@@ -125,6 +125,7 @@ const (
 	StateDisconnected = centrifuge.StateDisconnected
 	StateConnecting   = centrifuge.StateConnecting
 	StateConnected    = centrifuge.StateConnected
+	StateClosed       = centrifuge.StateClosed
 )
 
 const (

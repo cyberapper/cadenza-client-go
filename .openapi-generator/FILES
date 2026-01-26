@@ -594,13 +594,4 @@ model_ws_subscribe_result.go
 model_ws_unsubscribe_push.go
 model_ws_unsubscribe_request.go
 response.go
-test/api_market_subscription_test.go
-test/api_market_test.go
-test/api_trade_order_test.go
-test/api_trading_account_credential_test.go
-test/api_trading_account_portfolio_test.go
-test/api_trading_account_subscription_test.go
-test/api_trading_account_test.go
-test/api_utility_test.go
-test/api_web_socket_test.go
 utils.go
