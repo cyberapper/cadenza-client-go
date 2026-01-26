@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.0.0...v1.1.0) (2026-01-26)
+
+
+### Features
+
+* add ws package re-exporting centrifuge-go SDK ([c86067b](https://github.com/cyberapper/cadenza-client-go/commit/c86067bf364e3e290ea11e1a6da86e2cc98d6373))
+
 ## [1.0.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.0.0...v1.0.0) (2026-01-26)
 
 
