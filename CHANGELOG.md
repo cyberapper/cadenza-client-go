@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.3](https://github.com/cyberapper/cadenza-client-go/compare/v3.1.2...v3.1.3) (2026-01-26)
+
+
+### Miscellaneous
+
+* ignore local Claude Code files ([#16](https://github.com/cyberapper/cadenza-client-go/issues/16)) ([4a39668](https://github.com/cyberapper/cadenza-client-go/commit/4a39668add3d0bded57f1f81a6df33e1d9a88ab6))
+
 ## [3.1.2](https://github.com/cyberapper/cadenza-client-go/compare/v3.1.1...v3.1.2) (2026-01-26)
 
 
