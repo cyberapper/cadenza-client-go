@@ -13,7 +13,7 @@ import "github.com/cyberapper/cadenza-client-go/ws"
 ### Connect to WebSocket
 
 ```go
-client := ws.NewJsonClient("ws://localhost:8001/connection/websocket", ws.Config{
+client := ws.NewJsonClient("wss://cadenza-ws.algo724.com", ws.Config{
     Token: "your-jwt-token",
 })
 
