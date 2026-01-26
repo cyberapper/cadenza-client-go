@@ -8,6 +8,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref || github.ref_name, 'release-please') }}
     strategy:
       matrix:
         go-version: ["1.22", "1.23"]
