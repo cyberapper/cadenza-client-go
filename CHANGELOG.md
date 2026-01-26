@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cyberapper/cadenza-client-go/compare/v1.1.0...v1.1.1) (2026-01-26)
+
+
+### Documentation
+
+* add README for ws package ([4f6d8b7](https://github.com/cyberapper/cadenza-client-go/commit/4f6d8b7b24e09636502e543cfb4b96b8efe8bbfd))
+
 ## [1.1.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.0.0...v1.1.0) (2026-01-26)
 
 
