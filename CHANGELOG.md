@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.1.0...v1.2.0) (2026-01-27)
+
+
+### Features
+
+* **auth:** add authentication API endpoints ([88f60bb](https://github.com/cyberapper/cadenza-client-go/commit/88f60bbef31e36ebf8f6872d488b57de532831e4))
+
 ## [1.1.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.0.0...v1.1.0) (2026-01-26)
 
 
