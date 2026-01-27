@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.0...v1.2.1) (2026-01-27)
+
+
+### Miscellaneous
+
+* protect go.mod from openapi-generator overwrite ([#20](https://github.com/cyberapper/cadenza-client-go/issues/20)) ([c0fa177](https://github.com/cyberapper/cadenza-client-go/commit/c0fa177e8bbf19fbad09121de22920b385efb3e3))
+
 ## [1.2.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.1.0...v1.2.0) (2026-01-27)
 
 
