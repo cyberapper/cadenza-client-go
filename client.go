@@ -49,6 +49,8 @@ type APIClient struct {
 
 	// API Services
 
+	AuthenticationAPI AuthenticationAPI
+
 	MarketAPI MarketAPI
 
 	MarketSubscriptionAPI MarketSubscriptionAPI
@@ -84,6 +86,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.AuthenticationAPI = (*AuthenticationAPIService)(&c.common)
 	c.MarketAPI = (*MarketAPIService)(&c.common)
 	c.MarketSubscriptionAPI = (*MarketSubscriptionAPIService)(&c.common)
 	c.TradeOrderAPI = (*TradeOrderAPIService)(&c.common)

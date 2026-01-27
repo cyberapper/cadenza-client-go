@@ -24,6 +24,8 @@ security:
 tags:
 - description: Utility endpoints
   name: Utility
+- description: Authentication endpoints (Supabase GoTrue proxy)
+  name: Authentication
 - description: Trade Order Management
   name: Trade Order
 - description: Trading Account Management
@@ -117,6 +119,257 @@ paths:
       summary: Health check
       tags:
       - Utility
+  /api/v3/auth/signup:
+    post:
+      description: Create a new user account with email and password
+      operationId: authSignup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authSignupRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authSignup_200_response"
+          description: Authentication user response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_400_response"
+          description: Bad request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authSignup_429_response"
+          description: Too many requests - Rate limited
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      security: []
+      summary: Sign up new user
+      tags:
+      - Authentication
+  /api/v3/auth/login:
+    post:
+      description: Authenticate user and return access/refresh tokens
+      operationId: authLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authLoginRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authLogin_200_response"
+          description: Authentication session response with tokens
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_400_response"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_401_response"
+          description: Unauthorized - Authentication required
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authSignup_429_response"
+          description: Too many requests - Rate limited
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      security: []
+      summary: Login with email and password
+      tags:
+      - Authentication
+  /api/v3/auth/logout:
+    post:
+      description: Invalidate the current session
+      operationId: authLogout
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authLogout_200_response"
+          description: Simple authentication response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_401_response"
+          description: Unauthorized - Authentication required
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      summary: Logout user
+      tags:
+      - Authentication
+  /api/v3/auth/token/refresh:
+    post:
+      description: Get new access token using refresh token
+      operationId: authRefreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authRefreshTokenRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authLogin_200_response"
+          description: Authentication session response with tokens
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_400_response"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_401_response"
+          description: Unauthorized - Authentication required
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      security: []
+      summary: Refresh access token
+      tags:
+      - Authentication
+  /api/v3/auth/user:
+    get:
+      description: Get the currently authenticated user's information
+      operationId: authGetUser
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authSignup_200_response"
+          description: Authentication user response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_401_response"
+          description: Unauthorized - Authentication required
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      summary: Get current user
+      tags:
+      - Authentication
+    put:
+      description: Update the currently authenticated user's information
+      operationId: authUpdateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authUpdateUserRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authSignup_200_response"
+          description: Authentication user response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_400_response"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_401_response"
+          description: Unauthorized - Authentication required
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      summary: Update current user
+      tags:
+      - Authentication
+  /api/v3/auth/recover:
+    post:
+      description: Send password recovery email to user
+      operationId: authRecover
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authRecoverRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authLogout_200_response"
+          description: Simple authentication response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_400_response"
+          description: Bad request
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/authSignup_429_response"
+          description: Too many requests - Rate limited
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/root_500_response"
+          description: Internal server error
+      security: []
+      summary: Request password recovery
+      tags:
+      - Authentication
   /api/v3/tradeOrder/submit:
     post:
       description: Submit a new trade order
@@ -2635,6 +2888,30 @@ components:
           schema:
             $ref: "#/components/schemas/root_500_response"
       description: Internal server error
+    rateLimitedResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/authSignup_429_response"
+      description: Too many requests - Rate limited
+    authUserResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/authSignup_200_response"
+      description: Authentication user response
+    authSessionResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/authLogin_200_response"
+      description: Authentication session response with tokens
+    authSimpleResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/authLogout_200_response"
+      description: Simple authentication response
     submitTradeOrderResponse:
       content:
         application/json:
@@ -2818,6 +3095,187 @@ components:
       description: UUID string
       format: uuid
       type: string
+    authSignupRequest:
+      properties:
+        email:
+          description: User email address
+          example: user@example.com
+          format: email
+          type: string
+        password:
+          description: User password (minimum 8 characters)
+          example: securepassword123
+          minLength: 8
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Optional user metadata
+          type: object
+      required:
+      - email
+      - password
+      type: object
+    authLoginRequest:
+      properties:
+        email:
+          description: User email address
+          example: user@example.com
+          format: email
+          type: string
+        password:
+          description: User password
+          example: securepassword123
+          type: string
+      required:
+      - email
+      - password
+      type: object
+    authRefreshTokenRequest:
+      properties:
+        refreshToken:
+          description: Refresh token from previous login
+          type: string
+      required:
+      - refreshToken
+      type: object
+    authUpdateUserRequest:
+      properties:
+        email:
+          description: New email address
+          format: email
+          type: string
+        password:
+          description: New password (minimum 8 characters)
+          minLength: 8
+          type: string
+        metadata:
+          additionalProperties: true
+          description: User metadata to update
+          type: object
+      type: object
+    authRecoverRequest:
+      properties:
+        email:
+          description: Email address to send recovery link
+          example: user@example.com
+          format: email
+          type: string
+      required:
+      - email
+      type: object
+    authUser:
+      description: Authenticated user information
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        appMetadata:
+          environments:
+          - environments
+          - environments
+          tenantId: tenantId
+        role: authenticated
+        phone: phone
+        lastSignInAt: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+        userMetadata:
+          key: ""
+        email: email
+        phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: User ID
+          format: uuid
+          type: string
+        email:
+          description: User email address
+          format: email
+          type: string
+        phone:
+          description: User phone number
+          nullable: true
+          type: string
+        emailConfirmedAt:
+          description: Email confirmation timestamp
+          format: date-time
+          nullable: true
+          type: string
+        phoneConfirmedAt:
+          description: Phone confirmation timestamp
+          format: date-time
+          nullable: true
+          type: string
+        lastSignInAt:
+          description: Last sign in timestamp
+          format: date-time
+          nullable: true
+          type: string
+        role:
+          description: User role
+          example: authenticated
+          type: string
+        createdAt:
+          description: Account creation timestamp
+          format: date-time
+          type: string
+        updatedAt:
+          description: Account last update timestamp
+          format: date-time
+          type: string
+        appMetadata:
+          $ref: "#/components/schemas/authUser_appMetadata"
+        userMetadata:
+          additionalProperties: true
+          description: User-defined metadata
+          type: object
+      type: object
+    authSession:
+      description: Authentication session with tokens
+      example:
+        expiresIn: 3600
+        accessToken: accessToken
+        tokenType: bearer
+        user:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appMetadata:
+            environments:
+            - environments
+            - environments
+            tenantId: tenantId
+          role: authenticated
+          phone: phone
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          userMetadata:
+            key: ""
+          email: email
+          phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        expiresAt: 0
+        refreshToken: refreshToken
+      properties:
+        accessToken:
+          description: JWT access token
+          type: string
+        refreshToken:
+          description: Refresh token for obtaining new access tokens
+          type: string
+        tokenType:
+          description: Token type
+          example: bearer
+          type: string
+        expiresIn:
+          description: Token expiry in seconds
+          example: 3600
+          type: integer
+        expiresAt:
+          description: Token expiry timestamp (Unix seconds)
+          format: int64
+          type: integer
+        user:
+          $ref: "#/components/schemas/authUser"
+      type: object
     venue:
       description: |
         Trading venue identifier. UAT/sandbox environments are treated as separate venues.
@@ -8360,6 +8818,147 @@ components:
       - timestamp
       - version
       type: object
+    authSignup_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/authUser"
+        type: object
+      example:
+        errno: 0
+        data:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appMetadata:
+            environments:
+            - environments
+            - environments
+            tenantId: tenantId
+          role: authenticated
+          phone: phone
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          userMetadata:
+            key: ""
+          email: email
+          phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    authSignup_429_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            example: Too many requests
+            nullable: true
+            type: string
+        type: object
+      example:
+        errno: 0
+        data: Too many requests
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    authLogin_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/authSession"
+        type: object
+      example:
+        errno: 0
+        data:
+          expiresIn: 3600
+          accessToken: accessToken
+          tokenType: bearer
+          user:
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appMetadata:
+              environments:
+              - environments
+              - environments
+              tenantId: tenantId
+            role: authenticated
+            phone: phone
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+            userMetadata:
+              key: ""
+            email: email
+            phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          expiresAt: 0
+          refreshToken: refreshToken
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    authLogout_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            example: ok
+            type: string
+        type: object
+      example:
+        errno: 0
+        data: ok
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
     submitTradeOrder_200_response:
       allOf:
       - $ref: "#/components/schemas/baseResponse"
@@ -10019,6 +10618,24 @@ components:
           additionalProperties: true
           description: Additional metadata as key-value pairs
           type: object
+      type: object
+    authUser_appMetadata:
+      description: Application metadata
+      example:
+        environments:
+        - environments
+        - environments
+        tenantId: tenantId
+      properties:
+        tenantId:
+          description: Tenant ID
+          nullable: true
+          type: string
+        environments:
+          description: Allowed environments
+          items:
+            type: string
+          type: array
       type: object
     wsMarketOrderBookSubscribe_params:
       properties:

@@ -81,6 +81,13 @@ All URIs are relative to *https://cadenza-api-uat.algo724.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AuthenticationAPI* | [**AuthGetUser**](docs/AuthenticationAPI.md#authgetuser) | **Get** /api/v3/auth/user | Get current user
+*AuthenticationAPI* | [**AuthLogin**](docs/AuthenticationAPI.md#authlogin) | **Post** /api/v3/auth/login | Login with email and password
+*AuthenticationAPI* | [**AuthLogout**](docs/AuthenticationAPI.md#authlogout) | **Post** /api/v3/auth/logout | Logout user
+*AuthenticationAPI* | [**AuthRecover**](docs/AuthenticationAPI.md#authrecover) | **Post** /api/v3/auth/recover | Request password recovery
+*AuthenticationAPI* | [**AuthRefreshToken**](docs/AuthenticationAPI.md#authrefreshtoken) | **Post** /api/v3/auth/token/refresh | Refresh access token
+*AuthenticationAPI* | [**AuthSignup**](docs/AuthenticationAPI.md#authsignup) | **Post** /api/v3/auth/signup | Sign up new user
+*AuthenticationAPI* | [**AuthUpdateUser**](docs/AuthenticationAPI.md#authupdateuser) | **Put** /api/v3/auth/user | Update current user
 *MarketAPI* | [**DeleteMarketInstrument**](docs/MarketAPI.md#deletemarketinstrument) | **Delete** /api/v3/market/instrument/delete | Delete market instrument
 *MarketAPI* | [**DeleteMarketSecurity**](docs/MarketAPI.md#deletemarketsecurity) | **Delete** /api/v3/market/security/delete | Delete market security
 *MarketAPI* | [**DisableMarketInstrument**](docs/MarketAPI.md#disablemarketinstrument) | **Post** /api/v3/market/instrument/disable | Disable market instrument
@@ -123,6 +130,18 @@ Class | Method | HTTP request | Description
 
  - [AccountOperation](docs/AccountOperation.md)
  - [AccountType](docs/AccountType.md)
+ - [AuthLogin200Response](docs/AuthLogin200Response.md)
+ - [AuthLoginRequest](docs/AuthLoginRequest.md)
+ - [AuthLogout200Response](docs/AuthLogout200Response.md)
+ - [AuthRecoverRequest](docs/AuthRecoverRequest.md)
+ - [AuthRefreshTokenRequest](docs/AuthRefreshTokenRequest.md)
+ - [AuthSession](docs/AuthSession.md)
+ - [AuthSignup200Response](docs/AuthSignup200Response.md)
+ - [AuthSignup429Response](docs/AuthSignup429Response.md)
+ - [AuthSignupRequest](docs/AuthSignupRequest.md)
+ - [AuthUpdateUserRequest](docs/AuthUpdateUserRequest.md)
+ - [AuthUser](docs/AuthUser.md)
+ - [AuthUserAppMetadata](docs/AuthUserAppMetadata.md)
  - [BalanceEntry](docs/BalanceEntry.md)
  - [BalanceStatus](docs/BalanceStatus.md)
  - [BaseResponse](docs/BaseResponse.md)
