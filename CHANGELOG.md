@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.1...v1.2.2) (2026-01-27)
+
+
+### Continuous Integration
+
+* skip workflow for release-please PRs ([#22](https://github.com/cyberapper/cadenza-client-go/issues/22)) ([7cdbece](https://github.com/cyberapper/cadenza-client-go/commit/7cdbecee4c84ee4e781aa89f2d162fad3a5a7bdf))
+
 ## [1.2.1](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.0...v1.2.1) (2026-01-27)
 
 
