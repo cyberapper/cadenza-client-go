@@ -15,7 +15,7 @@ client.go
 configuration.go
 docs/AccountOperation.md
 docs/AccountType.md
-docs/AuthLogin200Response.md
+docs/AuthGetUser200Response.md
 docs/AuthLoginRequest.md
 docs/AuthLogout200Response.md
 docs/AuthRecoverRequest.md
@@ -323,7 +323,7 @@ docs/WsUnsubscribeRequest.md
 git_push.sh
 model_account_operation.go
 model_account_type.go
-model_auth_login_200_response.go
+model_auth_get_user_200_response.go
 model_auth_login_request.go
 model_auth_logout_200_response.go
 model_auth_recover_request.go

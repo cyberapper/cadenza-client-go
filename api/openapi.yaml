@@ -135,7 +135,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/authSignup_200_response"
-          description: Authentication user response
+          description: Authentication session response with tokens
         "400":
           content:
             application/json:
@@ -173,7 +173,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authLogin_200_response"
+                $ref: "#/components/schemas/authSignup_200_response"
           description: Authentication session response with tokens
         "400":
           content:
@@ -244,7 +244,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authLogin_200_response"
+                $ref: "#/components/schemas/authSignup_200_response"
           description: Authentication session response with tokens
         "400":
           content:
@@ -277,7 +277,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authSignup_200_response"
+                $ref: "#/components/schemas/authGetUser_200_response"
           description: Authentication user response
         "401":
           content:
@@ -308,7 +308,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authSignup_200_response"
+                $ref: "#/components/schemas/authGetUser_200_response"
           description: Authentication user response
         "400":
           content:
@@ -2898,13 +2898,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/authSignup_200_response"
+            $ref: "#/components/schemas/authGetUser_200_response"
       description: Authentication user response
     authSessionResponse:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/authLogin_200_response"
+            $ref: "#/components/schemas/authSignup_200_response"
       description: Authentication session response with tokens
     authSimpleResponse:
       content:
@@ -8862,91 +8862,6 @@ components:
       - $ref: "#/components/schemas/baseResponse"
       - properties:
           data:
-            $ref: "#/components/schemas/authUser"
-        type: object
-      example:
-        errno: 0
-        data:
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          appMetadata:
-            environments:
-            - environments
-            - environments
-            tenantId: tenantId
-          role: authenticated
-          identities:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            provider: provider
-            lastSignInAt: 2000-01-23T04:56:07.000+00:00
-            id: id
-            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            identityData:
-              key: ""
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            provider: provider
-            lastSignInAt: 2000-01-23T04:56:07.000+00:00
-            id: id
-            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            identityData:
-              key: ""
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          phone: phone
-          lastSignInAt: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
-          userMetadata:
-            key: ""
-          email: email
-          phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
-    authSignup_429_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
-            example: Too many requests
-            nullable: true
-            type: string
-        type: object
-      example:
-        errno: 0
-        data: Too many requests
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
-    authLogin_200_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
             $ref: "#/components/schemas/authSession"
         type: object
       example:
@@ -9006,6 +8921,33 @@ components:
           - admin
           - write
         error: error
+    authSignup_429_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            example: Too many requests
+            nullable: true
+            type: string
+        type: object
+      example:
+        errno: 0
+        data: Too many requests
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
     authLogout_200_response:
       allOf:
       - $ref: "#/components/schemas/baseResponse"
@@ -9017,6 +8959,64 @@ components:
       example:
         errno: 0
         data: ok
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    authGetUser_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/authUser"
+        type: object
+      example:
+        errno: 0
+        data:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appMetadata:
+            environments:
+            - environments
+            - environments
+            tenantId: tenantId
+          role: authenticated
+          identities:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          phone: phone
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          userMetadata:
+            key: ""
+          email: email
+          phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         success: true
         details:
           tenant_id: tenant-123

@@ -16,11 +16,11 @@ import (
 	"fmt"
 )
 
-// checks if the AuthSignup200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &AuthSignup200Response{}
+// checks if the AuthGetUser200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthGetUser200Response{}
 
-// AuthSignup200Response struct for AuthSignup200Response
-type AuthSignup200Response struct {
+// AuthGetUser200Response struct for AuthGetUser200Response
+type AuthGetUser200Response struct {
 	// Indicates if the operation was successful
 	Success bool `json:"success"`
 	// Error code (0 for success, negative for errors)
@@ -28,32 +28,32 @@ type AuthSignup200Response struct {
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
-	Data *AuthSession `json:"data,omitempty"`
+	Data *AuthUser `json:"data,omitempty"`
 }
 
-type _AuthSignup200Response AuthSignup200Response
+type _AuthGetUser200Response AuthGetUser200Response
 
-// NewAuthSignup200Response instantiates a new AuthSignup200Response object
+// NewAuthGetUser200Response instantiates a new AuthGetUser200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAuthSignup200Response(success bool, errno int32) *AuthSignup200Response {
-	this := AuthSignup200Response{}
+func NewAuthGetUser200Response(success bool, errno int32) *AuthGetUser200Response {
+	this := AuthGetUser200Response{}
 	this.Success = success
 	this.Errno = errno
 	return &this
 }
 
-// NewAuthSignup200ResponseWithDefaults instantiates a new AuthSignup200Response object
+// NewAuthGetUser200ResponseWithDefaults instantiates a new AuthGetUser200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAuthSignup200ResponseWithDefaults() *AuthSignup200Response {
-	this := AuthSignup200Response{}
+func NewAuthGetUser200ResponseWithDefaults() *AuthGetUser200Response {
+	this := AuthGetUser200Response{}
 	return &this
 }
 
 // GetSuccess returns the Success field value
-func (o *AuthSignup200Response) GetSuccess() bool {
+func (o *AuthGetUser200Response) GetSuccess() bool {
 	if o == nil {
 		var ret bool
 		return ret
@@ -64,7 +64,7 @@ func (o *AuthSignup200Response) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value
 // and a boolean to check if the value has been set.
-func (o *AuthSignup200Response) GetSuccessOk() (*bool, bool) {
+func (o *AuthGetUser200Response) GetSuccessOk() (*bool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -72,12 +72,12 @@ func (o *AuthSignup200Response) GetSuccessOk() (*bool, bool) {
 }
 
 // SetSuccess sets field value
-func (o *AuthSignup200Response) SetSuccess(v bool) {
+func (o *AuthGetUser200Response) SetSuccess(v bool) {
 	o.Success = v
 }
 
 // GetErrno returns the Errno field value
-func (o *AuthSignup200Response) GetErrno() int32 {
+func (o *AuthGetUser200Response) GetErrno() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -88,7 +88,7 @@ func (o *AuthSignup200Response) GetErrno() int32 {
 
 // GetErrnoOk returns a tuple with the Errno field value
 // and a boolean to check if the value has been set.
-func (o *AuthSignup200Response) GetErrnoOk() (*int32, bool) {
+func (o *AuthGetUser200Response) GetErrnoOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -96,12 +96,12 @@ func (o *AuthSignup200Response) GetErrnoOk() (*int32, bool) {
 }
 
 // SetErrno sets field value
-func (o *AuthSignup200Response) SetErrno(v int32) {
+func (o *AuthGetUser200Response) SetErrno(v int32) {
 	o.Errno = v
 }
 
 // GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AuthSignup200Response) GetError() string {
+func (o *AuthGetUser200Response) GetError() string {
 	if o == nil || IsNil(o.Error.Get()) {
 		var ret string
 		return ret
@@ -112,7 +112,7 @@ func (o *AuthSignup200Response) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AuthSignup200Response) GetErrorOk() (*string, bool) {
+func (o *AuthGetUser200Response) GetErrorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -120,7 +120,7 @@ func (o *AuthSignup200Response) GetErrorOk() (*string, bool) {
 }
 
 // HasError returns a boolean if a field has been set.
-func (o *AuthSignup200Response) HasError() bool {
+func (o *AuthGetUser200Response) HasError() bool {
 	if o != nil && o.Error.IsSet() {
 		return true
 	}
@@ -129,21 +129,21 @@ func (o *AuthSignup200Response) HasError() bool {
 }
 
 // SetError gets a reference to the given NullableString and assigns it to the Error field.
-func (o *AuthSignup200Response) SetError(v string) {
+func (o *AuthGetUser200Response) SetError(v string) {
 	o.Error.Set(&v)
 }
 // SetErrorNil sets the value for Error to be an explicit nil
-func (o *AuthSignup200Response) SetErrorNil() {
+func (o *AuthGetUser200Response) SetErrorNil() {
 	o.Error.Set(nil)
 }
 
 // UnsetError ensures that no value is present for Error, not even an explicit nil
-func (o *AuthSignup200Response) UnsetError() {
+func (o *AuthGetUser200Response) UnsetError() {
 	o.Error.Unset()
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AuthSignup200Response) GetDetails() BaseResponseDetails {
+func (o *AuthGetUser200Response) GetDetails() BaseResponseDetails {
 	if o == nil || IsNil(o.Details.Get()) {
 		var ret BaseResponseDetails
 		return ret
@@ -154,7 +154,7 @@ func (o *AuthSignup200Response) GetDetails() BaseResponseDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AuthSignup200Response) GetDetailsOk() (*BaseResponseDetails, bool) {
+func (o *AuthGetUser200Response) GetDetailsOk() (*BaseResponseDetails, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -162,7 +162,7 @@ func (o *AuthSignup200Response) GetDetailsOk() (*BaseResponseDetails, bool) {
 }
 
 // HasDetails returns a boolean if a field has been set.
-func (o *AuthSignup200Response) HasDetails() bool {
+func (o *AuthGetUser200Response) HasDetails() bool {
 	if o != nil && o.Details.IsSet() {
 		return true
 	}
@@ -171,23 +171,23 @@ func (o *AuthSignup200Response) HasDetails() bool {
 }
 
 // SetDetails gets a reference to the given NullableBaseResponseDetails and assigns it to the Details field.
-func (o *AuthSignup200Response) SetDetails(v BaseResponseDetails) {
+func (o *AuthGetUser200Response) SetDetails(v BaseResponseDetails) {
 	o.Details.Set(&v)
 }
 // SetDetailsNil sets the value for Details to be an explicit nil
-func (o *AuthSignup200Response) SetDetailsNil() {
+func (o *AuthGetUser200Response) SetDetailsNil() {
 	o.Details.Set(nil)
 }
 
 // UnsetDetails ensures that no value is present for Details, not even an explicit nil
-func (o *AuthSignup200Response) UnsetDetails() {
+func (o *AuthGetUser200Response) UnsetDetails() {
 	o.Details.Unset()
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *AuthSignup200Response) GetData() AuthSession {
+func (o *AuthGetUser200Response) GetData() AuthUser {
 	if o == nil || IsNil(o.Data) {
-		var ret AuthSession
+		var ret AuthUser
 		return ret
 	}
 	return *o.Data
@@ -195,7 +195,7 @@ func (o *AuthSignup200Response) GetData() AuthSession {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AuthSignup200Response) GetDataOk() (*AuthSession, bool) {
+func (o *AuthGetUser200Response) GetDataOk() (*AuthUser, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -203,7 +203,7 @@ func (o *AuthSignup200Response) GetDataOk() (*AuthSession, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *AuthSignup200Response) HasData() bool {
+func (o *AuthGetUser200Response) HasData() bool {
 	if o != nil && !IsNil(o.Data) {
 		return true
 	}
@@ -211,12 +211,12 @@ func (o *AuthSignup200Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given AuthSession and assigns it to the Data field.
-func (o *AuthSignup200Response) SetData(v AuthSession) {
+// SetData gets a reference to the given AuthUser and assigns it to the Data field.
+func (o *AuthGetUser200Response) SetData(v AuthUser) {
 	o.Data = &v
 }
 
-func (o AuthSignup200Response) MarshalJSON() ([]byte, error) {
+func (o AuthGetUser200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -224,7 +224,7 @@ func (o AuthSignup200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o AuthSignup200Response) ToMap() (map[string]interface{}, error) {
+func (o AuthGetUser200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["success"] = o.Success
 	toSerialize["errno"] = o.Errno
@@ -240,7 +240,7 @@ func (o AuthSignup200Response) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *AuthSignup200Response) UnmarshalJSON(data []byte) (err error) {
+func (o *AuthGetUser200Response) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -263,53 +263,53 @@ func (o *AuthSignup200Response) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varAuthSignup200Response := _AuthSignup200Response{}
+	varAuthGetUser200Response := _AuthGetUser200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthSignup200Response)
+	err = decoder.Decode(&varAuthGetUser200Response)
 
 	if err != nil {
 		return err
 	}
 
-	*o = AuthSignup200Response(varAuthSignup200Response)
+	*o = AuthGetUser200Response(varAuthGetUser200Response)
 
 	return err
 }
 
-type NullableAuthSignup200Response struct {
-	value *AuthSignup200Response
+type NullableAuthGetUser200Response struct {
+	value *AuthGetUser200Response
 	isSet bool
 }
 
-func (v NullableAuthSignup200Response) Get() *AuthSignup200Response {
+func (v NullableAuthGetUser200Response) Get() *AuthGetUser200Response {
 	return v.value
 }
 
-func (v *NullableAuthSignup200Response) Set(val *AuthSignup200Response) {
+func (v *NullableAuthGetUser200Response) Set(val *AuthGetUser200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAuthSignup200Response) IsSet() bool {
+func (v NullableAuthGetUser200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAuthSignup200Response) Unset() {
+func (v *NullableAuthGetUser200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAuthSignup200Response(val *AuthSignup200Response) *NullableAuthSignup200Response {
-	return &NullableAuthSignup200Response{value: val, isSet: true}
+func NewNullableAuthGetUser200Response(val *AuthGetUser200Response) *NullableAuthGetUser200Response {
+	return &NullableAuthGetUser200Response{value: val, isSet: true}
 }
 
-func (v NullableAuthSignup200Response) MarshalJSON() ([]byte, error) {
+func (v NullableAuthGetUser200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAuthSignup200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableAuthGetUser200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

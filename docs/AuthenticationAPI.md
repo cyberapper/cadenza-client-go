@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 ## AuthGetUser
 
-> AuthSignup200Response AuthGetUser(ctx).Execute()
+> AuthGetUser200Response AuthGetUser(ctx).Execute()
 
 Get current user
 
@@ -43,7 +43,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthenticationAPI.AuthGetUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `AuthGetUser`: AuthSignup200Response
+	// response from `AuthGetUser`: AuthGetUser200Response
 	fmt.Fprintf(os.Stdout, "Response from `AuthenticationAPI.AuthGetUser`: %v\n", resp)
 }
 ```
@@ -59,7 +59,7 @@ Other parameters are passed through a pointer to a apiAuthGetUserRequest struct 
 
 ### Return type
 
-[**AuthSignup200Response**](AuthSignup200Response.md)
+[**AuthGetUser200Response**](AuthGetUser200Response.md)
 
 ### Authorization
 
@@ -77,7 +77,7 @@ Other parameters are passed through a pointer to a apiAuthGetUserRequest struct 
 
 ## AuthLogin
 
-> AuthLogin200Response AuthLogin(ctx).AuthLoginRequest(authLoginRequest).Execute()
+> AuthSignup200Response AuthLogin(ctx).AuthLoginRequest(authLoginRequest).Execute()
 
 Login with email and password
 
@@ -105,7 +105,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthenticationAPI.AuthLogin``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `AuthLogin`: AuthLogin200Response
+	// response from `AuthLogin`: AuthSignup200Response
 	fmt.Fprintf(os.Stdout, "Response from `AuthenticationAPI.AuthLogin`: %v\n", resp)
 }
 ```
@@ -125,7 +125,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AuthLogin200Response**](AuthLogin200Response.md)
+[**AuthSignup200Response**](AuthSignup200Response.md)
 
 ### Authorization
 
@@ -270,7 +270,7 @@ No authorization required
 
 ## AuthRefreshToken
 
-> AuthLogin200Response AuthRefreshToken(ctx).AuthRefreshTokenRequest(authRefreshTokenRequest).Execute()
+> AuthSignup200Response AuthRefreshToken(ctx).AuthRefreshTokenRequest(authRefreshTokenRequest).Execute()
 
 Refresh access token
 
@@ -298,7 +298,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthenticationAPI.AuthRefreshToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `AuthRefreshToken`: AuthLogin200Response
+	// response from `AuthRefreshToken`: AuthSignup200Response
 	fmt.Fprintf(os.Stdout, "Response from `AuthenticationAPI.AuthRefreshToken`: %v\n", resp)
 }
 ```
@@ -318,7 +318,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AuthLogin200Response**](AuthLogin200Response.md)
+[**AuthSignup200Response**](AuthSignup200Response.md)
 
 ### Authorization
 
@@ -402,7 +402,7 @@ No authorization required
 
 ## AuthUpdateUser
 
-> AuthSignup200Response AuthUpdateUser(ctx).AuthUpdateUserRequest(authUpdateUserRequest).Execute()
+> AuthGetUser200Response AuthUpdateUser(ctx).AuthUpdateUserRequest(authUpdateUserRequest).Execute()
 
 Update current user
 
@@ -430,7 +430,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthenticationAPI.AuthUpdateUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `AuthUpdateUser`: AuthSignup200Response
+	// response from `AuthUpdateUser`: AuthGetUser200Response
 	fmt.Fprintf(os.Stdout, "Response from `AuthenticationAPI.AuthUpdateUser`: %v\n", resp)
 }
 ```
@@ -450,7 +450,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AuthSignup200Response**](AuthSignup200Response.md)
+[**AuthGetUser200Response**](AuthGetUser200Response.md)
 
 ### Authorization
 
