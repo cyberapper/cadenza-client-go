@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Success** | **bool** | Indicates if the operation was successful | 
 **Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Data** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewDeleteMarketInstrument200Response
 
-`func NewDeleteMarketInstrument200Response(success bool, errno int32, error_ NullableString, ) *DeleteMarketInstrument200Response`
+`func NewDeleteMarketInstrument200Response(success bool, errno int32, ) *DeleteMarketInstrument200Response`
 
 NewDeleteMarketInstrument200Response instantiates a new DeleteMarketInstrument200Response object
 This constructor will assign default values to properties that have it defined,
@@ -87,6 +87,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *DeleteMarketInstrument200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 

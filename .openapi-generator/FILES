@@ -27,6 +27,7 @@ docs/AuthSignupRequest.md
 docs/AuthUpdateUserRequest.md
 docs/AuthUser.md
 docs/AuthUserAppMetadata.md
+docs/AuthUserIdentitiesInner.md
 docs/AuthenticationAPI.md
 docs/BalanceEntry.md
 docs/BalanceStatus.md
@@ -320,8 +321,6 @@ docs/WsSubscribeResult.md
 docs/WsUnsubscribePush.md
 docs/WsUnsubscribeRequest.md
 git_push.sh
-go.mod
-go.sum
 model_account_operation.go
 model_account_type.go
 model_auth_login_200_response.go
@@ -336,6 +335,7 @@ model_auth_signup_request.go
 model_auth_update_user_request.go
 model_auth_user.go
 model_auth_user_app_metadata.go
+model_auth_user_identities_inner.go
 model_balance_entry.go
 model_balance_status.go
 model_base_response.go
@@ -619,5 +619,4 @@ model_ws_subscribe_result.go
 model_ws_unsubscribe_push.go
 model_ws_unsubscribe_request.go
 response.go
-test/api_authentication_test.go
 utils.go

@@ -142,6 +142,7 @@ Class | Method | HTTP request | Description
  - [AuthUpdateUserRequest](docs/AuthUpdateUserRequest.md)
  - [AuthUser](docs/AuthUser.md)
  - [AuthUserAppMetadata](docs/AuthUserAppMetadata.md)
+ - [AuthUserIdentitiesInner](docs/AuthUserIdentitiesInner.md)
  - [BalanceEntry](docs/BalanceEntry.md)
  - [BalanceStatus](docs/BalanceStatus.md)
  - [BaseResponse](docs/BaseResponse.md)

@@ -3062,7 +3062,6 @@ components:
           $ref: "#/components/schemas/baseResponse_details"
       required:
       - errno
-      - error
       - success
       type: object
     millisecond:
@@ -3173,6 +3172,23 @@ components:
           - environments
           tenantId: tenantId
         role: authenticated
+        identities:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          provider: provider
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          identityData:
+            key: ""
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          provider: provider
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          identityData:
+            key: ""
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         phone: phone
         lastSignInAt: 2000-01-23T04:56:07.000+00:00
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -3228,6 +3244,12 @@ components:
           additionalProperties: true
           description: User-defined metadata
           type: object
+        identities:
+          description: User identity providers (Supabase specific)
+          items:
+            $ref: "#/components/schemas/authUser_identities_inner"
+          nullable: true
+          type: array
       type: object
     authSession:
       description: Authentication session with tokens
@@ -3243,6 +3265,23 @@ components:
             - environments
             tenantId: tenantId
           role: authenticated
+          identities:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           phone: phone
           lastSignInAt: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -8835,6 +8874,23 @@ components:
             - environments
             tenantId: tenantId
           role: authenticated
+          identities:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           phone: phone
           lastSignInAt: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -8907,6 +8963,23 @@ components:
               - environments
               tenantId: tenantId
             role: authenticated
+            identities:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              provider: provider
+              lastSignInAt: 2000-01-23T04:56:07.000+00:00
+              id: id
+              userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              identityData:
+                key: ""
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              provider: provider
+              lastSignInAt: 2000-01-23T04:56:07.000+00:00
+              id: id
+              userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              identityData:
+                key: ""
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             phone: phone
             lastSignInAt: 2000-01-23T04:56:07.000+00:00
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -10216,7 +10289,6 @@ components:
           type: string
       required:
       - errno
-      - error
       - success
       type: object
     enableMarketInstrument_200_response:
@@ -10636,6 +10708,45 @@ components:
           items:
             type: string
           type: array
+      type: object
+    authUser_identities_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        provider: provider
+        lastSignInAt: 2000-01-23T04:56:07.000+00:00
+        id: id
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        identityData:
+          key: ""
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identity ID
+          type: string
+        userId:
+          description: User ID
+          format: uuid
+          type: string
+        identityData:
+          additionalProperties: true
+          description: Identity provider data
+          type: object
+        provider:
+          description: "Identity provider name (email, google, etc.)"
+          type: string
+        lastSignInAt:
+          description: Last sign in timestamp for this identity
+          format: date-time
+          nullable: true
+          type: string
+        createdAt:
+          description: Identity creation timestamp
+          format: date-time
+          type: string
+        updatedAt:
+          description: Identity last update timestamp
+          format: date-time
+          type: string
       type: object
     wsMarketOrderBookSubscribe_params:
       properties:
