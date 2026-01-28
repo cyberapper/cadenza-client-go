@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Success** | **bool** | Indicates if the operation was successful | 
 **Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
 **Data** | Pointer to [**Subscription**](Subscription.md) |  | [optional] 
 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewSubscribeTradingAccount200Response
 
-`func NewSubscribeTradingAccount200Response(success bool, errno int32, error_ NullableString, ) *SubscribeTradingAccount200Response`
+`func NewSubscribeTradingAccount200Response(success bool, errno int32, ) *SubscribeTradingAccount200Response`
 
 NewSubscribeTradingAccount200Response instantiates a new SubscribeTradingAccount200Response object
 This constructor will assign default values to properties that have it defined,
@@ -88,6 +88,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *SubscribeTradingAccount200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 
