@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.2...v1.2.3) (2026-01-30)
+
+
+### Miscellaneous
+
+* add .worktrees/ to gitignore ([#25](https://github.com/cyberapper/cadenza-client-go/issues/25)) ([ab823e1](https://github.com/cyberapper/cadenza-client-go/commit/ab823e104e9d5c144c60a646b23b0c2185376716))
+
 ## [1.2.2](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.1...v1.2.2) (2026-01-27)
 
 
