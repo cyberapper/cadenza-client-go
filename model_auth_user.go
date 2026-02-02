@@ -41,6 +41,8 @@ type AuthUser struct {
 	AppMetadata *AuthUserAppMetadata `json:"appMetadata,omitempty"`
 	// User-defined metadata
 	UserMetadata map[string]interface{} `json:"userMetadata,omitempty"`
+	// User identity providers (Supabase specific)
+	Identities []AuthUserIdentitiesInner `json:"identities,omitempty"`
 }
 
 // NewAuthUser instantiates a new AuthUser object
@@ -452,6 +454,39 @@ func (o *AuthUser) SetUserMetadata(v map[string]interface{}) {
 	o.UserMetadata = v
 }
 
+// GetIdentities returns the Identities field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AuthUser) GetIdentities() []AuthUserIdentitiesInner {
+	if o == nil {
+		var ret []AuthUserIdentitiesInner
+		return ret
+	}
+	return o.Identities
+}
+
+// GetIdentitiesOk returns a tuple with the Identities field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AuthUser) GetIdentitiesOk() ([]AuthUserIdentitiesInner, bool) {
+	if o == nil || IsNil(o.Identities) {
+		return nil, false
+	}
+	return o.Identities, true
+}
+
+// HasIdentities returns a boolean if a field has been set.
+func (o *AuthUser) HasIdentities() bool {
+	if o != nil && !IsNil(o.Identities) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentities gets a reference to the given []AuthUserIdentitiesInner and assigns it to the Identities field.
+func (o *AuthUser) SetIdentities(v []AuthUserIdentitiesInner) {
+	o.Identities = v
+}
+
 func (o AuthUser) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -494,6 +529,9 @@ func (o AuthUser) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UserMetadata) {
 		toSerialize["userMetadata"] = o.UserMetadata
+	}
+	if o.Identities != nil {
+		toSerialize["identities"] = o.Identities
 	}
 	return toSerialize, nil
 }

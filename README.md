@@ -130,7 +130,7 @@ Class | Method | HTTP request | Description
 
  - [AccountOperation](docs/AccountOperation.md)
  - [AccountType](docs/AccountType.md)
- - [AuthLogin200Response](docs/AuthLogin200Response.md)
+ - [AuthGetUser200Response](docs/AuthGetUser200Response.md)
  - [AuthLoginRequest](docs/AuthLoginRequest.md)
  - [AuthLogout200Response](docs/AuthLogout200Response.md)
  - [AuthRecoverRequest](docs/AuthRecoverRequest.md)
@@ -142,6 +142,7 @@ Class | Method | HTTP request | Description
  - [AuthUpdateUserRequest](docs/AuthUpdateUserRequest.md)
  - [AuthUser](docs/AuthUser.md)
  - [AuthUserAppMetadata](docs/AuthUserAppMetadata.md)
+ - [AuthUserIdentitiesInner](docs/AuthUserIdentitiesInner.md)
  - [BalanceEntry](docs/BalanceEntry.md)
  - [BalanceStatus](docs/BalanceStatus.md)
  - [BaseResponse](docs/BaseResponse.md)

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Success** | **bool** | Indicates if the operation was successful | 
 **Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
 **Data** | Pointer to [**[]Orderbook**](Orderbook.md) |  | [optional] 
 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewListMarketOrderBooks200Response
 
-`func NewListMarketOrderBooks200Response(success bool, errno int32, error_ NullableString, ) *ListMarketOrderBooks200Response`
+`func NewListMarketOrderBooks200Response(success bool, errno int32, ) *ListMarketOrderBooks200Response`
 
 NewListMarketOrderBooks200Response instantiates a new ListMarketOrderBooks200Response object
 This constructor will assign default values to properties that have it defined,
@@ -88,6 +88,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *ListMarketOrderBooks200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 

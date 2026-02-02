@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Success** | **bool** | Indicates if the operation was successful | 
 **Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
 **Data** | Pointer to [**[]TradingAccountCredential**](TradingAccountCredential.md) |  | [optional] 
 **Pagination** | Pointer to [**Pagination**](Pagination.md) |  | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewListTradingAccountCredentials200Response
 
-`func NewListTradingAccountCredentials200Response(success bool, errno int32, error_ NullableString, ) *ListTradingAccountCredentials200Response`
+`func NewListTradingAccountCredentials200Response(success bool, errno int32, ) *ListTradingAccountCredentials200Response`
 
 NewListTradingAccountCredentials200Response instantiates a new ListTradingAccountCredentials200Response object
 This constructor will assign default values to properties that have it defined,
@@ -89,6 +89,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *ListTradingAccountCredentials200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 
