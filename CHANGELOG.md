@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.4...v1.2.5) (2026-02-26)
+
+
+### Miscellaneous
+
+* regenerate Go client with relaxed unknown field handling ([#29](https://github.com/cyberapper/cadenza-client-go/issues/29)) ([9e7f0ba](https://github.com/cyberapper/cadenza-client-go/commit/9e7f0bad86f78d8f755d2c25c64d65f294ad5e16))
+
 ## [1.2.4](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.3...v1.2.4) (2026-02-26)
 
 
