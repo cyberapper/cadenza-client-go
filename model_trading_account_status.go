@@ -20,6 +20,7 @@ type TradingAccountStatus string
 
 // List of tradingAccountStatus
 const (
+	TRADINGACCOUNTSTATUS_NEW TradingAccountStatus = "NEW"
 	TRADINGACCOUNTSTATUS_SETUP TradingAccountStatus = "SETUP"
 	TRADINGACCOUNTSTATUS_ACTIVE TradingAccountStatus = "ACTIVE"
 	TRADINGACCOUNTSTATUS_INACTIVE TradingAccountStatus = "INACTIVE"
@@ -27,11 +28,13 @@ const (
 	TRADINGACCOUNTSTATUS_DISCONNECTED TradingAccountStatus = "DISCONNECTED"
 	TRADINGACCOUNTSTATUS_SUSPENDED TradingAccountStatus = "SUSPENDED"
 	TRADINGACCOUNTSTATUS_DELETED TradingAccountStatus = "DELETED"
+	TRADINGACCOUNTSTATUS_UNAVAILABLE TradingAccountStatus = "UNAVAILABLE"
 	TRADINGACCOUNTSTATUS_UNKNOWN TradingAccountStatus = "UNKNOWN"
 )
 
 // All allowed values of TradingAccountStatus enum
 var AllowedTradingAccountStatusEnumValues = []TradingAccountStatus{
+	"NEW",
 	"SETUP",
 	"ACTIVE",
 	"INACTIVE",
@@ -39,6 +42,7 @@ var AllowedTradingAccountStatusEnumValues = []TradingAccountStatus{
 	"DISCONNECTED",
 	"SUSPENDED",
 	"DELETED",
+	"UNAVAILABLE",
 	"UNKNOWN",
 }
 

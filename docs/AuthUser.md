@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** | Account last update timestamp | [optional] 
 **AppMetadata** | Pointer to [**AuthUserAppMetadata**](AuthUserAppMetadata.md) |  | [optional] 
 **UserMetadata** | Pointer to **map[string]interface{}** | User-defined metadata | [optional] 
+**Identities** | Pointer to [**[]AuthUserIdentitiesInner**](AuthUserIdentitiesInner.md) | User identity providers (Supabase specific) | [optional] 
 
 ## Methods
 
@@ -350,6 +351,41 @@ SetUserMetadata sets UserMetadata field to given value.
 
 HasUserMetadata returns a boolean if a field has been set.
 
+### GetIdentities
+
+`func (o *AuthUser) GetIdentities() []AuthUserIdentitiesInner`
+
+GetIdentities returns the Identities field if non-nil, zero value otherwise.
+
+### GetIdentitiesOk
+
+`func (o *AuthUser) GetIdentitiesOk() (*[]AuthUserIdentitiesInner, bool)`
+
+GetIdentitiesOk returns a tuple with the Identities field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIdentities
+
+`func (o *AuthUser) SetIdentities(v []AuthUserIdentitiesInner)`
+
+SetIdentities sets Identities field to given value.
+
+### HasIdentities
+
+`func (o *AuthUser) HasIdentities() bool`
+
+HasIdentities returns a boolean if a field has been set.
+
+### SetIdentitiesNil
+
+`func (o *AuthUser) SetIdentitiesNil(b bool)`
+
+ SetIdentitiesNil sets the value for Identities to be an explicit nil
+
+### UnsetIdentities
+`func (o *AuthUser) UnsetIdentities()`
+
+UnsetIdentities ensures that no value is present for Identities, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

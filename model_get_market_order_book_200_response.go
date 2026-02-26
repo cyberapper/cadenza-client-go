@@ -26,7 +26,7 @@ type GetMarketOrderBook200Response struct {
 	// Error code (0 for success, negative for errors)
 	Errno int32 `json:"errno"`
 	// Error message (null for successful operations)
-	Error NullableString `json:"error"`
+	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
 	Data *Orderbook `json:"data,omitempty"`
 }
@@ -37,11 +37,10 @@ type _GetMarketOrderBook200Response GetMarketOrderBook200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetMarketOrderBook200Response(success bool, errno int32, error_ NullableString) *GetMarketOrderBook200Response {
+func NewGetMarketOrderBook200Response(success bool, errno int32) *GetMarketOrderBook200Response {
 	this := GetMarketOrderBook200Response{}
 	this.Success = success
 	this.Errno = errno
-	this.Error = error_
 	return &this
 }
 
@@ -101,18 +100,16 @@ func (o *GetMarketOrderBook200Response) SetErrno(v int32) {
 	o.Errno = v
 }
 
-// GetError returns the Error field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetMarketOrderBook200Response) GetError() string {
-	if o == nil || o.Error.Get() == nil {
+	if o == nil || IsNil(o.Error.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.Error.Get()
 }
 
-// GetErrorOk returns a tuple with the Error field value
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetMarketOrderBook200Response) GetErrorOk() (*string, bool) {
@@ -122,9 +119,27 @@ func (o *GetMarketOrderBook200Response) GetErrorOk() (*string, bool) {
 	return o.Error.Get(), o.Error.IsSet()
 }
 
-// SetError sets field value
+// HasError returns a boolean if a field has been set.
+func (o *GetMarketOrderBook200Response) HasError() bool {
+	if o != nil && o.Error.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetError gets a reference to the given NullableString and assigns it to the Error field.
 func (o *GetMarketOrderBook200Response) SetError(v string) {
 	o.Error.Set(&v)
+}
+// SetErrorNil sets the value for Error to be an explicit nil
+func (o *GetMarketOrderBook200Response) SetErrorNil() {
+	o.Error.Set(nil)
+}
+
+// UnsetError ensures that no value is present for Error, not even an explicit nil
+func (o *GetMarketOrderBook200Response) UnsetError() {
+	o.Error.Unset()
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -213,7 +228,9 @@ func (o GetMarketOrderBook200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["success"] = o.Success
 	toSerialize["errno"] = o.Errno
-	toSerialize["error"] = o.Error.Get()
+	if o.Error.IsSet() {
+		toSerialize["error"] = o.Error.Get()
+	}
 	if o.Details.IsSet() {
 		toSerialize["details"] = o.Details.Get()
 	}
@@ -230,7 +247,6 @@ func (o *GetMarketOrderBook200Response) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"success",
 		"errno",
-		"error",
 	}
 
 	allProperties := make(map[string]interface{})
