@@ -95,11 +95,6 @@ docs/ResponseError.md
 docs/RevokeTradingAccountCredentialRequest.md
 docs/Root200Response.md
 docs/Root200ResponseAllOfData.md
-docs/Root400Response.md
-docs/Root401Response.md
-docs/Root403Response.md
-docs/Root404Response.md
-docs/Root500Response.md
 docs/RotateTradingAccountCredentialRequest.md
 docs/RpcBalanceEntry.md
 docs/RpcCancelTradeOrderParams.md
@@ -400,11 +395,6 @@ model_response_error.go
 model_revoke_trading_account_credential_request.go
 model_root_200_response.go
 model_root_200_response_all_of_data.go
-model_root_400_response.go
-model_root_401_response.go
-model_root_403_response.go
-model_root_404_response.go
-model_root_500_response.go
 model_rotate_trading_account_credential_request.go
 model_rpc_balance_entry.go
 model_rpc_cancel_trade_order_params.go

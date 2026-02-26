@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Success** | **bool** | Indicates if the operation was successful | 
-**Errno** | **int32** | Error code (0 for success, negative for errors) | 
+**Success** | Pointer to **bool** | Indicates if the operation was successful | [optional] 
+**Errno** | **int32** | Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code | 
 **Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
 **Data** | Pointer to [**[]AccountOperation**](AccountOperation.md) |  | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewListTradingAccountOperations200Response
 
-`func NewListTradingAccountOperations200Response(success bool, errno int32, ) *ListTradingAccountOperations200Response`
+`func NewListTradingAccountOperations200Response(errno int32, ) *ListTradingAccountOperations200Response`
 
 NewListTradingAccountOperations200Response instantiates a new ListTradingAccountOperations200Response object
 This constructor will assign default values to properties that have it defined,
@@ -49,6 +49,11 @@ and a boolean to check if the value has been set.
 
 SetSuccess sets Success field to given value.
 
+### HasSuccess
+
+`func (o *ListTradingAccountOperations200Response) HasSuccess() bool`
+
+HasSuccess returns a boolean if a field has been set.
 
 ### GetErrno
 

@@ -21,9 +21,7 @@ var _ MappedNullable = &DeleteMarketInstrument200Response{}
 
 // DeleteMarketInstrument200Response struct for DeleteMarketInstrument200Response
 type DeleteMarketInstrument200Response struct {
-	// Indicates if the operation was successful
-	Success bool `json:"success"`
-	// Error code (0 for success, negative for errors)
+	// Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
 	Errno int32 `json:"errno"`
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
@@ -36,9 +34,8 @@ type _DeleteMarketInstrument200Response DeleteMarketInstrument200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeleteMarketInstrument200Response(success bool, errno int32) *DeleteMarketInstrument200Response {
+func NewDeleteMarketInstrument200Response(errno int32) *DeleteMarketInstrument200Response {
 	this := DeleteMarketInstrument200Response{}
-	this.Success = success
 	this.Errno = errno
 	return &this
 }
@@ -49,30 +46,6 @@ func NewDeleteMarketInstrument200Response(success bool, errno int32) *DeleteMark
 func NewDeleteMarketInstrument200ResponseWithDefaults() *DeleteMarketInstrument200Response {
 	this := DeleteMarketInstrument200Response{}
 	return &this
-}
-
-// GetSuccess returns the Success field value
-func (o *DeleteMarketInstrument200Response) GetSuccess() bool {
-	if o == nil {
-		var ret bool
-		return ret
-	}
-
-	return o.Success
-}
-
-// GetSuccessOk returns a tuple with the Success field value
-// and a boolean to check if the value has been set.
-func (o *DeleteMarketInstrument200Response) GetSuccessOk() (*bool, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Success, true
-}
-
-// SetSuccess sets field value
-func (o *DeleteMarketInstrument200Response) SetSuccess(v bool) {
-	o.Success = v
 }
 
 // GetErrno returns the Errno field value
@@ -183,7 +156,6 @@ func (o DeleteMarketInstrument200Response) MarshalJSON() ([]byte, error) {
 
 func (o DeleteMarketInstrument200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["success"] = o.Success
 	toSerialize["errno"] = o.Errno
 	if o.Error.IsSet() {
 		toSerialize["error"] = o.Error.Get()
@@ -199,7 +171,6 @@ func (o *DeleteMarketInstrument200Response) UnmarshalJSON(data []byte) (err erro
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"success",
 		"errno",
 	}
 

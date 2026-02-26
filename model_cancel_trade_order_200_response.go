@@ -22,8 +22,8 @@ var _ MappedNullable = &CancelTradeOrder200Response{}
 // CancelTradeOrder200Response struct for CancelTradeOrder200Response
 type CancelTradeOrder200Response struct {
 	// Indicates if the operation was successful
-	Success bool `json:"success"`
-	// Error code (0 for success, negative for errors)
+	Success *bool `json:"success,omitempty"`
+	// Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
 	Errno int32 `json:"errno"`
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
@@ -37,9 +37,8 @@ type _CancelTradeOrder200Response CancelTradeOrder200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCancelTradeOrder200Response(success bool, errno int32) *CancelTradeOrder200Response {
+func NewCancelTradeOrder200Response(errno int32) *CancelTradeOrder200Response {
 	this := CancelTradeOrder200Response{}
-	this.Success = success
 	this.Errno = errno
 	return &this
 }
@@ -52,28 +51,36 @@ func NewCancelTradeOrder200ResponseWithDefaults() *CancelTradeOrder200Response {
 	return &this
 }
 
-// GetSuccess returns the Success field value
+// GetSuccess returns the Success field value if set, zero value otherwise.
 func (o *CancelTradeOrder200Response) GetSuccess() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Success) {
 		var ret bool
 		return ret
 	}
-
-	return o.Success
+	return *o.Success
 }
 
-// GetSuccessOk returns a tuple with the Success field value
+// GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CancelTradeOrder200Response) GetSuccessOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Success) {
 		return nil, false
 	}
-	return &o.Success, true
+	return o.Success, true
 }
 
-// SetSuccess sets field value
+// HasSuccess returns a boolean if a field has been set.
+func (o *CancelTradeOrder200Response) HasSuccess() bool {
+	if o != nil && !IsNil(o.Success) {
+		return true
+	}
+
+	return false
+}
+
+// SetSuccess gets a reference to the given bool and assigns it to the Success field.
 func (o *CancelTradeOrder200Response) SetSuccess(v bool) {
-	o.Success = v
+	o.Success = &v
 }
 
 // GetErrno returns the Errno field value
@@ -226,7 +233,9 @@ func (o CancelTradeOrder200Response) MarshalJSON() ([]byte, error) {
 
 func (o CancelTradeOrder200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["success"] = o.Success
+	if !IsNil(o.Success) {
+		toSerialize["success"] = o.Success
+	}
 	toSerialize["errno"] = o.Errno
 	if o.Error.IsSet() {
 		toSerialize["error"] = o.Error.Get()
@@ -245,7 +254,6 @@ func (o *CancelTradeOrder200Response) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"success",
 		"errno",
 	}
 

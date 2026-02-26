@@ -22,8 +22,8 @@ var _ MappedNullable = &InlineObject{}
 // InlineObject struct for InlineObject
 type InlineObject struct {
 	// Indicates if the operation was successful
-	Success bool `json:"success"`
-	// Error code (0 for success, negative for errors)
+	Success *bool `json:"success,omitempty"`
+	// Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
 	Errno int32 `json:"errno"`
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
@@ -37,9 +37,8 @@ type _InlineObject InlineObject
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInlineObject(success bool, errno int32) *InlineObject {
+func NewInlineObject(errno int32) *InlineObject {
 	this := InlineObject{}
-	this.Success = success
 	this.Errno = errno
 	return &this
 }
@@ -52,28 +51,36 @@ func NewInlineObjectWithDefaults() *InlineObject {
 	return &this
 }
 
-// GetSuccess returns the Success field value
+// GetSuccess returns the Success field value if set, zero value otherwise.
 func (o *InlineObject) GetSuccess() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Success) {
 		var ret bool
 		return ret
 	}
-
-	return o.Success
+	return *o.Success
 }
 
-// GetSuccessOk returns a tuple with the Success field value
+// GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *InlineObject) GetSuccessOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Success) {
 		return nil, false
 	}
-	return &o.Success, true
+	return o.Success, true
 }
 
-// SetSuccess sets field value
+// HasSuccess returns a boolean if a field has been set.
+func (o *InlineObject) HasSuccess() bool {
+	if o != nil && !IsNil(o.Success) {
+		return true
+	}
+
+	return false
+}
+
+// SetSuccess gets a reference to the given bool and assigns it to the Success field.
 func (o *InlineObject) SetSuccess(v bool) {
-	o.Success = v
+	o.Success = &v
 }
 
 // GetErrno returns the Errno field value
@@ -226,7 +233,9 @@ func (o InlineObject) MarshalJSON() ([]byte, error) {
 
 func (o InlineObject) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["success"] = o.Success
+	if !IsNil(o.Success) {
+		toSerialize["success"] = o.Success
+	}
 	toSerialize["errno"] = o.Errno
 	if o.Error.IsSet() {
 		toSerialize["error"] = o.Error.Get()
@@ -245,7 +254,6 @@ func (o *InlineObject) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"success",
 		"errno",
 	}
 
