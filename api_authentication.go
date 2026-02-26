@@ -32,8 +32,8 @@ type AuthenticationAPI interface {
 	AuthGetUser(ctx context.Context) ApiAuthGetUserRequest
 
 	// AuthGetUserExecute executes the request
-	//  @return AuthSignup200Response
-	AuthGetUserExecute(r ApiAuthGetUserRequest) (*AuthSignup200Response, *http.Response, error)
+	//  @return AuthGetUser200Response
+	AuthGetUserExecute(r ApiAuthGetUserRequest) (*AuthGetUser200Response, *http.Response, error)
 
 	/*
 	AuthLogin Login with email and password
@@ -46,8 +46,8 @@ type AuthenticationAPI interface {
 	AuthLogin(ctx context.Context) ApiAuthLoginRequest
 
 	// AuthLoginExecute executes the request
-	//  @return AuthLogin200Response
-	AuthLoginExecute(r ApiAuthLoginRequest) (*AuthLogin200Response, *http.Response, error)
+	//  @return AuthSignup200Response
+	AuthLoginExecute(r ApiAuthLoginRequest) (*AuthSignup200Response, *http.Response, error)
 
 	/*
 	AuthLogout Logout user
@@ -88,8 +88,8 @@ type AuthenticationAPI interface {
 	AuthRefreshToken(ctx context.Context) ApiAuthRefreshTokenRequest
 
 	// AuthRefreshTokenExecute executes the request
-	//  @return AuthLogin200Response
-	AuthRefreshTokenExecute(r ApiAuthRefreshTokenRequest) (*AuthLogin200Response, *http.Response, error)
+	//  @return AuthSignup200Response
+	AuthRefreshTokenExecute(r ApiAuthRefreshTokenRequest) (*AuthSignup200Response, *http.Response, error)
 
 	/*
 	AuthSignup Sign up new user
@@ -116,8 +116,8 @@ type AuthenticationAPI interface {
 	AuthUpdateUser(ctx context.Context) ApiAuthUpdateUserRequest
 
 	// AuthUpdateUserExecute executes the request
-	//  @return AuthSignup200Response
-	AuthUpdateUserExecute(r ApiAuthUpdateUserRequest) (*AuthSignup200Response, *http.Response, error)
+	//  @return AuthGetUser200Response
+	AuthUpdateUserExecute(r ApiAuthUpdateUserRequest) (*AuthGetUser200Response, *http.Response, error)
 }
 
 // AuthenticationAPIService AuthenticationAPI service
@@ -128,7 +128,7 @@ type ApiAuthGetUserRequest struct {
 	ApiService AuthenticationAPI
 }
 
-func (r ApiAuthGetUserRequest) Execute() (*AuthSignup200Response, *http.Response, error) {
+func (r ApiAuthGetUserRequest) Execute() (*AuthGetUser200Response, *http.Response, error) {
 	return r.ApiService.AuthGetUserExecute(r)
 }
 
@@ -148,13 +148,13 @@ func (a *AuthenticationAPIService) AuthGetUser(ctx context.Context) ApiAuthGetUs
 }
 
 // Execute executes the request
-//  @return AuthSignup200Response
-func (a *AuthenticationAPIService) AuthGetUserExecute(r ApiAuthGetUserRequest) (*AuthSignup200Response, *http.Response, error) {
+//  @return AuthGetUser200Response
+func (a *AuthenticationAPIService) AuthGetUserExecute(r ApiAuthGetUserRequest) (*AuthGetUser200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AuthSignup200Response
+		localVarReturnValue  *AuthGetUser200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthenticationAPIService.AuthGetUser")
@@ -208,7 +208,7 @@ func (a *AuthenticationAPIService) AuthGetUserExecute(r ApiAuthGetUserRequest) (
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -219,7 +219,7 @@ func (a *AuthenticationAPIService) AuthGetUserExecute(r ApiAuthGetUserRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -254,7 +254,7 @@ func (r ApiAuthLoginRequest) AuthLoginRequest(authLoginRequest AuthLoginRequest)
 	return r
 }
 
-func (r ApiAuthLoginRequest) Execute() (*AuthLogin200Response, *http.Response, error) {
+func (r ApiAuthLoginRequest) Execute() (*AuthSignup200Response, *http.Response, error) {
 	return r.ApiService.AuthLoginExecute(r)
 }
 
@@ -274,13 +274,13 @@ func (a *AuthenticationAPIService) AuthLogin(ctx context.Context) ApiAuthLoginRe
 }
 
 // Execute executes the request
-//  @return AuthLogin200Response
-func (a *AuthenticationAPIService) AuthLoginExecute(r ApiAuthLoginRequest) (*AuthLogin200Response, *http.Response, error) {
+//  @return AuthSignup200Response
+func (a *AuthenticationAPIService) AuthLoginExecute(r ApiAuthLoginRequest) (*AuthSignup200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AuthLogin200Response
+		localVarReturnValue  *AuthSignup200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthenticationAPIService.AuthLogin")
@@ -339,7 +339,7 @@ func (a *AuthenticationAPIService) AuthLoginExecute(r ApiAuthLoginRequest) (*Aut
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -350,7 +350,7 @@ func (a *AuthenticationAPIService) AuthLoginExecute(r ApiAuthLoginRequest) (*Aut
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -372,7 +372,7 @@ func (a *AuthenticationAPIService) AuthLoginExecute(r ApiAuthLoginRequest) (*Aut
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -481,7 +481,7 @@ func (a *AuthenticationAPIService) AuthLogoutExecute(r ApiAuthLogoutRequest) (*A
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -492,7 +492,7 @@ func (a *AuthenticationAPIService) AuthLogoutExecute(r ApiAuthLogoutRequest) (*A
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -612,7 +612,7 @@ func (a *AuthenticationAPIService) AuthRecoverExecute(r ApiAuthRecoverRequest) (
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -634,7 +634,7 @@ func (a *AuthenticationAPIService) AuthRecoverExecute(r ApiAuthRecoverRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -669,7 +669,7 @@ func (r ApiAuthRefreshTokenRequest) AuthRefreshTokenRequest(authRefreshTokenRequ
 	return r
 }
 
-func (r ApiAuthRefreshTokenRequest) Execute() (*AuthLogin200Response, *http.Response, error) {
+func (r ApiAuthRefreshTokenRequest) Execute() (*AuthSignup200Response, *http.Response, error) {
 	return r.ApiService.AuthRefreshTokenExecute(r)
 }
 
@@ -689,13 +689,13 @@ func (a *AuthenticationAPIService) AuthRefreshToken(ctx context.Context) ApiAuth
 }
 
 // Execute executes the request
-//  @return AuthLogin200Response
-func (a *AuthenticationAPIService) AuthRefreshTokenExecute(r ApiAuthRefreshTokenRequest) (*AuthLogin200Response, *http.Response, error) {
+//  @return AuthSignup200Response
+func (a *AuthenticationAPIService) AuthRefreshTokenExecute(r ApiAuthRefreshTokenRequest) (*AuthSignup200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AuthLogin200Response
+		localVarReturnValue  *AuthSignup200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthenticationAPIService.AuthRefreshToken")
@@ -754,7 +754,7 @@ func (a *AuthenticationAPIService) AuthRefreshTokenExecute(r ApiAuthRefreshToken
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -765,7 +765,7 @@ func (a *AuthenticationAPIService) AuthRefreshTokenExecute(r ApiAuthRefreshToken
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -776,7 +776,7 @@ func (a *AuthenticationAPIService) AuthRefreshTokenExecute(r ApiAuthRefreshToken
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -896,7 +896,7 @@ func (a *AuthenticationAPIService) AuthSignupExecute(r ApiAuthSignupRequest) (*A
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -918,7 +918,7 @@ func (a *AuthenticationAPIService) AuthSignupExecute(r ApiAuthSignupRequest) (*A
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -953,7 +953,7 @@ func (r ApiAuthUpdateUserRequest) AuthUpdateUserRequest(authUpdateUserRequest Au
 	return r
 }
 
-func (r ApiAuthUpdateUserRequest) Execute() (*AuthSignup200Response, *http.Response, error) {
+func (r ApiAuthUpdateUserRequest) Execute() (*AuthGetUser200Response, *http.Response, error) {
 	return r.ApiService.AuthUpdateUserExecute(r)
 }
 
@@ -973,13 +973,13 @@ func (a *AuthenticationAPIService) AuthUpdateUser(ctx context.Context) ApiAuthUp
 }
 
 // Execute executes the request
-//  @return AuthSignup200Response
-func (a *AuthenticationAPIService) AuthUpdateUserExecute(r ApiAuthUpdateUserRequest) (*AuthSignup200Response, *http.Response, error) {
+//  @return AuthGetUser200Response
+func (a *AuthenticationAPIService) AuthUpdateUserExecute(r ApiAuthUpdateUserRequest) (*AuthGetUser200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AuthSignup200Response
+		localVarReturnValue  *AuthGetUser200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthenticationAPIService.AuthUpdateUser")
@@ -1038,7 +1038,7 @@ func (a *AuthenticationAPIService) AuthUpdateUserExecute(r ApiAuthUpdateUserRequ
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1049,7 +1049,7 @@ func (a *AuthenticationAPIService) AuthUpdateUserExecute(r ApiAuthUpdateUserRequ
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1060,7 +1060,7 @@ func (a *AuthenticationAPIService) AuthUpdateUserExecute(r ApiAuthUpdateUserRequ
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

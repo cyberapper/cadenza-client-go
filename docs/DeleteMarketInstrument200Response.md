@@ -4,16 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Success** | **bool** | Indicates if the operation was successful | 
-**Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Errno** | **int32** | Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Data** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewDeleteMarketInstrument200Response
 
-`func NewDeleteMarketInstrument200Response(success bool, errno int32, error_ NullableString, ) *DeleteMarketInstrument200Response`
+`func NewDeleteMarketInstrument200Response(errno int32, ) *DeleteMarketInstrument200Response`
 
 NewDeleteMarketInstrument200Response instantiates a new DeleteMarketInstrument200Response object
 This constructor will assign default values to properties that have it defined,
@@ -27,26 +26,6 @@ will change when the set of required properties is changed
 NewDeleteMarketInstrument200ResponseWithDefaults instantiates a new DeleteMarketInstrument200Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetSuccess
-
-`func (o *DeleteMarketInstrument200Response) GetSuccess() bool`
-
-GetSuccess returns the Success field if non-nil, zero value otherwise.
-
-### GetSuccessOk
-
-`func (o *DeleteMarketInstrument200Response) GetSuccessOk() (*bool, bool)`
-
-GetSuccessOk returns a tuple with the Success field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSuccess
-
-`func (o *DeleteMarketInstrument200Response) SetSuccess(v bool)`
-
-SetSuccess sets Success field to given value.
-
 
 ### GetErrno
 
@@ -87,6 +66,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *DeleteMarketInstrument200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 

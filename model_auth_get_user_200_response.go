@@ -16,11 +16,11 @@ import (
 	"fmt"
 )
 
-// checks if the GetMarketOrderBook200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &GetMarketOrderBook200Response{}
+// checks if the AuthGetUser200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &AuthGetUser200Response{}
 
-// GetMarketOrderBook200Response struct for GetMarketOrderBook200Response
-type GetMarketOrderBook200Response struct {
+// AuthGetUser200Response struct for AuthGetUser200Response
+type AuthGetUser200Response struct {
 	// Indicates if the operation was successful
 	Success *bool `json:"success,omitempty"`
 	// Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
@@ -28,31 +28,31 @@ type GetMarketOrderBook200Response struct {
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
-	Data *Orderbook `json:"data,omitempty"`
+	Data *AuthUser `json:"data,omitempty"`
 }
 
-type _GetMarketOrderBook200Response GetMarketOrderBook200Response
+type _AuthGetUser200Response AuthGetUser200Response
 
-// NewGetMarketOrderBook200Response instantiates a new GetMarketOrderBook200Response object
+// NewAuthGetUser200Response instantiates a new AuthGetUser200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetMarketOrderBook200Response(errno int32) *GetMarketOrderBook200Response {
-	this := GetMarketOrderBook200Response{}
+func NewAuthGetUser200Response(errno int32) *AuthGetUser200Response {
+	this := AuthGetUser200Response{}
 	this.Errno = errno
 	return &this
 }
 
-// NewGetMarketOrderBook200ResponseWithDefaults instantiates a new GetMarketOrderBook200Response object
+// NewAuthGetUser200ResponseWithDefaults instantiates a new AuthGetUser200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewGetMarketOrderBook200ResponseWithDefaults() *GetMarketOrderBook200Response {
-	this := GetMarketOrderBook200Response{}
+func NewAuthGetUser200ResponseWithDefaults() *AuthGetUser200Response {
+	this := AuthGetUser200Response{}
 	return &this
 }
 
 // GetSuccess returns the Success field value if set, zero value otherwise.
-func (o *GetMarketOrderBook200Response) GetSuccess() bool {
+func (o *AuthGetUser200Response) GetSuccess() bool {
 	if o == nil || IsNil(o.Success) {
 		var ret bool
 		return ret
@@ -62,7 +62,7 @@ func (o *GetMarketOrderBook200Response) GetSuccess() bool {
 
 // GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetMarketOrderBook200Response) GetSuccessOk() (*bool, bool) {
+func (o *AuthGetUser200Response) GetSuccessOk() (*bool, bool) {
 	if o == nil || IsNil(o.Success) {
 		return nil, false
 	}
@@ -70,7 +70,7 @@ func (o *GetMarketOrderBook200Response) GetSuccessOk() (*bool, bool) {
 }
 
 // HasSuccess returns a boolean if a field has been set.
-func (o *GetMarketOrderBook200Response) HasSuccess() bool {
+func (o *AuthGetUser200Response) HasSuccess() bool {
 	if o != nil && !IsNil(o.Success) {
 		return true
 	}
@@ -79,12 +79,12 @@ func (o *GetMarketOrderBook200Response) HasSuccess() bool {
 }
 
 // SetSuccess gets a reference to the given bool and assigns it to the Success field.
-func (o *GetMarketOrderBook200Response) SetSuccess(v bool) {
+func (o *AuthGetUser200Response) SetSuccess(v bool) {
 	o.Success = &v
 }
 
 // GetErrno returns the Errno field value
-func (o *GetMarketOrderBook200Response) GetErrno() int32 {
+func (o *AuthGetUser200Response) GetErrno() int32 {
 	if o == nil {
 		var ret int32
 		return ret
@@ -95,7 +95,7 @@ func (o *GetMarketOrderBook200Response) GetErrno() int32 {
 
 // GetErrnoOk returns a tuple with the Errno field value
 // and a boolean to check if the value has been set.
-func (o *GetMarketOrderBook200Response) GetErrnoOk() (*int32, bool) {
+func (o *AuthGetUser200Response) GetErrnoOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -103,12 +103,12 @@ func (o *GetMarketOrderBook200Response) GetErrnoOk() (*int32, bool) {
 }
 
 // SetErrno sets field value
-func (o *GetMarketOrderBook200Response) SetErrno(v int32) {
+func (o *AuthGetUser200Response) SetErrno(v int32) {
 	o.Errno = v
 }
 
 // GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetMarketOrderBook200Response) GetError() string {
+func (o *AuthGetUser200Response) GetError() string {
 	if o == nil || IsNil(o.Error.Get()) {
 		var ret string
 		return ret
@@ -119,7 +119,7 @@ func (o *GetMarketOrderBook200Response) GetError() string {
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetMarketOrderBook200Response) GetErrorOk() (*string, bool) {
+func (o *AuthGetUser200Response) GetErrorOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -127,7 +127,7 @@ func (o *GetMarketOrderBook200Response) GetErrorOk() (*string, bool) {
 }
 
 // HasError returns a boolean if a field has been set.
-func (o *GetMarketOrderBook200Response) HasError() bool {
+func (o *AuthGetUser200Response) HasError() bool {
 	if o != nil && o.Error.IsSet() {
 		return true
 	}
@@ -136,21 +136,21 @@ func (o *GetMarketOrderBook200Response) HasError() bool {
 }
 
 // SetError gets a reference to the given NullableString and assigns it to the Error field.
-func (o *GetMarketOrderBook200Response) SetError(v string) {
+func (o *AuthGetUser200Response) SetError(v string) {
 	o.Error.Set(&v)
 }
 // SetErrorNil sets the value for Error to be an explicit nil
-func (o *GetMarketOrderBook200Response) SetErrorNil() {
+func (o *AuthGetUser200Response) SetErrorNil() {
 	o.Error.Set(nil)
 }
 
 // UnsetError ensures that no value is present for Error, not even an explicit nil
-func (o *GetMarketOrderBook200Response) UnsetError() {
+func (o *AuthGetUser200Response) UnsetError() {
 	o.Error.Unset()
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetMarketOrderBook200Response) GetDetails() BaseResponseDetails {
+func (o *AuthGetUser200Response) GetDetails() BaseResponseDetails {
 	if o == nil || IsNil(o.Details.Get()) {
 		var ret BaseResponseDetails
 		return ret
@@ -161,7 +161,7 @@ func (o *GetMarketOrderBook200Response) GetDetails() BaseResponseDetails {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetMarketOrderBook200Response) GetDetailsOk() (*BaseResponseDetails, bool) {
+func (o *AuthGetUser200Response) GetDetailsOk() (*BaseResponseDetails, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -169,7 +169,7 @@ func (o *GetMarketOrderBook200Response) GetDetailsOk() (*BaseResponseDetails, bo
 }
 
 // HasDetails returns a boolean if a field has been set.
-func (o *GetMarketOrderBook200Response) HasDetails() bool {
+func (o *AuthGetUser200Response) HasDetails() bool {
 	if o != nil && o.Details.IsSet() {
 		return true
 	}
@@ -178,23 +178,23 @@ func (o *GetMarketOrderBook200Response) HasDetails() bool {
 }
 
 // SetDetails gets a reference to the given NullableBaseResponseDetails and assigns it to the Details field.
-func (o *GetMarketOrderBook200Response) SetDetails(v BaseResponseDetails) {
+func (o *AuthGetUser200Response) SetDetails(v BaseResponseDetails) {
 	o.Details.Set(&v)
 }
 // SetDetailsNil sets the value for Details to be an explicit nil
-func (o *GetMarketOrderBook200Response) SetDetailsNil() {
+func (o *AuthGetUser200Response) SetDetailsNil() {
 	o.Details.Set(nil)
 }
 
 // UnsetDetails ensures that no value is present for Details, not even an explicit nil
-func (o *GetMarketOrderBook200Response) UnsetDetails() {
+func (o *AuthGetUser200Response) UnsetDetails() {
 	o.Details.Unset()
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *GetMarketOrderBook200Response) GetData() Orderbook {
+func (o *AuthGetUser200Response) GetData() AuthUser {
 	if o == nil || IsNil(o.Data) {
-		var ret Orderbook
+		var ret AuthUser
 		return ret
 	}
 	return *o.Data
@@ -202,7 +202,7 @@ func (o *GetMarketOrderBook200Response) GetData() Orderbook {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetMarketOrderBook200Response) GetDataOk() (*Orderbook, bool) {
+func (o *AuthGetUser200Response) GetDataOk() (*AuthUser, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -210,7 +210,7 @@ func (o *GetMarketOrderBook200Response) GetDataOk() (*Orderbook, bool) {
 }
 
 // HasData returns a boolean if a field has been set.
-func (o *GetMarketOrderBook200Response) HasData() bool {
+func (o *AuthGetUser200Response) HasData() bool {
 	if o != nil && !IsNil(o.Data) {
 		return true
 	}
@@ -218,12 +218,12 @@ func (o *GetMarketOrderBook200Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given Orderbook and assigns it to the Data field.
-func (o *GetMarketOrderBook200Response) SetData(v Orderbook) {
+// SetData gets a reference to the given AuthUser and assigns it to the Data field.
+func (o *AuthGetUser200Response) SetData(v AuthUser) {
 	o.Data = &v
 }
 
-func (o GetMarketOrderBook200Response) MarshalJSON() ([]byte, error) {
+func (o AuthGetUser200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -231,7 +231,7 @@ func (o GetMarketOrderBook200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o GetMarketOrderBook200Response) ToMap() (map[string]interface{}, error) {
+func (o AuthGetUser200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Success) {
 		toSerialize["success"] = o.Success
@@ -249,7 +249,7 @@ func (o GetMarketOrderBook200Response) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *GetMarketOrderBook200Response) UnmarshalJSON(data []byte) (err error) {
+func (o *AuthGetUser200Response) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -271,53 +271,53 @@ func (o *GetMarketOrderBook200Response) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varGetMarketOrderBook200Response := _GetMarketOrderBook200Response{}
+	varAuthGetUser200Response := _AuthGetUser200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetMarketOrderBook200Response)
+	err = decoder.Decode(&varAuthGetUser200Response)
 
 	if err != nil {
 		return err
 	}
 
-	*o = GetMarketOrderBook200Response(varGetMarketOrderBook200Response)
+	*o = AuthGetUser200Response(varAuthGetUser200Response)
 
 	return err
 }
 
-type NullableGetMarketOrderBook200Response struct {
-	value *GetMarketOrderBook200Response
+type NullableAuthGetUser200Response struct {
+	value *AuthGetUser200Response
 	isSet bool
 }
 
-func (v NullableGetMarketOrderBook200Response) Get() *GetMarketOrderBook200Response {
+func (v NullableAuthGetUser200Response) Get() *AuthGetUser200Response {
 	return v.value
 }
 
-func (v *NullableGetMarketOrderBook200Response) Set(val *GetMarketOrderBook200Response) {
+func (v *NullableAuthGetUser200Response) Set(val *AuthGetUser200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableGetMarketOrderBook200Response) IsSet() bool {
+func (v NullableAuthGetUser200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableGetMarketOrderBook200Response) Unset() {
+func (v *NullableAuthGetUser200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableGetMarketOrderBook200Response(val *GetMarketOrderBook200Response) *NullableGetMarketOrderBook200Response {
-	return &NullableGetMarketOrderBook200Response{value: val, isSet: true}
+func NewNullableAuthGetUser200Response(val *AuthGetUser200Response) *NullableAuthGetUser200Response {
+	return &NullableAuthGetUser200Response{value: val, isSet: true}
 }
 
-func (v NullableGetMarketOrderBook200Response) MarshalJSON() ([]byte, error) {
+func (v NullableAuthGetUser200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableGetMarketOrderBook200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableAuthGetUser200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

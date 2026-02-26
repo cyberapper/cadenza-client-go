@@ -21,7 +21,7 @@ var _ MappedNullable = &RpcError{}
 
 // RpcError RPC error response
 type RpcError struct {
-	// Error code
+	// Error code (non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
 	Code int32 `json:"code"`
 	// Error message
 	Message string `json:"message"`
