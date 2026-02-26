@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.3...v1.2.4) (2026-02-26)
+
+
+### Miscellaneous
+
+* regenerate Go client for CDZ-400 ([#27](https://github.com/cyberapper/cadenza-client-go/issues/27)) ([472cbb5](https://github.com/cyberapper/cadenza-client-go/commit/472cbb50d5fffd672d3680897b309fd8fa3113a6))
+
 ## [1.2.3](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.2...v1.2.3) (2026-01-30)
 
 
