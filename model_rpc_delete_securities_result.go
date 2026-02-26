@@ -20,7 +20,10 @@ var _ MappedNullable = &RpcDeleteSecuritiesResult{}
 // RpcDeleteSecuritiesResult Response for security deletion
 type RpcDeleteSecuritiesResult struct {
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcDeleteSecuritiesResult RpcDeleteSecuritiesResult
 
 // NewRpcDeleteSecuritiesResult instantiates a new RpcDeleteSecuritiesResult object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o RpcDeleteSecuritiesResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcDeleteSecuritiesResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcDeleteSecuritiesResult := _RpcDeleteSecuritiesResult{}
+
+	err = json.Unmarshal(data, &varRpcDeleteSecuritiesResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcDeleteSecuritiesResult(varRpcDeleteSecuritiesResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcDeleteSecuritiesResult struct {

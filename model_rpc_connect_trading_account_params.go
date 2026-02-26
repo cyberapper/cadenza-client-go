@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcConnectTradingAccountParams{}
 // RpcConnectTradingAccountParams Request to connect a trading account
 type RpcConnectTradingAccountParams struct {
 	TradingAccount RpcTradingAccount `json:"tradingAccount"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcConnectTradingAccountParams RpcConnectTradingAccountParams
@@ -79,6 +79,11 @@ func (o RpcConnectTradingAccountParams) MarshalJSON() ([]byte, error) {
 func (o RpcConnectTradingAccountParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccount"] = o.TradingAccount
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcConnectTradingAccountParams) UnmarshalJSON(data []byte) (err error) 
 
 	varRpcConnectTradingAccountParams := _RpcConnectTradingAccountParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcConnectTradingAccountParams)
+	err = json.Unmarshal(data, &varRpcConnectTradingAccountParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcConnectTradingAccountParams(varRpcConnectTradingAccountParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccount")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

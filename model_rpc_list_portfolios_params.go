@@ -26,7 +26,10 @@ type RpcListPortfoliosParams struct {
 	// Filter by currency
 	Currency *string `json:"currency,omitempty"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListPortfoliosParams RpcListPortfoliosParams
 
 // NewRpcListPortfoliosParams instantiates a new RpcListPortfoliosParams object
 // This constructor will assign default values to properties that have it defined,
@@ -195,7 +198,36 @@ func (o RpcListPortfoliosParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListPortfoliosParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListPortfoliosParams := _RpcListPortfoliosParams{}
+
+	err = json.Unmarshal(data, &varRpcListPortfoliosParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListPortfoliosParams(varRpcListPortfoliosParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "currency")
+		delete(additionalProperties, "pagination")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListPortfoliosParams struct {

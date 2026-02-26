@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type WsPublishRequest struct {
 	Channel string `json:"channel"`
 	// Message data to publish
 	Data map[string]interface{} `json:"data"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsPublishRequest WsPublishRequest
@@ -108,6 +108,11 @@ func (o WsPublishRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["channel"] = o.Channel
 	toSerialize["data"] = o.Data
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -136,15 +141,21 @@ func (o *WsPublishRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsPublishRequest := _WsPublishRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsPublishRequest)
+	err = json.Unmarshal(data, &varWsPublishRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsPublishRequest(varWsPublishRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

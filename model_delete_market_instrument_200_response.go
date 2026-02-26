@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -26,6 +25,7 @@ type DeleteMarketInstrument200Response struct {
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
 	Data *string `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _DeleteMarketInstrument200Response DeleteMarketInstrument200Response
@@ -163,6 +163,11 @@ func (o DeleteMarketInstrument200Response) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -190,15 +195,22 @@ func (o *DeleteMarketInstrument200Response) UnmarshalJSON(data []byte) (err erro
 
 	varDeleteMarketInstrument200Response := _DeleteMarketInstrument200Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDeleteMarketInstrument200Response)
+	err = json.Unmarshal(data, &varDeleteMarketInstrument200Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = DeleteMarketInstrument200Response(varDeleteMarketInstrument200Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "errno")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

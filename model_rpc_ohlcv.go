@@ -33,7 +33,10 @@ type RpcOhlcv struct {
 	C *string `json:"c,omitempty"`
 	// Volume (decimal)
 	V *string `json:"v,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcOhlcv RpcOhlcv
 
 // NewRpcOhlcv instantiates a new RpcOhlcv object
 // This constructor will assign default values to properties that have it defined,
@@ -307,7 +310,39 @@ func (o RpcOhlcv) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.V) {
 		toSerialize["v"] = o.V
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcOhlcv) UnmarshalJSON(data []byte) (err error) {
+	varRpcOhlcv := _RpcOhlcv{}
+
+	err = json.Unmarshal(data, &varRpcOhlcv)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcOhlcv(varRpcOhlcv)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "t")
+		delete(additionalProperties, "interval")
+		delete(additionalProperties, "o")
+		delete(additionalProperties, "h")
+		delete(additionalProperties, "l")
+		delete(additionalProperties, "c")
+		delete(additionalProperties, "v")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcOhlcv struct {

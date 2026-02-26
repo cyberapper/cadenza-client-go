@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -32,6 +31,7 @@ type Portfolio struct {
 	UpdatedAt int64 `json:"updatedAt"`
 	// Last update timestamp in ISO 8601 format
 	UpdatedAtDateTime *time.Time `json:"updatedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _Portfolio Portfolio
@@ -254,6 +254,11 @@ func (o Portfolio) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAtDateTime) {
 		toSerialize["updatedAtDateTime"] = o.UpdatedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -286,15 +291,26 @@ func (o *Portfolio) UnmarshalJSON(data []byte) (err error) {
 
 	varPortfolio := _Portfolio{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPortfolio)
+	err = json.Unmarshal(data, &varPortfolio)
 
 	if err != nil {
 		return err
 	}
 
 	*o = Portfolio(varPortfolio)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "positions")
+		delete(additionalProperties, "balances")
+		delete(additionalProperties, "summary")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

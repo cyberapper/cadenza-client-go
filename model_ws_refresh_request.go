@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &WsRefreshRequest{}
 type WsRefreshRequest struct {
 	// New JWT token
 	Token string `json:"token"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsRefreshRequest WsRefreshRequest
@@ -80,6 +80,11 @@ func (o WsRefreshRequest) MarshalJSON() ([]byte, error) {
 func (o WsRefreshRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["token"] = o.Token
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *WsRefreshRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsRefreshRequest := _WsRefreshRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsRefreshRequest)
+	err = json.Unmarshal(data, &varWsRefreshRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsRefreshRequest(varWsRefreshRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "token")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

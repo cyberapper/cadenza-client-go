@@ -22,7 +22,10 @@ type RpcListTickersParams struct {
 	InstrumentIds []string `json:"instrumentIds,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
 	Symbols []string `json:"symbols,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListTickersParams RpcListTickersParams
 
 // NewRpcListTickersParams instantiates a new RpcListTickersParams object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o RpcListTickersParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Symbols) {
 		toSerialize["symbols"] = o.Symbols
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListTickersParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListTickersParams := _RpcListTickersParams{}
+
+	err = json.Unmarshal(data, &varRpcListTickersParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListTickersParams(varRpcListTickersParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentIds")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbols")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListTickersParams struct {

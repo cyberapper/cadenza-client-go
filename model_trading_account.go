@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -45,6 +44,7 @@ type TradingAccount struct {
 	UpdatedAt int64 `json:"updatedAt"`
 	// Last update timestamp in ISO 8601 format
 	UpdatedAtDateTime *time.Time `json:"updatedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _TradingAccount TradingAccount
@@ -511,6 +511,11 @@ func (o TradingAccount) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAtDateTime) {
 		toSerialize["updatedAtDateTime"] = o.UpdatedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -547,15 +552,34 @@ func (o *TradingAccount) UnmarshalJSON(data []byte) (err error) {
 
 	varTradingAccount := _TradingAccount{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTradingAccount)
+	err = json.Unmarshal(data, &varTradingAccount)
 
 	if err != nil {
 		return err
 	}
 
 	*o = TradingAccount(varTradingAccount)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "externalTradingAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "accountType")
+		delete(additionalProperties, "externalAccountType")
+		delete(additionalProperties, "positionMode")
+		delete(additionalProperties, "collateralMode")
+		delete(additionalProperties, "marginMode")
+		delete(additionalProperties, "credentials")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

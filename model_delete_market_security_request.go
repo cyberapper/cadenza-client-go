@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &DeleteMarketSecurityRequest{}
 type DeleteMarketSecurityRequest struct {
 	// Security ID in the format of venue:symbol
 	SecurityId string `json:"securityId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _DeleteMarketSecurityRequest DeleteMarketSecurityRequest
@@ -80,6 +80,11 @@ func (o DeleteMarketSecurityRequest) MarshalJSON() ([]byte, error) {
 func (o DeleteMarketSecurityRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["securityId"] = o.SecurityId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *DeleteMarketSecurityRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varDeleteMarketSecurityRequest := _DeleteMarketSecurityRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDeleteMarketSecurityRequest)
+	err = json.Unmarshal(data, &varDeleteMarketSecurityRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = DeleteMarketSecurityRequest(varDeleteMarketSecurityRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "securityId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -79,6 +78,7 @@ type TradeOrder struct {
 	CanceledAt *int64 `json:"canceledAt,omitempty"`
 	// Cancellation timestamp in ISO 8601 format
 	CanceledAtDateTime *time.Time `json:"canceledAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _TradeOrder TradeOrder
@@ -1072,6 +1072,11 @@ func (o TradeOrder) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CanceledAtDateTime) {
 		toSerialize["canceledAtDateTime"] = o.CanceledAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -1116,15 +1121,51 @@ func (o *TradeOrder) UnmarshalJSON(data []byte) (err error) {
 
 	varTradeOrder := _TradeOrder{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTradeOrder)
+	err = json.Unmarshal(data, &varTradeOrder)
 
 	if err != nil {
 		return err
 	}
 
 	*o = TradeOrder(varTradeOrder)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrderId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "quoteId")
+		delete(additionalProperties, "baseAsset")
+		delete(additionalProperties, "quoteAsset")
+		delete(additionalProperties, "orderSide")
+		delete(additionalProperties, "orderType")
+		delete(additionalProperties, "timeInForce")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "rejectReason")
+		delete(additionalProperties, "cancelReason")
+		delete(additionalProperties, "limitPrice")
+		delete(additionalProperties, "stopPrice")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "orderQuantityType")
+		delete(additionalProperties, "quantityRounding")
+		delete(additionalProperties, "executedPrice")
+		delete(additionalProperties, "executedQuantity")
+		delete(additionalProperties, "executedCost")
+		delete(additionalProperties, "fees")
+		delete(additionalProperties, "executions")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		delete(additionalProperties, "expireAt")
+		delete(additionalProperties, "expireAtDateTime")
+		delete(additionalProperties, "canceledAt")
+		delete(additionalProperties, "canceledAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

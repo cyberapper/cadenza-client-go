@@ -27,7 +27,10 @@ type WsClientInfo struct {
 	ConnInfo map[string]interface{} `json:"connInfo,omitempty"`
 	// Channel info set during subscription
 	ChanInfo map[string]interface{} `json:"chanInfo,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsClientInfo WsClientInfo
 
 // NewWsClientInfo instantiates a new WsClientInfo object
 // This constructor will assign default values to properties that have it defined,
@@ -196,7 +199,36 @@ func (o WsClientInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ChanInfo) {
 		toSerialize["chanInfo"] = o.ChanInfo
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsClientInfo) UnmarshalJSON(data []byte) (err error) {
+	varWsClientInfo := _WsClientInfo{}
+
+	err = json.Unmarshal(data, &varWsClientInfo)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsClientInfo(varWsClientInfo)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "user")
+		delete(additionalProperties, "client")
+		delete(additionalProperties, "connInfo")
+		delete(additionalProperties, "chanInfo")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsClientInfo struct {

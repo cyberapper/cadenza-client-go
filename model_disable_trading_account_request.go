@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &DisableTradingAccountRequest{}
 type DisableTradingAccountRequest struct {
 	// UUID string
 	TradingAccountId string `json:"tradingAccountId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _DisableTradingAccountRequest DisableTradingAccountRequest
@@ -80,6 +80,11 @@ func (o DisableTradingAccountRequest) MarshalJSON() ([]byte, error) {
 func (o DisableTradingAccountRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *DisableTradingAccountRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varDisableTradingAccountRequest := _DisableTradingAccountRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varDisableTradingAccountRequest)
+	err = json.Unmarshal(data, &varDisableTradingAccountRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = DisableTradingAccountRequest(varDisableTradingAccountRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

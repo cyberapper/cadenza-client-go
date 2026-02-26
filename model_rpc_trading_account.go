@@ -43,7 +43,10 @@ type RpcTradingAccount struct {
 	Config *RpcTradingAccountConfig `json:"config,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTradingAccount RpcTradingAccount
 
 // NewRpcTradingAccount instantiates a new RpcTradingAccount object
 // This constructor will assign default values to properties that have it defined,
@@ -632,7 +635,48 @@ func (o RpcTradingAccount) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTradingAccount) UnmarshalJSON(data []byte) (err error) {
+	varRpcTradingAccount := _RpcTradingAccount{}
+
+	err = json.Unmarshal(data, &varRpcTradingAccount)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTradingAccount(varRpcTradingAccount)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "userId")
+		delete(additionalProperties, "tenantId")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "externalAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "accountType")
+		delete(additionalProperties, "externalAccountType")
+		delete(additionalProperties, "positionMode")
+		delete(additionalProperties, "collateralMode")
+		delete(additionalProperties, "marginMode")
+		delete(additionalProperties, "credentials")
+		delete(additionalProperties, "config")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTradingAccount struct {

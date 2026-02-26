@@ -21,7 +21,10 @@ var _ MappedNullable = &WsMessage{}
 type WsMessage struct {
 	// Message data
 	Data map[string]interface{} `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsMessage WsMessage
 
 // NewWsMessage instantiates a new WsMessage object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o WsMessage) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsMessage) UnmarshalJSON(data []byte) (err error) {
+	varWsMessage := _WsMessage{}
+
+	err = json.Unmarshal(data, &varWsMessage)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsMessage(varWsMessage)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsMessage struct {

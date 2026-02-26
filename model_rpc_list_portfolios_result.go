@@ -22,7 +22,10 @@ type RpcListPortfoliosResult struct {
 	Data []RpcPortfolio `json:"data,omitempty"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListPortfoliosResult RpcListPortfoliosResult
 
 // NewRpcListPortfoliosResult instantiates a new RpcListPortfoliosResult object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o RpcListPortfoliosResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListPortfoliosResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcListPortfoliosResult := _RpcListPortfoliosResult{}
+
+	err = json.Unmarshal(data, &varRpcListPortfoliosResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListPortfoliosResult(varRpcListPortfoliosResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "pagination")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListPortfoliosResult struct {

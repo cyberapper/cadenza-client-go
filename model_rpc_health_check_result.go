@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcHealthCheckResult{}
 type RpcHealthCheckResult struct {
 	Data *RpcHealthCheck `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcHealthCheckResult RpcHealthCheckResult
 
 // NewRpcHealthCheckResult instantiates a new RpcHealthCheckResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcHealthCheckResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcHealthCheckResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcHealthCheckResult := _RpcHealthCheckResult{}
+
+	err = json.Unmarshal(data, &varRpcHealthCheckResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcHealthCheckResult(varRpcHealthCheckResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcHealthCheckResult struct {

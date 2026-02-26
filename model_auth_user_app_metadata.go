@@ -23,7 +23,10 @@ type AuthUserAppMetadata struct {
 	TenantId NullableString `json:"tenantId,omitempty"`
 	// Allowed environments
 	Environments []string `json:"environments,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthUserAppMetadata AuthUserAppMetadata
 
 // NewAuthUserAppMetadata instantiates a new AuthUserAppMetadata object
 // This constructor will assign default values to properties that have it defined,
@@ -132,7 +135,34 @@ func (o AuthUserAppMetadata) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Environments) {
 		toSerialize["environments"] = o.Environments
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthUserAppMetadata) UnmarshalJSON(data []byte) (err error) {
+	varAuthUserAppMetadata := _AuthUserAppMetadata{}
+
+	err = json.Unmarshal(data, &varAuthUserAppMetadata)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthUserAppMetadata(varAuthUserAppMetadata)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tenantId")
+		delete(additionalProperties, "environments")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthUserAppMetadata struct {

@@ -24,7 +24,10 @@ type RpcListCredentialsParams struct {
 	CredentialType *CredentialType `json:"credentialType,omitempty"`
 	Status *CredentialStatus `json:"status,omitempty"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListCredentialsParams RpcListCredentialsParams
 
 // NewRpcListCredentialsParams instantiates a new RpcListCredentialsParams object
 // This constructor will assign default values to properties that have it defined,
@@ -228,7 +231,37 @@ func (o RpcListCredentialsParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListCredentialsParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListCredentialsParams := _RpcListCredentialsParams{}
+
+	err = json.Unmarshal(data, &varRpcListCredentialsParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListCredentialsParams(varRpcListCredentialsParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialIds")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "pagination")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListCredentialsParams struct {

@@ -35,7 +35,10 @@ type BaseResponseDetails struct {
 	RequestId *string `json:"request_id,omitempty"`
 	// Additional metadata as key-value pairs
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _BaseResponseDetails BaseResponseDetails
 
 // NewBaseResponseDetails instantiates a new BaseResponseDetails object
 // This constructor will assign default values to properties that have it defined,
@@ -344,7 +347,40 @@ func (o BaseResponseDetails) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Metadata) {
 		toSerialize["metadata"] = o.Metadata
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *BaseResponseDetails) UnmarshalJSON(data []byte) (err error) {
+	varBaseResponseDetails := _BaseResponseDetails{}
+
+	err = json.Unmarshal(data, &varBaseResponseDetails)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BaseResponseDetails(varBaseResponseDetails)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "code")
+		delete(additionalProperties, "resource")
+		delete(additionalProperties, "action")
+		delete(additionalProperties, "required")
+		delete(additionalProperties, "provided")
+		delete(additionalProperties, "tenant_id")
+		delete(additionalProperties, "request_id")
+		delete(additionalProperties, "metadata")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableBaseResponseDetails struct {

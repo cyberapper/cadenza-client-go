@@ -20,7 +20,10 @@ var _ MappedNullable = &RpcValidateTradingAccountResultData{}
 // RpcValidateTradingAccountResultData struct for RpcValidateTradingAccountResultData
 type RpcValidateTradingAccountResultData struct {
 	IsValid *bool `json:"isValid,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcValidateTradingAccountResultData RpcValidateTradingAccountResultData
 
 // NewRpcValidateTradingAccountResultData instantiates a new RpcValidateTradingAccountResultData object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o RpcValidateTradingAccountResultData) ToMap() (map[string]interface{}, er
 	if !IsNil(o.IsValid) {
 		toSerialize["isValid"] = o.IsValid
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcValidateTradingAccountResultData) UnmarshalJSON(data []byte) (err error) {
+	varRpcValidateTradingAccountResultData := _RpcValidateTradingAccountResultData{}
+
+	err = json.Unmarshal(data, &varRpcValidateTradingAccountResultData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcValidateTradingAccountResultData(varRpcValidateTradingAccountResultData)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "isValid")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcValidateTradingAccountResultData struct {

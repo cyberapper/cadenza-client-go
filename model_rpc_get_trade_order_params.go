@@ -27,7 +27,10 @@ type RpcGetTradeOrderParams struct {
 	ClientOrderId *string `json:"clientOrderId,omitempty"`
 	// External order ID
 	ExternalOrderId *string `json:"externalOrderId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcGetTradeOrderParams RpcGetTradeOrderParams
 
 // NewRpcGetTradeOrderParams instantiates a new RpcGetTradeOrderParams object
 // This constructor will assign default values to properties that have it defined,
@@ -196,7 +199,36 @@ func (o RpcGetTradeOrderParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ExternalOrderId) {
 		toSerialize["externalOrderId"] = o.ExternalOrderId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcGetTradeOrderParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcGetTradeOrderParams := _RpcGetTradeOrderParams{}
+
+	err = json.Unmarshal(data, &varRpcGetTradeOrderParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcGetTradeOrderParams(varRpcGetTradeOrderParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrderId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "clientOrderId")
+		delete(additionalProperties, "externalOrderId")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcGetTradeOrderParams struct {

@@ -23,7 +23,10 @@ type WsSubRefreshResult struct {
 	Expires *bool `json:"expires,omitempty"`
 	// New TTL in seconds
 	Ttl *int32 `json:"ttl,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsSubRefreshResult WsSubRefreshResult
 
 // NewWsSubRefreshResult instantiates a new WsSubRefreshResult object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o WsSubRefreshResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Ttl) {
 		toSerialize["ttl"] = o.Ttl
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsSubRefreshResult) UnmarshalJSON(data []byte) (err error) {
+	varWsSubRefreshResult := _WsSubRefreshResult{}
+
+	err = json.Unmarshal(data, &varWsSubRefreshResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsSubRefreshResult(varWsSubRefreshResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "expires")
+		delete(additionalProperties, "ttl")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsSubRefreshResult struct {

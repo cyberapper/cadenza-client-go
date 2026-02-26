@@ -27,7 +27,10 @@ type RpcSubscription struct {
 	Status *SubscriptionStatus `json:"status,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSubscription RpcSubscription
 
 // NewRpcSubscription instantiates a new RpcSubscription object
 // This constructor will assign default values to properties that have it defined,
@@ -301,7 +304,39 @@ func (o RpcSubscription) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSubscription) UnmarshalJSON(data []byte) (err error) {
+	varRpcSubscription := _RpcSubscription{}
+
+	err = json.Unmarshal(data, &varRpcSubscription)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSubscription(varRpcSubscription)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "subscriptionId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "subscriptionType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSubscription struct {

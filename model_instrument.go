@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -79,6 +78,7 @@ type Instrument struct {
 	ExerciseStyle *string `json:"exerciseStyle,omitempty"`
 	// Decimal value as string to preserve precision
 	StrikePrice *string `json:"strikePrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _Instrument Instrument
@@ -1066,6 +1066,11 @@ func (o Instrument) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.StrikePrice) {
 		toSerialize["strikePrice"] = o.StrikePrice
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -1115,15 +1120,52 @@ func (o *Instrument) UnmarshalJSON(data []byte) (err error) {
 
 	varInstrument := _Instrument{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varInstrument)
+	err = json.Unmarshal(data, &varInstrument)
 
 	if err != nil {
 		return err
 	}
 
 	*o = Instrument(varInstrument)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "externalSymbol")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "instrumentType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "baseAsset")
+		delete(additionalProperties, "quoteAsset")
+		delete(additionalProperties, "baseSecurityType")
+		delete(additionalProperties, "quoteSecurityType")
+		delete(additionalProperties, "basePrecision")
+		delete(additionalProperties, "quotePrecision")
+		delete(additionalProperties, "baseMaxSignificant")
+		delete(additionalProperties, "quoteMaxSignificant")
+		delete(additionalProperties, "lotSize")
+		delete(additionalProperties, "pipSize")
+		delete(additionalProperties, "baseScale")
+		delete(additionalProperties, "quoteScale")
+		delete(additionalProperties, "minQuantity")
+		delete(additionalProperties, "maxQuantity")
+		delete(additionalProperties, "minNotional")
+		delete(additionalProperties, "maxNotional")
+		delete(additionalProperties, "orderFilters")
+		delete(additionalProperties, "orderTypes")
+		delete(additionalProperties, "timeInForceOptions")
+		delete(additionalProperties, "tradingHours")
+		delete(additionalProperties, "isIcebergAllowed")
+		delete(additionalProperties, "icebergMinQuantity")
+		delete(additionalProperties, "deliveryDate")
+		delete(additionalProperties, "deliveryDateTime")
+		delete(additionalProperties, "exerciseStyle")
+		delete(additionalProperties, "strikePrice")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

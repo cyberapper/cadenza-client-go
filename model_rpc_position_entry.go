@@ -37,7 +37,10 @@ type RpcPositionEntry struct {
 	RealizedPnl *string `json:"realizedPnl,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcPositionEntry RpcPositionEntry
 
 // NewRpcPositionEntry instantiates a new RpcPositionEntry object
 // This constructor will assign default values to properties that have it defined,
@@ -591,7 +594,47 @@ func (o RpcPositionEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcPositionEntry) UnmarshalJSON(data []byte) (err error) {
+	varRpcPositionEntry := _RpcPositionEntry{}
+
+	err = json.Unmarshal(data, &varRpcPositionEntry)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcPositionEntry(varRpcPositionEntry)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "externalPositionId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "securitySymbol")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "entryPrice")
+		delete(additionalProperties, "exitPrice")
+		delete(additionalProperties, "currentPrice")
+		delete(additionalProperties, "unrealizedPnl")
+		delete(additionalProperties, "realizedPnl")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcPositionEntry struct {

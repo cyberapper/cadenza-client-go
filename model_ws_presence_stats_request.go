@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &WsPresenceStatsRequest{}
 type WsPresenceStatsRequest struct {
 	// Channel name
 	Channel string `json:"channel"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsPresenceStatsRequest WsPresenceStatsRequest
@@ -80,6 +80,11 @@ func (o WsPresenceStatsRequest) MarshalJSON() ([]byte, error) {
 func (o WsPresenceStatsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["channel"] = o.Channel
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *WsPresenceStatsRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsPresenceStatsRequest := _WsPresenceStatsRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsPresenceStatsRequest)
+	err = json.Unmarshal(data, &varWsPresenceStatsRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsPresenceStatsRequest(varWsPresenceStatsRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

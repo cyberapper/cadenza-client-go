@@ -20,7 +20,10 @@ var _ MappedNullable = &WsRPCResult{}
 // WsRPCResult RPC result from server
 type WsRPCResult struct {
 	Data *WsRPCResultData `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsRPCResult WsRPCResult
 
 // NewWsRPCResult instantiates a new WsRPCResult object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o WsRPCResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsRPCResult) UnmarshalJSON(data []byte) (err error) {
+	varWsRPCResult := _WsRPCResult{}
+
+	err = json.Unmarshal(data, &varWsRPCResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsRPCResult(varWsRPCResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsRPCResult struct {

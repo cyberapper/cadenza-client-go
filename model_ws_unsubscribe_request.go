@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &WsUnsubscribeRequest{}
 type WsUnsubscribeRequest struct {
 	// Channel name to unsubscribe from
 	Channel string `json:"channel"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsUnsubscribeRequest WsUnsubscribeRequest
@@ -80,6 +80,11 @@ func (o WsUnsubscribeRequest) MarshalJSON() ([]byte, error) {
 func (o WsUnsubscribeRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["channel"] = o.Channel
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *WsUnsubscribeRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsUnsubscribeRequest := _WsUnsubscribeRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsUnsubscribeRequest)
+	err = json.Unmarshal(data, &varWsUnsubscribeRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsUnsubscribeRequest(varWsUnsubscribeRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

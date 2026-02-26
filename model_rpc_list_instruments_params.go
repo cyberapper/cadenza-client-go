@@ -25,7 +25,10 @@ type RpcListInstrumentsParams struct {
 	InstrumentStatus *string `json:"instrumentStatus,omitempty"`
 	Limit *int32 `json:"limit,omitempty"`
 	Offset *int32 `json:"offset,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListInstrumentsParams RpcListInstrumentsParams
 
 // NewRpcListInstrumentsParams instantiates a new RpcListInstrumentsParams object
 // This constructor will assign default values to properties that have it defined,
@@ -264,7 +267,38 @@ func (o RpcListInstrumentsParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListInstrumentsParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListInstrumentsParams := _RpcListInstrumentsParams{}
+
+	err = json.Unmarshal(data, &varRpcListInstrumentsParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListInstrumentsParams(varRpcListInstrumentsParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbols")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "instrumentStatus")
+		delete(additionalProperties, "limit")
+		delete(additionalProperties, "offset")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListInstrumentsParams struct {

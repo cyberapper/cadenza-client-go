@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcSaveKlinesParams{}
 // RpcSaveKlinesParams Request to save klines (candlestick data)
 type RpcSaveKlinesParams struct {
 	Klines []RpcKline `json:"klines"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcSaveKlinesParams RpcSaveKlinesParams
@@ -79,6 +79,11 @@ func (o RpcSaveKlinesParams) MarshalJSON() ([]byte, error) {
 func (o RpcSaveKlinesParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["klines"] = o.Klines
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcSaveKlinesParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcSaveKlinesParams := _RpcSaveKlinesParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcSaveKlinesParams)
+	err = json.Unmarshal(data, &varRpcSaveKlinesParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcSaveKlinesParams(varRpcSaveKlinesParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "klines")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

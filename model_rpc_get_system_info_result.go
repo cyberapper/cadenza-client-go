@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcGetSystemInfoResult{}
 type RpcGetSystemInfoResult struct {
 	Data *RpcSystemInfo `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcGetSystemInfoResult RpcGetSystemInfoResult
 
 // NewRpcGetSystemInfoResult instantiates a new RpcGetSystemInfoResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcGetSystemInfoResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcGetSystemInfoResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcGetSystemInfoResult := _RpcGetSystemInfoResult{}
+
+	err = json.Unmarshal(data, &varRpcGetSystemInfoResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcGetSystemInfoResult(varRpcGetSystemInfoResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcGetSystemInfoResult struct {

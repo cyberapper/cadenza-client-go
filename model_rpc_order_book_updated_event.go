@@ -20,7 +20,10 @@ var _ MappedNullable = &RpcOrderBookUpdatedEvent{}
 // RpcOrderBookUpdatedEvent Order book update event (pushed via WebSocket)
 type RpcOrderBookUpdatedEvent struct {
 	Data *RpcOrderBook `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcOrderBookUpdatedEvent RpcOrderBookUpdatedEvent
 
 // NewRpcOrderBookUpdatedEvent instantiates a new RpcOrderBookUpdatedEvent object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o RpcOrderBookUpdatedEvent) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcOrderBookUpdatedEvent) UnmarshalJSON(data []byte) (err error) {
+	varRpcOrderBookUpdatedEvent := _RpcOrderBookUpdatedEvent{}
+
+	err = json.Unmarshal(data, &varRpcOrderBookUpdatedEvent)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcOrderBookUpdatedEvent(varRpcOrderBookUpdatedEvent)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcOrderBookUpdatedEvent struct {

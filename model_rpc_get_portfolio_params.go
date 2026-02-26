@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &RpcGetPortfolioParams{}
 type RpcGetPortfolioParams struct {
 	// Trading account ID
 	TradingAccountId string `json:"tradingAccountId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcGetPortfolioParams RpcGetPortfolioParams
@@ -80,6 +80,11 @@ func (o RpcGetPortfolioParams) MarshalJSON() ([]byte, error) {
 func (o RpcGetPortfolioParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *RpcGetPortfolioParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcGetPortfolioParams := _RpcGetPortfolioParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcGetPortfolioParams)
+	err = json.Unmarshal(data, &varRpcGetPortfolioParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcGetPortfolioParams(varRpcGetPortfolioParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

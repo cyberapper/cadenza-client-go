@@ -20,7 +20,10 @@ var _ MappedNullable = &WsLeave{}
 // WsLeave Client leave notification
 type WsLeave struct {
 	Info *WsClientInfo `json:"info,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsLeave WsLeave
 
 // NewWsLeave instantiates a new WsLeave object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o WsLeave) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Info) {
 		toSerialize["info"] = o.Info
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsLeave) UnmarshalJSON(data []byte) (err error) {
+	varWsLeave := _WsLeave{}
+
+	err = json.Unmarshal(data, &varWsLeave)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsLeave(varWsLeave)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "info")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsLeave struct {

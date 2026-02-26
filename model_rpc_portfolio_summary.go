@@ -44,7 +44,10 @@ type RpcPortfolioSummary struct {
 	MaxRiskExposure *string `json:"maxRiskExposure,omitempty"`
 	// Risk exposure rate
 	RiskExposureRate *string `json:"riskExposureRate,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcPortfolioSummary RpcPortfolioSummary
 
 // NewRpcPortfolioSummary instantiates a new RpcPortfolioSummary object
 // This constructor will assign default values to properties that have it defined,
@@ -563,7 +566,46 @@ func (o RpcPortfolioSummary) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RiskExposureRate) {
 		toSerialize["riskExposureRate"] = o.RiskExposureRate
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcPortfolioSummary) UnmarshalJSON(data []byte) (err error) {
+	varRpcPortfolioSummary := _RpcPortfolioSummary{}
+
+	err = json.Unmarshal(data, &varRpcPortfolioSummary)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcPortfolioSummary(varRpcPortfolioSummary)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "portfolioSummaryId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "currency")
+		delete(additionalProperties, "leverage")
+		delete(additionalProperties, "equity")
+		delete(additionalProperties, "margin")
+		delete(additionalProperties, "marginLoan")
+		delete(additionalProperties, "marginUsage")
+		delete(additionalProperties, "marginRequirement")
+		delete(additionalProperties, "marginLevel")
+		delete(additionalProperties, "credit")
+		delete(additionalProperties, "riskExposure")
+		delete(additionalProperties, "maxRiskExposure")
+		delete(additionalProperties, "riskExposureRate")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcPortfolioSummary struct {

@@ -20,7 +20,10 @@ var _ MappedNullable = &RpcVerifyCredentialResultData{}
 // RpcVerifyCredentialResultData struct for RpcVerifyCredentialResultData
 type RpcVerifyCredentialResultData struct {
 	TradingAccounts []RpcTradingAccount `json:"tradingAccounts,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcVerifyCredentialResultData RpcVerifyCredentialResultData
 
 // NewRpcVerifyCredentialResultData instantiates a new RpcVerifyCredentialResultData object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o RpcVerifyCredentialResultData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.TradingAccounts) {
 		toSerialize["tradingAccounts"] = o.TradingAccounts
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcVerifyCredentialResultData) UnmarshalJSON(data []byte) (err error) {
+	varRpcVerifyCredentialResultData := _RpcVerifyCredentialResultData{}
+
+	err = json.Unmarshal(data, &varRpcVerifyCredentialResultData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcVerifyCredentialResultData(varRpcVerifyCredentialResultData)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccounts")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcVerifyCredentialResultData struct {

@@ -25,7 +25,10 @@ type UnsubscribeRequest struct {
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _UnsubscribeRequest UnsubscribeRequest
 
 // NewUnsubscribeRequest instantiates a new UnsubscribeRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -159,7 +162,35 @@ func (o UnsubscribeRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.InstrumentId) {
 		toSerialize["instrumentId"] = o.InstrumentId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *UnsubscribeRequest) UnmarshalJSON(data []byte) (err error) {
+	varUnsubscribeRequest := _UnsubscribeRequest{}
+
+	err = json.Unmarshal(data, &varUnsubscribeRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UnsubscribeRequest(varUnsubscribeRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "subscriptionId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableUnsubscribeRequest struct {

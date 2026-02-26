@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type RpcCancelTradeOrderParams struct {
 	ClientOrderId *string `json:"clientOrderId,omitempty"`
 	// External order ID from venue
 	ExternalOrderId *string `json:"externalOrderId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcCancelTradeOrderParams RpcCancelTradeOrderParams
@@ -191,6 +191,11 @@ func (o RpcCancelTradeOrderParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ExternalOrderId) {
 		toSerialize["externalOrderId"] = o.ExternalOrderId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -218,15 +223,23 @@ func (o *RpcCancelTradeOrderParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcCancelTradeOrderParams := _RpcCancelTradeOrderParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcCancelTradeOrderParams)
+	err = json.Unmarshal(data, &varRpcCancelTradeOrderParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcCancelTradeOrderParams(varRpcCancelTradeOrderParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrderId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "clientOrderId")
+		delete(additionalProperties, "externalOrderId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

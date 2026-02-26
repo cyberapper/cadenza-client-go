@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcSaveKlinesResult{}
 type RpcSaveKlinesResult struct {
 	Data []RpcKline `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSaveKlinesResult RpcSaveKlinesResult
 
 // NewRpcSaveKlinesResult instantiates a new RpcSaveKlinesResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcSaveKlinesResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSaveKlinesResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcSaveKlinesResult := _RpcSaveKlinesResult{}
+
+	err = json.Unmarshal(data, &varRpcSaveKlinesResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSaveKlinesResult(varRpcSaveKlinesResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSaveKlinesResult struct {

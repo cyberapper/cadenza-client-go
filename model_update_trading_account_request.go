@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type UpdateTradingAccountRequest struct {
 	TradingAccountId string `json:"tradingAccountId"`
 	// New nickname for the trading account
 	Nickname *string `json:"nickname,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _UpdateTradingAccountRequest UpdateTradingAccountRequest
@@ -117,6 +117,11 @@ func (o UpdateTradingAccountRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -144,15 +149,21 @@ func (o *UpdateTradingAccountRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varUpdateTradingAccountRequest := _UpdateTradingAccountRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varUpdateTradingAccountRequest)
+	err = json.Unmarshal(data, &varUpdateTradingAccountRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = UpdateTradingAccountRequest(varUpdateTradingAccountRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "nickname")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }
