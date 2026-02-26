@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcValidateTradingAccountResult{}
 type RpcValidateTradingAccountResult struct {
 	Data *RpcValidateTradingAccountResultData `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcValidateTradingAccountResult RpcValidateTradingAccountResult
 
 // NewRpcValidateTradingAccountResult instantiates a new RpcValidateTradingAccountResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcValidateTradingAccountResult) ToMap() (map[string]interface{}, error)
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcValidateTradingAccountResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcValidateTradingAccountResult := _RpcValidateTradingAccountResult{}
+
+	err = json.Unmarshal(data, &varRpcValidateTradingAccountResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcValidateTradingAccountResult(varRpcValidateTradingAccountResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcValidateTradingAccountResult struct {

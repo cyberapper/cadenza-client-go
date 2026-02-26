@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type BaseResponse struct {
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _BaseResponse BaseResponse
@@ -210,6 +210,11 @@ func (o BaseResponse) ToMap() (map[string]interface{}, error) {
 	if o.Details.IsSet() {
 		toSerialize["details"] = o.Details.Get()
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -237,15 +242,23 @@ func (o *BaseResponse) UnmarshalJSON(data []byte) (err error) {
 
 	varBaseResponse := _BaseResponse{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varBaseResponse)
+	err = json.Unmarshal(data, &varBaseResponse)
 
 	if err != nil {
 		return err
 	}
 
 	*o = BaseResponse(varBaseResponse)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "success")
+		delete(additionalProperties, "errno")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "details")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

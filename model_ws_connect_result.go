@@ -41,7 +41,10 @@ type WsConnectResult struct {
 	Node *string `json:"node,omitempty"`
 	// Server time in milliseconds
 	Time *int64 `json:"time,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsConnectResult WsConnectResult
 
 // NewWsConnectResult instantiates a new WsConnectResult object
 // This constructor will assign default values to properties that have it defined,
@@ -455,7 +458,43 @@ func (o WsConnectResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Time) {
 		toSerialize["time"] = o.Time
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsConnectResult) UnmarshalJSON(data []byte) (err error) {
+	varWsConnectResult := _WsConnectResult{}
+
+	err = json.Unmarshal(data, &varWsConnectResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsConnectResult(varWsConnectResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "client")
+		delete(additionalProperties, "version")
+		delete(additionalProperties, "expires")
+		delete(additionalProperties, "ttl")
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "subs")
+		delete(additionalProperties, "ping")
+		delete(additionalProperties, "pong")
+		delete(additionalProperties, "session")
+		delete(additionalProperties, "node")
+		delete(additionalProperties, "time")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsConnectResult struct {

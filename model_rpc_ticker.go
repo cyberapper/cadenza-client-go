@@ -37,7 +37,10 @@ type RpcTicker struct {
 	Last *string `json:"last,omitempty"`
 	// Last quantity (decimal)
 	LastQuantity *string `json:"lastQuantity,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTicker RpcTicker
 
 // NewRpcTicker instantiates a new RpcTicker object
 // This constructor will assign default values to properties that have it defined,
@@ -451,7 +454,43 @@ func (o RpcTicker) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastQuantity) {
 		toSerialize["lastQuantity"] = o.LastQuantity
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTicker) UnmarshalJSON(data []byte) (err error) {
+	varRpcTicker := _RpcTicker{}
+
+	err = json.Unmarshal(data, &varRpcTicker)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTicker(varRpcTicker)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "exchange")
+		delete(additionalProperties, "exchangeTime")
+		delete(additionalProperties, "time")
+		delete(additionalProperties, "ask")
+		delete(additionalProperties, "askQuantity")
+		delete(additionalProperties, "bid")
+		delete(additionalProperties, "bidQuantity")
+		delete(additionalProperties, "last")
+		delete(additionalProperties, "lastQuantity")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTicker struct {

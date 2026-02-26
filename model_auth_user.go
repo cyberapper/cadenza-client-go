@@ -43,7 +43,10 @@ type AuthUser struct {
 	UserMetadata map[string]interface{} `json:"userMetadata,omitempty"`
 	// User identity providers (Supabase specific)
 	Identities []AuthUserIdentitiesInner `json:"identities,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthUser AuthUser
 
 // NewAuthUser instantiates a new AuthUser object
 // This constructor will assign default values to properties that have it defined,
@@ -533,7 +536,44 @@ func (o AuthUser) ToMap() (map[string]interface{}, error) {
 	if o.Identities != nil {
 		toSerialize["identities"] = o.Identities
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthUser) UnmarshalJSON(data []byte) (err error) {
+	varAuthUser := _AuthUser{}
+
+	err = json.Unmarshal(data, &varAuthUser)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthUser(varAuthUser)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "email")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "emailConfirmedAt")
+		delete(additionalProperties, "phoneConfirmedAt")
+		delete(additionalProperties, "lastSignInAt")
+		delete(additionalProperties, "role")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "appMetadata")
+		delete(additionalProperties, "userMetadata")
+		delete(additionalProperties, "identities")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthUser struct {

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -30,6 +29,7 @@ type ListTradingAccountCredentials200Response struct {
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
 	Data []TradingAccountCredential `json:"data,omitempty"`
 	Pagination *Pagination `json:"pagination,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ListTradingAccountCredentials200Response ListTradingAccountCredentials200Response
@@ -282,6 +282,11 @@ func (o ListTradingAccountCredentials200Response) ToMap() (map[string]interface{
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -309,15 +314,25 @@ func (o *ListTradingAccountCredentials200Response) UnmarshalJSON(data []byte) (e
 
 	varListTradingAccountCredentials200Response := _ListTradingAccountCredentials200Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varListTradingAccountCredentials200Response)
+	err = json.Unmarshal(data, &varListTradingAccountCredentials200Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ListTradingAccountCredentials200Response(varListTradingAccountCredentials200Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "success")
+		delete(additionalProperties, "errno")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "details")
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "pagination")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

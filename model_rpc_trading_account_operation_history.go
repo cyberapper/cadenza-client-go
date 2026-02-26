@@ -28,7 +28,10 @@ type RpcTradingAccountOperationHistory struct {
 	Tags []string `json:"tags,omitempty"`
 	PreviousValues map[string]interface{} `json:"previousValues,omitempty"`
 	NewValues map[string]interface{} `json:"newValues,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTradingAccountOperationHistory RpcTradingAccountOperationHistory
 
 // NewRpcTradingAccountOperationHistory instantiates a new RpcTradingAccountOperationHistory object
 // This constructor will assign default values to properties that have it defined,
@@ -337,7 +340,40 @@ func (o RpcTradingAccountOperationHistory) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.NewValues) {
 		toSerialize["newValues"] = o.NewValues
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTradingAccountOperationHistory) UnmarshalJSON(data []byte) (err error) {
+	varRpcTradingAccountOperationHistory := _RpcTradingAccountOperationHistory{}
+
+	err = json.Unmarshal(data, &varRpcTradingAccountOperationHistory)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTradingAccountOperationHistory(varRpcTradingAccountOperationHistory)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountHistoryId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "timestamp")
+		delete(additionalProperties, "operationType")
+		delete(additionalProperties, "operateBy")
+		delete(additionalProperties, "tags")
+		delete(additionalProperties, "previousValues")
+		delete(additionalProperties, "newValues")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTradingAccountOperationHistory struct {

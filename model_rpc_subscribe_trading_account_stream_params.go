@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &RpcSubscribeTradingAccountStreamParams{}
 type RpcSubscribeTradingAccountStreamParams struct {
 	TradingAccount RpcTradingAccount `json:"tradingAccount"`
 	SubscriptionType SubscriptionType `json:"subscriptionType"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcSubscribeTradingAccountStreamParams RpcSubscribeTradingAccountStreamParams
@@ -106,6 +106,11 @@ func (o RpcSubscribeTradingAccountStreamParams) ToMap() (map[string]interface{},
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccount"] = o.TradingAccount
 	toSerialize["subscriptionType"] = o.SubscriptionType
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -134,15 +139,21 @@ func (o *RpcSubscribeTradingAccountStreamParams) UnmarshalJSON(data []byte) (err
 
 	varRpcSubscribeTradingAccountStreamParams := _RpcSubscribeTradingAccountStreamParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcSubscribeTradingAccountStreamParams)
+	err = json.Unmarshal(data, &varRpcSubscribeTradingAccountStreamParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcSubscribeTradingAccountStreamParams(varRpcSubscribeTradingAccountStreamParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccount")
+		delete(additionalProperties, "subscriptionType")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &RevokeTradingAccountCredentialRequest{}
 type RevokeTradingAccountCredentialRequest struct {
 	// UUID string
 	CredentialId string `json:"credentialId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RevokeTradingAccountCredentialRequest RevokeTradingAccountCredentialRequest
@@ -80,6 +80,11 @@ func (o RevokeTradingAccountCredentialRequest) MarshalJSON() ([]byte, error) {
 func (o RevokeTradingAccountCredentialRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["credentialId"] = o.CredentialId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *RevokeTradingAccountCredentialRequest) UnmarshalJSON(data []byte) (err 
 
 	varRevokeTradingAccountCredentialRequest := _RevokeTradingAccountCredentialRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRevokeTradingAccountCredentialRequest)
+	err = json.Unmarshal(data, &varRevokeTradingAccountCredentialRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RevokeTradingAccountCredentialRequest(varRevokeTradingAccountCredentialRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

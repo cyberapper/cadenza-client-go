@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &MarketVenue{}
 type MarketVenue struct {
 	Venue Venue `json:"venue"`
 	Status VenueStatus `json:"status"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _MarketVenue MarketVenue
@@ -106,6 +106,11 @@ func (o MarketVenue) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["venue"] = o.Venue
 	toSerialize["status"] = o.Status
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -134,15 +139,21 @@ func (o *MarketVenue) UnmarshalJSON(data []byte) (err error) {
 
 	varMarketVenue := _MarketVenue{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varMarketVenue)
+	err = json.Unmarshal(data, &varMarketVenue)
 
 	if err != nil {
 		return err
 	}
 
 	*o = MarketVenue(varMarketVenue)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "status")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

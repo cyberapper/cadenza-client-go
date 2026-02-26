@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcEnableInstrumentParams{}
 // RpcEnableInstrumentParams Request to enable an instrument
 type RpcEnableInstrumentParams struct {
 	InstrumentId string `json:"instrumentId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcEnableInstrumentParams RpcEnableInstrumentParams
@@ -79,6 +79,11 @@ func (o RpcEnableInstrumentParams) MarshalJSON() ([]byte, error) {
 func (o RpcEnableInstrumentParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["instrumentId"] = o.InstrumentId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcEnableInstrumentParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcEnableInstrumentParams := _RpcEnableInstrumentParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcEnableInstrumentParams)
+	err = json.Unmarshal(data, &varRpcEnableInstrumentParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcEnableInstrumentParams(varRpcEnableInstrumentParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

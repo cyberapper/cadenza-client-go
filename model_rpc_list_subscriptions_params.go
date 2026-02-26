@@ -22,7 +22,10 @@ type RpcListSubscriptionsParams struct {
 	InstrumentId []string `json:"instrumentId,omitempty"`
 	SubscriptionType *SubscriptionType `json:"subscriptionType,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListSubscriptionsParams RpcListSubscriptionsParams
 
 // NewRpcListSubscriptionsParams instantiates a new RpcListSubscriptionsParams object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o RpcListSubscriptionsParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Venue) {
 		toSerialize["venue"] = o.Venue
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListSubscriptionsParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListSubscriptionsParams := _RpcListSubscriptionsParams{}
+
+	err = json.Unmarshal(data, &varRpcListSubscriptionsParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListSubscriptionsParams(varRpcListSubscriptionsParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "subscriptionType")
+		delete(additionalProperties, "venue")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListSubscriptionsParams struct {

@@ -23,7 +23,10 @@ type RpcOrderBookLevel struct {
 	Price *string `json:"price,omitempty"`
 	// Quantity at this price
 	Quantity *string `json:"quantity,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcOrderBookLevel RpcOrderBookLevel
 
 // NewRpcOrderBookLevel instantiates a new RpcOrderBookLevel object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o RpcOrderBookLevel) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Quantity) {
 		toSerialize["quantity"] = o.Quantity
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcOrderBookLevel) UnmarshalJSON(data []byte) (err error) {
+	varRpcOrderBookLevel := _RpcOrderBookLevel{}
+
+	err = json.Unmarshal(data, &varRpcOrderBookLevel)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcOrderBookLevel(varRpcOrderBookLevel)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "price")
+		delete(additionalProperties, "quantity")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcOrderBookLevel struct {

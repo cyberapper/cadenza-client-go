@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -47,6 +46,7 @@ type PortfolioSummary struct {
 	MaxRiskExposure *string `json:"maxRiskExposure,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
 	RiskExposureRate *string `json:"riskExposureRate,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _PortfolioSummary PortfolioSummary
@@ -436,6 +436,11 @@ func (o PortfolioSummary) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RiskExposureRate) {
 		toSerialize["riskExposureRate"] = o.RiskExposureRate
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -473,15 +478,32 @@ func (o *PortfolioSummary) UnmarshalJSON(data []byte) (err error) {
 
 	varPortfolioSummary := _PortfolioSummary{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPortfolioSummary)
+	err = json.Unmarshal(data, &varPortfolioSummary)
 
 	if err != nil {
 		return err
 	}
 
 	*o = PortfolioSummary(varPortfolioSummary)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "currency")
+		delete(additionalProperties, "leverage")
+		delete(additionalProperties, "equity")
+		delete(additionalProperties, "margin")
+		delete(additionalProperties, "marginLoan")
+		delete(additionalProperties, "marginUsage")
+		delete(additionalProperties, "marginRequirement")
+		delete(additionalProperties, "marginLevel")
+		delete(additionalProperties, "credit")
+		delete(additionalProperties, "riskExposure")
+		delete(additionalProperties, "maxRiskExposure")
+		delete(additionalProperties, "riskExposureRate")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

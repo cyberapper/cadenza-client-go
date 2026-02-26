@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcListInstrumentsResult{}
 type RpcListInstrumentsResult struct {
 	Data []RpcInstrument `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListInstrumentsResult RpcListInstrumentsResult
 
 // NewRpcListInstrumentsResult instantiates a new RpcListInstrumentsResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcListInstrumentsResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListInstrumentsResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcListInstrumentsResult := _RpcListInstrumentsResult{}
+
+	err = json.Unmarshal(data, &varRpcListInstrumentsResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListInstrumentsResult(varRpcListInstrumentsResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListInstrumentsResult struct {

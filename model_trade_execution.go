@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -42,6 +41,7 @@ type TradeExecution struct {
 	ExecutedAt int64 `json:"executedAt"`
 	// Execution timestamp in ISO 8601 format
 	ExecutedAtDateTime *time.Time `json:"executedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _TradeExecution TradeExecution
@@ -395,6 +395,11 @@ func (o TradeExecution) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ExecutedAtDateTime) {
 		toSerialize["executedAtDateTime"] = o.ExecutedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -428,15 +433,30 @@ func (o *TradeExecution) UnmarshalJSON(data []byte) (err error) {
 
 	varTradeExecution := _TradeExecution{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTradeExecution)
+	err = json.Unmarshal(data, &varTradeExecution)
 
 	if err != nil {
 		return err
 	}
 
 	*o = TradeExecution(varTradeExecution)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "executionId")
+		delete(additionalProperties, "externalTradeId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "orderSide")
+		delete(additionalProperties, "executedQuantity")
+		delete(additionalProperties, "executedPrice")
+		delete(additionalProperties, "executedCost")
+		delete(additionalProperties, "fees")
+		delete(additionalProperties, "executedAt")
+		delete(additionalProperties, "executedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

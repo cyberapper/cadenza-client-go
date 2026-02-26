@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -40,6 +39,7 @@ type TradingAccountCredential struct {
 	RevokedAt *int64 `json:"revokedAt,omitempty"`
 	// Revocation timestamp in ISO 8601 format
 	RevokedAtDateTime *time.Time `json:"revokedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _TradingAccountCredential TradingAccountCredential
@@ -402,6 +402,11 @@ func (o TradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RevokedAtDateTime) {
 		toSerialize["revokedAtDateTime"] = o.RevokedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -434,15 +439,30 @@ func (o *TradingAccountCredential) UnmarshalJSON(data []byte) (err error) {
 
 	varTradingAccountCredential := _TradingAccountCredential{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTradingAccountCredential)
+	err = json.Unmarshal(data, &varTradingAccountCredential)
 
 	if err != nil {
 		return err
 	}
 
 	*o = TradingAccountCredential(varTradingAccountCredential)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		delete(additionalProperties, "revokedAt")
+		delete(additionalProperties, "revokedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

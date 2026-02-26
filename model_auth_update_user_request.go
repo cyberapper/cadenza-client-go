@@ -25,7 +25,10 @@ type AuthUpdateUserRequest struct {
 	Password *string `json:"password,omitempty"`
 	// User metadata to update
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthUpdateUserRequest AuthUpdateUserRequest
 
 // NewAuthUpdateUserRequest instantiates a new AuthUpdateUserRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -159,7 +162,35 @@ func (o AuthUpdateUserRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Metadata) {
 		toSerialize["metadata"] = o.Metadata
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthUpdateUserRequest) UnmarshalJSON(data []byte) (err error) {
+	varAuthUpdateUserRequest := _AuthUpdateUserRequest{}
+
+	err = json.Unmarshal(data, &varAuthUpdateUserRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthUpdateUserRequest(varAuthUpdateUserRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "email")
+		delete(additionalProperties, "password")
+		delete(additionalProperties, "metadata")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthUpdateUserRequest struct {

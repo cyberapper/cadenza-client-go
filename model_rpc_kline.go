@@ -23,7 +23,10 @@ type RpcKline struct {
 	Symbol *string `json:"symbol,omitempty"`
 	Interval *string `json:"interval,omitempty"`
 	Candles []RpcOhlcv `json:"candles,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcKline RpcKline
 
 // NewRpcKline instantiates a new RpcKline object
 // This constructor will assign default values to properties that have it defined,
@@ -192,7 +195,36 @@ func (o RpcKline) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Candles) {
 		toSerialize["candles"] = o.Candles
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcKline) UnmarshalJSON(data []byte) (err error) {
+	varRpcKline := _RpcKline{}
+
+	err = json.Unmarshal(data, &varRpcKline)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcKline(varRpcKline)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "interval")
+		delete(additionalProperties, "candles")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcKline struct {

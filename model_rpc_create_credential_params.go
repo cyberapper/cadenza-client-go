@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type RpcCreateCredentialParams struct {
 	SecretKey *string `json:"secretKey,omitempty"`
 	SecretPassphrase *string `json:"secretPassphrase,omitempty"`
 	Nickname *string `json:"nickname,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcCreateCredentialParams RpcCreateCredentialParams
@@ -277,6 +277,11 @@ func (o RpcCreateCredentialParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -306,15 +311,26 @@ func (o *RpcCreateCredentialParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcCreateCredentialParams := _RpcCreateCredentialParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcCreateCredentialParams)
+	err = json.Unmarshal(data, &varRpcCreateCredentialParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcCreateCredentialParams(varRpcCreateCredentialParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "apiKey")
+		delete(additionalProperties, "secretKey")
+		delete(additionalProperties, "secretPassphrase")
+		delete(additionalProperties, "nickname")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type ListMarketVenues200Response struct {
 	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
 	Data []MarketVenue `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ListMarketVenues200Response ListMarketVenues200Response
@@ -246,6 +246,11 @@ func (o ListMarketVenues200Response) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -273,15 +278,24 @@ func (o *ListMarketVenues200Response) UnmarshalJSON(data []byte) (err error) {
 
 	varListMarketVenues200Response := _ListMarketVenues200Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varListMarketVenues200Response)
+	err = json.Unmarshal(data, &varListMarketVenues200Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ListMarketVenues200Response(varListMarketVenues200Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "success")
+		delete(additionalProperties, "errno")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "details")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

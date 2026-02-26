@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcGetTradeOrderByIdParams{}
 // RpcGetTradeOrderByIdParams Request to get a trade order by ID
 type RpcGetTradeOrderByIdParams struct {
 	TradeOrderId string `json:"tradeOrderId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcGetTradeOrderByIdParams RpcGetTradeOrderByIdParams
@@ -79,6 +79,11 @@ func (o RpcGetTradeOrderByIdParams) MarshalJSON() ([]byte, error) {
 func (o RpcGetTradeOrderByIdParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradeOrderId"] = o.TradeOrderId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcGetTradeOrderByIdParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcGetTradeOrderByIdParams := _RpcGetTradeOrderByIdParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcGetTradeOrderByIdParams)
+	err = json.Unmarshal(data, &varRpcGetTradeOrderByIdParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcGetTradeOrderByIdParams(varRpcGetTradeOrderByIdParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrderId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

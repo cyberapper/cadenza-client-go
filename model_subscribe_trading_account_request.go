@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &SubscribeTradingAccountRequest{}
 type SubscribeTradingAccountRequest struct {
 	// UUID string
 	TradingAccountId string `json:"tradingAccountId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SubscribeTradingAccountRequest SubscribeTradingAccountRequest
@@ -80,6 +80,11 @@ func (o SubscribeTradingAccountRequest) MarshalJSON() ([]byte, error) {
 func (o SubscribeTradingAccountRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *SubscribeTradingAccountRequest) UnmarshalJSON(data []byte) (err error) 
 
 	varSubscribeTradingAccountRequest := _SubscribeTradingAccountRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSubscribeTradingAccountRequest)
+	err = json.Unmarshal(data, &varSubscribeTradingAccountRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SubscribeTradingAccountRequest(varSubscribeTradingAccountRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

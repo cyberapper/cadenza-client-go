@@ -23,7 +23,10 @@ type WsStreamPosition struct {
 	Offset *int64 `json:"offset,omitempty"`
 	// Stream epoch
 	Epoch *string `json:"epoch,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsStreamPosition WsStreamPosition
 
 // NewWsStreamPosition instantiates a new WsStreamPosition object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o WsStreamPosition) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Epoch) {
 		toSerialize["epoch"] = o.Epoch
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsStreamPosition) UnmarshalJSON(data []byte) (err error) {
+	varWsStreamPosition := _WsStreamPosition{}
+
+	err = json.Unmarshal(data, &varWsStreamPosition)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsStreamPosition(varWsStreamPosition)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "offset")
+		delete(additionalProperties, "epoch")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsStreamPosition struct {

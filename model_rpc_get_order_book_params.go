@@ -27,7 +27,10 @@ type RpcGetOrderBookParams struct {
 	Symbol *string `json:"symbol,omitempty"`
 	// Order book depth
 	Depth *int32 `json:"depth,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcGetOrderBookParams RpcGetOrderBookParams
 
 // NewRpcGetOrderBookParams instantiates a new RpcGetOrderBookParams object
 // This constructor will assign default values to properties that have it defined,
@@ -200,7 +203,36 @@ func (o RpcGetOrderBookParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Depth) {
 		toSerialize["depth"] = o.Depth
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcGetOrderBookParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcGetOrderBookParams := _RpcGetOrderBookParams{}
+
+	err = json.Unmarshal(data, &varRpcGetOrderBookParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcGetOrderBookParams(varRpcGetOrderBookParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "depth")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcGetOrderBookParams struct {

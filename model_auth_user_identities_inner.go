@@ -34,7 +34,10 @@ type AuthUserIdentitiesInner struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	// Identity last update timestamp
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthUserIdentitiesInner AuthUserIdentitiesInner
 
 // NewAuthUserIdentitiesInner instantiates a new AuthUserIdentitiesInner object
 // This constructor will assign default values to properties that have it defined,
@@ -318,7 +321,39 @@ func (o AuthUserIdentitiesInner) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthUserIdentitiesInner) UnmarshalJSON(data []byte) (err error) {
+	varAuthUserIdentitiesInner := _AuthUserIdentitiesInner{}
+
+	err = json.Unmarshal(data, &varAuthUserIdentitiesInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthUserIdentitiesInner(varAuthUserIdentitiesInner)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "userId")
+		delete(additionalProperties, "identityData")
+		delete(additionalProperties, "provider")
+		delete(additionalProperties, "lastSignInAt")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthUserIdentitiesInner struct {

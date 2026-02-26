@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type AuthSignup429Response struct {
 	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
 	Data NullableString `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AuthSignup429Response AuthSignup429Response
@@ -256,6 +256,11 @@ func (o AuthSignup429Response) ToMap() (map[string]interface{}, error) {
 	if o.Data.IsSet() {
 		toSerialize["data"] = o.Data.Get()
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -283,15 +288,24 @@ func (o *AuthSignup429Response) UnmarshalJSON(data []byte) (err error) {
 
 	varAuthSignup429Response := _AuthSignup429Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthSignup429Response)
+	err = json.Unmarshal(data, &varAuthSignup429Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AuthSignup429Response(varAuthSignup429Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "success")
+		delete(additionalProperties, "errno")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "details")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

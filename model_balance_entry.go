@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -46,6 +45,7 @@ type BalanceEntry struct {
 	UpdatedAt int64 `json:"updatedAt"`
 	// Last update timestamp in ISO 8601 format
 	UpdatedAtDateTime *time.Time `json:"updatedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _BalanceEntry BalanceEntry
@@ -452,6 +452,11 @@ func (o BalanceEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAtDateTime) {
 		toSerialize["updatedAtDateTime"] = o.UpdatedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -488,15 +493,32 @@ func (o *BalanceEntry) UnmarshalJSON(data []byte) (err error) {
 
 	varBalanceEntry := _BalanceEntry{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varBalanceEntry)
+	err = json.Unmarshal(data, &varBalanceEntry)
 
 	if err != nil {
 		return err
 	}
 
 	*o = BalanceEntry(varBalanceEntry)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "securitySymbol")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "externalBalanceId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "free")
+		delete(additionalProperties, "locked")
+		delete(additionalProperties, "borrowed")
+		delete(additionalProperties, "total")
+		delete(additionalProperties, "net")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

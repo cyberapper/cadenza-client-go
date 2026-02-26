@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcGetOrderBookResult{}
 type RpcGetOrderBookResult struct {
 	Data *RpcOrderBook `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcGetOrderBookResult RpcGetOrderBookResult
 
 // NewRpcGetOrderBookResult instantiates a new RpcGetOrderBookResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcGetOrderBookResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcGetOrderBookResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcGetOrderBookResult := _RpcGetOrderBookResult{}
+
+	err = json.Unmarshal(data, &varRpcGetOrderBookResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcGetOrderBookResult(varRpcGetOrderBookResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcGetOrderBookResult struct {

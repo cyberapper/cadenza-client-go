@@ -24,7 +24,10 @@ type WsHistoryResult struct {
 	Epoch *string `json:"epoch,omitempty"`
 	// Current stream offset
 	Offset *int64 `json:"offset,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsHistoryResult WsHistoryResult
 
 // NewWsHistoryResult instantiates a new WsHistoryResult object
 // This constructor will assign default values to properties that have it defined,
@@ -158,7 +161,35 @@ func (o WsHistoryResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsHistoryResult) UnmarshalJSON(data []byte) (err error) {
+	varWsHistoryResult := _WsHistoryResult{}
+
+	err = json.Unmarshal(data, &varWsHistoryResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsHistoryResult(varWsHistoryResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "publications")
+		delete(additionalProperties, "epoch")
+		delete(additionalProperties, "offset")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsHistoryResult struct {

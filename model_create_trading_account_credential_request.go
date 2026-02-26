@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type CreateTradingAccountCredentialRequest struct {
 	ApiKey *string `json:"apiKey,omitempty"`
 	ApiSecret *string `json:"apiSecret,omitempty"`
 	ApiPassphrase *string `json:"apiPassphrase,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _CreateTradingAccountCredentialRequest CreateTradingAccountCredentialRequest
@@ -251,6 +251,11 @@ func (o CreateTradingAccountCredentialRequest) ToMap() (map[string]interface{}, 
 	if !IsNil(o.ApiPassphrase) {
 		toSerialize["apiPassphrase"] = o.ApiPassphrase
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -279,15 +284,25 @@ func (o *CreateTradingAccountCredentialRequest) UnmarshalJSON(data []byte) (err 
 
 	varCreateTradingAccountCredentialRequest := _CreateTradingAccountCredentialRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varCreateTradingAccountCredentialRequest)
+	err = json.Unmarshal(data, &varCreateTradingAccountCredentialRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = CreateTradingAccountCredentialRequest(varCreateTradingAccountCredentialRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "apiKey")
+		delete(additionalProperties, "apiSecret")
+		delete(additionalProperties, "apiPassphrase")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -27,7 +27,10 @@ type RpcSystemInfo struct {
 	Description *string `json:"description,omitempty"`
 	// API documentation URL
 	Documentation *string `json:"documentation,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSystemInfo RpcSystemInfo
 
 // NewRpcSystemInfo instantiates a new RpcSystemInfo object
 // This constructor will assign default values to properties that have it defined,
@@ -196,7 +199,36 @@ func (o RpcSystemInfo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Documentation) {
 		toSerialize["documentation"] = o.Documentation
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSystemInfo) UnmarshalJSON(data []byte) (err error) {
+	varRpcSystemInfo := _RpcSystemInfo{}
+
+	err = json.Unmarshal(data, &varRpcSystemInfo)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSystemInfo(varRpcSystemInfo)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "version")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "documentation")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSystemInfo struct {

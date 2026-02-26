@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type RpcListTradingAccountSubscriptionsParams struct {
 	SubscriptionType *SubscriptionType `json:"subscriptionType,omitempty"`
 	Status *SubscriptionStatus `json:"status,omitempty"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcListTradingAccountSubscriptionsParams RpcListTradingAccountSubscriptionsParams
@@ -187,6 +187,11 @@ func (o RpcListTradingAccountSubscriptionsParams) ToMap() (map[string]interface{
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -214,15 +219,23 @@ func (o *RpcListTradingAccountSubscriptionsParams) UnmarshalJSON(data []byte) (e
 
 	varRpcListTradingAccountSubscriptionsParams := _RpcListTradingAccountSubscriptionsParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcListTradingAccountSubscriptionsParams)
+	err = json.Unmarshal(data, &varRpcListTradingAccountSubscriptionsParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcListTradingAccountSubscriptionsParams(varRpcListTradingAccountSubscriptionsParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "subscriptionType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "pagination")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }
