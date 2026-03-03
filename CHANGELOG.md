@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.6](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.5...v1.2.6) (2026-03-03)
+
+
+### Miscellaneous
+
+* regenerate client SDK from updated OpenAPI spec ([#31](https://github.com/cyberapper/cadenza-client-go/issues/31)) ([a9178b8](https://github.com/cyberapper/cadenza-client-go/commit/a9178b82f9313be9644775a783005675c3a2b8e4))
+
 ## [1.2.5](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.4...v1.2.5) (2026-02-26)
 
 
