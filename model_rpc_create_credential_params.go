@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,11 +22,12 @@ var _ MappedNullable = &RpcCreateCredentialParams{}
 type RpcCreateCredentialParams struct {
 	TradingAccountId string `json:"tradingAccountId"`
 	Venue Venue `json:"venue"`
-	CredentialType CredentialType `json:"credentialType"`
+	CredentialType NullableCredentialType `json:"credentialType"`
 	ApiKey *string `json:"apiKey,omitempty"`
 	SecretKey *string `json:"secretKey,omitempty"`
 	SecretPassphrase *string `json:"secretPassphrase,omitempty"`
 	Nickname *string `json:"nickname,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcCreateCredentialParams RpcCreateCredentialParams
@@ -36,7 +36,7 @@ type _RpcCreateCredentialParams RpcCreateCredentialParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRpcCreateCredentialParams(tradingAccountId string, venue Venue, credentialType CredentialType) *RpcCreateCredentialParams {
+func NewRpcCreateCredentialParams(tradingAccountId string, venue Venue, credentialType NullableCredentialType) *RpcCreateCredentialParams {
 	this := RpcCreateCredentialParams{}
 	this.TradingAccountId = tradingAccountId
 	this.Venue = venue
@@ -101,27 +101,29 @@ func (o *RpcCreateCredentialParams) SetVenue(v Venue) {
 }
 
 // GetCredentialType returns the CredentialType field value
+// If the value is explicit nil, the zero value for CredentialType will be returned
 func (o *RpcCreateCredentialParams) GetCredentialType() CredentialType {
-	if o == nil {
+	if o == nil || o.CredentialType.Get() == nil {
 		var ret CredentialType
 		return ret
 	}
 
-	return o.CredentialType
+	return *o.CredentialType.Get()
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcCreateCredentialParams) GetCredentialTypeOk() (*CredentialType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CredentialType, true
+	return o.CredentialType.Get(), o.CredentialType.IsSet()
 }
 
 // SetCredentialType sets field value
 func (o *RpcCreateCredentialParams) SetCredentialType(v CredentialType) {
-	o.CredentialType = v
+	o.CredentialType.Set(&v)
 }
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
@@ -264,7 +266,7 @@ func (o RpcCreateCredentialParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
 	toSerialize["venue"] = o.Venue
-	toSerialize["credentialType"] = o.CredentialType
+	toSerialize["credentialType"] = o.CredentialType.Get()
 	if !IsNil(o.ApiKey) {
 		toSerialize["apiKey"] = o.ApiKey
 	}
@@ -277,6 +279,11 @@ func (o RpcCreateCredentialParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -306,15 +313,26 @@ func (o *RpcCreateCredentialParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcCreateCredentialParams := _RpcCreateCredentialParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcCreateCredentialParams)
+	err = json.Unmarshal(data, &varRpcCreateCredentialParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcCreateCredentialParams(varRpcCreateCredentialParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "apiKey")
+		delete(additionalProperties, "secretKey")
+		delete(additionalProperties, "secretPassphrase")
+		delete(additionalProperties, "nickname")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

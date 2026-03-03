@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -41,6 +40,7 @@ type Subscription struct {
 	UpdatedAtDateTime *time.Time `json:"updatedAtDateTime,omitempty"`
 	// Unix timestamp in milliseconds
 	LastEventTimestamp *int64 `json:"lastEventTimestamp,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _Subscription Subscription
@@ -403,6 +403,11 @@ func (o Subscription) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastEventTimestamp) {
 		toSerialize["lastEventTimestamp"] = o.LastEventTimestamp
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -435,15 +440,30 @@ func (o *Subscription) UnmarshalJSON(data []byte) (err error) {
 
 	varSubscription := _Subscription{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSubscription)
+	err = json.Unmarshal(data, &varSubscription)
 
 	if err != nil {
 		return err
 	}
 
 	*o = Subscription(varSubscription)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "subscriptionId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "subscriptionType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		delete(additionalProperties, "lastEventTimestamp")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -30,7 +30,10 @@ type WsPush struct {
 	Connect *WsConnectPush `json:"connect,omitempty"`
 	Disconnect *WsDisconnect `json:"disconnect,omitempty"`
 	Refresh *WsRefreshPush `json:"refresh,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsPush WsPush
 
 // NewWsPush instantiates a new WsPush object
 // This constructor will assign default values to properties that have it defined,
@@ -409,7 +412,42 @@ func (o WsPush) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Refresh) {
 		toSerialize["refresh"] = o.Refresh
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsPush) UnmarshalJSON(data []byte) (err error) {
+	varWsPush := _WsPush{}
+
+	err = json.Unmarshal(data, &varWsPush)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsPush(varWsPush)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "pub")
+		delete(additionalProperties, "join")
+		delete(additionalProperties, "leave")
+		delete(additionalProperties, "unsubscribe")
+		delete(additionalProperties, "message")
+		delete(additionalProperties, "subscribe")
+		delete(additionalProperties, "connect")
+		delete(additionalProperties, "disconnect")
+		delete(additionalProperties, "refresh")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsPush struct {

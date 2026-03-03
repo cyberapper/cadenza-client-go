@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -24,6 +23,7 @@ type SyncMarketInstrumentsRequest struct {
 	Venue Venue `json:"venue"`
 	// symbol list, example \\[\"BTC/ETH\",\"BTC/USDT\"\\]
 	Symbols []string `json:"symbols"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SyncMarketInstrumentsRequest SyncMarketInstrumentsRequest
@@ -107,6 +107,11 @@ func (o SyncMarketInstrumentsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["venue"] = o.Venue
 	toSerialize["symbols"] = o.Symbols
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -135,15 +140,21 @@ func (o *SyncMarketInstrumentsRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varSyncMarketInstrumentsRequest := _SyncMarketInstrumentsRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSyncMarketInstrumentsRequest)
+	err = json.Unmarshal(data, &varSyncMarketInstrumentsRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SyncMarketInstrumentsRequest(varSyncMarketInstrumentsRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbols")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

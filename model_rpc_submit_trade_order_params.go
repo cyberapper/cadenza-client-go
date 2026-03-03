@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type RpcSubmitTradeOrderParams struct {
 	IdempotencyKey *string `json:"idempotencyKey,omitempty"`
 	// Wait for order to reach terminal state before responding
 	AwaitClosed *bool `json:"awaitClosed,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcSubmitTradeOrderParams RpcSubmitTradeOrderParams
@@ -185,6 +185,11 @@ func (o RpcSubmitTradeOrderParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AwaitClosed) {
 		toSerialize["awaitClosed"] = o.AwaitClosed
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -213,15 +218,23 @@ func (o *RpcSubmitTradeOrderParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcSubmitTradeOrderParams := _RpcSubmitTradeOrderParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcSubmitTradeOrderParams)
+	err = json.Unmarshal(data, &varRpcSubmitTradeOrderParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcSubmitTradeOrderParams(varRpcSubmitTradeOrderParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrder")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "idempotencyKey")
+		delete(additionalProperties, "awaitClosed")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

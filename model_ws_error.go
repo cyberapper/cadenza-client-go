@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -27,6 +26,7 @@ type WsError struct {
 	Message string `json:"message"`
 	// Whether the error is temporary and the command can be retried
 	Temporary *bool `json:"temporary,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsError WsError
@@ -145,6 +145,11 @@ func (o WsError) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Temporary) {
 		toSerialize["temporary"] = o.Temporary
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -173,15 +178,22 @@ func (o *WsError) UnmarshalJSON(data []byte) (err error) {
 
 	varWsError := _WsError{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsError)
+	err = json.Unmarshal(data, &varWsError)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsError(varWsError)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "code")
+		delete(additionalProperties, "message")
+		delete(additionalProperties, "temporary")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -27,6 +26,7 @@ type WsMarketOrderBookUpdate struct {
 	SubscriptionId string `json:"subscriptionId"`
 	// Unix timestamp in milliseconds
 	Timestamp int64 `json:"timestamp"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsMarketOrderBookUpdate WsMarketOrderBookUpdate
@@ -162,6 +162,11 @@ func (o WsMarketOrderBookUpdate) ToMap() (map[string]interface{}, error) {
 	toSerialize["data"] = o.Data
 	toSerialize["subscriptionId"] = o.SubscriptionId
 	toSerialize["timestamp"] = o.Timestamp
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -192,15 +197,23 @@ func (o *WsMarketOrderBookUpdate) UnmarshalJSON(data []byte) (err error) {
 
 	varWsMarketOrderBookUpdate := _WsMarketOrderBookUpdate{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsMarketOrderBookUpdate)
+	err = json.Unmarshal(data, &varWsMarketOrderBookUpdate)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsMarketOrderBookUpdate(varWsMarketOrderBookUpdate)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "subscriptionId")
+		delete(additionalProperties, "timestamp")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -37,7 +37,10 @@ type WsReply struct {
 	Rpc *WsRPCResult `json:"rpc,omitempty"`
 	Refresh *WsRefreshResult `json:"refresh,omitempty"`
 	SubRefresh *WsSubRefreshResult `json:"subRefresh,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsReply WsReply
 
 // NewWsReply instantiates a new WsReply object
 // This constructor will assign default values to properties that have it defined,
@@ -556,7 +559,46 @@ func (o WsReply) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SubRefresh) {
 		toSerialize["subRefresh"] = o.SubRefresh
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsReply) UnmarshalJSON(data []byte) (err error) {
+	varWsReply := _WsReply{}
+
+	err = json.Unmarshal(data, &varWsReply)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsReply(varWsReply)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "push")
+		delete(additionalProperties, "connect")
+		delete(additionalProperties, "subscribe")
+		delete(additionalProperties, "unsubscribe")
+		delete(additionalProperties, "publish")
+		delete(additionalProperties, "presence")
+		delete(additionalProperties, "presenceStats")
+		delete(additionalProperties, "history")
+		delete(additionalProperties, "ping")
+		delete(additionalProperties, "rpc")
+		delete(additionalProperties, "refresh")
+		delete(additionalProperties, "subRefresh")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsReply struct {

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &SyncMarketSecuritiesRequest{}
 // SyncMarketSecuritiesRequest struct for SyncMarketSecuritiesRequest
 type SyncMarketSecuritiesRequest struct {
 	Venue Venue `json:"venue"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SyncMarketSecuritiesRequest SyncMarketSecuritiesRequest
@@ -79,6 +79,11 @@ func (o SyncMarketSecuritiesRequest) MarshalJSON() ([]byte, error) {
 func (o SyncMarketSecuritiesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["venue"] = o.Venue
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *SyncMarketSecuritiesRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varSyncMarketSecuritiesRequest := _SyncMarketSecuritiesRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSyncMarketSecuritiesRequest)
+	err = json.Unmarshal(data, &varSyncMarketSecuritiesRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SyncMarketSecuritiesRequest(varSyncMarketSecuritiesRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

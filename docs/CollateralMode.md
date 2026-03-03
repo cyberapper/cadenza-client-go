@@ -3,8 +3,6 @@
 ## Enum
 
 
-* `EMPTY` (value: `""`)
-
 * `CROSS` (value: `"CROSS"`)
 
 * `ISOLATED` (value: `"ISOLATED"`)

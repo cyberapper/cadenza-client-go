@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcRevokeCredentialParams{}
 // RpcRevokeCredentialParams Request to revoke a credential
 type RpcRevokeCredentialParams struct {
 	CredentialId string `json:"credentialId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcRevokeCredentialParams RpcRevokeCredentialParams
@@ -79,6 +79,11 @@ func (o RpcRevokeCredentialParams) MarshalJSON() ([]byte, error) {
 func (o RpcRevokeCredentialParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["credentialId"] = o.CredentialId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcRevokeCredentialParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcRevokeCredentialParams := _RpcRevokeCredentialParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcRevokeCredentialParams)
+	err = json.Unmarshal(data, &varRpcRevokeCredentialParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcRevokeCredentialParams(varRpcRevokeCredentialParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

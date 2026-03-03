@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &AuthRecoverRequest{}
 type AuthRecoverRequest struct {
 	// Email address to send recovery link
 	Email string `json:"email"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AuthRecoverRequest AuthRecoverRequest
@@ -80,6 +80,11 @@ func (o AuthRecoverRequest) MarshalJSON() ([]byte, error) {
 func (o AuthRecoverRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["email"] = o.Email
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *AuthRecoverRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varAuthRecoverRequest := _AuthRecoverRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthRecoverRequest)
+	err = json.Unmarshal(data, &varAuthRecoverRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AuthRecoverRequest(varAuthRecoverRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "email")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -32,6 +31,7 @@ type AccountOperation struct {
 	CreatedAt int64 `json:"createdAt"`
 	// Creation timestamp in ISO 8601 format
 	CreatedAtDateTime *time.Time `json:"createdAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AccountOperation AccountOperation
@@ -228,6 +228,11 @@ func (o AccountOperation) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CreatedAtDateTime) {
 		toSerialize["createdAtDateTime"] = o.CreatedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -259,15 +264,25 @@ func (o *AccountOperation) UnmarshalJSON(data []byte) (err error) {
 
 	varAccountOperation := _AccountOperation{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAccountOperation)
+	err = json.Unmarshal(data, &varAccountOperation)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AccountOperation(varAccountOperation)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "operationId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "operationType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -24,7 +24,7 @@ type TradingAccountAPI interface {
 	/*
 	ConnectTradingAccount Connect trading account
 
-	Connect to a trading account
+	Connect to a trading account. Returns 409 Conflict if the external account is already connected by another user.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiConnectTradingAccountRequest
@@ -141,7 +141,7 @@ func (r ApiConnectTradingAccountRequest) Execute() (*ConnectTradingAccount200Res
 /*
 ConnectTradingAccount Connect trading account
 
-Connect to a trading account
+Connect to a trading account. Returns 409 Conflict if the external account is already connected by another user.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiConnectTradingAccountRequest
@@ -216,7 +216,7 @@ func (a *TradingAccountAPIService) ConnectTradingAccountExecute(r ApiConnectTrad
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -227,7 +227,7 @@ func (a *TradingAccountAPIService) ConnectTradingAccountExecute(r ApiConnectTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -238,7 +238,7 @@ func (a *TradingAccountAPIService) ConnectTradingAccountExecute(r ApiConnectTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -249,7 +249,18 @@ func (a *TradingAccountAPIService) ConnectTradingAccountExecute(r ApiConnectTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -260,7 +271,7 @@ func (a *TradingAccountAPIService) ConnectTradingAccountExecute(r ApiConnectTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -377,7 +388,7 @@ func (a *TradingAccountAPIService) DisableTradingAccountExecute(r ApiDisableTrad
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -388,7 +399,7 @@ func (a *TradingAccountAPIService) DisableTradingAccountExecute(r ApiDisableTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -399,7 +410,7 @@ func (a *TradingAccountAPIService) DisableTradingAccountExecute(r ApiDisableTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -410,7 +421,7 @@ func (a *TradingAccountAPIService) DisableTradingAccountExecute(r ApiDisableTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -421,7 +432,7 @@ func (a *TradingAccountAPIService) DisableTradingAccountExecute(r ApiDisableTrad
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -538,7 +549,7 @@ func (a *TradingAccountAPIService) DisconnectTradingAccountExecute(r ApiDisconne
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -549,7 +560,7 @@ func (a *TradingAccountAPIService) DisconnectTradingAccountExecute(r ApiDisconne
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -560,7 +571,7 @@ func (a *TradingAccountAPIService) DisconnectTradingAccountExecute(r ApiDisconne
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -571,7 +582,7 @@ func (a *TradingAccountAPIService) DisconnectTradingAccountExecute(r ApiDisconne
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -582,7 +593,7 @@ func (a *TradingAccountAPIService) DisconnectTradingAccountExecute(r ApiDisconne
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -699,7 +710,7 @@ func (a *TradingAccountAPIService) EnableTradingAccountExecute(r ApiEnableTradin
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -710,7 +721,7 @@ func (a *TradingAccountAPIService) EnableTradingAccountExecute(r ApiEnableTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -721,7 +732,7 @@ func (a *TradingAccountAPIService) EnableTradingAccountExecute(r ApiEnableTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -732,7 +743,7 @@ func (a *TradingAccountAPIService) EnableTradingAccountExecute(r ApiEnableTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -743,7 +754,7 @@ func (a *TradingAccountAPIService) EnableTradingAccountExecute(r ApiEnableTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -929,7 +940,7 @@ func (a *TradingAccountAPIService) ListTradingAccountOperationsExecute(r ApiList
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -940,7 +951,7 @@ func (a *TradingAccountAPIService) ListTradingAccountOperationsExecute(r ApiList
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -951,7 +962,7 @@ func (a *TradingAccountAPIService) ListTradingAccountOperationsExecute(r ApiList
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -962,7 +973,7 @@ func (a *TradingAccountAPIService) ListTradingAccountOperationsExecute(r ApiList
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -973,7 +984,7 @@ func (a *TradingAccountAPIService) ListTradingAccountOperationsExecute(r ApiList
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1160,7 +1171,7 @@ func (a *TradingAccountAPIService) ListTradingAccountsExecute(r ApiListTradingAc
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1171,7 +1182,7 @@ func (a *TradingAccountAPIService) ListTradingAccountsExecute(r ApiListTradingAc
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1182,7 +1193,7 @@ func (a *TradingAccountAPIService) ListTradingAccountsExecute(r ApiListTradingAc
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1193,7 +1204,7 @@ func (a *TradingAccountAPIService) ListTradingAccountsExecute(r ApiListTradingAc
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1204,7 +1215,7 @@ func (a *TradingAccountAPIService) ListTradingAccountsExecute(r ApiListTradingAc
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1321,7 +1332,7 @@ func (a *TradingAccountAPIService) UpdateTradingAccountExecute(r ApiUpdateTradin
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1332,7 +1343,7 @@ func (a *TradingAccountAPIService) UpdateTradingAccountExecute(r ApiUpdateTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1343,7 +1354,7 @@ func (a *TradingAccountAPIService) UpdateTradingAccountExecute(r ApiUpdateTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1354,7 +1365,7 @@ func (a *TradingAccountAPIService) UpdateTradingAccountExecute(r ApiUpdateTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1365,7 +1376,7 @@ func (a *TradingAccountAPIService) UpdateTradingAccountExecute(r ApiUpdateTradin
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

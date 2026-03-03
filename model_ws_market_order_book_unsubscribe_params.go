@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &WsMarketOrderBookUnsubscribeParams{}
 type WsMarketOrderBookUnsubscribeParams struct {
 	// UUID string
 	SubscriptionId string `json:"subscriptionId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsMarketOrderBookUnsubscribeParams WsMarketOrderBookUnsubscribeParams
@@ -80,6 +80,11 @@ func (o WsMarketOrderBookUnsubscribeParams) MarshalJSON() ([]byte, error) {
 func (o WsMarketOrderBookUnsubscribeParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["subscriptionId"] = o.SubscriptionId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *WsMarketOrderBookUnsubscribeParams) UnmarshalJSON(data []byte) (err err
 
 	varWsMarketOrderBookUnsubscribeParams := _WsMarketOrderBookUnsubscribeParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsMarketOrderBookUnsubscribeParams)
+	err = json.Unmarshal(data, &varWsMarketOrderBookUnsubscribeParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsMarketOrderBookUnsubscribeParams(varWsMarketOrderBookUnsubscribeParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "subscriptionId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

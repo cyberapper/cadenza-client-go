@@ -25,7 +25,10 @@ type RpcSubscribeOrderBookParams struct {
 	Venue *string `json:"venue,omitempty"`
 	// List of symbols to subscribe
 	Symbols []string `json:"symbols,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSubscribeOrderBookParams RpcSubscribeOrderBookParams
 
 // NewRpcSubscribeOrderBookParams instantiates a new RpcSubscribeOrderBookParams object
 // This constructor will assign default values to properties that have it defined,
@@ -159,7 +162,35 @@ func (o RpcSubscribeOrderBookParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Symbols) {
 		toSerialize["symbols"] = o.Symbols
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSubscribeOrderBookParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcSubscribeOrderBookParams := _RpcSubscribeOrderBookParams{}
+
+	err = json.Unmarshal(data, &varRpcSubscribeOrderBookParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSubscribeOrderBookParams(varRpcSubscribeOrderBookParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentIds")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbols")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSubscribeOrderBookParams struct {

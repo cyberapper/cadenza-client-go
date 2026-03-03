@@ -20,16 +20,14 @@ type MarginMode string
 
 // List of marginMode
 const (
-	MARGINMODE_EMPTY MarginMode = ""
-	MARGINMODE_STANDARD MarginMode = "STANDARD"
-	MARGINMODE_PORTFOLIO MarginMode = "PORTFOLIO"
+	MARGINMODE_ISOLATED MarginMode = "ISOLATED"
+	MARGINMODE_CROSS MarginMode = "CROSS"
 )
 
 // All allowed values of MarginMode enum
 var AllowedMarginModeEnumValues = []MarginMode{
-	"",
-	"STANDARD",
-	"PORTFOLIO",
+	"ISOLATED",
+	"CROSS",
 }
 
 func (v *MarginMode) UnmarshalJSON(src []byte) error {

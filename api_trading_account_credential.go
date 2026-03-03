@@ -81,7 +81,7 @@ type TradingAccountCredentialAPI interface {
 	/*
 	VerifyTradingAccountCredential Verify trading account credential
 
-	Verify credentials and list all supported trading accounts that the credential have permissions to access
+	Verify credentials and list all supported trading accounts that the credential have permissions to access. Each returned account includes a status indicating its state relative to Cadenza: NEW (not yet connected), ACTIVE or current status (connected by the current user), or UNAVAILABLE (connected by another user).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiVerifyTradingAccountCredentialRequest
@@ -189,7 +189,7 @@ func (a *TradingAccountCredentialAPIService) CreateTradingAccountCredentialExecu
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -200,7 +200,7 @@ func (a *TradingAccountCredentialAPIService) CreateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -211,7 +211,7 @@ func (a *TradingAccountCredentialAPIService) CreateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -222,7 +222,7 @@ func (a *TradingAccountCredentialAPIService) CreateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -233,7 +233,7 @@ func (a *TradingAccountCredentialAPIService) CreateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -261,7 +261,7 @@ type ApiListTradingAccountCredentialsRequest struct {
 	ctx context.Context
 	ApiService TradingAccountCredentialAPI
 	credentialType *CredentialType
-	credentialStatus *TradingAccountStatus
+	credentialStatus *CredentialStatus
 	credentialIds *[]string
 }
 
@@ -272,7 +272,7 @@ func (r ApiListTradingAccountCredentialsRequest) CredentialType(credentialType C
 }
 
 // Credential status
-func (r ApiListTradingAccountCredentialsRequest) CredentialStatus(credentialStatus TradingAccountStatus) ApiListTradingAccountCredentialsRequest {
+func (r ApiListTradingAccountCredentialsRequest) CredentialStatus(credentialStatus CredentialStatus) ApiListTradingAccountCredentialsRequest {
 	r.credentialStatus = &credentialStatus
 	return r
 }
@@ -380,7 +380,7 @@ func (a *TradingAccountCredentialAPIService) ListTradingAccountCredentialsExecut
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -391,7 +391,7 @@ func (a *TradingAccountCredentialAPIService) ListTradingAccountCredentialsExecut
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -508,7 +508,7 @@ func (a *TradingAccountCredentialAPIService) RevokeTradingAccountCredentialExecu
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -519,7 +519,7 @@ func (a *TradingAccountCredentialAPIService) RevokeTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -530,7 +530,7 @@ func (a *TradingAccountCredentialAPIService) RevokeTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -541,7 +541,7 @@ func (a *TradingAccountCredentialAPIService) RevokeTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -552,7 +552,7 @@ func (a *TradingAccountCredentialAPIService) RevokeTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -669,7 +669,7 @@ func (a *TradingAccountCredentialAPIService) RotateTradingAccountCredentialExecu
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -680,7 +680,7 @@ func (a *TradingAccountCredentialAPIService) RotateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -691,7 +691,7 @@ func (a *TradingAccountCredentialAPIService) RotateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -702,7 +702,7 @@ func (a *TradingAccountCredentialAPIService) RotateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -713,7 +713,7 @@ func (a *TradingAccountCredentialAPIService) RotateTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -755,7 +755,7 @@ func (r ApiVerifyTradingAccountCredentialRequest) Execute() (*VerifyTradingAccou
 /*
 VerifyTradingAccountCredential Verify trading account credential
 
-Verify credentials and list all supported trading accounts that the credential have permissions to access
+Verify credentials and list all supported trading accounts that the credential have permissions to access. Each returned account includes a status indicating its state relative to Cadenza: NEW (not yet connected), ACTIVE or current status (connected by the current user), or UNAVAILABLE (connected by another user).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiVerifyTradingAccountCredentialRequest
@@ -830,7 +830,7 @@ func (a *TradingAccountCredentialAPIService) VerifyTradingAccountCredentialExecu
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v Root400Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -841,7 +841,7 @@ func (a *TradingAccountCredentialAPIService) VerifyTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v Root401Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -852,7 +852,7 @@ func (a *TradingAccountCredentialAPIService) VerifyTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v Root403Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -863,7 +863,7 @@ func (a *TradingAccountCredentialAPIService) VerifyTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v Root404Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -874,7 +874,7 @@ func (a *TradingAccountCredentialAPIService) VerifyTradingAccountCredentialExecu
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v Root500Response
+			var v BaseResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

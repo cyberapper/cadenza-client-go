@@ -39,7 +39,10 @@ type WsSubscribeResult struct {
 	Data map[string]interface{} `json:"data,omitempty"`
 	// Whether delta compression is enabled
 	Delta *bool `json:"delta,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsSubscribeResult WsSubscribeResult
 
 // NewWsSubscribeResult instantiates a new WsSubscribeResult object
 // This constructor will assign default values to properties that have it defined,
@@ -418,7 +421,42 @@ func (o WsSubscribeResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Delta) {
 		toSerialize["delta"] = o.Delta
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsSubscribeResult) UnmarshalJSON(data []byte) (err error) {
+	varWsSubscribeResult := _WsSubscribeResult{}
+
+	err = json.Unmarshal(data, &varWsSubscribeResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsSubscribeResult(varWsSubscribeResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "expires")
+		delete(additionalProperties, "ttl")
+		delete(additionalProperties, "recoverable")
+		delete(additionalProperties, "epoch")
+		delete(additionalProperties, "publications")
+		delete(additionalProperties, "recovered")
+		delete(additionalProperties, "offset")
+		delete(additionalProperties, "positioned")
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "delta")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsSubscribeResult struct {

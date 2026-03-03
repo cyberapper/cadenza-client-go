@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -27,6 +26,7 @@ type AuthSignupRequest struct {
 	Password string `json:"password"`
 	// Optional user metadata
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AuthSignupRequest AuthSignupRequest
@@ -145,6 +145,11 @@ func (o AuthSignupRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Metadata) {
 		toSerialize["metadata"] = o.Metadata
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -173,15 +178,22 @@ func (o *AuthSignupRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varAuthSignupRequest := _AuthSignupRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthSignupRequest)
+	err = json.Unmarshal(data, &varAuthSignupRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AuthSignupRequest(varAuthSignupRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "email")
+		delete(additionalProperties, "password")
+		delete(additionalProperties, "metadata")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

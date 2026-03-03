@@ -20,7 +20,6 @@ type TimeInForce string
 
 // List of timeInForce
 const (
-	TIMEINFORCE_EMPTY TimeInForce = ""
 	TIMEINFORCE_GTC TimeInForce = "GTC"
 	TIMEINFORCE_IOC TimeInForce = "IOC"
 	TIMEINFORCE_FOK TimeInForce = "FOK"
@@ -40,7 +39,6 @@ const (
 
 // All allowed values of TimeInForce enum
 var AllowedTimeInForceEnumValues = []TimeInForce{
-	"",
 	"GTC",
 	"IOC",
 	"FOK",

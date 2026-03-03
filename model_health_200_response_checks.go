@@ -22,7 +22,10 @@ type Health200ResponseChecks struct {
 	Database *HealthCheckComponent `json:"database,omitempty"`
 	Temporal *HealthCheckComponent `json:"temporal,omitempty"`
 	Redis *HealthCheckComponent `json:"redis,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Health200ResponseChecks Health200ResponseChecks
 
 // NewHealth200ResponseChecks instantiates a new Health200ResponseChecks object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o Health200ResponseChecks) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Redis) {
 		toSerialize["redis"] = o.Redis
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *Health200ResponseChecks) UnmarshalJSON(data []byte) (err error) {
+	varHealth200ResponseChecks := _Health200ResponseChecks{}
+
+	err = json.Unmarshal(data, &varHealth200ResponseChecks)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Health200ResponseChecks(varHealth200ResponseChecks)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "database")
+		delete(additionalProperties, "temporal")
+		delete(additionalProperties, "redis")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableHealth200ResponseChecks struct {

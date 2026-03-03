@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcDeleteSecuritiesParams{}
 // RpcDeleteSecuritiesParams Request to delete securities
 type RpcDeleteSecuritiesParams struct {
 	SecurityIds []string `json:"securityIds"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcDeleteSecuritiesParams RpcDeleteSecuritiesParams
@@ -79,6 +79,11 @@ func (o RpcDeleteSecuritiesParams) MarshalJSON() ([]byte, error) {
 func (o RpcDeleteSecuritiesParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["securityIds"] = o.SecurityIds
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcDeleteSecuritiesParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcDeleteSecuritiesParams := _RpcDeleteSecuritiesParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcDeleteSecuritiesParams)
+	err = json.Unmarshal(data, &varRpcDeleteSecuritiesParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcDeleteSecuritiesParams(varRpcDeleteSecuritiesParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "securityIds")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

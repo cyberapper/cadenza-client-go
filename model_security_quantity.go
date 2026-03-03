@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type SecurityQuantity struct {
 	Venue Venue `json:"venue"`
 	// Decimal value as string to preserve precision
 	Quantity string `json:"quantity" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SecurityQuantity SecurityQuantity
@@ -163,6 +163,11 @@ func (o SecurityQuantity) ToMap() (map[string]interface{}, error) {
 	toSerialize["asset"] = o.Asset
 	toSerialize["venue"] = o.Venue
 	toSerialize["quantity"] = o.Quantity
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -193,15 +198,23 @@ func (o *SecurityQuantity) UnmarshalJSON(data []byte) (err error) {
 
 	varSecurityQuantity := _SecurityQuantity{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSecurityQuantity)
+	err = json.Unmarshal(data, &varSecurityQuantity)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SecurityQuantity(varSecurityQuantity)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "security")
+		delete(additionalProperties, "asset")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "quantity")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

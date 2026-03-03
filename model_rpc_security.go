@@ -23,7 +23,10 @@ type RpcSecurity struct {
 	Symbol *string `json:"symbol,omitempty"`
 	ExternalSymbol *string `json:"externalSymbol,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSecurity RpcSecurity
 
 // NewRpcSecurity instantiates a new RpcSecurity object
 // This constructor will assign default values to properties that have it defined,
@@ -192,7 +195,36 @@ func (o RpcSecurity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Venue) {
 		toSerialize["venue"] = o.Venue
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSecurity) UnmarshalJSON(data []byte) (err error) {
+	varRpcSecurity := _RpcSecurity{}
+
+	err = json.Unmarshal(data, &varRpcSecurity)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSecurity(varRpcSecurity)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "securityId")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "externalSymbol")
+		delete(additionalProperties, "venue")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSecurity struct {

@@ -55,7 +55,10 @@ type RpcInstrument struct {
 	ContractSize *string `json:"contractSize,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcInstrument RpcInstrument
 
 // NewRpcInstrument instantiates a new RpcInstrument object
 // This constructor will assign default values to properties that have it defined,
@@ -994,7 +997,58 @@ func (o RpcInstrument) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcInstrument) UnmarshalJSON(data []byte) (err error) {
+	varRpcInstrument := _RpcInstrument{}
+
+	err = json.Unmarshal(data, &varRpcInstrument)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcInstrument(varRpcInstrument)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "externalSymbol")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "instrumentType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "baseAsset")
+		delete(additionalProperties, "quoteAsset")
+		delete(additionalProperties, "baseSecurityType")
+		delete(additionalProperties, "quoteSecurityType")
+		delete(additionalProperties, "basePrecision")
+		delete(additionalProperties, "quotePrecision")
+		delete(additionalProperties, "lotSize")
+		delete(additionalProperties, "pipSize")
+		delete(additionalProperties, "minQuantity")
+		delete(additionalProperties, "maxQuantity")
+		delete(additionalProperties, "minNotional")
+		delete(additionalProperties, "maxNotional")
+		delete(additionalProperties, "orderTypes")
+		delete(additionalProperties, "timeInForceOptions")
+		delete(additionalProperties, "fee")
+		delete(additionalProperties, "isIcebergAllowed")
+		delete(additionalProperties, "contractSize")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcInstrument struct {

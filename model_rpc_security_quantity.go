@@ -23,7 +23,10 @@ type RpcSecurityQuantity struct {
 	Asset *string `json:"asset,omitempty"`
 	// Quantity (decimal string)
 	Quantity *string `json:"quantity,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSecurityQuantity RpcSecurityQuantity
 
 // NewRpcSecurityQuantity instantiates a new RpcSecurityQuantity object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o RpcSecurityQuantity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Quantity) {
 		toSerialize["quantity"] = o.Quantity
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSecurityQuantity) UnmarshalJSON(data []byte) (err error) {
+	varRpcSecurityQuantity := _RpcSecurityQuantity{}
+
+	err = json.Unmarshal(data, &varRpcSecurityQuantity)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSecurityQuantity(varRpcSecurityQuantity)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "asset")
+		delete(additionalProperties, "quantity")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSecurityQuantity struct {

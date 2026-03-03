@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -24,10 +23,11 @@ type CreateTradingAccountCredentialRequest struct {
 	Venue Venue `json:"venue"`
 	// Nickname of the credential
 	Nickname *string `json:"nickname,omitempty"`
-	CredentialType CredentialType `json:"credentialType"`
+	CredentialType NullableCredentialType `json:"credentialType"`
 	ApiKey *string `json:"apiKey,omitempty"`
 	ApiSecret *string `json:"apiSecret,omitempty"`
 	ApiPassphrase *string `json:"apiPassphrase,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _CreateTradingAccountCredentialRequest CreateTradingAccountCredentialRequest
@@ -36,7 +36,7 @@ type _CreateTradingAccountCredentialRequest CreateTradingAccountCredentialReques
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateTradingAccountCredentialRequest(venue Venue, credentialType CredentialType) *CreateTradingAccountCredentialRequest {
+func NewCreateTradingAccountCredentialRequest(venue Venue, credentialType NullableCredentialType) *CreateTradingAccountCredentialRequest {
 	this := CreateTradingAccountCredentialRequest{}
 	this.Venue = venue
 	this.CredentialType = credentialType
@@ -108,27 +108,29 @@ func (o *CreateTradingAccountCredentialRequest) SetNickname(v string) {
 }
 
 // GetCredentialType returns the CredentialType field value
+// If the value is explicit nil, the zero value for CredentialType will be returned
 func (o *CreateTradingAccountCredentialRequest) GetCredentialType() CredentialType {
-	if o == nil {
+	if o == nil || o.CredentialType.Get() == nil {
 		var ret CredentialType
 		return ret
 	}
 
-	return o.CredentialType
+	return *o.CredentialType.Get()
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateTradingAccountCredentialRequest) GetCredentialTypeOk() (*CredentialType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CredentialType, true
+	return o.CredentialType.Get(), o.CredentialType.IsSet()
 }
 
 // SetCredentialType sets field value
 func (o *CreateTradingAccountCredentialRequest) SetCredentialType(v CredentialType) {
-	o.CredentialType = v
+	o.CredentialType.Set(&v)
 }
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
@@ -241,7 +243,7 @@ func (o CreateTradingAccountCredentialRequest) ToMap() (map[string]interface{}, 
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
-	toSerialize["credentialType"] = o.CredentialType
+	toSerialize["credentialType"] = o.CredentialType.Get()
 	if !IsNil(o.ApiKey) {
 		toSerialize["apiKey"] = o.ApiKey
 	}
@@ -251,6 +253,11 @@ func (o CreateTradingAccountCredentialRequest) ToMap() (map[string]interface{}, 
 	if !IsNil(o.ApiPassphrase) {
 		toSerialize["apiPassphrase"] = o.ApiPassphrase
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -279,15 +286,25 @@ func (o *CreateTradingAccountCredentialRequest) UnmarshalJSON(data []byte) (err 
 
 	varCreateTradingAccountCredentialRequest := _CreateTradingAccountCredentialRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varCreateTradingAccountCredentialRequest)
+	err = json.Unmarshal(data, &varCreateTradingAccountCredentialRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = CreateTradingAccountCredentialRequest(varCreateTradingAccountCredentialRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "apiKey")
+		delete(additionalProperties, "apiSecret")
+		delete(additionalProperties, "apiPassphrase")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

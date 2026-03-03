@@ -20,26 +20,24 @@ type TradingAccountStatus string
 
 // List of tradingAccountStatus
 const (
-	TRADINGACCOUNTSTATUS_SETUP TradingAccountStatus = "SETUP"
+	TRADINGACCOUNTSTATUS_NEW TradingAccountStatus = "NEW"
+	TRADINGACCOUNTSTATUS_CREATED TradingAccountStatus = "CREATED"
 	TRADINGACCOUNTSTATUS_ACTIVE TradingAccountStatus = "ACTIVE"
 	TRADINGACCOUNTSTATUS_INACTIVE TradingAccountStatus = "INACTIVE"
 	TRADINGACCOUNTSTATUS_LOCKED TradingAccountStatus = "LOCKED"
 	TRADINGACCOUNTSTATUS_DISCONNECTED TradingAccountStatus = "DISCONNECTED"
-	TRADINGACCOUNTSTATUS_SUSPENDED TradingAccountStatus = "SUSPENDED"
-	TRADINGACCOUNTSTATUS_DELETED TradingAccountStatus = "DELETED"
-	TRADINGACCOUNTSTATUS_UNKNOWN TradingAccountStatus = "UNKNOWN"
+	TRADINGACCOUNTSTATUS_UNAVAILABLE TradingAccountStatus = "UNAVAILABLE"
 )
 
 // All allowed values of TradingAccountStatus enum
 var AllowedTradingAccountStatusEnumValues = []TradingAccountStatus{
-	"SETUP",
+	"NEW",
+	"CREATED",
 	"ACTIVE",
 	"INACTIVE",
 	"LOCKED",
 	"DISCONNECTED",
-	"SUSPENDED",
-	"DELETED",
-	"UNKNOWN",
+	"UNAVAILABLE",
 }
 
 func (v *TradingAccountStatus) UnmarshalJSON(src []byte) error {

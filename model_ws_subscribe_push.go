@@ -24,7 +24,10 @@ type WsSubscribePush struct {
 	Offset *int64 `json:"offset,omitempty"`
 	Positioned *bool `json:"positioned,omitempty"`
 	Data map[string]interface{} `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsSubscribePush WsSubscribePush
 
 // NewWsSubscribePush instantiates a new WsSubscribePush object
 // This constructor will assign default values to properties that have it defined,
@@ -228,7 +231,37 @@ func (o WsSubscribePush) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsSubscribePush) UnmarshalJSON(data []byte) (err error) {
+	varWsSubscribePush := _WsSubscribePush{}
+
+	err = json.Unmarshal(data, &varWsSubscribePush)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsSubscribePush(varWsSubscribePush)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "recoverable")
+		delete(additionalProperties, "epoch")
+		delete(additionalProperties, "offset")
+		delete(additionalProperties, "positioned")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsSubscribePush struct {

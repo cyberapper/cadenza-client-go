@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **int32** | Error code | 
+**Code** | **int32** | Error code (non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code | 
 **Message** | **string** | Error message | 
 **Temporary** | Pointer to **bool** | Whether the error is temporary and retryable | [optional] 
 

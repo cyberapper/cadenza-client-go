@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type AuthLoginRequest struct {
 	Email string `json:"email"`
 	// User password
 	Password string `json:"password"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _AuthLoginRequest AuthLoginRequest
@@ -108,6 +108,11 @@ func (o AuthLoginRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["email"] = o.Email
 	toSerialize["password"] = o.Password
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -136,15 +141,21 @@ func (o *AuthLoginRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varAuthLoginRequest := _AuthLoginRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAuthLoginRequest)
+	err = json.Unmarshal(data, &varAuthLoginRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = AuthLoginRequest(varAuthLoginRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "email")
+		delete(additionalProperties, "password")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

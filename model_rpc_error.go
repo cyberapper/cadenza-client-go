@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -21,12 +20,13 @@ var _ MappedNullable = &RpcError{}
 
 // RpcError RPC error response
 type RpcError struct {
-	// Error code
+	// Error code (non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
 	Code int32 `json:"code"`
 	// Error message
 	Message string `json:"message"`
 	// Whether the error is temporary and retryable
 	Temporary *bool `json:"temporary,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcError RpcError
@@ -145,6 +145,11 @@ func (o RpcError) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Temporary) {
 		toSerialize["temporary"] = o.Temporary
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -173,15 +178,22 @@ func (o *RpcError) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcError := _RpcError{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcError)
+	err = json.Unmarshal(data, &varRpcError)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcError(varRpcError)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "code")
+		delete(additionalProperties, "message")
+		delete(additionalProperties, "temporary")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

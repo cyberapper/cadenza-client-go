@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -25,7 +24,7 @@ type TradingAccountCredential struct {
 	// UUID string
 	CredentialId string `json:"credentialId"`
 	Venue Venue `json:"venue"`
-	CredentialType CredentialType `json:"credentialType"`
+	CredentialType NullableCredentialType `json:"credentialType"`
 	Nickname *string `json:"nickname,omitempty"`
 	Status TradingAccountCredentialStatus `json:"status"`
 	// Unix timestamp in milliseconds
@@ -40,6 +39,7 @@ type TradingAccountCredential struct {
 	RevokedAt *int64 `json:"revokedAt,omitempty"`
 	// Revocation timestamp in ISO 8601 format
 	RevokedAtDateTime *time.Time `json:"revokedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _TradingAccountCredential TradingAccountCredential
@@ -48,7 +48,7 @@ type _TradingAccountCredential TradingAccountCredential
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTradingAccountCredential(credentialId string, venue Venue, credentialType CredentialType, status TradingAccountCredentialStatus, createdAt int64, updatedAt int64) *TradingAccountCredential {
+func NewTradingAccountCredential(credentialId string, venue Venue, credentialType NullableCredentialType, status TradingAccountCredentialStatus, createdAt int64, updatedAt int64) *TradingAccountCredential {
 	this := TradingAccountCredential{}
 	this.CredentialId = credentialId
 	this.Venue = venue
@@ -116,27 +116,29 @@ func (o *TradingAccountCredential) SetVenue(v Venue) {
 }
 
 // GetCredentialType returns the CredentialType field value
+// If the value is explicit nil, the zero value for CredentialType will be returned
 func (o *TradingAccountCredential) GetCredentialType() CredentialType {
-	if o == nil {
+	if o == nil || o.CredentialType.Get() == nil {
 		var ret CredentialType
 		return ret
 	}
 
-	return o.CredentialType
+	return *o.CredentialType.Get()
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradingAccountCredential) GetCredentialTypeOk() (*CredentialType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.CredentialType, true
+	return o.CredentialType.Get(), o.CredentialType.IsSet()
 }
 
 // SetCredentialType sets field value
 func (o *TradingAccountCredential) SetCredentialType(v CredentialType) {
-	o.CredentialType = v
+	o.CredentialType.Set(&v)
 }
 
 // GetNickname returns the Nickname field value if set, zero value otherwise.
@@ -383,7 +385,7 @@ func (o TradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["credentialId"] = o.CredentialId
 	toSerialize["venue"] = o.Venue
-	toSerialize["credentialType"] = o.CredentialType
+	toSerialize["credentialType"] = o.CredentialType.Get()
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
@@ -402,6 +404,11 @@ func (o TradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RevokedAtDateTime) {
 		toSerialize["revokedAtDateTime"] = o.RevokedAtDateTime
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -434,15 +441,30 @@ func (o *TradingAccountCredential) UnmarshalJSON(data []byte) (err error) {
 
 	varTradingAccountCredential := _TradingAccountCredential{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTradingAccountCredential)
+	err = json.Unmarshal(data, &varTradingAccountCredential)
 
 	if err != nil {
 		return err
 	}
 
 	*o = TradingAccountCredential(varTradingAccountCredential)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		delete(additionalProperties, "revokedAt")
+		delete(additionalProperties, "revokedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

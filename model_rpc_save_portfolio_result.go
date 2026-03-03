@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcSavePortfolioResult{}
 type RpcSavePortfolioResult struct {
 	Data *RpcPortfolio `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcSavePortfolioResult RpcSavePortfolioResult
 
 // NewRpcSavePortfolioResult instantiates a new RpcSavePortfolioResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcSavePortfolioResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcSavePortfolioResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcSavePortfolioResult := _RpcSavePortfolioResult{}
+
+	err = json.Unmarshal(data, &varRpcSavePortfolioResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcSavePortfolioResult(varRpcSavePortfolioResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcSavePortfolioResult struct {

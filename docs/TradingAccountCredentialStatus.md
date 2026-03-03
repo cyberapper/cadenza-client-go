@@ -5,6 +5,10 @@
 
 * `CREATED` (value: `"CREATED"`)
 
+* `ACTIVE` (value: `"ACTIVE"`)
+
+* `EXPIRED` (value: `"EXPIRED"`)
+
 * `REVOKED` (value: `"REVOKED"`)
 
 

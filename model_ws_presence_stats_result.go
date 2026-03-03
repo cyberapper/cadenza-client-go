@@ -23,7 +23,10 @@ type WsPresenceStatsResult struct {
 	NumClients *int32 `json:"numClients,omitempty"`
 	// Number of unique users
 	NumUsers *int32 `json:"numUsers,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsPresenceStatsResult WsPresenceStatsResult
 
 // NewWsPresenceStatsResult instantiates a new WsPresenceStatsResult object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o WsPresenceStatsResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.NumUsers) {
 		toSerialize["numUsers"] = o.NumUsers
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsPresenceStatsResult) UnmarshalJSON(data []byte) (err error) {
+	varWsPresenceStatsResult := _WsPresenceStatsResult{}
+
+	err = json.Unmarshal(data, &varWsPresenceStatsResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsPresenceStatsResult(varWsPresenceStatsResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "numClients")
+		delete(additionalProperties, "numUsers")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsPresenceStatsResult struct {

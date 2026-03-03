@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -41,6 +40,7 @@ type WsSubscribeRequest struct {
 	JoinLeave *bool `json:"joinLeave,omitempty"`
 	// Delta compression mode
 	Delta *string `json:"delta,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsSubscribeRequest WsSubscribeRequest
@@ -413,6 +413,11 @@ func (o WsSubscribeRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Delta) {
 		toSerialize["delta"] = o.Delta
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -440,15 +445,29 @@ func (o *WsSubscribeRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsSubscribeRequest := _WsSubscribeRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsSubscribeRequest)
+	err = json.Unmarshal(data, &varWsSubscribeRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsSubscribeRequest(varWsSubscribeRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "token")
+		delete(additionalProperties, "recover")
+		delete(additionalProperties, "epoch")
+		delete(additionalProperties, "offset")
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "positioned")
+		delete(additionalProperties, "recoverable")
+		delete(additionalProperties, "joinLeave")
+		delete(additionalProperties, "delta")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

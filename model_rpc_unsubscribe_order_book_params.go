@@ -23,7 +23,10 @@ type RpcUnsubscribeOrderBookParams struct {
 	SubscriptionId *string `json:"subscriptionId,omitempty"`
 	// Instrument ID to unsubscribe
 	InstrumentId *string `json:"instrumentId,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcUnsubscribeOrderBookParams RpcUnsubscribeOrderBookParams
 
 // NewRpcUnsubscribeOrderBookParams instantiates a new RpcUnsubscribeOrderBookParams object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o RpcUnsubscribeOrderBookParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.InstrumentId) {
 		toSerialize["instrumentId"] = o.InstrumentId
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcUnsubscribeOrderBookParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcUnsubscribeOrderBookParams := _RpcUnsubscribeOrderBookParams{}
+
+	err = json.Unmarshal(data, &varRpcUnsubscribeOrderBookParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcUnsubscribeOrderBookParams(varRpcUnsubscribeOrderBookParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "subscriptionId")
+		delete(additionalProperties, "instrumentId")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcUnsubscribeOrderBookParams struct {

@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcCreateSubscriptionResult{}
 type RpcCreateSubscriptionResult struct {
 	Data []RpcSubscription `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcCreateSubscriptionResult RpcCreateSubscriptionResult
 
 // NewRpcCreateSubscriptionResult instantiates a new RpcCreateSubscriptionResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcCreateSubscriptionResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcCreateSubscriptionResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcCreateSubscriptionResult := _RpcCreateSubscriptionResult{}
+
+	err = json.Unmarshal(data, &varRpcCreateSubscriptionResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcCreateSubscriptionResult(varRpcCreateSubscriptionResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcCreateSubscriptionResult struct {

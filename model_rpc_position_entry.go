@@ -28,6 +28,7 @@ type RpcPositionEntry struct {
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	SecurityType *SecurityType `json:"securityType,omitempty"`
 	Status *PositionStatus `json:"status,omitempty"`
+	PositionSide *PositionSide `json:"positionSide,omitempty"`
 	// Position quantity
 	Quantity *string `json:"quantity,omitempty"`
 	EntryPrice *string `json:"entryPrice,omitempty"`
@@ -37,7 +38,10 @@ type RpcPositionEntry struct {
 	RealizedPnl *string `json:"realizedPnl,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcPositionEntry RpcPositionEntry
 
 // NewRpcPositionEntry instantiates a new RpcPositionEntry object
 // This constructor will assign default values to properties that have it defined,
@@ -278,6 +282,38 @@ func (o *RpcPositionEntry) HasStatus() bool {
 // SetStatus gets a reference to the given PositionStatus and assigns it to the Status field.
 func (o *RpcPositionEntry) SetStatus(v PositionStatus) {
 	o.Status = &v
+}
+
+// GetPositionSide returns the PositionSide field value if set, zero value otherwise.
+func (o *RpcPositionEntry) GetPositionSide() PositionSide {
+	if o == nil || IsNil(o.PositionSide) {
+		var ret PositionSide
+		return ret
+	}
+	return *o.PositionSide
+}
+
+// GetPositionSideOk returns a tuple with the PositionSide field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RpcPositionEntry) GetPositionSideOk() (*PositionSide, bool) {
+	if o == nil || IsNil(o.PositionSide) {
+		return nil, false
+	}
+	return o.PositionSide, true
+}
+
+// HasPositionSide returns a boolean if a field has been set.
+func (o *RpcPositionEntry) HasPositionSide() bool {
+	if o != nil && !IsNil(o.PositionSide) {
+		return true
+	}
+
+	return false
+}
+
+// SetPositionSide gets a reference to the given PositionSide and assigns it to the PositionSide field.
+func (o *RpcPositionEntry) SetPositionSide(v PositionSide) {
+	o.PositionSide = &v
 }
 
 // GetQuantity returns the Quantity field value if set, zero value otherwise.
@@ -567,6 +603,9 @@ func (o RpcPositionEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
+	if !IsNil(o.PositionSide) {
+		toSerialize["positionSide"] = o.PositionSide
+	}
 	if !IsNil(o.Quantity) {
 		toSerialize["quantity"] = o.Quantity
 	}
@@ -591,7 +630,48 @@ func (o RpcPositionEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcPositionEntry) UnmarshalJSON(data []byte) (err error) {
+	varRpcPositionEntry := _RpcPositionEntry{}
+
+	err = json.Unmarshal(data, &varRpcPositionEntry)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcPositionEntry(varRpcPositionEntry)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "externalPositionId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "securitySymbol")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "positionSide")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "entryPrice")
+		delete(additionalProperties, "exitPrice")
+		delete(additionalProperties, "currentPrice")
+		delete(additionalProperties, "unrealizedPnl")
+		delete(additionalProperties, "realizedPnl")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcPositionEntry struct {

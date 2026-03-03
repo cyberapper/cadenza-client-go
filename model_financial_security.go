@@ -33,7 +33,10 @@ type FinancialSecurity struct {
 	MinQuantity *string `json:"minQuantity,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
 	LotSize *string `json:"lotSize,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _FinancialSecurity FinancialSecurity
 
 // NewFinancialSecurity instantiates a new FinancialSecurity object
 // This constructor will assign default values to properties that have it defined,
@@ -342,7 +345,40 @@ func (o FinancialSecurity) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LotSize) {
 		toSerialize["lotSize"] = o.LotSize
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *FinancialSecurity) UnmarshalJSON(data []byte) (err error) {
+	varFinancialSecurity := _FinancialSecurity{}
+
+	err = json.Unmarshal(data, &varFinancialSecurity)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FinancialSecurity(varFinancialSecurity)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "securityId")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "precision")
+		delete(additionalProperties, "scale")
+		delete(additionalProperties, "minQuantity")
+		delete(additionalProperties, "lotSize")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableFinancialSecurity struct {

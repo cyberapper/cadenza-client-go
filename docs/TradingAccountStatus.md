@@ -3,7 +3,9 @@
 ## Enum
 
 
-* `SETUP` (value: `"SETUP"`)
+* `NEW` (value: `"NEW"`)
+
+* `CREATED` (value: `"CREATED"`)
 
 * `ACTIVE` (value: `"ACTIVE"`)
 
@@ -13,11 +15,7 @@
 
 * `DISCONNECTED` (value: `"DISCONNECTED"`)
 
-* `SUSPENDED` (value: `"SUSPENDED"`)
-
-* `DELETED` (value: `"DELETED"`)
-
-* `UNKNOWN` (value: `"UNKNOWN"`)
+* `UNAVAILABLE` (value: `"UNAVAILABLE"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

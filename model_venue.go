@@ -20,7 +20,6 @@ type Venue string
 
 // List of venue
 const (
-	VENUE_EMPTY Venue = ""
 	VENUE_BINANCE Venue = "BINANCE"
 	VENUE_B2_C2 Venue = "B2C2"
 	VENUE_WINTERMUTE Venue = "WINTERMUTE"
@@ -50,7 +49,6 @@ const (
 
 // All allowed values of Venue enum
 var AllowedVenueEnumValues = []Venue{
-	"",
 	"BINANCE",
 	"B2C2",
 	"WINTERMUTE",

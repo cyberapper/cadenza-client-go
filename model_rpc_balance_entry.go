@@ -49,7 +49,10 @@ type RpcBalanceEntry struct {
 	MarginRatio *string `json:"marginRatio,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcBalanceEntry RpcBalanceEntry
 
 // NewRpcBalanceEntry instantiates a new RpcBalanceEntry object
 // This constructor will assign default values to properties that have it defined,
@@ -813,7 +816,53 @@ func (o RpcBalanceEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcBalanceEntry) UnmarshalJSON(data []byte) (err error) {
+	varRpcBalanceEntry := _RpcBalanceEntry{}
+
+	err = json.Unmarshal(data, &varRpcBalanceEntry)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcBalanceEntry(varRpcBalanceEntry)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "balanceId")
+		delete(additionalProperties, "externalBalanceId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "securitySymbol")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "free")
+		delete(additionalProperties, "locked")
+		delete(additionalProperties, "frozen")
+		delete(additionalProperties, "borrowed")
+		delete(additionalProperties, "interestOwed")
+		delete(additionalProperties, "total")
+		delete(additionalProperties, "net")
+		delete(additionalProperties, "collateralWeight")
+		delete(additionalProperties, "collateralValue")
+		delete(additionalProperties, "collateralEnabled")
+		delete(additionalProperties, "crossMargin")
+		delete(additionalProperties, "isolatedMargin")
+		delete(additionalProperties, "marginRatio")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcBalanceEntry struct {

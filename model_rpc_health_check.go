@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type RpcHealthCheck struct {
 	// API version
 	Version string `json:"version"`
 	Checks *Health200ResponseChecks `json:"checks,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcHealthCheck RpcHealthCheck
@@ -172,6 +172,11 @@ func (o RpcHealthCheck) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Checks) {
 		toSerialize["checks"] = o.Checks
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -201,15 +206,23 @@ func (o *RpcHealthCheck) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcHealthCheck := _RpcHealthCheck{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcHealthCheck)
+	err = json.Unmarshal(data, &varRpcHealthCheck)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcHealthCheck(varRpcHealthCheck)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "timestamp")
+		delete(additionalProperties, "version")
+		delete(additionalProperties, "checks")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

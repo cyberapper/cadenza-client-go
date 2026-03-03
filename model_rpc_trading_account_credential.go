@@ -22,7 +22,7 @@ var _ MappedNullable = &RpcTradingAccountCredential{}
 type RpcTradingAccountCredential struct {
 	CredentialId *string `json:"credentialId,omitempty"`
 	Nickname *string `json:"nickname,omitempty"`
-	CredentialType *CredentialType `json:"credentialType,omitempty"`
+	CredentialType NullableCredentialType `json:"credentialType,omitempty"`
 	Status *CredentialStatus `json:"status,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
 	// API key (only in responses where withSecret=true)
@@ -34,7 +34,10 @@ type RpcTradingAccountCredential struct {
 	WithInfo *bool `json:"withInfo,omitempty"`
 	// Whether secret fields are populated
 	WithSecret *bool `json:"withSecret,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTradingAccountCredential RpcTradingAccountCredential
 
 // NewRpcTradingAccountCredential instantiates a new RpcTradingAccountCredential object
 // This constructor will assign default values to properties that have it defined,
@@ -117,36 +120,46 @@ func (o *RpcTradingAccountCredential) SetNickname(v string) {
 	o.Nickname = &v
 }
 
-// GetCredentialType returns the CredentialType field value if set, zero value otherwise.
+// GetCredentialType returns the CredentialType field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RpcTradingAccountCredential) GetCredentialType() CredentialType {
-	if o == nil || IsNil(o.CredentialType) {
+	if o == nil || IsNil(o.CredentialType.Get()) {
 		var ret CredentialType
 		return ret
 	}
-	return *o.CredentialType
+	return *o.CredentialType.Get()
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcTradingAccountCredential) GetCredentialTypeOk() (*CredentialType, bool) {
-	if o == nil || IsNil(o.CredentialType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CredentialType, true
+	return o.CredentialType.Get(), o.CredentialType.IsSet()
 }
 
 // HasCredentialType returns a boolean if a field has been set.
 func (o *RpcTradingAccountCredential) HasCredentialType() bool {
-	if o != nil && !IsNil(o.CredentialType) {
+	if o != nil && o.CredentialType.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCredentialType gets a reference to the given CredentialType and assigns it to the CredentialType field.
+// SetCredentialType gets a reference to the given NullableCredentialType and assigns it to the CredentialType field.
 func (o *RpcTradingAccountCredential) SetCredentialType(v CredentialType) {
-	o.CredentialType = &v
+	o.CredentialType.Set(&v)
+}
+// SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
+func (o *RpcTradingAccountCredential) SetCredentialTypeNil() {
+	o.CredentialType.Set(nil)
+}
+
+// UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
+func (o *RpcTradingAccountCredential) UnsetCredentialType() {
+	o.CredentialType.Unset()
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
@@ -421,8 +434,8 @@ func (o RpcTradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
-	if !IsNil(o.CredentialType) {
-		toSerialize["credentialType"] = o.CredentialType
+	if o.CredentialType.IsSet() {
+		toSerialize["credentialType"] = o.CredentialType.Get()
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
@@ -448,7 +461,43 @@ func (o RpcTradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.WithSecret) {
 		toSerialize["withSecret"] = o.WithSecret
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTradingAccountCredential) UnmarshalJSON(data []byte) (err error) {
+	varRpcTradingAccountCredential := _RpcTradingAccountCredential{}
+
+	err = json.Unmarshal(data, &varRpcTradingAccountCredential)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTradingAccountCredential(varRpcTradingAccountCredential)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialId")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "apiKey")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "revokedAt")
+		delete(additionalProperties, "withInfo")
+		delete(additionalProperties, "withSecret")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTradingAccountCredential struct {

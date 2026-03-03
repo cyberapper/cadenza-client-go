@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &RpcSyncInstrumentsParams{}
 type RpcSyncInstrumentsParams struct {
 	Venue Venue `json:"venue"`
 	Symbols []string `json:"symbols,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcSyncInstrumentsParams RpcSyncInstrumentsParams
@@ -115,6 +115,11 @@ func (o RpcSyncInstrumentsParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Symbols) {
 		toSerialize["symbols"] = o.Symbols
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -142,15 +147,21 @@ func (o *RpcSyncInstrumentsParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcSyncInstrumentsParams := _RpcSyncInstrumentsParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcSyncInstrumentsParams)
+	err = json.Unmarshal(data, &varRpcSyncInstrumentsParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcSyncInstrumentsParams(varRpcSyncInstrumentsParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbols")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

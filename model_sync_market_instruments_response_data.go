@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &SyncMarketInstrumentsResponseData{}
 type SyncMarketInstrumentsResponseData struct {
 	// Total number of instruments synced
 	Total int32 `json:"total"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SyncMarketInstrumentsResponseData SyncMarketInstrumentsResponseData
@@ -80,6 +80,11 @@ func (o SyncMarketInstrumentsResponseData) MarshalJSON() ([]byte, error) {
 func (o SyncMarketInstrumentsResponseData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["total"] = o.Total
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *SyncMarketInstrumentsResponseData) UnmarshalJSON(data []byte) (err erro
 
 	varSyncMarketInstrumentsResponseData := _SyncMarketInstrumentsResponseData{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSyncMarketInstrumentsResponseData)
+	err = json.Unmarshal(data, &varSyncMarketInstrumentsResponseData)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SyncMarketInstrumentsResponseData(varSyncMarketInstrumentsResponseData)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "total")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -34,6 +33,7 @@ type PositionEntry struct {
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	SecurityType SecurityType `json:"securityType"`
 	Status PositionStatus `json:"status"`
+	PositionSide PositionSide `json:"positionSide"`
 	// Decimal value as string to preserve precision
 	Quantity string `json:"quantity" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
@@ -58,6 +58,7 @@ type PositionEntry struct {
 	ClosedAt *int64 `json:"closedAt,omitempty"`
 	// Position closure timestamp in ISO 8601 format
 	ClosedAtDateTime NullableTime `json:"closedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _PositionEntry PositionEntry
@@ -66,13 +67,14 @@ type _PositionEntry PositionEntry
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPositionEntry(positionId string, securitySymbol string, tradingAccountId string, securityType SecurityType, status PositionStatus, quantity string, createdAt int64, updatedAt int64) *PositionEntry {
+func NewPositionEntry(positionId string, securitySymbol string, tradingAccountId string, securityType SecurityType, status PositionStatus, positionSide PositionSide, quantity string, createdAt int64, updatedAt int64) *PositionEntry {
 	this := PositionEntry{}
 	this.PositionId = positionId
 	this.SecuritySymbol = securitySymbol
 	this.TradingAccountId = tradingAccountId
 	this.SecurityType = securityType
 	this.Status = status
+	this.PositionSide = positionSide
 	this.Quantity = quantity
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -279,6 +281,30 @@ func (o *PositionEntry) GetStatusOk() (*PositionStatus, bool) {
 // SetStatus sets field value
 func (o *PositionEntry) SetStatus(v PositionStatus) {
 	o.Status = v
+}
+
+// GetPositionSide returns the PositionSide field value
+func (o *PositionEntry) GetPositionSide() PositionSide {
+	if o == nil {
+		var ret PositionSide
+		return ret
+	}
+
+	return o.PositionSide
+}
+
+// GetPositionSideOk returns a tuple with the PositionSide field value
+// and a boolean to check if the value has been set.
+func (o *PositionEntry) GetPositionSideOk() (*PositionSide, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PositionSide, true
+}
+
+// SetPositionSide sets field value
+func (o *PositionEntry) SetPositionSide(v PositionSide) {
+	o.PositionSide = v
 }
 
 // GetQuantity returns the Quantity field value
@@ -672,6 +698,7 @@ func (o PositionEntry) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["securityType"] = o.SecurityType
 	toSerialize["status"] = o.Status
+	toSerialize["positionSide"] = o.PositionSide
 	toSerialize["quantity"] = o.Quantity
 	if !IsNil(o.EntryPrice) {
 		toSerialize["entryPrice"] = o.EntryPrice
@@ -702,6 +729,11 @@ func (o PositionEntry) ToMap() (map[string]interface{}, error) {
 	if o.ClosedAtDateTime.IsSet() {
 		toSerialize["closedAtDateTime"] = o.ClosedAtDateTime.Get()
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -715,6 +747,7 @@ func (o *PositionEntry) UnmarshalJSON(data []byte) (err error) {
 		"tradingAccountId",
 		"securityType",
 		"status",
+		"positionSide",
 		"quantity",
 		"createdAt",
 		"updatedAt",
@@ -736,15 +769,39 @@ func (o *PositionEntry) UnmarshalJSON(data []byte) (err error) {
 
 	varPositionEntry := _PositionEntry{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPositionEntry)
+	err = json.Unmarshal(data, &varPositionEntry)
 
 	if err != nil {
 		return err
 	}
 
 	*o = PositionEntry(varPositionEntry)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "securitySymbol")
+		delete(additionalProperties, "externalPositionId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "positionSide")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "entryPrice")
+		delete(additionalProperties, "exitPrice")
+		delete(additionalProperties, "currentPrice")
+		delete(additionalProperties, "unrealizedPnl")
+		delete(additionalProperties, "realizedPnl")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		delete(additionalProperties, "closedAt")
+		delete(additionalProperties, "closedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

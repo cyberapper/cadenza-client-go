@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Success** | **bool** | Indicates if the operation was successful | 
-**Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Success** | Pointer to **bool** | Indicates if the operation was successful | [optional] 
+**Errno** | **int32** | Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
 **Data** | Pointer to [**Root200ResponseAllOfData**](Root200ResponseAllOfData.md) |  | [optional] 
 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewRoot200Response
 
-`func NewRoot200Response(success bool, errno int32, error_ NullableString, ) *Root200Response`
+`func NewRoot200Response(errno int32, ) *Root200Response`
 
 NewRoot200Response instantiates a new Root200Response object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +48,11 @@ and a boolean to check if the value has been set.
 
 SetSuccess sets Success field to given value.
 
+### HasSuccess
+
+`func (o *Root200Response) HasSuccess() bool`
+
+HasSuccess returns a boolean if a field has been set.
 
 ### GetErrno
 
@@ -88,6 +93,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *Root200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 

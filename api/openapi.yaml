@@ -59,31 +59,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: "Root, Information about the API"
       tags:
@@ -106,7 +106,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "503":
           content:
@@ -135,12 +135,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/authSignup_200_response"
-          description: Authentication user response
+          description: Authentication session response with tokens
         "400":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "429":
           content:
@@ -152,7 +152,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       security: []
       summary: Sign up new user
@@ -173,19 +173,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authLogin_200_response"
+                $ref: "#/components/schemas/authSignup_200_response"
           description: Authentication session response with tokens
         "400":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "429":
           content:
@@ -197,7 +197,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       security: []
       summary: Login with email and password
@@ -218,13 +218,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Logout user
       tags:
@@ -244,25 +244,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authLogin_200_response"
+                $ref: "#/components/schemas/authSignup_200_response"
           description: Authentication session response with tokens
         "400":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       security: []
       summary: Refresh access token
@@ -277,19 +277,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authSignup_200_response"
+                $ref: "#/components/schemas/authGetUser_200_response"
           description: Authentication user response
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Get current user
       tags:
@@ -308,25 +308,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/authSignup_200_response"
+                $ref: "#/components/schemas/authGetUser_200_response"
           description: Authentication user response
         "400":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Update current user
       tags:
@@ -352,7 +352,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "429":
           content:
@@ -364,7 +364,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       security: []
       summary: Request password recovery
@@ -390,31 +390,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Submit trade order
       tags:
@@ -439,31 +439,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Cancel trade order
       tags:
@@ -573,31 +573,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List trade orders
       tags:
@@ -621,7 +621,7 @@ paths:
         name: credentialStatus
         required: false
         schema:
-          $ref: "#/components/schemas/tradingAccountStatus"
+          $ref: "#/components/schemas/credentialStatus"
         style: form
       - description: credentialId array
         explode: true
@@ -644,13 +644,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
       summary: List trading account credentials
       tags:
@@ -675,31 +675,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Create trading account credential
       tags:
@@ -724,31 +724,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Revoke trading account credential
       tags:
@@ -775,39 +775,42 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Rotate trading account credential
       tags:
       - Trading Account Credential
   /api/v3/credential/verify:
     post:
-      description: Verify credentials and list all supported trading accounts that
-        the credential have permissions to access
+      description: "Verify credentials and list all supported trading accounts that\
+        \ the credential have permissions to access. Each returned account includes\
+        \ a status indicating its state relative to Cadenza: NEW (not yet connected),\
+        \ ACTIVE or current status (connected by the current user), or UNAVAILABLE\
+        \ (connected by another user)."
       operationId: verifyTradingAccountCredential
       requestBody:
         content:
@@ -825,38 +828,39 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Verify trading account credential
       tags:
       - Trading Account Credential
   /api/v3/tradingAccount/connect:
     post:
-      description: Connect to a trading account
+      description: Connect to a trading account. Returns 409 Conflict if the external
+        account is already connected by another user.
       operationId: connectTradingAccount
       requestBody:
         content:
@@ -874,31 +878,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Connect trading account
       tags:
@@ -927,31 +937,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Disconnect trading account
       tags:
@@ -976,31 +986,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Update trading account
       tags:
@@ -1085,31 +1095,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List trading accounts
       tags:
@@ -1135,31 +1145,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Disable trading account
       tags:
@@ -1185,31 +1195,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Enable trading account
       tags:
@@ -1294,31 +1304,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List trading account operations
       tags:
@@ -1343,31 +1353,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Subscribe to trading account updates
       tags:
@@ -1392,13 +1402,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
       summary: Unsubscribe from trading account updates
       tags:
@@ -1458,13 +1468,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
       summary: List trading account subscriptions
       tags:
@@ -1533,31 +1543,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List trading account portfolios
       tags:
@@ -1582,31 +1592,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Subscribe to order book updates
       tags:
@@ -1631,31 +1641,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Unsubscribe from order book updates
       tags:
@@ -1684,31 +1694,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List order book subscriptions
       tags:
@@ -1728,31 +1738,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List market venues
       tags:
@@ -1777,31 +1787,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Sync market instruments
       tags:
@@ -1826,31 +1836,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Delete market instrument
       tags:
@@ -1875,31 +1885,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Enable market instrument
       tags:
@@ -1924,31 +1934,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Disable market instrument
       tags:
@@ -2027,31 +2037,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List market instruments
       tags:
@@ -2076,31 +2086,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Sync market securities
       tags:
@@ -2125,31 +2135,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Delete market security
       tags:
@@ -2209,31 +2219,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List market securities
       tags:
@@ -2290,31 +2300,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Get market order book
       tags:
@@ -2376,31 +2386,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
         "403":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_403_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Forbidden - Insufficient permissions
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_404_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Not found
         "500":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_500_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: List market order books
       tags:
@@ -2549,13 +2559,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_400_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Bad request
         "401":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/root_401_response"
+                $ref: "#/components/schemas/baseResponse"
           description: Unauthorized - Authentication required
       security: []
       summary: WebSocket Connection
@@ -2636,7 +2646,7 @@ components:
       name: credentialStatus
       required: false
       schema:
-        $ref: "#/components/schemas/tradingAccountStatus"
+        $ref: "#/components/schemas/credentialStatus"
       style: form
     credentialId:
       description: Credential ID
@@ -2862,31 +2872,31 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/root_400_response"
+            $ref: "#/components/schemas/baseResponse"
       description: Bad request
     unauthorizedResponse:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/root_401_response"
+            $ref: "#/components/schemas/baseResponse"
       description: Unauthorized - Authentication required
     forbiddenResponse:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/root_403_response"
+            $ref: "#/components/schemas/baseResponse"
       description: Forbidden - Insufficient permissions
     notFoundResponse:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/root_404_response"
+            $ref: "#/components/schemas/baseResponse"
       description: Not found
     internalServerErrorResponse:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/root_500_response"
+            $ref: "#/components/schemas/baseResponse"
       description: Internal server error
     rateLimitedResponse:
       content:
@@ -2898,13 +2908,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/authSignup_200_response"
+            $ref: "#/components/schemas/authGetUser_200_response"
       description: Authentication user response
     authSessionResponse:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/authLogin_200_response"
+            $ref: "#/components/schemas/authSignup_200_response"
       description: Authentication session response with tokens
     authSimpleResponse:
       content:
@@ -3046,12 +3056,30 @@ components:
       description: List market securities response
   schemas:
     baseResponse:
+      example:
+        errno: 0
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
       properties:
         success:
           description: Indicates if the operation was successful
           type: boolean
         errno:
-          description: "Error code (0 for success, negative for errors)"
+          description: "Error code (0 for success, non-zero indicates error). Format:\
+            \ AABBB where AA is the module code and BBB is the error code"
           example: 0
           type: integer
         error:
@@ -3062,8 +3090,6 @@ components:
           $ref: "#/components/schemas/baseResponse_details"
       required:
       - errno
-      - error
-      - success
       type: object
     millisecond:
       description: Unix timestamp in milliseconds
@@ -3173,6 +3199,23 @@ components:
           - environments
           tenantId: tenantId
         role: authenticated
+        identities:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          provider: provider
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          identityData:
+            key: ""
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          provider: provider
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: id
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          identityData:
+            key: ""
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         phone: phone
         lastSignInAt: 2000-01-23T04:56:07.000+00:00
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -3228,6 +3271,12 @@ components:
           additionalProperties: true
           description: User-defined metadata
           type: object
+        identities:
+          description: User identity providers (Supabase specific)
+          items:
+            $ref: "#/components/schemas/authUser_identities_inner"
+          nullable: true
+          type: array
       type: object
     authSession:
       description: Authentication session with tokens
@@ -3243,6 +3292,23 @@ components:
             - environments
             tenantId: tenantId
           role: authenticated
+          identities:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           phone: phone
           lastSignInAt: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -3281,7 +3347,6 @@ components:
         Trading venue identifier. UAT/sandbox environments are treated as separate venues.
         Note: _SANDBOX and _PAPER suffixes are deprecated. Use _UAT suffix for new integrations.
       enum:
-      - ""
       - BINANCE
       - B2C2
       - WINTERMUTE
@@ -3312,24 +3377,22 @@ components:
     credentialType:
       description: Type of API credential
       enum:
-      - ""
       - API_KEY
       - HMAC
       - OAUTH
       - RSA
       - ED25519
       example: API_KEY
+      nullable: true
       type: string
     credentialStatus:
       description: Status of the credential
       enum:
       - CREATED
-      - VALIDATED
-      - INACTIVE
+      - ACTIVE
+      - EXPIRED
       - REVOKED
-      - ERROR
-      - UNKNOWN
-      example: VALIDATED
+      example: CREATED
       type: string
     orderSide:
       description: Order side (buy or sell)
@@ -3342,7 +3405,6 @@ components:
     orderType:
       description: Order type
       enum:
-      - ""
       - MARKET
       - LIMIT
       - STOP
@@ -3355,11 +3417,11 @@ components:
       - QUOTED
       - UNKNOWN
       example: LIMIT
+      nullable: true
       type: string
     orderStatus:
       description: Order status
       enum:
-      - ""
       - CREATED
       - SUBMITTED
       - ACCEPTED
@@ -3374,6 +3436,7 @@ components:
       - REVOKED
       - UNKNOWN
       example: FILLED
+      nullable: true
       type: string
     rejectReason:
       description: Reason for order rejection
@@ -3384,7 +3447,6 @@ components:
     timeInForce:
       description: Time in force - specifies how long an order remains active
       enum:
-      - ""
       - GTC
       - IOC
       - FOK
@@ -3401,6 +3463,7 @@ components:
       - EXT
       - UNKNOWN
       example: GTC
+      nullable: true
       type: string
     quantityType:
       description: How order quantity is specified
@@ -3472,14 +3535,13 @@ components:
     tradingAccountStatus:
       description: Status of the trading account
       enum:
-      - SETUP
+      - NEW
+      - CREATED
       - ACTIVE
       - INACTIVE
       - LOCKED
       - DISCONNECTED
-      - SUSPENDED
-      - DELETED
-      - UNKNOWN
+      - UNAVAILABLE
       example: ACTIVE
       type: string
     tradingAccountType:
@@ -3487,8 +3549,7 @@ components:
       enum:
       - SPOT
       - MARGIN
-      - FUTURES
-      - OPTIONS
+      - CREDIT
       example: SPOT
       type: string
     tradingAccountOperationType:
@@ -3509,68 +3570,62 @@ components:
       description: Status of the trading account credential
       enum:
       - CREATED
+      - ACTIVE
+      - EXPIRED
       - REVOKED
+      example: CREATED
       type: string
     accountType:
       description: Type of trading account
       enum:
       - SPOT
       - MARGIN
-      - FUTURES
-      - OPTIONS
+      - CREDIT
       example: SPOT
       type: string
     positionMode:
       description: Position mode setting - how positions are handled
       enum:
-      - ""
       - HEDGE
       - NETTING
       example: NETTING
+      nullable: true
       type: string
     collateralMode:
       description: Collateral mode - how margin is shared across positions
       enum:
-      - ""
       - CROSS
       - ISOLATED
       example: CROSS
+      nullable: true
       type: string
     marginMode:
       description: Margin mode - account-level margin calculation type
       enum:
-      - ""
-      - STANDARD
-      - PORTFOLIO
-      example: STANDARD
+      - ISOLATED
+      - CROSS
+      example: CROSS
+      nullable: true
       type: string
     instrumentType:
       description: Type of financial instrument
       enum:
       - SPOT
-      - FUTURES
-      - OPTION
-      - PERPETUAL
-      - DERIVATIVE
+      - CONTRACT
       example: SPOT
       type: string
     securityType:
-      description: Type of security (base asset)
+      description: Type of financial instrument
       enum:
-      - ""
-      - CASH
       - STOCK
       - CRYPTO
       - CURRENCY
       - COMMODITY
       - INDEX
       - BOND
-      - DERIVATIVE
       - OPTION
-      - FUTURE
       - FUTURES
       - PERPETUAL
-      - FOREX
       example: CRYPTO
       type: string
     operationType:
@@ -3607,20 +3662,25 @@ components:
       - MAINTENANCE
       type: string
     balanceStatus:
-      description: Balance entry status
+      description: Status of a balance entry
       enum:
       - ACTIVE
-      - INACTIVE
-      - FROZEN
+      - LOCKED
       example: ACTIVE
       type: string
     positionStatus:
-      description: Position entry status
+      description: Status of a position
       enum:
       - OPEN
       - CLOSED
-      - LIQUIDATED
       example: OPEN
+      type: string
+    positionSide:
+      description: Side of a position
+      enum:
+      - LONG
+      - SHORT
+      example: LONG
       type: string
     updateMode:
       description: Portfolio update mode
@@ -3632,15 +3692,15 @@ components:
     subscriptionType:
       description: Type of data subscription
       enum:
-      - MARKET.SUBSCRIPTION.ORDERBOOK
-      - MARKET.SUBSCRIPTION.TRADE
-      - MARKET.SUBSCRIPTION.TICKER
-      - MARKET.SUBSCRIPTION.KLINE
-      - TRADING_ACCOUNT.SUBSCRIPTION.USER_DATA
-      - TRADING_ACCOUNT.SUBSCRIPTION.PORTFOLIO
-      - TRADING_ACCOUNT.SUBSCRIPTION.EXECUTION_REPORT
-      - TRADING_ACCOUNT.SUBSCRIPTION.TRADING_ACCOUNT
-      example: MARKET.SUBSCRIPTION.ORDERBOOK
+      - ORDERBOOK
+      - TRADE
+      - TICKER
+      - KLINE
+      - USER_DATA
+      - PORTFOLIO
+      - EXECUTION_REPORT
+      - TRADING_ACCOUNT
+      example: ORDERBOOK
       type: string
     subscriptionStatus:
       description: Status of a subscription
@@ -4254,7 +4314,6 @@ components:
       - baseMaxSignificant
       - basePrecision
       - baseScale
-      - baseSecurityType
       - externalSymbol
       - instrumentId
       - instrumentType
@@ -4268,7 +4327,6 @@ components:
       - quoteMaxSignificant
       - quotePrecision
       - quoteScale
-      - quoteSecurityType
       - status
       - symbol
       - timeInForceOptions
@@ -4365,7 +4423,7 @@ components:
         accountType: SPOT
         positionMode: NETTING
         collateralMode: CROSS
-        marginMode: STANDARD
+        marginMode: CROSS
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
         tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -4485,6 +4543,7 @@ components:
         - exitPrice: "1234.56789000"
           quantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
+          positionSide: LONG
           currentPrice: "1234.56789000"
           entryPrice: "1234.56789000"
           createdAt: 1632933600000
@@ -4504,6 +4563,7 @@ components:
         - exitPrice: "1234.56789000"
           quantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
+          positionSide: LONG
           currentPrice: "1234.56789000"
           entryPrice: "1234.56789000"
           createdAt: 1632933600000
@@ -4560,6 +4620,7 @@ components:
         exitPrice: "1234.56789000"
         quantity: "1234.56789000"
         instrumentId: BINANCE:BTC/USDT
+        positionSide: LONG
         currentPrice: "1234.56789000"
         entryPrice: "1234.56789000"
         createdAt: 1632933600000
@@ -4601,6 +4662,8 @@ components:
           $ref: "#/components/schemas/securityType"
         status:
           $ref: "#/components/schemas/positionStatus"
+        positionSide:
+          $ref: "#/components/schemas/positionSide"
         quantity:
           description: Decimal value as string to preserve precision
           example: "1234.56789000"
@@ -4662,6 +4725,7 @@ components:
       required:
       - createdAt
       - positionId
+      - positionSide
       - quantity
       - securitySymbol
       - securityType
@@ -4884,7 +4948,7 @@ components:
         venue: BINANCE
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-        subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+        subscriptionType: ORDERBOOK
         instrumentId: BINANCE:BTC/USDT
         lastEventTimestamp: 1632933600000
         tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -5598,7 +5662,7 @@ components:
               version: 3.0.1
             error:
               temporary: false
-              code: -111000
+              code: 11000
               message: Invalid order parameters
         subscribe:
           expires: true
@@ -6158,7 +6222,7 @@ components:
             version: 3.0.1
           error:
             temporary: false
-            code: -111000
+            code: 11000
             message: Invalid order parameters
       properties:
         data:
@@ -6622,12 +6686,13 @@ components:
       description: RPC error response
       example:
         temporary: false
-        code: -111000
+        code: 11000
         message: Invalid order parameters
       properties:
         code:
-          description: Error code
-          example: -111000
+          description: "Error code (non-zero indicates error). Format: AABBB where\
+            \ AA is the module code and BBB is the error code"
+          example: 11000
           type: integer
         message:
           description: Error message
@@ -7252,6 +7317,8 @@ components:
           $ref: "#/components/schemas/securityType"
         status:
           $ref: "#/components/schemas/positionStatus"
+        positionSide:
+          $ref: "#/components/schemas/positionSide"
         quantity:
           description: Position quantity
           type: string
@@ -7520,7 +7587,7 @@ components:
           version: 3.0.1
         error:
           temporary: false
-          code: -111000
+          code: 11000
           message: Invalid order parameters
       properties:
         data:
@@ -8629,141 +8696,6 @@ components:
           - admin
           - write
         error: error
-    root_400_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
-            example: Bad request
-            nullable: true
-            type: string
-        type: object
-      example:
-        errno: 0
-        data: Bad request
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
-    root_401_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
-            example: Authentication required
-            nullable: true
-            type: string
-        type: object
-      example:
-        errno: 0
-        data: Authentication required
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
-    root_403_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
-            example: Insufficient permissions
-            nullable: true
-            type: string
-        type: object
-      example:
-        errno: 0
-        data: Insufficient permissions
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
-    root_404_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
-            example: Not found
-            nullable: true
-            type: string
-        type: object
-      example:
-        errno: 0
-        data: Not found
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
-    root_500_response:
-      allOf:
-      - $ref: "#/components/schemas/baseResponse"
-      - properties:
-          data:
-            example: Internal server error
-            nullable: true
-            type: string
-        type: object
-      example:
-        errno: 0
-        data: Internal server error
-        success: true
-        details:
-          tenant_id: tenant-123
-          metadata:
-            key: ""
-          code: INVALID_TOKEN
-          resource: /api/v3/tradingAccount
-          provided:
-          - read
-          action: create
-          request_id: req-456-789
-          required:
-          - admin
-          - write
-        error: error
     health_200_response_checks:
       description: Health status of individual components
       example:
@@ -8823,27 +8755,50 @@ components:
       - $ref: "#/components/schemas/baseResponse"
       - properties:
           data:
-            $ref: "#/components/schemas/authUser"
+            $ref: "#/components/schemas/authSession"
         type: object
       example:
         errno: 0
         data:
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          appMetadata:
-            environments:
-            - environments
-            - environments
-            tenantId: tenantId
-          role: authenticated
-          phone: phone
-          lastSignInAt: 2000-01-23T04:56:07.000+00:00
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
-          userMetadata:
-            key: ""
-          email: email
-          phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
-          updatedAt: 2000-01-23T04:56:07.000+00:00
+          expiresIn: 3600
+          accessToken: accessToken
+          tokenType: bearer
+          user:
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            appMetadata:
+              environments:
+              - environments
+              - environments
+              tenantId: tenantId
+            role: authenticated
+            identities:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              provider: provider
+              lastSignInAt: 2000-01-23T04:56:07.000+00:00
+              id: id
+              userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              identityData:
+                key: ""
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              provider: provider
+              lastSignInAt: 2000-01-23T04:56:07.000+00:00
+              id: id
+              userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              identityData:
+                key: ""
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            phone: phone
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+            userMetadata:
+              key: ""
+            email: email
+            phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          expiresAt: 0
+          refreshToken: refreshToken
         success: true
         details:
           tenant_id: tenant-123
@@ -8886,38 +8841,17 @@ components:
           - admin
           - write
         error: error
-    authLogin_200_response:
+    authLogout_200_response:
       allOf:
       - $ref: "#/components/schemas/baseResponse"
       - properties:
           data:
-            $ref: "#/components/schemas/authSession"
+            example: ok
+            type: string
         type: object
       example:
         errno: 0
-        data:
-          expiresIn: 3600
-          accessToken: accessToken
-          tokenType: bearer
-          user:
-            createdAt: 2000-01-23T04:56:07.000+00:00
-            appMetadata:
-              environments:
-              - environments
-              - environments
-              tenantId: tenantId
-            role: authenticated
-            phone: phone
-            lastSignInAt: 2000-01-23T04:56:07.000+00:00
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
-            userMetadata:
-              key: ""
-            email: email
-            phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          expiresAt: 0
-          refreshToken: refreshToken
+        data: ok
         success: true
         details:
           tenant_id: tenant-123
@@ -8933,17 +8867,49 @@ components:
           - admin
           - write
         error: error
-    authLogout_200_response:
+    authGetUser_200_response:
       allOf:
       - $ref: "#/components/schemas/baseResponse"
       - properties:
           data:
-            example: ok
-            type: string
+            $ref: "#/components/schemas/authUser"
         type: object
       example:
         errno: 0
-        data: ok
+        data:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          appMetadata:
+            environments:
+            - environments
+            - environments
+            tenantId: tenantId
+          role: authenticated
+          identities:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            provider: provider
+            lastSignInAt: 2000-01-23T04:56:07.000+00:00
+            id: id
+            userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            identityData:
+              key: ""
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          phone: phone
+          lastSignInAt: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          emailConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          userMetadata:
+            key: ""
+          email: email
+          phoneConfirmedAt: 2000-01-23T04:56:07.000+00:00
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         success: true
         details:
           tenant_id: tenant-123
@@ -9568,7 +9534,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9605,7 +9571,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9667,7 +9633,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9739,7 +9705,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9776,7 +9742,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9861,7 +9827,7 @@ components:
           venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+          subscriptionType: ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9899,7 +9865,7 @@ components:
         - venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+          subscriptionType: ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9910,7 +9876,7 @@ components:
         - venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+          subscriptionType: ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -10001,6 +9967,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -10020,6 +9987,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -10085,6 +10053,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -10104,6 +10073,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -10197,14 +10167,11 @@ components:
       example:
         errno: 0
         data: ok
-        success: true
         error: error
       properties:
-        success:
-          description: Indicates if the operation was successful
-          type: boolean
         errno:
-          description: "Error code (0 for success, negative for errors)"
+          description: "Error code (0 for success, non-zero indicates error). Format:\
+            \ AABBB where AA is the module code and BBB is the error code"
           example: 0
           type: integer
         error:
@@ -10216,8 +10183,6 @@ components:
           type: string
       required:
       - errno
-      - error
-      - success
       type: object
     enableMarketInstrument_200_response:
       allOf:
@@ -10636,6 +10601,45 @@ components:
           items:
             type: string
           type: array
+      type: object
+    authUser_identities_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        provider: provider
+        lastSignInAt: 2000-01-23T04:56:07.000+00:00
+        id: id
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        identityData:
+          key: ""
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Identity ID
+          type: string
+        userId:
+          description: User ID
+          format: uuid
+          type: string
+        identityData:
+          additionalProperties: true
+          description: Identity provider data
+          type: object
+        provider:
+          description: "Identity provider name (email, google, etc.)"
+          type: string
+        lastSignInAt:
+          description: Last sign in timestamp for this identity
+          format: date-time
+          nullable: true
+          type: string
+        createdAt:
+          description: Identity creation timestamp
+          format: date-time
+          type: string
+        updatedAt:
+          description: Identity last update timestamp
+          format: date-time
+          type: string
       type: object
     wsMarketOrderBookSubscribe_params:
       properties:
