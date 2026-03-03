@@ -23,7 +23,10 @@ type RpcListKlinesParams struct {
 	Venue *Venue `json:"venue,omitempty"`
 	Symbols []string `json:"symbols,omitempty"`
 	Interval *string `json:"interval,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListKlinesParams RpcListKlinesParams
 
 // NewRpcListKlinesParams instantiates a new RpcListKlinesParams object
 // This constructor will assign default values to properties that have it defined,
@@ -192,7 +195,36 @@ func (o RpcListKlinesParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Interval) {
 		toSerialize["interval"] = o.Interval
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListKlinesParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListKlinesParams := _RpcListKlinesParams{}
+
+	err = json.Unmarshal(data, &varRpcListKlinesParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListKlinesParams(varRpcListKlinesParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentIds")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbols")
+		delete(additionalProperties, "interval")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListKlinesParams struct {

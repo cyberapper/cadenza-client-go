@@ -15,7 +15,7 @@ client.go
 configuration.go
 docs/AccountOperation.md
 docs/AccountType.md
-docs/AuthLogin200Response.md
+docs/AuthGetUser200Response.md
 docs/AuthLoginRequest.md
 docs/AuthLogout200Response.md
 docs/AuthRecoverRequest.md
@@ -27,6 +27,7 @@ docs/AuthSignupRequest.md
 docs/AuthUpdateUserRequest.md
 docs/AuthUser.md
 docs/AuthUserAppMetadata.md
+docs/AuthUserIdentitiesInner.md
 docs/AuthenticationAPI.md
 docs/BalanceEntry.md
 docs/BalanceStatus.md
@@ -94,11 +95,6 @@ docs/ResponseError.md
 docs/RevokeTradingAccountCredentialRequest.md
 docs/Root200Response.md
 docs/Root200ResponseAllOfData.md
-docs/Root400Response.md
-docs/Root401Response.md
-docs/Root403Response.md
-docs/Root404Response.md
-docs/Root500Response.md
 docs/RotateTradingAccountCredentialRequest.md
 docs/RpcBalanceEntry.md
 docs/RpcCancelTradeOrderParams.md
@@ -320,11 +316,9 @@ docs/WsSubscribeResult.md
 docs/WsUnsubscribePush.md
 docs/WsUnsubscribeRequest.md
 git_push.sh
-go.mod
-go.sum
 model_account_operation.go
 model_account_type.go
-model_auth_login_200_response.go
+model_auth_get_user_200_response.go
 model_auth_login_request.go
 model_auth_logout_200_response.go
 model_auth_recover_request.go
@@ -336,6 +330,7 @@ model_auth_signup_request.go
 model_auth_update_user_request.go
 model_auth_user.go
 model_auth_user_app_metadata.go
+model_auth_user_identities_inner.go
 model_balance_entry.go
 model_balance_status.go
 model_base_response.go
@@ -400,11 +395,6 @@ model_response_error.go
 model_revoke_trading_account_credential_request.go
 model_root_200_response.go
 model_root_200_response_all_of_data.go
-model_root_400_response.go
-model_root_401_response.go
-model_root_403_response.go
-model_root_404_response.go
-model_root_500_response.go
 model_rotate_trading_account_credential_request.go
 model_rpc_balance_entry.go
 model_rpc_cancel_trade_order_params.go
@@ -619,5 +609,4 @@ model_ws_subscribe_result.go
 model_ws_unsubscribe_push.go
 model_ws_unsubscribe_request.go
 response.go
-test/api_authentication_test.go
 utils.go

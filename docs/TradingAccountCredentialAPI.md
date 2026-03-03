@@ -100,7 +100,7 @@ import (
 
 func main() {
 	credentialType := openapiclient.credentialType("") // CredentialType | Credential type (optional)
-	credentialStatus := openapiclient.tradingAccountStatus("SETUP") // TradingAccountStatus | Credential status (optional)
+	credentialStatus := openapiclient.tradingAccountStatus("NEW") // TradingAccountStatus | Credential status (optional)
 	credentialIds := []string{"Inner_example"} // []string | credentialId array (optional)
 
 	configuration := openapiclient.NewConfiguration()

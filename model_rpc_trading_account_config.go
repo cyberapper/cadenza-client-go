@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcTradingAccountConfig{}
 type RpcTradingAccountConfig struct {
 	// Account leverage
 	Leverage *int32 `json:"leverage,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTradingAccountConfig RpcTradingAccountConfig
 
 // NewRpcTradingAccountConfig instantiates a new RpcTradingAccountConfig object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o RpcTradingAccountConfig) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Leverage) {
 		toSerialize["leverage"] = o.Leverage
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTradingAccountConfig) UnmarshalJSON(data []byte) (err error) {
+	varRpcTradingAccountConfig := _RpcTradingAccountConfig{}
+
+	err = json.Unmarshal(data, &varRpcTradingAccountConfig)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTradingAccountConfig(varRpcTradingAccountConfig)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "leverage")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTradingAccountConfig struct {

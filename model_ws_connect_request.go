@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -31,6 +30,7 @@ type WsConnectRequest struct {
 	Name *string `json:"name,omitempty"`
 	// Client version
 	Version *string `json:"version,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsConnectRequest WsConnectRequest
@@ -228,6 +228,11 @@ func (o WsConnectRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -255,15 +260,24 @@ func (o *WsConnectRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsConnectRequest := _WsConnectRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsConnectRequest)
+	err = json.Unmarshal(data, &varWsConnectRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsConnectRequest(varWsConnectRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "token")
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "subs")
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "version")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

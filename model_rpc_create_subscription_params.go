@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -24,6 +23,7 @@ type RpcCreateSubscriptionParams struct {
 	Venue Venue `json:"venue"`
 	Instruments []string `json:"instruments,omitempty"`
 	SubscriptionType SubscriptionType `json:"subscriptionType"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcCreateSubscriptionParams RpcCreateSubscriptionParams
@@ -142,6 +142,11 @@ func (o RpcCreateSubscriptionParams) ToMap() (map[string]interface{}, error) {
 		toSerialize["instruments"] = o.Instruments
 	}
 	toSerialize["subscriptionType"] = o.SubscriptionType
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -170,15 +175,22 @@ func (o *RpcCreateSubscriptionParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcCreateSubscriptionParams := _RpcCreateSubscriptionParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcCreateSubscriptionParams)
+	err = json.Unmarshal(data, &varRpcCreateSubscriptionParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcCreateSubscriptionParams(varRpcCreateSubscriptionParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "instruments")
+		delete(additionalProperties, "subscriptionType")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcSavePortfolioParams{}
 // RpcSavePortfolioParams Request to save a portfolio
 type RpcSavePortfolioParams struct {
 	Portfolio RpcPortfolio `json:"portfolio"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcSavePortfolioParams RpcSavePortfolioParams
@@ -79,6 +79,11 @@ func (o RpcSavePortfolioParams) MarshalJSON() ([]byte, error) {
 func (o RpcSavePortfolioParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["portfolio"] = o.Portfolio
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcSavePortfolioParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcSavePortfolioParams := _RpcSavePortfolioParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcSavePortfolioParams)
+	err = json.Unmarshal(data, &varRpcSavePortfolioParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcSavePortfolioParams(varRpcSavePortfolioParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "portfolio")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

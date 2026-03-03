@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -36,6 +35,7 @@ type WsCommand struct {
 	Rpc *WsRPCRequest `json:"rpc,omitempty"`
 	Refresh *WsRefreshRequest `json:"refresh,omitempty"`
 	SubRefresh *WsSubRefreshRequest `json:"subRefresh,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsCommand WsCommand
@@ -513,6 +513,11 @@ func (o WsCommand) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SubRefresh) {
 		toSerialize["subRefresh"] = o.SubRefresh
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -540,15 +545,32 @@ func (o *WsCommand) UnmarshalJSON(data []byte) (err error) {
 
 	varWsCommand := _WsCommand{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsCommand)
+	err = json.Unmarshal(data, &varWsCommand)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsCommand(varWsCommand)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "connect")
+		delete(additionalProperties, "subscribe")
+		delete(additionalProperties, "unsubscribe")
+		delete(additionalProperties, "publish")
+		delete(additionalProperties, "presence")
+		delete(additionalProperties, "presenceStats")
+		delete(additionalProperties, "history")
+		delete(additionalProperties, "ping")
+		delete(additionalProperties, "send")
+		delete(additionalProperties, "rpc")
+		delete(additionalProperties, "refresh")
+		delete(additionalProperties, "subRefresh")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

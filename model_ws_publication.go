@@ -32,7 +32,10 @@ type WsPublication struct {
 	Time *int64 `json:"time,omitempty"`
 	// Channel name (for wildcard subscriptions)
 	Channel *string `json:"channel,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsPublication WsPublication
 
 // NewWsPublication instantiates a new WsPublication object
 // This constructor will assign default values to properties that have it defined,
@@ -306,7 +309,39 @@ func (o WsPublication) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Channel) {
 		toSerialize["channel"] = o.Channel
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsPublication) UnmarshalJSON(data []byte) (err error) {
+	varWsPublication := _WsPublication{}
+
+	err = json.Unmarshal(data, &varWsPublication)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsPublication(varWsPublication)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "info")
+		delete(additionalProperties, "offset")
+		delete(additionalProperties, "tags")
+		delete(additionalProperties, "delta")
+		delete(additionalProperties, "time")
+		delete(additionalProperties, "channel")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsPublication struct {

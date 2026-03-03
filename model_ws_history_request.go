@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -28,6 +27,7 @@ type WsHistoryRequest struct {
 	Since *WsStreamPosition `json:"since,omitempty"`
 	// Whether to return publications in reverse order
 	Reverse *bool `json:"reverse,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsHistoryRequest WsHistoryRequest
@@ -190,6 +190,11 @@ func (o WsHistoryRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Reverse) {
 		toSerialize["reverse"] = o.Reverse
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -217,15 +222,23 @@ func (o *WsHistoryRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsHistoryRequest := _WsHistoryRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsHistoryRequest)
+	err = json.Unmarshal(data, &varWsHistoryRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsHistoryRequest(varWsHistoryRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "limit")
+		delete(additionalProperties, "since")
+		delete(additionalProperties, "reverse")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

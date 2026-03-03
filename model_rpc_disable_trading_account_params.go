@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcDisableTradingAccountParams{}
 // RpcDisableTradingAccountParams Request to disable a trading account
 type RpcDisableTradingAccountParams struct {
 	TradingAccountId string `json:"tradingAccountId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcDisableTradingAccountParams RpcDisableTradingAccountParams
@@ -79,6 +79,11 @@ func (o RpcDisableTradingAccountParams) MarshalJSON() ([]byte, error) {
 func (o RpcDisableTradingAccountParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcDisableTradingAccountParams) UnmarshalJSON(data []byte) (err error) 
 
 	varRpcDisableTradingAccountParams := _RpcDisableTradingAccountParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcDisableTradingAccountParams)
+	err = json.Unmarshal(data, &varRpcDisableTradingAccountParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcDisableTradingAccountParams(varRpcDisableTradingAccountParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

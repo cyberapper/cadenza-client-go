@@ -21,7 +21,10 @@ var _ MappedNullable = &WsRefreshPush{}
 type WsRefreshPush struct {
 	Expires *bool `json:"expires,omitempty"`
 	Ttl *int32 `json:"ttl,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsRefreshPush WsRefreshPush
 
 // NewWsRefreshPush instantiates a new WsRefreshPush object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o WsRefreshPush) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Ttl) {
 		toSerialize["ttl"] = o.Ttl
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsRefreshPush) UnmarshalJSON(data []byte) (err error) {
+	varWsRefreshPush := _WsRefreshPush{}
+
+	err = json.Unmarshal(data, &varWsRefreshPush)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsRefreshPush(varWsRefreshPush)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "expires")
+		delete(additionalProperties, "ttl")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsRefreshPush struct {

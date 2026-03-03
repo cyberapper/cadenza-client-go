@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &VerifyTradingAccountCredentialRequest{}
 // VerifyTradingAccountCredentialRequest struct for VerifyTradingAccountCredentialRequest
 type VerifyTradingAccountCredentialRequest struct {
 	CredentialIds []string `json:"credentialIds"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _VerifyTradingAccountCredentialRequest VerifyTradingAccountCredentialRequest
@@ -79,6 +79,11 @@ func (o VerifyTradingAccountCredentialRequest) MarshalJSON() ([]byte, error) {
 func (o VerifyTradingAccountCredentialRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["credentialIds"] = o.CredentialIds
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *VerifyTradingAccountCredentialRequest) UnmarshalJSON(data []byte) (err 
 
 	varVerifyTradingAccountCredentialRequest := _VerifyTradingAccountCredentialRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varVerifyTradingAccountCredentialRequest)
+	err = json.Unmarshal(data, &varVerifyTradingAccountCredentialRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = VerifyTradingAccountCredentialRequest(varVerifyTradingAccountCredentialRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialIds")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

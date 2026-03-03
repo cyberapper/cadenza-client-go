@@ -23,7 +23,10 @@ type WsUnsubscribePush struct {
 	Code *int32 `json:"code,omitempty"`
 	// Unsubscribe reason message
 	Reason *string `json:"reason,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsUnsubscribePush WsUnsubscribePush
 
 // NewWsUnsubscribePush instantiates a new WsUnsubscribePush object
 // This constructor will assign default values to properties that have it defined,
@@ -122,7 +125,34 @@ func (o WsUnsubscribePush) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Reason) {
 		toSerialize["reason"] = o.Reason
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsUnsubscribePush) UnmarshalJSON(data []byte) (err error) {
+	varWsUnsubscribePush := _WsUnsubscribePush{}
+
+	err = json.Unmarshal(data, &varWsUnsubscribePush)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsUnsubscribePush(varWsUnsubscribePush)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "code")
+		delete(additionalProperties, "reason")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsUnsubscribePush struct {

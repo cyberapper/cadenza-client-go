@@ -25,7 +25,10 @@ type WsDisconnect struct {
 	Reason *string `json:"reason,omitempty"`
 	// Whether client should attempt to reconnect
 	Reconnect *bool `json:"reconnect,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsDisconnect WsDisconnect
 
 // NewWsDisconnect instantiates a new WsDisconnect object
 // This constructor will assign default values to properties that have it defined,
@@ -159,7 +162,35 @@ func (o WsDisconnect) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Reconnect) {
 		toSerialize["reconnect"] = o.Reconnect
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsDisconnect) UnmarshalJSON(data []byte) (err error) {
+	varWsDisconnect := _WsDisconnect{}
+
+	err = json.Unmarshal(data, &varWsDisconnect)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsDisconnect(varWsDisconnect)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "code")
+		delete(additionalProperties, "reason")
+		delete(additionalProperties, "reconnect")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsDisconnect struct {

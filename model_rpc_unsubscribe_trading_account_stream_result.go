@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcUnsubscribeTradingAccountStreamResult{}
 type RpcUnsubscribeTradingAccountStreamResult struct {
 	Data *RpcSubscription `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcUnsubscribeTradingAccountStreamResult RpcUnsubscribeTradingAccountStreamResult
 
 // NewRpcUnsubscribeTradingAccountStreamResult instantiates a new RpcUnsubscribeTradingAccountStreamResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcUnsubscribeTradingAccountStreamResult) ToMap() (map[string]interface{
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcUnsubscribeTradingAccountStreamResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcUnsubscribeTradingAccountStreamResult := _RpcUnsubscribeTradingAccountStreamResult{}
+
+	err = json.Unmarshal(data, &varRpcUnsubscribeTradingAccountStreamResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcUnsubscribeTradingAccountStreamResult(varRpcUnsubscribeTradingAccountStreamResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcUnsubscribeTradingAccountStreamResult struct {

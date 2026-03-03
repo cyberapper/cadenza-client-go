@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,6 +21,7 @@ var _ MappedNullable = &RpcSaveTickersParams{}
 // RpcSaveTickersParams Request to save tickers
 type RpcSaveTickersParams struct {
 	Tickers []RpcTicker `json:"tickers"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _RpcSaveTickersParams RpcSaveTickersParams
@@ -79,6 +79,11 @@ func (o RpcSaveTickersParams) MarshalJSON() ([]byte, error) {
 func (o RpcSaveTickersParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tickers"] = o.Tickers
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -106,15 +111,20 @@ func (o *RpcSaveTickersParams) UnmarshalJSON(data []byte) (err error) {
 
 	varRpcSaveTickersParams := _RpcSaveTickersParams{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRpcSaveTickersParams)
+	err = json.Unmarshal(data, &varRpcSaveTickersParams)
 
 	if err != nil {
 		return err
 	}
 
 	*o = RpcSaveTickersParams(varRpcSaveTickersParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tickers")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

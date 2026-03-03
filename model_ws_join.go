@@ -20,7 +20,10 @@ var _ MappedNullable = &WsJoin{}
 // WsJoin Client join notification
 type WsJoin struct {
 	Info *WsClientInfo `json:"info,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsJoin WsJoin
 
 // NewWsJoin instantiates a new WsJoin object
 // This constructor will assign default values to properties that have it defined,
@@ -84,7 +87,33 @@ func (o WsJoin) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Info) {
 		toSerialize["info"] = o.Info
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsJoin) UnmarshalJSON(data []byte) (err error) {
+	varWsJoin := _WsJoin{}
+
+	err = json.Unmarshal(data, &varWsJoin)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsJoin(varWsJoin)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "info")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsJoin struct {

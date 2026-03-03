@@ -34,7 +34,10 @@ type RpcTradingAccountCredential struct {
 	WithInfo *bool `json:"withInfo,omitempty"`
 	// Whether secret fields are populated
 	WithSecret *bool `json:"withSecret,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTradingAccountCredential RpcTradingAccountCredential
 
 // NewRpcTradingAccountCredential instantiates a new RpcTradingAccountCredential object
 // This constructor will assign default values to properties that have it defined,
@@ -448,7 +451,43 @@ func (o RpcTradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.WithSecret) {
 		toSerialize["withSecret"] = o.WithSecret
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTradingAccountCredential) UnmarshalJSON(data []byte) (err error) {
+	varRpcTradingAccountCredential := _RpcTradingAccountCredential{}
+
+	err = json.Unmarshal(data, &varRpcTradingAccountCredential)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTradingAccountCredential(varRpcTradingAccountCredential)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialId")
+		delete(additionalProperties, "nickname")
+		delete(additionalProperties, "credentialType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "apiKey")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "revokedAt")
+		delete(additionalProperties, "withInfo")
+		delete(additionalProperties, "withSecret")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTradingAccountCredential struct {

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -50,6 +49,7 @@ type SubmitTradeOrderRequest struct {
 	Leverage *int32 `json:"leverage,omitempty"`
 	// If true, the API will wait up to 1 second for the order to reach a closed/finalized state (FILLED, REJECTED, EXPIRED, CANCELLED) before responding. If false or omitted, returns immediately with the initial order state. Useful for market orders that typically fill immediately. 
 	AwaitClosed *bool `json:"awaitClosed,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SubmitTradeOrderRequest SubmitTradeOrderRequest
@@ -639,6 +639,11 @@ func (o SubmitTradeOrderRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AwaitClosed) {
 		toSerialize["awaitClosed"] = o.AwaitClosed
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -670,15 +675,36 @@ func (o *SubmitTradeOrderRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varSubmitTradeOrderRequest := _SubmitTradeOrderRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSubmitTradeOrderRequest)
+	err = json.Unmarshal(data, &varSubmitTradeOrderRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SubmitTradeOrderRequest(varSubmitTradeOrderRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "idempotencyKey")
+		delete(additionalProperties, "clientOrderId")
+		delete(additionalProperties, "orderSide")
+		delete(additionalProperties, "orderType")
+		delete(additionalProperties, "limitPrice")
+		delete(additionalProperties, "stopPrice")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "quantityType")
+		delete(additionalProperties, "quantityRounding")
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "timeInForce")
+		delete(additionalProperties, "expireAt")
+		delete(additionalProperties, "quoteId")
+		delete(additionalProperties, "leverage")
+		delete(additionalProperties, "awaitClosed")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

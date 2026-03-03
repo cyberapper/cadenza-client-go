@@ -34,7 +34,10 @@ type RpcListTradeOrdersParams struct {
 	// Filter orders created before this time
 	EndTime *time.Time `json:"endTime,omitempty"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListTradeOrdersParams RpcListTradeOrdersParams
 
 // NewRpcListTradeOrdersParams instantiates a new RpcListTradeOrdersParams object
 // This constructor will assign default values to properties that have it defined,
@@ -378,7 +381,41 @@ func (o RpcListTradeOrdersParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Pagination) {
 		toSerialize["pagination"] = o.Pagination
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListTradeOrdersParams) UnmarshalJSON(data []byte) (err error) {
+	varRpcListTradeOrdersParams := _RpcListTradeOrdersParams{}
+
+	err = json.Unmarshal(data, &varRpcListTradeOrdersParams)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListTradeOrdersParams(varRpcListTradeOrdersParams)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrderId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "side")
+		delete(additionalProperties, "orderType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "startTime")
+		delete(additionalProperties, "endTime")
+		delete(additionalProperties, "pagination")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListTradeOrdersParams struct {

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &WsRPCRequest{}
 type WsRPCRequest struct {
 	Method RpcMethod `json:"method"`
 	Data *WsRPCRequestData `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsRPCRequest WsRPCRequest
@@ -115,6 +115,11 @@ func (o WsRPCRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -142,15 +147,21 @@ func (o *WsRPCRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsRPCRequest := _WsRPCRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsRPCRequest)
+	err = json.Unmarshal(data, &varWsRPCRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsRPCRequest(varWsRPCRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "method")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

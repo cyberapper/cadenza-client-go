@@ -22,7 +22,10 @@ type WsConnectPush struct {
 	Client *string `json:"client,omitempty"`
 	Version *string `json:"version,omitempty"`
 	Data map[string]interface{} `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsConnectPush WsConnectPush
 
 // NewWsConnectPush instantiates a new WsConnectPush object
 // This constructor will assign default values to properties that have it defined,
@@ -156,7 +159,35 @@ func (o WsConnectPush) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsConnectPush) UnmarshalJSON(data []byte) (err error) {
+	varWsConnectPush := _WsConnectPush{}
+
+	err = json.Unmarshal(data, &varWsConnectPush)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsConnectPush(varWsConnectPush)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "client")
+		delete(additionalProperties, "version")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsConnectPush struct {

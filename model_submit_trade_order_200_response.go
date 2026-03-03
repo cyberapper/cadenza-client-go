@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,13 +21,14 @@ var _ MappedNullable = &SubmitTradeOrder200Response{}
 // SubmitTradeOrder200Response struct for SubmitTradeOrder200Response
 type SubmitTradeOrder200Response struct {
 	// Indicates if the operation was successful
-	Success bool `json:"success"`
-	// Error code (0 for success, negative for errors)
+	Success *bool `json:"success,omitempty"`
+	// Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code
 	Errno int32 `json:"errno"`
 	// Error message (null for successful operations)
-	Error NullableString `json:"error"`
+	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
 	Data []TradeOrder `json:"data,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SubmitTradeOrder200Response SubmitTradeOrder200Response
@@ -37,11 +37,9 @@ type _SubmitTradeOrder200Response SubmitTradeOrder200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSubmitTradeOrder200Response(success bool, errno int32, error_ NullableString) *SubmitTradeOrder200Response {
+func NewSubmitTradeOrder200Response(errno int32) *SubmitTradeOrder200Response {
 	this := SubmitTradeOrder200Response{}
-	this.Success = success
 	this.Errno = errno
-	this.Error = error_
 	return &this
 }
 
@@ -53,28 +51,36 @@ func NewSubmitTradeOrder200ResponseWithDefaults() *SubmitTradeOrder200Response {
 	return &this
 }
 
-// GetSuccess returns the Success field value
+// GetSuccess returns the Success field value if set, zero value otherwise.
 func (o *SubmitTradeOrder200Response) GetSuccess() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Success) {
 		var ret bool
 		return ret
 	}
-
-	return o.Success
+	return *o.Success
 }
 
-// GetSuccessOk returns a tuple with the Success field value
+// GetSuccessOk returns a tuple with the Success field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SubmitTradeOrder200Response) GetSuccessOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Success) {
 		return nil, false
 	}
-	return &o.Success, true
+	return o.Success, true
 }
 
-// SetSuccess sets field value
+// HasSuccess returns a boolean if a field has been set.
+func (o *SubmitTradeOrder200Response) HasSuccess() bool {
+	if o != nil && !IsNil(o.Success) {
+		return true
+	}
+
+	return false
+}
+
+// SetSuccess gets a reference to the given bool and assigns it to the Success field.
 func (o *SubmitTradeOrder200Response) SetSuccess(v bool) {
-	o.Success = v
+	o.Success = &v
 }
 
 // GetErrno returns the Errno field value
@@ -101,18 +107,16 @@ func (o *SubmitTradeOrder200Response) SetErrno(v int32) {
 	o.Errno = v
 }
 
-// GetError returns the Error field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SubmitTradeOrder200Response) GetError() string {
-	if o == nil || o.Error.Get() == nil {
+	if o == nil || IsNil(o.Error.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.Error.Get()
 }
 
-// GetErrorOk returns a tuple with the Error field value
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SubmitTradeOrder200Response) GetErrorOk() (*string, bool) {
@@ -122,9 +126,27 @@ func (o *SubmitTradeOrder200Response) GetErrorOk() (*string, bool) {
 	return o.Error.Get(), o.Error.IsSet()
 }
 
-// SetError sets field value
+// HasError returns a boolean if a field has been set.
+func (o *SubmitTradeOrder200Response) HasError() bool {
+	if o != nil && o.Error.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetError gets a reference to the given NullableString and assigns it to the Error field.
 func (o *SubmitTradeOrder200Response) SetError(v string) {
 	o.Error.Set(&v)
+}
+// SetErrorNil sets the value for Error to be an explicit nil
+func (o *SubmitTradeOrder200Response) SetErrorNil() {
+	o.Error.Set(nil)
+}
+
+// UnsetError ensures that no value is present for Error, not even an explicit nil
+func (o *SubmitTradeOrder200Response) UnsetError() {
+	o.Error.Unset()
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -211,15 +233,24 @@ func (o SubmitTradeOrder200Response) MarshalJSON() ([]byte, error) {
 
 func (o SubmitTradeOrder200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["success"] = o.Success
+	if !IsNil(o.Success) {
+		toSerialize["success"] = o.Success
+	}
 	toSerialize["errno"] = o.Errno
-	toSerialize["error"] = o.Error.Get()
+	if o.Error.IsSet() {
+		toSerialize["error"] = o.Error.Get()
+	}
 	if o.Details.IsSet() {
 		toSerialize["details"] = o.Details.Get()
 	}
 	if !IsNil(o.Data) {
 		toSerialize["data"] = o.Data
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -228,9 +259,7 @@ func (o *SubmitTradeOrder200Response) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"success",
 		"errno",
-		"error",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -249,15 +278,24 @@ func (o *SubmitTradeOrder200Response) UnmarshalJSON(data []byte) (err error) {
 
 	varSubmitTradeOrder200Response := _SubmitTradeOrder200Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSubmitTradeOrder200Response)
+	err = json.Unmarshal(data, &varSubmitTradeOrder200Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SubmitTradeOrder200Response(varSubmitTradeOrder200Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "success")
+		delete(additionalProperties, "errno")
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "details")
+		delete(additionalProperties, "data")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Success** | **bool** | Indicates if the operation was successful | 
-**Errno** | **int32** | Error code (0 for success, negative for errors) | 
-**Error** | **NullableString** | Error message (null for successful operations) | 
+**Success** | Pointer to **bool** | Indicates if the operation was successful | [optional] 
+**Errno** | **int32** | Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code | 
+**Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
-**Data** | Pointer to [**AuthUser**](AuthUser.md) |  | [optional] 
+**Data** | Pointer to [**AuthSession**](AuthSession.md) |  | [optional] 
 
 ## Methods
 
 ### NewAuthSignup200Response
 
-`func NewAuthSignup200Response(success bool, errno int32, error_ NullableString, ) *AuthSignup200Response`
+`func NewAuthSignup200Response(errno int32, ) *AuthSignup200Response`
 
 NewAuthSignup200Response instantiates a new AuthSignup200Response object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +48,11 @@ and a boolean to check if the value has been set.
 
 SetSuccess sets Success field to given value.
 
+### HasSuccess
+
+`func (o *AuthSignup200Response) HasSuccess() bool`
+
+HasSuccess returns a boolean if a field has been set.
 
 ### GetErrno
 
@@ -88,6 +93,11 @@ and a boolean to check if the value has been set.
 
 SetError sets Error field to given value.
 
+### HasError
+
+`func (o *AuthSignup200Response) HasError() bool`
+
+HasError returns a boolean if a field has been set.
 
 ### SetErrorNil
 
@@ -136,20 +146,20 @@ HasDetails returns a boolean if a field has been set.
 UnsetDetails ensures that no value is present for Details, not even an explicit nil
 ### GetData
 
-`func (o *AuthSignup200Response) GetData() AuthUser`
+`func (o *AuthSignup200Response) GetData() AuthSession`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *AuthSignup200Response) GetDataOk() (*AuthUser, bool)`
+`func (o *AuthSignup200Response) GetDataOk() (*AuthSession, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *AuthSignup200Response) SetData(v AuthUser)`
+`func (o *AuthSignup200Response) SetData(v AuthSession)`
 
 SetData sets Data field to given value.
 

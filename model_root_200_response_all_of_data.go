@@ -23,7 +23,10 @@ type Root200ResponseAllOfData struct {
 	Version *string `json:"version,omitempty"`
 	Description *string `json:"description,omitempty"`
 	Documentation *string `json:"documentation,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Root200ResponseAllOfData Root200ResponseAllOfData
 
 // NewRoot200ResponseAllOfData instantiates a new Root200ResponseAllOfData object
 // This constructor will assign default values to properties that have it defined,
@@ -192,7 +195,36 @@ func (o Root200ResponseAllOfData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Documentation) {
 		toSerialize["documentation"] = o.Documentation
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *Root200ResponseAllOfData) UnmarshalJSON(data []byte) (err error) {
+	varRoot200ResponseAllOfData := _Root200ResponseAllOfData{}
+
+	err = json.Unmarshal(data, &varRoot200ResponseAllOfData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Root200ResponseAllOfData(varRoot200ResponseAllOfData)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "version")
+		delete(additionalProperties, "description")
+		delete(additionalProperties, "documentation")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRoot200ResponseAllOfData struct {

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -29,6 +28,7 @@ type Orderbook struct {
 	Bids [][]string `json:"bids"`
 	// Unix timestamp in milliseconds
 	Timestamp int64 `json:"timestamp"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _Orderbook Orderbook
@@ -225,6 +225,11 @@ func (o Orderbook) ToMap() (map[string]interface{}, error) {
 	toSerialize["asks"] = o.Asks
 	toSerialize["bids"] = o.Bids
 	toSerialize["timestamp"] = o.Timestamp
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -256,15 +261,25 @@ func (o *Orderbook) UnmarshalJSON(data []byte) (err error) {
 
 	varOrderbook := _Orderbook{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varOrderbook)
+	err = json.Unmarshal(data, &varOrderbook)
 
 	if err != nil {
 		return err
 	}
 
 	*o = Orderbook(varOrderbook)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "asks")
+		delete(additionalProperties, "bids")
+		delete(additionalProperties, "timestamp")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

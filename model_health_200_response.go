@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -30,6 +29,7 @@ type Health200Response struct {
 	// API version
 	Version string `json:"version"`
 	Checks *Health200ResponseChecks `json:"checks,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _Health200Response Health200Response
@@ -209,6 +209,11 @@ func (o Health200Response) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Checks) {
 		toSerialize["checks"] = o.Checks
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -238,15 +243,24 @@ func (o *Health200Response) UnmarshalJSON(data []byte) (err error) {
 
 	varHealth200Response := _Health200Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varHealth200Response)
+	err = json.Unmarshal(data, &varHealth200Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = Health200Response(varHealth200Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "timestamp")
+		delete(additionalProperties, "isoDateTime")
+		delete(additionalProperties, "version")
+		delete(additionalProperties, "checks")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

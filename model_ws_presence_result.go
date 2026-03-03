@@ -21,7 +21,10 @@ var _ MappedNullable = &WsPresenceResult{}
 type WsPresenceResult struct {
 	// Map of client ID to client info
 	Presence *map[string]WsClientInfo `json:"presence,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _WsPresenceResult WsPresenceResult
 
 // NewWsPresenceResult instantiates a new WsPresenceResult object
 // This constructor will assign default values to properties that have it defined,
@@ -85,7 +88,33 @@ func (o WsPresenceResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Presence) {
 		toSerialize["presence"] = o.Presence
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *WsPresenceResult) UnmarshalJSON(data []byte) (err error) {
+	varWsPresenceResult := _WsPresenceResult{}
+
+	err = json.Unmarshal(data, &varWsPresenceResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WsPresenceResult(varWsPresenceResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "presence")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableWsPresenceResult struct {

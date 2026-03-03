@@ -21,7 +21,10 @@ var _ MappedNullable = &RpcListCredentialsResult{}
 type RpcListCredentialsResult struct {
 	Data []RpcTradingAccountCredential `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcListCredentialsResult RpcListCredentialsResult
 
 // NewRpcListCredentialsResult instantiates a new RpcListCredentialsResult object
 // This constructor will assign default values to properties that have it defined,
@@ -120,7 +123,34 @@ func (o RpcListCredentialsResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcListCredentialsResult) UnmarshalJSON(data []byte) (err error) {
+	varRpcListCredentialsResult := _RpcListCredentialsResult{}
+
+	err = json.Unmarshal(data, &varRpcListCredentialsResult)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcListCredentialsResult(varRpcListCredentialsResult)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "data")
+		delete(additionalProperties, "error")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcListCredentialsResult struct {

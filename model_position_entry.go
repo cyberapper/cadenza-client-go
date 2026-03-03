@@ -13,7 +13,6 @@ package client
 import (
 	"encoding/json"
 	"time"
-	"bytes"
 	"fmt"
 )
 
@@ -58,6 +57,7 @@ type PositionEntry struct {
 	ClosedAt *int64 `json:"closedAt,omitempty"`
 	// Position closure timestamp in ISO 8601 format
 	ClosedAtDateTime NullableTime `json:"closedAtDateTime,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _PositionEntry PositionEntry
@@ -702,6 +702,11 @@ func (o PositionEntry) ToMap() (map[string]interface{}, error) {
 	if o.ClosedAtDateTime.IsSet() {
 		toSerialize["closedAtDateTime"] = o.ClosedAtDateTime.Get()
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -736,15 +741,38 @@ func (o *PositionEntry) UnmarshalJSON(data []byte) (err error) {
 
 	varPositionEntry := _PositionEntry{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPositionEntry)
+	err = json.Unmarshal(data, &varPositionEntry)
 
 	if err != nil {
 		return err
 	}
 
 	*o = PositionEntry(varPositionEntry)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "positionId")
+		delete(additionalProperties, "securitySymbol")
+		delete(additionalProperties, "externalPositionId")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "securityType")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "entryPrice")
+		delete(additionalProperties, "exitPrice")
+		delete(additionalProperties, "currentPrice")
+		delete(additionalProperties, "unrealizedPnl")
+		delete(additionalProperties, "realizedPnl")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "createdAtDateTime")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "updatedAtDateTime")
+		delete(additionalProperties, "closedAt")
+		delete(additionalProperties, "closedAtDateTime")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

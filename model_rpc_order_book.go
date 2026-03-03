@@ -34,7 +34,10 @@ type RpcOrderBook struct {
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// Sequence number for ordering updates
 	SequenceNumber *int64 `json:"sequenceNumber,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcOrderBook RpcOrderBook
 
 // NewRpcOrderBook instantiates a new RpcOrderBook object
 // This constructor will assign default values to properties that have it defined,
@@ -308,7 +311,39 @@ func (o RpcOrderBook) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SequenceNumber) {
 		toSerialize["sequenceNumber"] = o.SequenceNumber
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcOrderBook) UnmarshalJSON(data []byte) (err error) {
+	varRpcOrderBook := _RpcOrderBook{}
+
+	err = json.Unmarshal(data, &varRpcOrderBook)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcOrderBook(varRpcOrderBook)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "symbol")
+		delete(additionalProperties, "bids")
+		delete(additionalProperties, "asks")
+		delete(additionalProperties, "timestamp")
+		delete(additionalProperties, "sequenceNumber")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcOrderBook struct {

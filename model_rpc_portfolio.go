@@ -27,7 +27,10 @@ type RpcPortfolio struct {
 	Summary *RpcPortfolioSummary `json:"summary,omitempty"`
 	UpdateMode *UpdateMode `json:"updateMode,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcPortfolio RpcPortfolio
 
 // NewRpcPortfolio instantiates a new RpcPortfolio object
 // This constructor will assign default values to properties that have it defined,
@@ -301,7 +304,39 @@ func (o RpcPortfolio) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcPortfolio) UnmarshalJSON(data []byte) (err error) {
+	varRpcPortfolio := _RpcPortfolio{}
+
+	err = json.Unmarshal(data, &varRpcPortfolio)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcPortfolio(varRpcPortfolio)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "accountInfo")
+		delete(additionalProperties, "balances")
+		delete(additionalProperties, "positions")
+		delete(additionalProperties, "summary")
+		delete(additionalProperties, "updateMode")
+		delete(additionalProperties, "updatedAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcPortfolio struct {

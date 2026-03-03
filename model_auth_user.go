@@ -41,7 +41,12 @@ type AuthUser struct {
 	AppMetadata *AuthUserAppMetadata `json:"appMetadata,omitempty"`
 	// User-defined metadata
 	UserMetadata map[string]interface{} `json:"userMetadata,omitempty"`
+	// User identity providers (Supabase specific)
+	Identities []AuthUserIdentitiesInner `json:"identities,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthUser AuthUser
 
 // NewAuthUser instantiates a new AuthUser object
 // This constructor will assign default values to properties that have it defined,
@@ -452,6 +457,39 @@ func (o *AuthUser) SetUserMetadata(v map[string]interface{}) {
 	o.UserMetadata = v
 }
 
+// GetIdentities returns the Identities field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AuthUser) GetIdentities() []AuthUserIdentitiesInner {
+	if o == nil {
+		var ret []AuthUserIdentitiesInner
+		return ret
+	}
+	return o.Identities
+}
+
+// GetIdentitiesOk returns a tuple with the Identities field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AuthUser) GetIdentitiesOk() ([]AuthUserIdentitiesInner, bool) {
+	if o == nil || IsNil(o.Identities) {
+		return nil, false
+	}
+	return o.Identities, true
+}
+
+// HasIdentities returns a boolean if a field has been set.
+func (o *AuthUser) HasIdentities() bool {
+	if o != nil && !IsNil(o.Identities) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentities gets a reference to the given []AuthUserIdentitiesInner and assigns it to the Identities field.
+func (o *AuthUser) SetIdentities(v []AuthUserIdentitiesInner) {
+	o.Identities = v
+}
+
 func (o AuthUser) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -495,7 +533,47 @@ func (o AuthUser) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.UserMetadata) {
 		toSerialize["userMetadata"] = o.UserMetadata
 	}
+	if o.Identities != nil {
+		toSerialize["identities"] = o.Identities
+	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthUser) UnmarshalJSON(data []byte) (err error) {
+	varAuthUser := _AuthUser{}
+
+	err = json.Unmarshal(data, &varAuthUser)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthUser(varAuthUser)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "email")
+		delete(additionalProperties, "phone")
+		delete(additionalProperties, "emailConfirmedAt")
+		delete(additionalProperties, "phoneConfirmedAt")
+		delete(additionalProperties, "lastSignInAt")
+		delete(additionalProperties, "role")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "appMetadata")
+		delete(additionalProperties, "userMetadata")
+		delete(additionalProperties, "identities")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthUser struct {

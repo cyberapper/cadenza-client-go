@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -27,6 +26,7 @@ type ConnectTradingAccountRequest struct {
 	ExternalTradingAccountId string `json:"externalTradingAccountId"`
 	// Nickname of the trading account
 	Nickname *string `json:"nickname,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ConnectTradingAccountRequest ConnectTradingAccountRequest
@@ -145,6 +145,11 @@ func (o ConnectTradingAccountRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -173,15 +178,22 @@ func (o *ConnectTradingAccountRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varConnectTradingAccountRequest := _ConnectTradingAccountRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varConnectTradingAccountRequest)
+	err = json.Unmarshal(data, &varConnectTradingAccountRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ConnectTradingAccountRequest(varConnectTradingAccountRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "credentialIds")
+		delete(additionalProperties, "externalTradingAccountId")
+		delete(additionalProperties, "nickname")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type CancelTradeOrderRequest struct {
 	TradingAccountId string `json:"tradingAccountId"`
 	// UUID string
 	TradeOrderId string `json:"tradeOrderId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _CancelTradeOrderRequest CancelTradeOrderRequest
@@ -108,6 +108,11 @@ func (o CancelTradeOrderRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
 	toSerialize["tradeOrderId"] = o.TradeOrderId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -136,15 +141,21 @@ func (o *CancelTradeOrderRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varCancelTradeOrderRequest := _CancelTradeOrderRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varCancelTradeOrderRequest)
+	err = json.Unmarshal(data, &varCancelTradeOrderRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = CancelTradeOrderRequest(varCancelTradeOrderRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "tradeOrderId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

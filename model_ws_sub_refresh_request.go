@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type WsSubRefreshRequest struct {
 	Channel string `json:"channel"`
 	// New subscription token
 	Token string `json:"token"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsSubRefreshRequest WsSubRefreshRequest
@@ -108,6 +108,11 @@ func (o WsSubRefreshRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["channel"] = o.Channel
 	toSerialize["token"] = o.Token
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -136,15 +141,21 @@ func (o *WsSubRefreshRequest) UnmarshalJSON(data []byte) (err error) {
 
 	varWsSubRefreshRequest := _WsSubRefreshRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsSubRefreshRequest)
+	err = json.Unmarshal(data, &varWsSubRefreshRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsSubRefreshRequest(varWsSubRefreshRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "token")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

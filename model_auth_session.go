@@ -30,7 +30,10 @@ type AuthSession struct {
 	// Token expiry timestamp (Unix seconds)
 	ExpiresAt *int64 `json:"expiresAt,omitempty"`
 	User *AuthUser `json:"user,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _AuthSession AuthSession
 
 // NewAuthSession instantiates a new AuthSession object
 // This constructor will assign default values to properties that have it defined,
@@ -269,7 +272,38 @@ func (o AuthSession) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.User) {
 		toSerialize["user"] = o.User
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *AuthSession) UnmarshalJSON(data []byte) (err error) {
+	varAuthSession := _AuthSession{}
+
+	err = json.Unmarshal(data, &varAuthSession)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AuthSession(varAuthSession)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "accessToken")
+		delete(additionalProperties, "refreshToken")
+		delete(additionalProperties, "tokenType")
+		delete(additionalProperties, "expiresIn")
+		delete(additionalProperties, "expiresAt")
+		delete(additionalProperties, "user")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableAuthSession struct {

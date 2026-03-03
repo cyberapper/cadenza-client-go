@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -23,6 +22,7 @@ var _ MappedNullable = &SubscribeMarketOrderBookRequest{}
 type SubscribeMarketOrderBookRequest struct {
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId string `json:"instrumentId"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _SubscribeMarketOrderBookRequest SubscribeMarketOrderBookRequest
@@ -80,6 +80,11 @@ func (o SubscribeMarketOrderBookRequest) MarshalJSON() ([]byte, error) {
 func (o SubscribeMarketOrderBookRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["instrumentId"] = o.InstrumentId
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -107,15 +112,20 @@ func (o *SubscribeMarketOrderBookRequest) UnmarshalJSON(data []byte) (err error)
 
 	varSubscribeMarketOrderBookRequest := _SubscribeMarketOrderBookRequest{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSubscribeMarketOrderBookRequest)
+	err = json.Unmarshal(data, &varSubscribeMarketOrderBookRequest)
 
 	if err != nil {
 		return err
 	}
 
 	*o = SubscribeMarketOrderBookRequest(varSubscribeMarketOrderBookRequest)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "instrumentId")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

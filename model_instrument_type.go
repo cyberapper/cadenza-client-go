@@ -21,19 +21,13 @@ type InstrumentType string
 // List of instrumentType
 const (
 	INSTRUMENTTYPE_SPOT InstrumentType = "SPOT"
-	INSTRUMENTTYPE_FUTURES InstrumentType = "FUTURES"
-	INSTRUMENTTYPE_OPTION InstrumentType = "OPTION"
-	INSTRUMENTTYPE_PERPETUAL InstrumentType = "PERPETUAL"
-	INSTRUMENTTYPE_DERIVATIVE InstrumentType = "DERIVATIVE"
+	INSTRUMENTTYPE_CONTRACT InstrumentType = "CONTRACT"
 )
 
 // All allowed values of InstrumentType enum
 var AllowedInstrumentTypeEnumValues = []InstrumentType{
 	"SPOT",
-	"FUTURES",
-	"OPTION",
-	"PERPETUAL",
-	"DERIVATIVE",
+	"CONTRACT",
 }
 
 func (v *InstrumentType) UnmarshalJSON(src []byte) error {

@@ -84,7 +84,10 @@ type RpcTradeOrder struct {
 	LastExecutionAt *time.Time `json:"lastExecutionAt,omitempty"`
 	// Time of cancellation
 	CanceledAt *time.Time `json:"canceledAt,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _RpcTradeOrder RpcTradeOrder
 
 // NewRpcTradeOrder instantiates a new RpcTradeOrder object
 // This constructor will assign default values to properties that have it defined,
@@ -1342,7 +1345,67 @@ func (o RpcTradeOrder) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CanceledAt) {
 		toSerialize["canceledAt"] = o.CanceledAt
 	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
+}
+
+func (o *RpcTradeOrder) UnmarshalJSON(data []byte) (err error) {
+	varRpcTradeOrder := _RpcTradeOrder{}
+
+	err = json.Unmarshal(data, &varRpcTradeOrder)
+
+	if err != nil {
+		return err
+	}
+
+	*o = RpcTradeOrder(varRpcTradeOrder)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "tradeOrderId")
+		delete(additionalProperties, "clientOrderId")
+		delete(additionalProperties, "originalClientOrderId")
+		delete(additionalProperties, "externalOrderId")
+		delete(additionalProperties, "idempotencyKey")
+		delete(additionalProperties, "venue")
+		delete(additionalProperties, "tradingAccountId")
+		delete(additionalProperties, "externalTradingAccountId")
+		delete(additionalProperties, "instrumentId")
+		delete(additionalProperties, "externalSymbol")
+		delete(additionalProperties, "baseAsset")
+		delete(additionalProperties, "quoteAsset")
+		delete(additionalProperties, "orderType")
+		delete(additionalProperties, "orderSide")
+		delete(additionalProperties, "quantityType")
+		delete(additionalProperties, "quantity")
+		delete(additionalProperties, "quoteCurrencyQuantity")
+		delete(additionalProperties, "positionPercentage")
+		delete(additionalProperties, "quantityRounding")
+		delete(additionalProperties, "limitPrice")
+		delete(additionalProperties, "stopPrice")
+		delete(additionalProperties, "timeInForce")
+		delete(additionalProperties, "status")
+		delete(additionalProperties, "executedPrice")
+		delete(additionalProperties, "executedPercentage")
+		delete(additionalProperties, "executedQuantity")
+		delete(additionalProperties, "executedCost")
+		delete(additionalProperties, "fees")
+		delete(additionalProperties, "cancelReason")
+		delete(additionalProperties, "rejectReason")
+		delete(additionalProperties, "createdAt")
+		delete(additionalProperties, "updatedAt")
+		delete(additionalProperties, "expireAt")
+		delete(additionalProperties, "lastExecutionAt")
+		delete(additionalProperties, "canceledAt")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableRpcTradeOrder struct {

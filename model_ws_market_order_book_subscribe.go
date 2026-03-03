@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -24,6 +23,7 @@ type WsMarketOrderBookSubscribe struct {
 	Action string `json:"action"`
 	Channel string `json:"channel"`
 	Params WsMarketOrderBookSubscribeParams `json:"params"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _WsMarketOrderBookSubscribe WsMarketOrderBookSubscribe
@@ -133,6 +133,11 @@ func (o WsMarketOrderBookSubscribe) ToMap() (map[string]interface{}, error) {
 	toSerialize["action"] = o.Action
 	toSerialize["channel"] = o.Channel
 	toSerialize["params"] = o.Params
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -162,15 +167,22 @@ func (o *WsMarketOrderBookSubscribe) UnmarshalJSON(data []byte) (err error) {
 
 	varWsMarketOrderBookSubscribe := _WsMarketOrderBookSubscribe{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varWsMarketOrderBookSubscribe)
+	err = json.Unmarshal(data, &varWsMarketOrderBookSubscribe)
 
 	if err != nil {
 		return err
 	}
 
 	*o = WsMarketOrderBookSubscribe(varWsMarketOrderBookSubscribe)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "action")
+		delete(additionalProperties, "channel")
+		delete(additionalProperties, "params")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

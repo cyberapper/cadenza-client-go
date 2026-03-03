@@ -12,7 +12,6 @@ package client
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -25,6 +24,7 @@ type ResponseError struct {
 	Code string `json:"code"`
 	// Error message
 	Message string `json:"message"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ResponseError ResponseError
@@ -108,6 +108,11 @@ func (o ResponseError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["code"] = o.Code
 	toSerialize["message"] = o.Message
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -136,15 +141,21 @@ func (o *ResponseError) UnmarshalJSON(data []byte) (err error) {
 
 	varResponseError := _ResponseError{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varResponseError)
+	err = json.Unmarshal(data, &varResponseError)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ResponseError(varResponseError)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "code")
+		delete(additionalProperties, "message")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }
