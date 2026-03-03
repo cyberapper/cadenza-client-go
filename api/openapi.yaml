@@ -3612,10 +3612,7 @@ components:
       description: Type of financial instrument
       enum:
       - SPOT
-      - FUTURES
-      - OPTION
-      - PERPETUAL
-      - DERIVATIVE
+      - CONTRACT
       example: SPOT
       type: string
     securityType:
