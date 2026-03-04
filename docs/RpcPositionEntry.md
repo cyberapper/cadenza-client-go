@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **InstrumentId** | Pointer to **string** | Instrument ID | [optional] 
 **SecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
 **Status** | Pointer to [**PositionStatus**](PositionStatus.md) |  | [optional] 
+**PositionSide** | Pointer to [**PositionSide**](PositionSide.md) |  | [optional] 
 **Quantity** | Pointer to **string** | Position quantity | [optional] 
 **EntryPrice** | Pointer to **string** |  | [optional] 
 **ExitPrice** | Pointer to **string** |  | [optional] 
@@ -213,6 +214,31 @@ SetStatus sets Status field to given value.
 `func (o *RpcPositionEntry) HasStatus() bool`
 
 HasStatus returns a boolean if a field has been set.
+
+### GetPositionSide
+
+`func (o *RpcPositionEntry) GetPositionSide() PositionSide`
+
+GetPositionSide returns the PositionSide field if non-nil, zero value otherwise.
+
+### GetPositionSideOk
+
+`func (o *RpcPositionEntry) GetPositionSideOk() (*PositionSide, bool)`
+
+GetPositionSideOk returns a tuple with the PositionSide field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPositionSide
+
+`func (o *RpcPositionEntry) SetPositionSide(v PositionSide)`
+
+SetPositionSide sets PositionSide field to given value.
+
+### HasPositionSide
+
+`func (o *RpcPositionEntry) HasPositionSide() bool`
+
+HasPositionSide returns a boolean if a field has been set.
 
 ### GetQuantity
 

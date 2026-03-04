@@ -13,8 +13,8 @@ Name | Type | Description | Notes
 **Status** | [**InstrumentStatus**](InstrumentStatus.md) |  | 
 **BaseAsset** | **string** |  | 
 **QuoteAsset** | **string** |  | 
-**BaseSecurityType** | [**SecurityType**](SecurityType.md) |  | 
-**QuoteSecurityType** | [**SecurityType**](SecurityType.md) |  | 
+**BaseSecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
+**QuoteSecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
 **BasePrecision** | **int32** | Base asset precision | 
 **QuotePrecision** | **int32** | Quote asset precision | 
 **BaseMaxSignificant** | **NullableInt32** | Maximum significant digits for base asset | 
@@ -42,7 +42,7 @@ Name | Type | Description | Notes
 
 ### NewInstrument
 
-`func NewInstrument(instrumentId string, venue Venue, symbol string, externalSymbol string, instrumentType InstrumentType, status InstrumentStatus, baseAsset string, quoteAsset string, baseSecurityType SecurityType, quoteSecurityType SecurityType, basePrecision int32, quotePrecision int32, baseMaxSignificant NullableInt32, quoteMaxSignificant NullableInt32, lotSize string, pipSize string, baseScale NullableInt32, quoteScale NullableInt32, minQuantity string, maxQuantity string, minNotional string, orderTypes []OrderType, timeInForceOptions []TimeInForce, ) *Instrument`
+`func NewInstrument(instrumentId string, venue Venue, symbol string, externalSymbol string, instrumentType InstrumentType, status InstrumentStatus, baseAsset string, quoteAsset string, basePrecision int32, quotePrecision int32, baseMaxSignificant NullableInt32, quoteMaxSignificant NullableInt32, lotSize string, pipSize string, baseScale NullableInt32, quoteScale NullableInt32, minQuantity string, maxQuantity string, minNotional string, orderTypes []OrderType, timeInForceOptions []TimeInForce, ) *Instrument`
 
 NewInstrument instantiates a new Instrument object
 This constructor will assign default values to properties that have it defined,
@@ -261,6 +261,11 @@ and a boolean to check if the value has been set.
 
 SetBaseSecurityType sets BaseSecurityType field to given value.
 
+### HasBaseSecurityType
+
+`func (o *Instrument) HasBaseSecurityType() bool`
+
+HasBaseSecurityType returns a boolean if a field has been set.
 
 ### GetQuoteSecurityType
 
@@ -281,6 +286,11 @@ and a boolean to check if the value has been set.
 
 SetQuoteSecurityType sets QuoteSecurityType field to given value.
 
+### HasQuoteSecurityType
+
+`func (o *Instrument) HasQuoteSecurityType() bool`
+
+HasQuoteSecurityType returns a boolean if a field has been set.
 
 ### GetBasePrecision
 

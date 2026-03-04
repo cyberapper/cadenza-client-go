@@ -37,9 +37,9 @@ type TradeOrder struct {
 	// Quote asset in the trading pair
 	QuoteAsset string `json:"quoteAsset"`
 	OrderSide OrderSide `json:"orderSide"`
-	OrderType OrderType `json:"orderType"`
-	TimeInForce TimeInForce `json:"timeInForce"`
-	Status OrderStatus `json:"status"`
+	OrderType NullableOrderType `json:"orderType"`
+	TimeInForce NullableTimeInForce `json:"timeInForce"`
+	Status NullableOrderStatus `json:"status"`
 	// Reason for order rejection
 	RejectReason *string `json:"rejectReason,omitempty"`
 	// Reason for order cancellation
@@ -87,7 +87,7 @@ type _TradeOrder TradeOrder
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTradeOrder(tradeOrderId string, tradingAccountId string, venue Venue, instrumentId string, baseAsset string, quoteAsset string, orderSide OrderSide, orderType OrderType, timeInForce TimeInForce, status OrderStatus, quantity string, orderQuantityType OrderQuantityType, executedPrice string, executedQuantity string, executedCost string, fees []SecurityQuantity, createdAt int64, updatedAt int64) *TradeOrder {
+func NewTradeOrder(tradeOrderId string, tradingAccountId string, venue Venue, instrumentId string, baseAsset string, quoteAsset string, orderSide OrderSide, orderType NullableOrderType, timeInForce NullableTimeInForce, status NullableOrderStatus, quantity string, orderQuantityType OrderQuantityType, executedPrice string, executedQuantity string, executedCost string, fees []SecurityQuantity, createdAt int64, updatedAt int64) *TradeOrder {
 	this := TradeOrder{}
 	this.TradeOrderId = tradeOrderId
 	this.TradingAccountId = tradingAccountId
@@ -355,75 +355,81 @@ func (o *TradeOrder) SetOrderSide(v OrderSide) {
 }
 
 // GetOrderType returns the OrderType field value
+// If the value is explicit nil, the zero value for OrderType will be returned
 func (o *TradeOrder) GetOrderType() OrderType {
-	if o == nil {
+	if o == nil || o.OrderType.Get() == nil {
 		var ret OrderType
 		return ret
 	}
 
-	return o.OrderType
+	return *o.OrderType.Get()
 }
 
 // GetOrderTypeOk returns a tuple with the OrderType field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradeOrder) GetOrderTypeOk() (*OrderType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.OrderType, true
+	return o.OrderType.Get(), o.OrderType.IsSet()
 }
 
 // SetOrderType sets field value
 func (o *TradeOrder) SetOrderType(v OrderType) {
-	o.OrderType = v
+	o.OrderType.Set(&v)
 }
 
 // GetTimeInForce returns the TimeInForce field value
+// If the value is explicit nil, the zero value for TimeInForce will be returned
 func (o *TradeOrder) GetTimeInForce() TimeInForce {
-	if o == nil {
+	if o == nil || o.TimeInForce.Get() == nil {
 		var ret TimeInForce
 		return ret
 	}
 
-	return o.TimeInForce
+	return *o.TimeInForce.Get()
 }
 
 // GetTimeInForceOk returns a tuple with the TimeInForce field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradeOrder) GetTimeInForceOk() (*TimeInForce, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.TimeInForce, true
+	return o.TimeInForce.Get(), o.TimeInForce.IsSet()
 }
 
 // SetTimeInForce sets field value
 func (o *TradeOrder) SetTimeInForce(v TimeInForce) {
-	o.TimeInForce = v
+	o.TimeInForce.Set(&v)
 }
 
 // GetStatus returns the Status field value
+// If the value is explicit nil, the zero value for OrderStatus will be returned
 func (o *TradeOrder) GetStatus() OrderStatus {
-	if o == nil {
+	if o == nil || o.Status.Get() == nil {
 		var ret OrderStatus
 		return ret
 	}
 
-	return o.Status
+	return *o.Status.Get()
 }
 
 // GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradeOrder) GetStatusOk() (*OrderStatus, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status.Get(), o.Status.IsSet()
 }
 
 // SetStatus sets field value
 func (o *TradeOrder) SetStatus(v OrderStatus) {
-	o.Status = v
+	o.Status.Set(&v)
 }
 
 // GetRejectReason returns the RejectReason field value if set, zero value otherwise.
@@ -1025,9 +1031,9 @@ func (o TradeOrder) ToMap() (map[string]interface{}, error) {
 	toSerialize["baseAsset"] = o.BaseAsset
 	toSerialize["quoteAsset"] = o.QuoteAsset
 	toSerialize["orderSide"] = o.OrderSide
-	toSerialize["orderType"] = o.OrderType
-	toSerialize["timeInForce"] = o.TimeInForce
-	toSerialize["status"] = o.Status
+	toSerialize["orderType"] = o.OrderType.Get()
+	toSerialize["timeInForce"] = o.TimeInForce.Get()
+	toSerialize["status"] = o.Status.Get()
 	if !IsNil(o.RejectReason) {
 		toSerialize["rejectReason"] = o.RejectReason
 	}

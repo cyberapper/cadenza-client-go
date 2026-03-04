@@ -33,6 +33,7 @@ type PositionEntry struct {
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	SecurityType SecurityType `json:"securityType"`
 	Status PositionStatus `json:"status"`
+	PositionSide PositionSide `json:"positionSide"`
 	// Decimal value as string to preserve precision
 	Quantity string `json:"quantity" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
@@ -66,13 +67,14 @@ type _PositionEntry PositionEntry
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPositionEntry(positionId string, securitySymbol string, tradingAccountId string, securityType SecurityType, status PositionStatus, quantity string, createdAt int64, updatedAt int64) *PositionEntry {
+func NewPositionEntry(positionId string, securitySymbol string, tradingAccountId string, securityType SecurityType, status PositionStatus, positionSide PositionSide, quantity string, createdAt int64, updatedAt int64) *PositionEntry {
 	this := PositionEntry{}
 	this.PositionId = positionId
 	this.SecuritySymbol = securitySymbol
 	this.TradingAccountId = tradingAccountId
 	this.SecurityType = securityType
 	this.Status = status
+	this.PositionSide = positionSide
 	this.Quantity = quantity
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
@@ -279,6 +281,30 @@ func (o *PositionEntry) GetStatusOk() (*PositionStatus, bool) {
 // SetStatus sets field value
 func (o *PositionEntry) SetStatus(v PositionStatus) {
 	o.Status = v
+}
+
+// GetPositionSide returns the PositionSide field value
+func (o *PositionEntry) GetPositionSide() PositionSide {
+	if o == nil {
+		var ret PositionSide
+		return ret
+	}
+
+	return o.PositionSide
+}
+
+// GetPositionSideOk returns a tuple with the PositionSide field value
+// and a boolean to check if the value has been set.
+func (o *PositionEntry) GetPositionSideOk() (*PositionSide, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.PositionSide, true
+}
+
+// SetPositionSide sets field value
+func (o *PositionEntry) SetPositionSide(v PositionSide) {
+	o.PositionSide = v
 }
 
 // GetQuantity returns the Quantity field value
@@ -672,6 +698,7 @@ func (o PositionEntry) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["securityType"] = o.SecurityType
 	toSerialize["status"] = o.Status
+	toSerialize["positionSide"] = o.PositionSide
 	toSerialize["quantity"] = o.Quantity
 	if !IsNil(o.EntryPrice) {
 		toSerialize["entryPrice"] = o.EntryPrice
@@ -720,6 +747,7 @@ func (o *PositionEntry) UnmarshalJSON(data []byte) (err error) {
 		"tradingAccountId",
 		"securityType",
 		"status",
+		"positionSide",
 		"quantity",
 		"createdAt",
 		"updatedAt",
@@ -759,6 +787,7 @@ func (o *PositionEntry) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "instrumentId")
 		delete(additionalProperties, "securityType")
 		delete(additionalProperties, "status")
+		delete(additionalProperties, "positionSide")
 		delete(additionalProperties, "quantity")
 		delete(additionalProperties, "entryPrice")
 		delete(additionalProperties, "exitPrice")

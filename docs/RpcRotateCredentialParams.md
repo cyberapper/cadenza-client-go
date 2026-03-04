@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CredentialId** | **string** |  | 
-**CredentialType** | [**CredentialType**](CredentialType.md) |  | 
+**CredentialType** | [**NullableCredentialType**](CredentialType.md) |  | 
 **ApiKey** | Pointer to **string** |  | [optional] 
 **SecretKey** | Pointer to **string** |  | [optional] 
 **SecretPassphrase** | Pointer to **string** |  | [optional] 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewRpcRotateCredentialParams
 
-`func NewRpcRotateCredentialParams(credentialId string, credentialType CredentialType, ) *RpcRotateCredentialParams`
+`func NewRpcRotateCredentialParams(credentialId string, credentialType NullableCredentialType, ) *RpcRotateCredentialParams`
 
 NewRpcRotateCredentialParams instantiates a new RpcRotateCredentialParams object
 This constructor will assign default values to properties that have it defined,
@@ -69,6 +69,16 @@ and a boolean to check if the value has been set.
 SetCredentialType sets CredentialType field to given value.
 
 
+### SetCredentialTypeNil
+
+`func (o *RpcRotateCredentialParams) SetCredentialTypeNil(b bool)`
+
+ SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
+
+### UnsetCredentialType
+`func (o *RpcRotateCredentialParams) UnsetCredentialType()`
+
+UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
 ### GetApiKey
 
 `func (o *RpcRotateCredentialParams) GetApiKey() string`

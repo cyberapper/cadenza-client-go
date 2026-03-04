@@ -20,7 +20,6 @@ type OrderType string
 
 // List of orderType
 const (
-	ORDERTYPE_EMPTY OrderType = ""
 	ORDERTYPE_MARKET OrderType = "MARKET"
 	ORDERTYPE_LIMIT OrderType = "LIMIT"
 	ORDERTYPE_STOP OrderType = "STOP"
@@ -36,7 +35,6 @@ const (
 
 // All allowed values of OrderType enum
 var AllowedOrderTypeEnumValues = []OrderType{
-	"",
 	"MARKET",
 	"LIMIT",
 	"STOP",

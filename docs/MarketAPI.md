@@ -304,7 +304,7 @@ import (
 
 func main() {
 	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
-	venue := openapiclient.venue("") // Venue | Exchange type (optional)
+	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
 	symbol := "BTC/USDT" // string | Instrument Symbol (optional)
 	depth := int32(56) // int32 | Order book depth (optional) (default to 10)
 
@@ -375,9 +375,9 @@ import (
 )
 
 func main() {
-	venue := openapiclient.venue("") // Venue | Exchange type (optional)
+	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
 	symbols := []string{"BTC/USDT"} // []string | Instrument Symbols array (optional)
-	securityType := openapiclient.securityType("") // SecurityType | Security type (optional)
+	securityType := openapiclient.securityType("STOCK") // SecurityType | Security type (optional)
 	instrumentStatus := openapiclient.instrumentStatus("ACTIVE") // InstrumentStatus | Instrument status (optional)
 	limit := int32(100) // int32 | Limit the number of returned results (optional) (default to 50)
 	offset := int32(0) // int32 | Offset of the returned results (optional) (default to 0)
@@ -452,7 +452,7 @@ import (
 
 func main() {
 	instrumentIds := []string{"BINANCE:BTC/USDT"} // []string |  (optional)
-	venue := openapiclient.venue("") // Venue | Exchange type (optional)
+	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
 	symbols := []string{"BTC/USDT"} // []string | Instrument Symbols array (optional)
 	depth := int32(56) // int32 | Order book depth (optional) (default to 10)
 
@@ -523,7 +523,7 @@ import (
 )
 
 func main() {
-	venue := openapiclient.venue("") // Venue | Exchange type (optional)
+	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
 	securityId := "securityId_example" // string | Security ID (optional)
 	limit := int32(100) // int32 | Limit the number of returned results (optional) (default to 50)
 	offset := int32(0) // int32 | Offset of the returned results (optional) (default to 0)
@@ -656,7 +656,7 @@ import (
 )
 
 func main() {
-	syncMarketInstrumentsRequest := *openapiclient.NewSyncMarketInstrumentsRequest(openapiclient.venue(""), []string{"Symbols_example"}) // SyncMarketInstrumentsRequest |  (optional)
+	syncMarketInstrumentsRequest := *openapiclient.NewSyncMarketInstrumentsRequest(openapiclient.venue("BINANCE"), []string{"Symbols_example"}) // SyncMarketInstrumentsRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -722,7 +722,7 @@ import (
 )
 
 func main() {
-	syncMarketSecuritiesRequest := *openapiclient.NewSyncMarketSecuritiesRequest(openapiclient.venue("")) // SyncMarketSecuritiesRequest |  (optional)
+	syncMarketSecuritiesRequest := *openapiclient.NewSyncMarketSecuritiesRequest(openapiclient.venue("BINANCE")) // SyncMarketSecuritiesRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

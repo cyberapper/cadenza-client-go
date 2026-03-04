@@ -29,7 +29,7 @@ type SubmitTradeOrderRequest struct {
 	// Client-provided order ID, used as idempotency key
 	ClientOrderId *string `json:"clientOrderId,omitempty"`
 	OrderSide OrderSide `json:"orderSide"`
-	OrderType OrderType `json:"orderType"`
+	OrderType NullableOrderType `json:"orderType"`
 	// Decimal value as string to preserve precision
 	LimitPrice *string `json:"limitPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
@@ -40,7 +40,7 @@ type SubmitTradeOrderRequest struct {
 	QuantityRounding *QuantityRounding `json:"quantityRounding,omitempty"`
 	// UUID string
 	PositionId *string `json:"positionId,omitempty"`
-	TimeInForce *TimeInForce `json:"timeInForce,omitempty"`
+	TimeInForce NullableTimeInForce `json:"timeInForce,omitempty"`
 	// Unix timestamp in milliseconds
 	ExpireAt *int64 `json:"expireAt,omitempty"`
 	// UUID string
@@ -58,7 +58,7 @@ type _SubmitTradeOrderRequest SubmitTradeOrderRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSubmitTradeOrderRequest(tradingAccountId string, instrumentId string, orderSide OrderSide, orderType OrderType, quantity string) *SubmitTradeOrderRequest {
+func NewSubmitTradeOrderRequest(tradingAccountId string, instrumentId string, orderSide OrderSide, orderType NullableOrderType, quantity string) *SubmitTradeOrderRequest {
 	this := SubmitTradeOrderRequest{}
 	this.TradingAccountId = tradingAccountId
 	this.InstrumentId = instrumentId
@@ -221,27 +221,29 @@ func (o *SubmitTradeOrderRequest) SetOrderSide(v OrderSide) {
 }
 
 // GetOrderType returns the OrderType field value
+// If the value is explicit nil, the zero value for OrderType will be returned
 func (o *SubmitTradeOrderRequest) GetOrderType() OrderType {
-	if o == nil {
+	if o == nil || o.OrderType.Get() == nil {
 		var ret OrderType
 		return ret
 	}
 
-	return o.OrderType
+	return *o.OrderType.Get()
 }
 
 // GetOrderTypeOk returns a tuple with the OrderType field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SubmitTradeOrderRequest) GetOrderTypeOk() (*OrderType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.OrderType, true
+	return o.OrderType.Get(), o.OrderType.IsSet()
 }
 
 // SetOrderType sets field value
 func (o *SubmitTradeOrderRequest) SetOrderType(v OrderType) {
-	o.OrderType = v
+	o.OrderType.Set(&v)
 }
 
 // GetLimitPrice returns the LimitPrice field value if set, zero value otherwise.
@@ -428,36 +430,46 @@ func (o *SubmitTradeOrderRequest) SetPositionId(v string) {
 	o.PositionId = &v
 }
 
-// GetTimeInForce returns the TimeInForce field value if set, zero value otherwise.
+// GetTimeInForce returns the TimeInForce field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SubmitTradeOrderRequest) GetTimeInForce() TimeInForce {
-	if o == nil || IsNil(o.TimeInForce) {
+	if o == nil || IsNil(o.TimeInForce.Get()) {
 		var ret TimeInForce
 		return ret
 	}
-	return *o.TimeInForce
+	return *o.TimeInForce.Get()
 }
 
 // GetTimeInForceOk returns a tuple with the TimeInForce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SubmitTradeOrderRequest) GetTimeInForceOk() (*TimeInForce, bool) {
-	if o == nil || IsNil(o.TimeInForce) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TimeInForce, true
+	return o.TimeInForce.Get(), o.TimeInForce.IsSet()
 }
 
 // HasTimeInForce returns a boolean if a field has been set.
 func (o *SubmitTradeOrderRequest) HasTimeInForce() bool {
-	if o != nil && !IsNil(o.TimeInForce) {
+	if o != nil && o.TimeInForce.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTimeInForce gets a reference to the given TimeInForce and assigns it to the TimeInForce field.
+// SetTimeInForce gets a reference to the given NullableTimeInForce and assigns it to the TimeInForce field.
 func (o *SubmitTradeOrderRequest) SetTimeInForce(v TimeInForce) {
-	o.TimeInForce = &v
+	o.TimeInForce.Set(&v)
+}
+// SetTimeInForceNil sets the value for TimeInForce to be an explicit nil
+func (o *SubmitTradeOrderRequest) SetTimeInForceNil() {
+	o.TimeInForce.Set(nil)
+}
+
+// UnsetTimeInForce ensures that no value is present for TimeInForce, not even an explicit nil
+func (o *SubmitTradeOrderRequest) UnsetTimeInForce() {
+	o.TimeInForce.Unset()
 }
 
 // GetExpireAt returns the ExpireAt field value if set, zero value otherwise.
@@ -607,7 +619,7 @@ func (o SubmitTradeOrderRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["clientOrderId"] = o.ClientOrderId
 	}
 	toSerialize["orderSide"] = o.OrderSide
-	toSerialize["orderType"] = o.OrderType
+	toSerialize["orderType"] = o.OrderType.Get()
 	if !IsNil(o.LimitPrice) {
 		toSerialize["limitPrice"] = o.LimitPrice
 	}
@@ -624,8 +636,8 @@ func (o SubmitTradeOrderRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PositionId) {
 		toSerialize["positionId"] = o.PositionId
 	}
-	if !IsNil(o.TimeInForce) {
-		toSerialize["timeInForce"] = o.TimeInForce
+	if o.TimeInForce.IsSet() {
+		toSerialize["timeInForce"] = o.TimeInForce.Get()
 	}
 	if !IsNil(o.ExpireAt) {
 		toSerialize["expireAt"] = o.ExpireAt

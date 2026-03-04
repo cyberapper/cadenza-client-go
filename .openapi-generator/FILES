@@ -88,6 +88,7 @@ docs/Portfolio.md
 docs/PortfolioSummary.md
 docs/PositionEntry.md
 docs/PositionMode.md
+docs/PositionSide.md
 docs/PositionStatus.md
 docs/QuantityRounding.md
 docs/QuantityType.md
@@ -388,6 +389,7 @@ model_portfolio.go
 model_portfolio_summary.go
 model_position_entry.go
 model_position_mode.go
+model_position_side.go
 model_position_status.go
 model_quantity_rounding.go
 model_quantity_type.go

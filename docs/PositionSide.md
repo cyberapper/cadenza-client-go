@@ -1,15 +1,11 @@
-# CredentialStatus
+# PositionSide
 
 ## Enum
 
 
-* `CREATED` (value: `"CREATED"`)
+* `LONG` (value: `"LONG"`)
 
-* `ACTIVE` (value: `"ACTIVE"`)
-
-* `EXPIRED` (value: `"EXPIRED"`)
-
-* `REVOKED` (value: `"REVOKED"`)
+* `SHORT` (value: `"SHORT"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

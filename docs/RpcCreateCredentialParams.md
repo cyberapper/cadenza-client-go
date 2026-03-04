@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradingAccountId** | **string** |  | 
 **Venue** | [**Venue**](Venue.md) |  | 
-**CredentialType** | [**CredentialType**](CredentialType.md) |  | 
+**CredentialType** | [**NullableCredentialType**](CredentialType.md) |  | 
 **ApiKey** | Pointer to **string** |  | [optional] 
 **SecretKey** | Pointer to **string** |  | [optional] 
 **SecretPassphrase** | Pointer to **string** |  | [optional] 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewRpcCreateCredentialParams
 
-`func NewRpcCreateCredentialParams(tradingAccountId string, venue Venue, credentialType CredentialType, ) *RpcCreateCredentialParams`
+`func NewRpcCreateCredentialParams(tradingAccountId string, venue Venue, credentialType NullableCredentialType, ) *RpcCreateCredentialParams`
 
 NewRpcCreateCredentialParams instantiates a new RpcCreateCredentialParams object
 This constructor will assign default values to properties that have it defined,
@@ -91,6 +91,16 @@ and a boolean to check if the value has been set.
 SetCredentialType sets CredentialType field to given value.
 
 
+### SetCredentialTypeNil
+
+`func (o *RpcCreateCredentialParams) SetCredentialTypeNil(b bool)`
+
+ SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
+
+### UnsetCredentialType
+`func (o *RpcCreateCredentialParams) UnsetCredentialType()`
+
+UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
 ### GetApiKey
 
 `func (o *RpcCreateCredentialParams) GetApiKey() string`
