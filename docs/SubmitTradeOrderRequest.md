@@ -9,14 +9,14 @@ Name | Type | Description | Notes
 **IdempotencyKey** | Pointer to **string** | Idempotency key to prevent duplicate request processing | [optional] 
 **ClientOrderId** | Pointer to **string** | Client-provided order ID, used as idempotency key | [optional] 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
-**OrderType** | [**OrderType**](OrderType.md) |  | 
+**OrderType** | [**NullableOrderType**](OrderType.md) |  | 
 **LimitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **StopPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **Quantity** | **string** | Decimal value as string to preserve precision | 
 **QuantityType** | Pointer to [**OrderQuantityType**](OrderQuantityType.md) |  | [optional] 
 **QuantityRounding** | Pointer to [**QuantityRounding**](QuantityRounding.md) |  | [optional] [default to QUANTITYROUNDING_EMPTY]
 **PositionId** | Pointer to **string** | UUID string | [optional] 
-**TimeInForce** | Pointer to [**TimeInForce**](TimeInForce.md) |  | [optional] 
+**TimeInForce** | Pointer to [**NullableTimeInForce**](TimeInForce.md) |  | [optional] 
 **ExpireAt** | Pointer to **int64** | Unix timestamp in milliseconds | [optional] 
 **QuoteId** | Pointer to **string** | UUID string | [optional] 
 **Leverage** | Pointer to **int32** | Leverage | [optional] 
@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewSubmitTradeOrderRequest
 
-`func NewSubmitTradeOrderRequest(tradingAccountId string, instrumentId string, orderSide OrderSide, orderType OrderType, quantity string, ) *SubmitTradeOrderRequest`
+`func NewSubmitTradeOrderRequest(tradingAccountId string, instrumentId string, orderSide OrderSide, orderType NullableOrderType, quantity string, ) *SubmitTradeOrderRequest`
 
 NewSubmitTradeOrderRequest instantiates a new SubmitTradeOrderRequest object
 This constructor will assign default values to properties that have it defined,
@@ -171,6 +171,16 @@ and a boolean to check if the value has been set.
 SetOrderType sets OrderType field to given value.
 
 
+### SetOrderTypeNil
+
+`func (o *SubmitTradeOrderRequest) SetOrderTypeNil(b bool)`
+
+ SetOrderTypeNil sets the value for OrderType to be an explicit nil
+
+### UnsetOrderType
+`func (o *SubmitTradeOrderRequest) UnsetOrderType()`
+
+UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
 ### GetLimitPrice
 
 `func (o *SubmitTradeOrderRequest) GetLimitPrice() string`
@@ -341,6 +351,16 @@ SetTimeInForce sets TimeInForce field to given value.
 
 HasTimeInForce returns a boolean if a field has been set.
 
+### SetTimeInForceNil
+
+`func (o *SubmitTradeOrderRequest) SetTimeInForceNil(b bool)`
+
+ SetTimeInForceNil sets the value for TimeInForce to be an explicit nil
+
+### UnsetTimeInForce
+`func (o *SubmitTradeOrderRequest) UnsetTimeInForce()`
+
+UnsetTimeInForce ensures that no value is present for TimeInForce, not even an explicit nil
 ### GetExpireAt
 
 `func (o *SubmitTradeOrderRequest) GetExpireAt() int64`

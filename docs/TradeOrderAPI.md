@@ -98,7 +98,7 @@ import (
 
 func main() {
 	tradeOrderId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trade order ID (optional)
-	orderStatus := openapiclient.orderStatus("") // OrderStatus | Order status (optional)
+	orderStatus := openapiclient.orderStatus("CREATED") // OrderStatus | Order status (optional)
 	tradingAccountId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trading account ID (optional)
 	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
 	startTime := int32(1622505600000) // int32 | Start time (in unix milliseconds), of the created at field (optional)
@@ -181,7 +181,7 @@ import (
 )
 
 func main() {
-	submitTradeOrderRequest := *openapiclient.NewSubmitTradeOrderRequest("TradingAccountId_example", "BINANCE:BTC/USDT", openapiclient.orderSide("BUY"), openapiclient.orderType(""), "1234.56789000") // SubmitTradeOrderRequest |  (optional)
+	submitTradeOrderRequest := *openapiclient.NewSubmitTradeOrderRequest("TradingAccountId_example", "BINANCE:BTC/USDT", openapiclient.orderSide("BUY"), "TODO", "1234.56789000") // SubmitTradeOrderRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

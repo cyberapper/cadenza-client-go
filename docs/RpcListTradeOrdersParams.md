@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **TradingAccountId** | Pointer to **string** | Filter by trading account ID | [optional] 
 **InstrumentId** | Pointer to **string** | Filter by instrument ID (e.g., BINANCE:BTC/USDT) | [optional] 
 **Side** | Pointer to [**OrderSide**](OrderSide.md) |  | [optional] 
-**OrderType** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
-**Status** | Pointer to [**OrderStatus**](OrderStatus.md) |  | [optional] 
+**OrderType** | Pointer to [**NullableOrderType**](OrderType.md) |  | [optional] 
+**Status** | Pointer to [**NullableOrderStatus**](OrderStatus.md) |  | [optional] 
 **StartTime** | Pointer to **time.Time** | Filter orders created after this time | [optional] 
 **EndTime** | Pointer to **time.Time** | Filter orders created before this time | [optional] 
 **Pagination** | Pointer to [**RpcPagination**](RpcPagination.md) |  | [optional] 
@@ -158,6 +158,16 @@ SetOrderType sets OrderType field to given value.
 
 HasOrderType returns a boolean if a field has been set.
 
+### SetOrderTypeNil
+
+`func (o *RpcListTradeOrdersParams) SetOrderTypeNil(b bool)`
+
+ SetOrderTypeNil sets the value for OrderType to be an explicit nil
+
+### UnsetOrderType
+`func (o *RpcListTradeOrdersParams) UnsetOrderType()`
+
+UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
 ### GetStatus
 
 `func (o *RpcListTradeOrdersParams) GetStatus() OrderStatus`
@@ -183,6 +193,16 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
+### SetStatusNil
+
+`func (o *RpcListTradeOrdersParams) SetStatusNil(b bool)`
+
+ SetStatusNil sets the value for Status to be an explicit nil
+
+### UnsetStatus
+`func (o *RpcListTradeOrdersParams) UnsetStatus()`
+
+UnsetStatus ensures that no value is present for Status, not even an explicit nil
 ### GetStartTime
 
 `func (o *RpcListTradeOrdersParams) GetStartTime() time.Time`

@@ -30,7 +30,7 @@ import (
 
 func main() {
 	tradingAccountId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trading account ID (optional)
-	venue := openapiclient.venue("") // Venue | Exchange type (optional)
+	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
 	currency := "USDT" // string | Currency (optional)
 	limit := int32(100) // int32 | Limit the number of returned results (optional) (default to 50)
 	offset := int32(0) // int32 | Offset of the returned results (optional) (default to 0)

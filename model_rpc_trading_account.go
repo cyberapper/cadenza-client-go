@@ -35,9 +35,9 @@ type RpcTradingAccount struct {
 	AccountType *TradingAccountType `json:"accountType,omitempty"`
 	// Type of account on the exchange (set by market connector)
 	ExternalAccountType *string `json:"externalAccountType,omitempty"`
-	PositionMode *PositionMode `json:"positionMode,omitempty"`
-	CollateralMode *CollateralMode `json:"collateralMode,omitempty"`
-	MarginMode *MarginMode `json:"marginMode,omitempty"`
+	PositionMode NullablePositionMode `json:"positionMode,omitempty"`
+	CollateralMode NullableCollateralMode `json:"collateralMode,omitempty"`
+	MarginMode NullableMarginMode `json:"marginMode,omitempty"`
 	// Account credentials
 	Credentials []RpcTradingAccountCredential `json:"credentials,omitempty"`
 	Config *RpcTradingAccountConfig `json:"config,omitempty"`
@@ -353,100 +353,130 @@ func (o *RpcTradingAccount) SetExternalAccountType(v string) {
 	o.ExternalAccountType = &v
 }
 
-// GetPositionMode returns the PositionMode field value if set, zero value otherwise.
+// GetPositionMode returns the PositionMode field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RpcTradingAccount) GetPositionMode() PositionMode {
-	if o == nil || IsNil(o.PositionMode) {
+	if o == nil || IsNil(o.PositionMode.Get()) {
 		var ret PositionMode
 		return ret
 	}
-	return *o.PositionMode
+	return *o.PositionMode.Get()
 }
 
 // GetPositionModeOk returns a tuple with the PositionMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcTradingAccount) GetPositionModeOk() (*PositionMode, bool) {
-	if o == nil || IsNil(o.PositionMode) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PositionMode, true
+	return o.PositionMode.Get(), o.PositionMode.IsSet()
 }
 
 // HasPositionMode returns a boolean if a field has been set.
 func (o *RpcTradingAccount) HasPositionMode() bool {
-	if o != nil && !IsNil(o.PositionMode) {
+	if o != nil && o.PositionMode.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPositionMode gets a reference to the given PositionMode and assigns it to the PositionMode field.
+// SetPositionMode gets a reference to the given NullablePositionMode and assigns it to the PositionMode field.
 func (o *RpcTradingAccount) SetPositionMode(v PositionMode) {
-	o.PositionMode = &v
+	o.PositionMode.Set(&v)
+}
+// SetPositionModeNil sets the value for PositionMode to be an explicit nil
+func (o *RpcTradingAccount) SetPositionModeNil() {
+	o.PositionMode.Set(nil)
 }
 
-// GetCollateralMode returns the CollateralMode field value if set, zero value otherwise.
+// UnsetPositionMode ensures that no value is present for PositionMode, not even an explicit nil
+func (o *RpcTradingAccount) UnsetPositionMode() {
+	o.PositionMode.Unset()
+}
+
+// GetCollateralMode returns the CollateralMode field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RpcTradingAccount) GetCollateralMode() CollateralMode {
-	if o == nil || IsNil(o.CollateralMode) {
+	if o == nil || IsNil(o.CollateralMode.Get()) {
 		var ret CollateralMode
 		return ret
 	}
-	return *o.CollateralMode
+	return *o.CollateralMode.Get()
 }
 
 // GetCollateralModeOk returns a tuple with the CollateralMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcTradingAccount) GetCollateralModeOk() (*CollateralMode, bool) {
-	if o == nil || IsNil(o.CollateralMode) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CollateralMode, true
+	return o.CollateralMode.Get(), o.CollateralMode.IsSet()
 }
 
 // HasCollateralMode returns a boolean if a field has been set.
 func (o *RpcTradingAccount) HasCollateralMode() bool {
-	if o != nil && !IsNil(o.CollateralMode) {
+	if o != nil && o.CollateralMode.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCollateralMode gets a reference to the given CollateralMode and assigns it to the CollateralMode field.
+// SetCollateralMode gets a reference to the given NullableCollateralMode and assigns it to the CollateralMode field.
 func (o *RpcTradingAccount) SetCollateralMode(v CollateralMode) {
-	o.CollateralMode = &v
+	o.CollateralMode.Set(&v)
+}
+// SetCollateralModeNil sets the value for CollateralMode to be an explicit nil
+func (o *RpcTradingAccount) SetCollateralModeNil() {
+	o.CollateralMode.Set(nil)
 }
 
-// GetMarginMode returns the MarginMode field value if set, zero value otherwise.
+// UnsetCollateralMode ensures that no value is present for CollateralMode, not even an explicit nil
+func (o *RpcTradingAccount) UnsetCollateralMode() {
+	o.CollateralMode.Unset()
+}
+
+// GetMarginMode returns the MarginMode field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RpcTradingAccount) GetMarginMode() MarginMode {
-	if o == nil || IsNil(o.MarginMode) {
+	if o == nil || IsNil(o.MarginMode.Get()) {
 		var ret MarginMode
 		return ret
 	}
-	return *o.MarginMode
+	return *o.MarginMode.Get()
 }
 
 // GetMarginModeOk returns a tuple with the MarginMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcTradingAccount) GetMarginModeOk() (*MarginMode, bool) {
-	if o == nil || IsNil(o.MarginMode) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MarginMode, true
+	return o.MarginMode.Get(), o.MarginMode.IsSet()
 }
 
 // HasMarginMode returns a boolean if a field has been set.
 func (o *RpcTradingAccount) HasMarginMode() bool {
-	if o != nil && !IsNil(o.MarginMode) {
+	if o != nil && o.MarginMode.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetMarginMode gets a reference to the given MarginMode and assigns it to the MarginMode field.
+// SetMarginMode gets a reference to the given NullableMarginMode and assigns it to the MarginMode field.
 func (o *RpcTradingAccount) SetMarginMode(v MarginMode) {
-	o.MarginMode = &v
+	o.MarginMode.Set(&v)
+}
+// SetMarginModeNil sets the value for MarginMode to be an explicit nil
+func (o *RpcTradingAccount) SetMarginModeNil() {
+	o.MarginMode.Set(nil)
+}
+
+// UnsetMarginMode ensures that no value is present for MarginMode, not even an explicit nil
+func (o *RpcTradingAccount) UnsetMarginMode() {
+	o.MarginMode.Unset()
 }
 
 // GetCredentials returns the Credentials field value if set, zero value otherwise.
@@ -614,14 +644,14 @@ func (o RpcTradingAccount) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ExternalAccountType) {
 		toSerialize["externalAccountType"] = o.ExternalAccountType
 	}
-	if !IsNil(o.PositionMode) {
-		toSerialize["positionMode"] = o.PositionMode
+	if o.PositionMode.IsSet() {
+		toSerialize["positionMode"] = o.PositionMode.Get()
 	}
-	if !IsNil(o.CollateralMode) {
-		toSerialize["collateralMode"] = o.CollateralMode
+	if o.CollateralMode.IsSet() {
+		toSerialize["collateralMode"] = o.CollateralMode.Get()
 	}
-	if !IsNil(o.MarginMode) {
-		toSerialize["marginMode"] = o.MarginMode
+	if o.MarginMode.IsSet() {
+		toSerialize["marginMode"] = o.MarginMode.Get()
 	}
 	if !IsNil(o.Credentials) {
 		toSerialize["credentials"] = o.Credentials

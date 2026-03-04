@@ -621,7 +621,7 @@ paths:
         name: credentialStatus
         required: false
         schema:
-          $ref: "#/components/schemas/tradingAccountStatus"
+          $ref: "#/components/schemas/credentialStatus"
         style: form
       - description: credentialId array
         explode: true
@@ -2646,7 +2646,7 @@ components:
       name: credentialStatus
       required: false
       schema:
-        $ref: "#/components/schemas/tradingAccountStatus"
+        $ref: "#/components/schemas/credentialStatus"
       style: form
     credentialId:
       description: Credential ID
@@ -3347,7 +3347,6 @@ components:
         Trading venue identifier. UAT/sandbox environments are treated as separate venues.
         Note: _SANDBOX and _PAPER suffixes are deprecated. Use _UAT suffix for new integrations.
       enum:
-      - ""
       - BINANCE
       - B2C2
       - WINTERMUTE
@@ -3378,24 +3377,22 @@ components:
     credentialType:
       description: Type of API credential
       enum:
-      - ""
       - API_KEY
       - HMAC
       - OAUTH
       - RSA
       - ED25519
       example: API_KEY
+      nullable: true
       type: string
     credentialStatus:
       description: Status of the credential
       enum:
       - CREATED
-      - VALIDATED
-      - INACTIVE
+      - ACTIVE
+      - EXPIRED
       - REVOKED
-      - ERROR
-      - UNKNOWN
-      example: VALIDATED
+      example: CREATED
       type: string
     orderSide:
       description: Order side (buy or sell)
@@ -3408,7 +3405,6 @@ components:
     orderType:
       description: Order type
       enum:
-      - ""
       - MARKET
       - LIMIT
       - STOP
@@ -3421,11 +3417,11 @@ components:
       - QUOTED
       - UNKNOWN
       example: LIMIT
+      nullable: true
       type: string
     orderStatus:
       description: Order status
       enum:
-      - ""
       - CREATED
       - SUBMITTED
       - ACCEPTED
@@ -3440,6 +3436,7 @@ components:
       - REVOKED
       - UNKNOWN
       example: FILLED
+      nullable: true
       type: string
     rejectReason:
       description: Reason for order rejection
@@ -3450,7 +3447,6 @@ components:
     timeInForce:
       description: Time in force - specifies how long an order remains active
       enum:
-      - ""
       - GTC
       - IOC
       - FOK
@@ -3467,6 +3463,7 @@ components:
       - EXT
       - UNKNOWN
       example: GTC
+      nullable: true
       type: string
     quantityType:
       description: How order quantity is specified
@@ -3539,6 +3536,7 @@ components:
       description: Status of the trading account
       enum:
       - NEW
+      - CREATED
       - ACTIVE
       - INACTIVE
       - LOCKED
@@ -3551,8 +3549,7 @@ components:
       enum:
       - SPOT
       - MARGIN
-      - FUTURES
-      - OPTIONS
+      - CREDIT
       example: SPOT
       type: string
     tradingAccountOperationType:
@@ -3573,40 +3570,42 @@ components:
       description: Status of the trading account credential
       enum:
       - CREATED
+      - ACTIVE
+      - EXPIRED
       - REVOKED
+      example: CREATED
       type: string
     accountType:
       description: Type of trading account
       enum:
       - SPOT
       - MARGIN
-      - FUTURES
-      - OPTIONS
+      - CREDIT
       example: SPOT
       type: string
     positionMode:
       description: Position mode setting - how positions are handled
       enum:
-      - ""
       - HEDGE
       - NETTING
       example: NETTING
+      nullable: true
       type: string
     collateralMode:
       description: Collateral mode - how margin is shared across positions
       enum:
-      - ""
       - CROSS
       - ISOLATED
       example: CROSS
+      nullable: true
       type: string
     marginMode:
       description: Margin mode - account-level margin calculation type
       enum:
-      - ""
-      - STANDARD
-      - PORTFOLIO
-      example: STANDARD
+      - ISOLATED
+      - CROSS
+      example: CROSS
+      nullable: true
       type: string
     instrumentType:
       description: Type of financial instrument
@@ -3616,22 +3615,17 @@ components:
       example: SPOT
       type: string
     securityType:
-      description: Type of security (base asset)
+      description: Type of financial instrument
       enum:
-      - ""
-      - CASH
       - STOCK
       - CRYPTO
       - CURRENCY
       - COMMODITY
       - INDEX
       - BOND
-      - DERIVATIVE
       - OPTION
-      - FUTURE
       - FUTURES
       - PERPETUAL
-      - FOREX
       example: CRYPTO
       type: string
     operationType:
@@ -3668,20 +3662,25 @@ components:
       - MAINTENANCE
       type: string
     balanceStatus:
-      description: Balance entry status
+      description: Status of a balance entry
       enum:
       - ACTIVE
-      - INACTIVE
-      - FROZEN
+      - LOCKED
       example: ACTIVE
       type: string
     positionStatus:
-      description: Position entry status
+      description: Status of a position
       enum:
       - OPEN
       - CLOSED
-      - LIQUIDATED
       example: OPEN
+      type: string
+    positionSide:
+      description: Side of a position
+      enum:
+      - LONG
+      - SHORT
+      example: LONG
       type: string
     updateMode:
       description: Portfolio update mode
@@ -3693,15 +3692,15 @@ components:
     subscriptionType:
       description: Type of data subscription
       enum:
-      - MARKET.SUBSCRIPTION.ORDERBOOK
-      - MARKET.SUBSCRIPTION.TRADE
-      - MARKET.SUBSCRIPTION.TICKER
-      - MARKET.SUBSCRIPTION.KLINE
-      - TRADING_ACCOUNT.SUBSCRIPTION.USER_DATA
-      - TRADING_ACCOUNT.SUBSCRIPTION.PORTFOLIO
-      - TRADING_ACCOUNT.SUBSCRIPTION.EXECUTION_REPORT
-      - TRADING_ACCOUNT.SUBSCRIPTION.TRADING_ACCOUNT
-      example: MARKET.SUBSCRIPTION.ORDERBOOK
+      - ORDERBOOK
+      - TRADE
+      - TICKER
+      - KLINE
+      - USER_DATA
+      - PORTFOLIO
+      - EXECUTION_REPORT
+      - TRADING_ACCOUNT
+      example: ORDERBOOK
       type: string
     subscriptionStatus:
       description: Status of a subscription
@@ -4315,7 +4314,6 @@ components:
       - baseMaxSignificant
       - basePrecision
       - baseScale
-      - baseSecurityType
       - externalSymbol
       - instrumentId
       - instrumentType
@@ -4329,7 +4327,6 @@ components:
       - quoteMaxSignificant
       - quotePrecision
       - quoteScale
-      - quoteSecurityType
       - status
       - symbol
       - timeInForceOptions
@@ -4426,7 +4423,7 @@ components:
         accountType: SPOT
         positionMode: NETTING
         collateralMode: CROSS
-        marginMode: STANDARD
+        marginMode: CROSS
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
         tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -4546,6 +4543,7 @@ components:
         - exitPrice: "1234.56789000"
           quantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
+          positionSide: LONG
           currentPrice: "1234.56789000"
           entryPrice: "1234.56789000"
           createdAt: 1632933600000
@@ -4565,6 +4563,7 @@ components:
         - exitPrice: "1234.56789000"
           quantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
+          positionSide: LONG
           currentPrice: "1234.56789000"
           entryPrice: "1234.56789000"
           createdAt: 1632933600000
@@ -4621,6 +4620,7 @@ components:
         exitPrice: "1234.56789000"
         quantity: "1234.56789000"
         instrumentId: BINANCE:BTC/USDT
+        positionSide: LONG
         currentPrice: "1234.56789000"
         entryPrice: "1234.56789000"
         createdAt: 1632933600000
@@ -4662,6 +4662,8 @@ components:
           $ref: "#/components/schemas/securityType"
         status:
           $ref: "#/components/schemas/positionStatus"
+        positionSide:
+          $ref: "#/components/schemas/positionSide"
         quantity:
           description: Decimal value as string to preserve precision
           example: "1234.56789000"
@@ -4723,6 +4725,7 @@ components:
       required:
       - createdAt
       - positionId
+      - positionSide
       - quantity
       - securitySymbol
       - securityType
@@ -4945,7 +4948,7 @@ components:
         venue: BINANCE
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-        subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+        subscriptionType: ORDERBOOK
         instrumentId: BINANCE:BTC/USDT
         lastEventTimestamp: 1632933600000
         tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -7314,6 +7317,8 @@ components:
           $ref: "#/components/schemas/securityType"
         status:
           $ref: "#/components/schemas/positionStatus"
+        positionSide:
+          $ref: "#/components/schemas/positionSide"
         quantity:
           description: Position quantity
           type: string
@@ -9529,7 +9534,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9566,7 +9571,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9628,7 +9633,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9700,7 +9705,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9737,7 +9742,7 @@ components:
           accountType: SPOT
           positionMode: NETTING
           collateralMode: CROSS
-          marginMode: STANDARD
+          marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9822,7 +9827,7 @@ components:
           venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+          subscriptionType: ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9860,7 +9865,7 @@ components:
         - venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+          subscriptionType: ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9871,7 +9876,7 @@ components:
         - venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
+          subscriptionType: ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -9962,6 +9967,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -9981,6 +9987,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -10046,6 +10053,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000
@@ -10065,6 +10073,7 @@ components:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
             instrumentId: BINANCE:BTC/USDT
+            positionSide: LONG
             currentPrice: "1234.56789000"
             entryPrice: "1234.56789000"
             createdAt: 1632933600000

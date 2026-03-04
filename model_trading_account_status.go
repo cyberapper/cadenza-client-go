@@ -21,6 +21,7 @@ type TradingAccountStatus string
 // List of tradingAccountStatus
 const (
 	TRADINGACCOUNTSTATUS_NEW TradingAccountStatus = "NEW"
+	TRADINGACCOUNTSTATUS_CREATED TradingAccountStatus = "CREATED"
 	TRADINGACCOUNTSTATUS_ACTIVE TradingAccountStatus = "ACTIVE"
 	TRADINGACCOUNTSTATUS_INACTIVE TradingAccountStatus = "INACTIVE"
 	TRADINGACCOUNTSTATUS_LOCKED TradingAccountStatus = "LOCKED"
@@ -31,6 +32,7 @@ const (
 // All allowed values of TradingAccountStatus enum
 var AllowedTradingAccountStatusEnumValues = []TradingAccountStatus{
 	"NEW",
+	"CREATED",
 	"ACTIVE",
 	"INACTIVE",
 	"LOCKED",

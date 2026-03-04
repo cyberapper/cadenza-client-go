@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **ExternalSymbol** | Pointer to **string** | Symbol at external venue | [optional] 
 **BaseAsset** | Pointer to **string** | Base asset | [optional] 
 **QuoteAsset** | Pointer to **string** | Quote asset | [optional] 
-**OrderType** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
+**OrderType** | Pointer to [**NullableOrderType**](OrderType.md) |  | [optional] 
 **OrderSide** | Pointer to [**OrderSide**](OrderSide.md) |  | [optional] 
 **QuantityType** | Pointer to [**QuantityType**](QuantityType.md) |  | [optional] 
 **Quantity** | Pointer to **string** | Order quantity (decimal string) | [optional] 
@@ -25,8 +25,8 @@ Name | Type | Description | Notes
 **QuantityRounding** | Pointer to [**QuantityRounding**](QuantityRounding.md) |  | [optional] [default to QUANTITYROUNDING_EMPTY]
 **LimitPrice** | Pointer to **string** | Limit price (decimal string) | [optional] 
 **StopPrice** | Pointer to **string** | Stop price (decimal string) | [optional] 
-**TimeInForce** | Pointer to [**TimeInForce**](TimeInForce.md) |  | [optional] 
-**Status** | Pointer to [**OrderStatus**](OrderStatus.md) |  | [optional] 
+**TimeInForce** | Pointer to [**NullableTimeInForce**](TimeInForce.md) |  | [optional] 
+**Status** | Pointer to [**NullableOrderStatus**](OrderStatus.md) |  | [optional] 
 **ExecutedPrice** | Pointer to **string** | Average executed price | [optional] 
 **ExecutedPercentage** | Pointer to **string** | Percentage of order filled | [optional] 
 **ExecutedQuantity** | Pointer to **string** | Quantity executed | [optional] 
@@ -384,6 +384,16 @@ SetOrderType sets OrderType field to given value.
 
 HasOrderType returns a boolean if a field has been set.
 
+### SetOrderTypeNil
+
+`func (o *RpcTradeOrder) SetOrderTypeNil(b bool)`
+
+ SetOrderTypeNil sets the value for OrderType to be an explicit nil
+
+### UnsetOrderType
+`func (o *RpcTradeOrder) UnsetOrderType()`
+
+UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
 ### GetOrderSide
 
 `func (o *RpcTradeOrder) GetOrderSide() OrderSide`
@@ -609,6 +619,16 @@ SetTimeInForce sets TimeInForce field to given value.
 
 HasTimeInForce returns a boolean if a field has been set.
 
+### SetTimeInForceNil
+
+`func (o *RpcTradeOrder) SetTimeInForceNil(b bool)`
+
+ SetTimeInForceNil sets the value for TimeInForce to be an explicit nil
+
+### UnsetTimeInForce
+`func (o *RpcTradeOrder) UnsetTimeInForce()`
+
+UnsetTimeInForce ensures that no value is present for TimeInForce, not even an explicit nil
 ### GetStatus
 
 `func (o *RpcTradeOrder) GetStatus() OrderStatus`
@@ -634,6 +654,16 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
+### SetStatusNil
+
+`func (o *RpcTradeOrder) SetStatusNil(b bool)`
+
+ SetStatusNil sets the value for Status to be an explicit nil
+
+### UnsetStatus
+`func (o *RpcTradeOrder) UnsetStatus()`
+
+UnsetStatus ensures that no value is present for Status, not even an explicit nil
 ### GetExecutedPrice
 
 `func (o *RpcTradeOrder) GetExecutedPrice() string`

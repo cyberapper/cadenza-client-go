@@ -13,9 +13,9 @@ Name | Type | Description | Notes
 **Status** | Pointer to [**TradingAccountStatus**](TradingAccountStatus.md) |  | [optional] 
 **AccountType** | Pointer to [**TradingAccountType**](TradingAccountType.md) |  | [optional] 
 **ExternalAccountType** | Pointer to **string** | Type of account on the exchange (set by market connector) | [optional] 
-**PositionMode** | Pointer to [**PositionMode**](PositionMode.md) |  | [optional] 
-**CollateralMode** | Pointer to [**CollateralMode**](CollateralMode.md) |  | [optional] 
-**MarginMode** | Pointer to [**MarginMode**](MarginMode.md) |  | [optional] 
+**PositionMode** | Pointer to [**NullablePositionMode**](PositionMode.md) |  | [optional] 
+**CollateralMode** | Pointer to [**NullableCollateralMode**](CollateralMode.md) |  | [optional] 
+**MarginMode** | Pointer to [**NullableMarginMode**](MarginMode.md) |  | [optional] 
 **Credentials** | Pointer to [**[]RpcTradingAccountCredential**](RpcTradingAccountCredential.md) | Account credentials | [optional] 
 **Config** | Pointer to [**RpcTradingAccountConfig**](RpcTradingAccountConfig.md) |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
@@ -290,6 +290,16 @@ SetPositionMode sets PositionMode field to given value.
 
 HasPositionMode returns a boolean if a field has been set.
 
+### SetPositionModeNil
+
+`func (o *RpcTradingAccount) SetPositionModeNil(b bool)`
+
+ SetPositionModeNil sets the value for PositionMode to be an explicit nil
+
+### UnsetPositionMode
+`func (o *RpcTradingAccount) UnsetPositionMode()`
+
+UnsetPositionMode ensures that no value is present for PositionMode, not even an explicit nil
 ### GetCollateralMode
 
 `func (o *RpcTradingAccount) GetCollateralMode() CollateralMode`
@@ -315,6 +325,16 @@ SetCollateralMode sets CollateralMode field to given value.
 
 HasCollateralMode returns a boolean if a field has been set.
 
+### SetCollateralModeNil
+
+`func (o *RpcTradingAccount) SetCollateralModeNil(b bool)`
+
+ SetCollateralModeNil sets the value for CollateralMode to be an explicit nil
+
+### UnsetCollateralMode
+`func (o *RpcTradingAccount) UnsetCollateralMode()`
+
+UnsetCollateralMode ensures that no value is present for CollateralMode, not even an explicit nil
 ### GetMarginMode
 
 `func (o *RpcTradingAccount) GetMarginMode() MarginMode`
@@ -340,6 +360,16 @@ SetMarginMode sets MarginMode field to given value.
 
 HasMarginMode returns a boolean if a field has been set.
 
+### SetMarginModeNil
+
+`func (o *RpcTradingAccount) SetMarginModeNil(b bool)`
+
+ SetMarginModeNil sets the value for MarginMode to be an explicit nil
+
+### UnsetMarginMode
+`func (o *RpcTradingAccount) UnsetMarginMode()`
+
+UnsetMarginMode ensures that no value is present for MarginMode, not even an explicit nil
 ### GetCredentials
 
 `func (o *RpcTradingAccount) GetCredentials() []RpcTradingAccountCredential`

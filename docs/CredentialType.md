@@ -3,8 +3,6 @@
 ## Enum
 
 
-* `EMPTY` (value: `""`)
-
 * `API_KEY` (value: `"API_KEY"`)
 
 * `HMAC` (value: `"HMAC"`)

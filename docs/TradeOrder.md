@@ -13,9 +13,9 @@ Name | Type | Description | Notes
 **BaseAsset** | **string** | Base asset in the trading pair | 
 **QuoteAsset** | **string** | Quote asset in the trading pair | 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
-**OrderType** | [**OrderType**](OrderType.md) |  | 
-**TimeInForce** | [**TimeInForce**](TimeInForce.md) |  | 
-**Status** | [**OrderStatus**](OrderStatus.md) |  | 
+**OrderType** | [**NullableOrderType**](OrderType.md) |  | 
+**TimeInForce** | [**NullableTimeInForce**](TimeInForce.md) |  | 
+**Status** | [**NullableOrderStatus**](OrderStatus.md) |  | 
 **RejectReason** | Pointer to **string** | Reason for order rejection | [optional] 
 **CancelReason** | Pointer to **string** | Reason for order cancellation | [optional] 
 **LimitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
@@ -41,7 +41,7 @@ Name | Type | Description | Notes
 
 ### NewTradeOrder
 
-`func NewTradeOrder(tradeOrderId string, tradingAccountId string, venue Venue, instrumentId string, baseAsset string, quoteAsset string, orderSide OrderSide, orderType OrderType, timeInForce TimeInForce, status OrderStatus, quantity string, orderQuantityType OrderQuantityType, executedPrice string, executedQuantity string, executedCost string, fees []SecurityQuantity, createdAt int64, updatedAt int64, ) *TradeOrder`
+`func NewTradeOrder(tradeOrderId string, tradingAccountId string, venue Venue, instrumentId string, baseAsset string, quoteAsset string, orderSide OrderSide, orderType NullableOrderType, timeInForce NullableTimeInForce, status NullableOrderStatus, quantity string, orderQuantityType OrderQuantityType, executedPrice string, executedQuantity string, executedCost string, fees []SecurityQuantity, createdAt int64, updatedAt int64, ) *TradeOrder`
 
 NewTradeOrder instantiates a new TradeOrder object
 This constructor will assign default values to properties that have it defined,
@@ -266,6 +266,16 @@ and a boolean to check if the value has been set.
 SetOrderType sets OrderType field to given value.
 
 
+### SetOrderTypeNil
+
+`func (o *TradeOrder) SetOrderTypeNil(b bool)`
+
+ SetOrderTypeNil sets the value for OrderType to be an explicit nil
+
+### UnsetOrderType
+`func (o *TradeOrder) UnsetOrderType()`
+
+UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
 ### GetTimeInForce
 
 `func (o *TradeOrder) GetTimeInForce() TimeInForce`
@@ -286,6 +296,16 @@ and a boolean to check if the value has been set.
 SetTimeInForce sets TimeInForce field to given value.
 
 
+### SetTimeInForceNil
+
+`func (o *TradeOrder) SetTimeInForceNil(b bool)`
+
+ SetTimeInForceNil sets the value for TimeInForce to be an explicit nil
+
+### UnsetTimeInForce
+`func (o *TradeOrder) UnsetTimeInForce()`
+
+UnsetTimeInForce ensures that no value is present for TimeInForce, not even an explicit nil
 ### GetStatus
 
 `func (o *TradeOrder) GetStatus() OrderStatus`
@@ -306,6 +326,16 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
+### SetStatusNil
+
+`func (o *TradeOrder) SetStatusNil(b bool)`
+
+ SetStatusNil sets the value for Status to be an explicit nil
+
+### UnsetStatus
+`func (o *TradeOrder) UnsetStatus()`
+
+UnsetStatus ensures that no value is present for Status, not even an explicit nil
 ### GetRejectReason
 
 `func (o *TradeOrder) GetRejectReason() string`

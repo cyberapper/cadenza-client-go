@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **ExternalOrderId** | Pointer to **string** | External order ID | [optional] 
 **InstrumentId** | **[]string** |  | 
 **Side** | Pointer to [**OrderSide**](OrderSide.md) |  | [optional] 
-**OrderType** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
+**OrderType** | Pointer to [**NullableOrderType**](OrderType.md) |  | [optional] 
 **Status** | Pointer to [**CredentialStatus**](CredentialStatus.md) |  | [optional] 
 **StartTime** | Pointer to **time.Time** | Filter orders created after this time | [optional] 
 **EndTime** | Pointer to **time.Time** | Filter orders created before this time | [optional] 
@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **Venue** | [**Venue**](Venue.md) |  | 
 **SubscriptionType** | [**SubscriptionType**](SubscriptionType.md) |  | 
 **SubscriptionId** | Pointer to **string** | Subscription ID to cancel | [optional] 
-**CredentialType** | [**CredentialType**](CredentialType.md) |  | 
+**CredentialType** | [**NullableCredentialType**](CredentialType.md) |  | 
 **ApiKey** | Pointer to **string** |  | [optional] 
 **SecretKey** | Pointer to **string** |  | [optional] 
 **SecretPassphrase** | Pointer to **string** |  | [optional] 
@@ -55,7 +55,7 @@ Name | Type | Description | Notes
 
 ### NewWsRPCRequestData
 
-`func NewWsRPCRequestData(tradeOrder RpcTradeOrder, tradingAccountId string, tradeOrderId string, instrumentId []string, tradingAccount RpcTradingAccount, tradingAccounts []RpcTradingAccount, venue Venue, subscriptionType SubscriptionType, credentialType CredentialType, credential RpcTradingAccountCredential, credentialId string, portfolio RpcPortfolio, instruments []string, securities []string, securityIds []string, orderBooks []RpcOrderBook, klines []RpcKline, tickers []RpcTicker, ) *WsRPCRequestData`
+`func NewWsRPCRequestData(tradeOrder RpcTradeOrder, tradingAccountId string, tradeOrderId string, instrumentId []string, tradingAccount RpcTradingAccount, tradingAccounts []RpcTradingAccount, venue Venue, subscriptionType SubscriptionType, credentialType NullableCredentialType, credential RpcTradingAccountCredential, credentialId string, portfolio RpcPortfolio, instruments []string, securities []string, securityIds []string, orderBooks []RpcOrderBook, klines []RpcKline, tickers []RpcTicker, ) *WsRPCRequestData`
 
 NewWsRPCRequestData instantiates a new WsRPCRequestData object
 This constructor will assign default values to properties that have it defined,
@@ -300,6 +300,16 @@ SetOrderType sets OrderType field to given value.
 
 HasOrderType returns a boolean if a field has been set.
 
+### SetOrderTypeNil
+
+`func (o *WsRPCRequestData) SetOrderTypeNil(b bool)`
+
+ SetOrderTypeNil sets the value for OrderType to be an explicit nil
+
+### UnsetOrderType
+`func (o *WsRPCRequestData) UnsetOrderType()`
+
+UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
 ### GetStatus
 
 `func (o *WsRPCRequestData) GetStatus() CredentialStatus`
@@ -525,6 +535,16 @@ and a boolean to check if the value has been set.
 SetCredentialType sets CredentialType field to given value.
 
 
+### SetCredentialTypeNil
+
+`func (o *WsRPCRequestData) SetCredentialTypeNil(b bool)`
+
+ SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
+
+### UnsetCredentialType
+`func (o *WsRPCRequestData) UnsetCredentialType()`
+
+UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
 ### GetApiKey
 
 `func (o *WsRPCRequestData) GetApiKey() string`
