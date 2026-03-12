@@ -5,6 +5,8 @@
 
 * `API_KEY` (value: `"API_KEY"`)
 
+* `TOKEN` (value: `"TOKEN"`)
+
 * `HMAC` (value: `"HMAC"`)
 
 * `OAUTH` (value: `"OAUTH"`)

@@ -22,7 +22,7 @@ var _ MappedNullable = &RotateTradingAccountCredentialRequest{}
 type RotateTradingAccountCredentialRequest struct {
 	// UUID string
 	CredentialId string `json:"credentialId"`
-	ApiKey string `json:"apiKey"`
+	ApiKey *string `json:"apiKey,omitempty"`
 	ApiSecret *string `json:"apiSecret,omitempty"`
 	ApiPassphrase *string `json:"apiPassphrase,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -34,10 +34,9 @@ type _RotateTradingAccountCredentialRequest RotateTradingAccountCredentialReques
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRotateTradingAccountCredentialRequest(credentialId string, apiKey string) *RotateTradingAccountCredentialRequest {
+func NewRotateTradingAccountCredentialRequest(credentialId string) *RotateTradingAccountCredentialRequest {
 	this := RotateTradingAccountCredentialRequest{}
 	this.CredentialId = credentialId
-	this.ApiKey = apiKey
 	return &this
 }
 
@@ -73,28 +72,36 @@ func (o *RotateTradingAccountCredentialRequest) SetCredentialId(v string) {
 	o.CredentialId = v
 }
 
-// GetApiKey returns the ApiKey field value
+// GetApiKey returns the ApiKey field value if set, zero value otherwise.
 func (o *RotateTradingAccountCredentialRequest) GetApiKey() string {
-	if o == nil {
+	if o == nil || IsNil(o.ApiKey) {
 		var ret string
 		return ret
 	}
-
-	return o.ApiKey
+	return *o.ApiKey
 }
 
-// GetApiKeyOk returns a tuple with the ApiKey field value
+// GetApiKeyOk returns a tuple with the ApiKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RotateTradingAccountCredentialRequest) GetApiKeyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ApiKey) {
 		return nil, false
 	}
-	return &o.ApiKey, true
+	return o.ApiKey, true
 }
 
-// SetApiKey sets field value
+// HasApiKey returns a boolean if a field has been set.
+func (o *RotateTradingAccountCredentialRequest) HasApiKey() bool {
+	if o != nil && !IsNil(o.ApiKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiKey gets a reference to the given string and assigns it to the ApiKey field.
 func (o *RotateTradingAccountCredentialRequest) SetApiKey(v string) {
-	o.ApiKey = v
+	o.ApiKey = &v
 }
 
 // GetApiSecret returns the ApiSecret field value if set, zero value otherwise.
@@ -172,7 +179,9 @@ func (o RotateTradingAccountCredentialRequest) MarshalJSON() ([]byte, error) {
 func (o RotateTradingAccountCredentialRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["credentialId"] = o.CredentialId
-	toSerialize["apiKey"] = o.ApiKey
+	if !IsNil(o.ApiKey) {
+		toSerialize["apiKey"] = o.ApiKey
+	}
 	if !IsNil(o.ApiSecret) {
 		toSerialize["apiSecret"] = o.ApiSecret
 	}
@@ -193,7 +202,6 @@ func (o *RotateTradingAccountCredentialRequest) UnmarshalJSON(data []byte) (err 
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"credentialId",
-		"apiKey",
 	}
 
 	allProperties := make(map[string]interface{})
