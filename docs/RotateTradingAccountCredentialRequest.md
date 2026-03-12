@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CredentialId** | **string** | UUID string | 
-**ApiKey** | **string** |  | 
+**ApiKey** | Pointer to **string** |  | [optional] 
 **ApiSecret** | Pointer to **string** |  | [optional] 
 **ApiPassphrase** | Pointer to **string** |  | [optional] 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewRotateTradingAccountCredentialRequest
 
-`func NewRotateTradingAccountCredentialRequest(credentialId string, apiKey string, ) *RotateTradingAccountCredentialRequest`
+`func NewRotateTradingAccountCredentialRequest(credentialId string, ) *RotateTradingAccountCredentialRequest`
 
 NewRotateTradingAccountCredentialRequest instantiates a new RotateTradingAccountCredentialRequest object
 This constructor will assign default values to properties that have it defined,
@@ -67,6 +67,11 @@ and a boolean to check if the value has been set.
 
 SetApiKey sets ApiKey field to given value.
 
+### HasApiKey
+
+`func (o *RotateTradingAccountCredentialRequest) HasApiKey() bool`
+
+HasApiKey returns a boolean if a field has been set.
 
 ### GetApiSecret
 

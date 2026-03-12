@@ -3378,6 +3378,7 @@ components:
       description: Type of API credential
       enum:
       - API_KEY
+      - TOKEN
       - HMAC
       - OAUTH
       - RSA
@@ -5263,7 +5264,6 @@ components:
           example: my_api_passphrase
           type: string
       required:
-      - apiKey
       - credentialId
       type: object
     verifyTradingAccountCredentialRequest:

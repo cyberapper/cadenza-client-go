@@ -21,6 +21,7 @@ type CredentialType string
 // List of credentialType
 const (
 	CREDENTIALTYPE_API_KEY CredentialType = "API_KEY"
+	CREDENTIALTYPE_TOKEN CredentialType = "TOKEN"
 	CREDENTIALTYPE_HMAC CredentialType = "HMAC"
 	CREDENTIALTYPE_OAUTH CredentialType = "OAUTH"
 	CREDENTIALTYPE_RSA CredentialType = "RSA"
@@ -30,6 +31,7 @@ const (
 // All allowed values of CredentialType enum
 var AllowedCredentialTypeEnumValues = []CredentialType{
 	"API_KEY",
+	"TOKEN",
 	"HMAC",
 	"OAUTH",
 	"RSA",

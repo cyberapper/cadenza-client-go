@@ -235,7 +235,7 @@ import (
 )
 
 func main() {
-	rotateTradingAccountCredentialRequest := *openapiclient.NewRotateTradingAccountCredentialRequest("CredentialId_example", "my_api_key") // RotateTradingAccountCredentialRequest |  (optional)
+	rotateTradingAccountCredentialRequest := *openapiclient.NewRotateTradingAccountCredentialRequest("CredentialId_example") // RotateTradingAccountCredentialRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
