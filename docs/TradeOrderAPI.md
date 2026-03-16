@@ -78,7 +78,7 @@ Name | Type | Description  | Notes
 
 ## ListTradeOrders
 
-> ListTradeOrders200Response ListTradeOrders(ctx).TradeOrderId(tradeOrderId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
+> ListTradeOrders200Response ListTradeOrders(ctx).TradeOrderId(tradeOrderId).OrderListId(orderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
 
 List trade orders
 
@@ -98,6 +98,7 @@ import (
 
 func main() {
 	tradeOrderId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trade order ID (optional)
+	orderListId := "orderListId_example" // string | Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO parent (optional)
 	orderStatus := openapiclient.orderStatus("CREATED") // OrderStatus | Order status (optional)
 	tradingAccountId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trading account ID (optional)
 	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
@@ -110,7 +111,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TradeOrderAPI.ListTradeOrders(context.Background()).TradeOrderId(tradeOrderId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
+	resp, r, err := apiClient.TradeOrderAPI.ListTradeOrders(context.Background()).TradeOrderId(tradeOrderId).OrderListId(orderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TradeOrderAPI.ListTradeOrders``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -132,6 +133,7 @@ Other parameters are passed through a pointer to a apiListTradeOrdersRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tradeOrderId** | **string** | Trade order ID | 
+ **orderListId** | **string** | Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO parent | 
  **orderStatus** | [**OrderStatus**](OrderStatus.md) | Order status | 
  **tradingAccountId** | **string** | Trading account ID | 
  **instrumentId** | **string** | Instrument ID | 
