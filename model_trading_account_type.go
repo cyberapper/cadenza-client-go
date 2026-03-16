@@ -22,14 +22,16 @@ type TradingAccountType string
 const (
 	TRADINGACCOUNTTYPE_SPOT TradingAccountType = "SPOT"
 	TRADINGACCOUNTTYPE_MARGIN TradingAccountType = "MARGIN"
-	TRADINGACCOUNTTYPE_CREDIT TradingAccountType = "CREDIT"
+	TRADINGACCOUNTTYPE_FUTURES TradingAccountType = "FUTURES"
+	TRADINGACCOUNTTYPE_OPTIONS TradingAccountType = "OPTIONS"
 )
 
 // All allowed values of TradingAccountType enum
 var AllowedTradingAccountTypeEnumValues = []TradingAccountType{
 	"SPOT",
 	"MARGIN",
-	"CREDIT",
+	"FUTURES",
+	"OPTIONS",
 }
 
 func (v *TradingAccountType) UnmarshalJSON(src []byte) error {

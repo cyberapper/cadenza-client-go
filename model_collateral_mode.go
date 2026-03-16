@@ -20,12 +20,14 @@ type CollateralMode string
 
 // List of collateralMode
 const (
+	COLLATERALMODE_EMPTY CollateralMode = ""
 	COLLATERALMODE_CROSS CollateralMode = "CROSS"
 	COLLATERALMODE_ISOLATED CollateralMode = "ISOLATED"
 )
 
 // All allowed values of CollateralMode enum
 var AllowedCollateralModeEnumValues = []CollateralMode{
+	"",
 	"CROSS",
 	"ISOLATED",
 }

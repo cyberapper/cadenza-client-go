@@ -27,8 +27,8 @@ type RpcListTradeOrdersParams struct {
 	// Filter by instrument ID (e.g., BINANCE:BTC/USDT)
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	Side *OrderSide `json:"side,omitempty"`
-	OrderType NullableOrderType `json:"orderType,omitempty"`
-	Status NullableOrderStatus `json:"status,omitempty"`
+	OrderType *OrderType `json:"orderType,omitempty"`
+	Status *OrderStatus `json:"status,omitempty"`
 	// Filter orders created after this time
 	StartTime *time.Time `json:"startTime,omitempty"`
 	// Filter orders created before this time
@@ -184,88 +184,68 @@ func (o *RpcListTradeOrdersParams) SetSide(v OrderSide) {
 	o.Side = &v
 }
 
-// GetOrderType returns the OrderType field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetOrderType returns the OrderType field value if set, zero value otherwise.
 func (o *RpcListTradeOrdersParams) GetOrderType() OrderType {
-	if o == nil || IsNil(o.OrderType.Get()) {
+	if o == nil || IsNil(o.OrderType) {
 		var ret OrderType
 		return ret
 	}
-	return *o.OrderType.Get()
+	return *o.OrderType
 }
 
 // GetOrderTypeOk returns a tuple with the OrderType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcListTradeOrdersParams) GetOrderTypeOk() (*OrderType, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrderType) {
 		return nil, false
 	}
-	return o.OrderType.Get(), o.OrderType.IsSet()
+	return o.OrderType, true
 }
 
 // HasOrderType returns a boolean if a field has been set.
 func (o *RpcListTradeOrdersParams) HasOrderType() bool {
-	if o != nil && o.OrderType.IsSet() {
+	if o != nil && !IsNil(o.OrderType) {
 		return true
 	}
 
 	return false
 }
 
-// SetOrderType gets a reference to the given NullableOrderType and assigns it to the OrderType field.
+// SetOrderType gets a reference to the given OrderType and assigns it to the OrderType field.
 func (o *RpcListTradeOrdersParams) SetOrderType(v OrderType) {
-	o.OrderType.Set(&v)
-}
-// SetOrderTypeNil sets the value for OrderType to be an explicit nil
-func (o *RpcListTradeOrdersParams) SetOrderTypeNil() {
-	o.OrderType.Set(nil)
+	o.OrderType = &v
 }
 
-// UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
-func (o *RpcListTradeOrdersParams) UnsetOrderType() {
-	o.OrderType.Unset()
-}
-
-// GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetStatus returns the Status field value if set, zero value otherwise.
 func (o *RpcListTradeOrdersParams) GetStatus() OrderStatus {
-	if o == nil || IsNil(o.Status.Get()) {
+	if o == nil || IsNil(o.Status) {
 		var ret OrderStatus
 		return ret
 	}
-	return *o.Status.Get()
+	return *o.Status
 }
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcListTradeOrdersParams) GetStatusOk() (*OrderStatus, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return o.Status.Get(), o.Status.IsSet()
+	return o.Status, true
 }
 
 // HasStatus returns a boolean if a field has been set.
 func (o *RpcListTradeOrdersParams) HasStatus() bool {
-	if o != nil && o.Status.IsSet() {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
 	return false
 }
 
-// SetStatus gets a reference to the given NullableOrderStatus and assigns it to the Status field.
+// SetStatus gets a reference to the given OrderStatus and assigns it to the Status field.
 func (o *RpcListTradeOrdersParams) SetStatus(v OrderStatus) {
-	o.Status.Set(&v)
-}
-// SetStatusNil sets the value for Status to be an explicit nil
-func (o *RpcListTradeOrdersParams) SetStatusNil() {
-	o.Status.Set(nil)
-}
-
-// UnsetStatus ensures that no value is present for Status, not even an explicit nil
-func (o *RpcListTradeOrdersParams) UnsetStatus() {
-	o.Status.Unset()
+	o.Status = &v
 }
 
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
@@ -386,11 +366,11 @@ func (o RpcListTradeOrdersParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Side) {
 		toSerialize["side"] = o.Side
 	}
-	if o.OrderType.IsSet() {
-		toSerialize["orderType"] = o.OrderType.Get()
+	if !IsNil(o.OrderType) {
+		toSerialize["orderType"] = o.OrderType
 	}
-	if o.Status.IsSet() {
-		toSerialize["status"] = o.Status.Get()
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
 	if !IsNil(o.StartTime) {
 		toSerialize["startTime"] = o.StartTime

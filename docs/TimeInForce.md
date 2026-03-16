@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `EMPTY` (value: `""`)
+
 * `GTC` (value: `"GTC"`)
 
 * `IOC` (value: `"IOC"`)

@@ -34,8 +34,8 @@ type Instrument struct {
 	Status InstrumentStatus `json:"status"`
 	BaseAsset string `json:"baseAsset"`
 	QuoteAsset string `json:"quoteAsset"`
-	BaseSecurityType *SecurityType `json:"baseSecurityType,omitempty"`
-	QuoteSecurityType *SecurityType `json:"quoteSecurityType,omitempty"`
+	BaseSecurityType SecurityType `json:"baseSecurityType"`
+	QuoteSecurityType SecurityType `json:"quoteSecurityType"`
 	// Base asset precision
 	BasePrecision int32 `json:"basePrecision"`
 	// Quote asset precision
@@ -87,7 +87,7 @@ type _Instrument Instrument
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewInstrument(instrumentId string, venue Venue, symbol string, externalSymbol string, instrumentType InstrumentType, status InstrumentStatus, baseAsset string, quoteAsset string, basePrecision int32, quotePrecision int32, baseMaxSignificant NullableInt32, quoteMaxSignificant NullableInt32, lotSize string, pipSize string, baseScale NullableInt32, quoteScale NullableInt32, minQuantity string, maxQuantity string, minNotional string, orderTypes []OrderType, timeInForceOptions []TimeInForce) *Instrument {
+func NewInstrument(instrumentId string, venue Venue, symbol string, externalSymbol string, instrumentType InstrumentType, status InstrumentStatus, baseAsset string, quoteAsset string, baseSecurityType SecurityType, quoteSecurityType SecurityType, basePrecision int32, quotePrecision int32, baseMaxSignificant NullableInt32, quoteMaxSignificant NullableInt32, lotSize string, pipSize string, baseScale NullableInt32, quoteScale NullableInt32, minQuantity string, maxQuantity string, minNotional string, orderTypes []OrderType, timeInForceOptions []TimeInForce) *Instrument {
 	this := Instrument{}
 	this.InstrumentId = instrumentId
 	this.Venue = venue
@@ -97,6 +97,8 @@ func NewInstrument(instrumentId string, venue Venue, symbol string, externalSymb
 	this.Status = status
 	this.BaseAsset = baseAsset
 	this.QuoteAsset = quoteAsset
+	this.BaseSecurityType = baseSecurityType
+	this.QuoteSecurityType = quoteSecurityType
 	this.BasePrecision = basePrecision
 	this.QuotePrecision = quotePrecision
 	this.BaseMaxSignificant = baseMaxSignificant
@@ -345,68 +347,52 @@ func (o *Instrument) SetQuoteAsset(v string) {
 	o.QuoteAsset = v
 }
 
-// GetBaseSecurityType returns the BaseSecurityType field value if set, zero value otherwise.
+// GetBaseSecurityType returns the BaseSecurityType field value
 func (o *Instrument) GetBaseSecurityType() SecurityType {
-	if o == nil || IsNil(o.BaseSecurityType) {
+	if o == nil {
 		var ret SecurityType
 		return ret
 	}
-	return *o.BaseSecurityType
+
+	return o.BaseSecurityType
 }
 
-// GetBaseSecurityTypeOk returns a tuple with the BaseSecurityType field value if set, nil otherwise
+// GetBaseSecurityTypeOk returns a tuple with the BaseSecurityType field value
 // and a boolean to check if the value has been set.
 func (o *Instrument) GetBaseSecurityTypeOk() (*SecurityType, bool) {
-	if o == nil || IsNil(o.BaseSecurityType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.BaseSecurityType, true
+	return &o.BaseSecurityType, true
 }
 
-// HasBaseSecurityType returns a boolean if a field has been set.
-func (o *Instrument) HasBaseSecurityType() bool {
-	if o != nil && !IsNil(o.BaseSecurityType) {
-		return true
-	}
-
-	return false
-}
-
-// SetBaseSecurityType gets a reference to the given SecurityType and assigns it to the BaseSecurityType field.
+// SetBaseSecurityType sets field value
 func (o *Instrument) SetBaseSecurityType(v SecurityType) {
-	o.BaseSecurityType = &v
+	o.BaseSecurityType = v
 }
 
-// GetQuoteSecurityType returns the QuoteSecurityType field value if set, zero value otherwise.
+// GetQuoteSecurityType returns the QuoteSecurityType field value
 func (o *Instrument) GetQuoteSecurityType() SecurityType {
-	if o == nil || IsNil(o.QuoteSecurityType) {
+	if o == nil {
 		var ret SecurityType
 		return ret
 	}
-	return *o.QuoteSecurityType
+
+	return o.QuoteSecurityType
 }
 
-// GetQuoteSecurityTypeOk returns a tuple with the QuoteSecurityType field value if set, nil otherwise
+// GetQuoteSecurityTypeOk returns a tuple with the QuoteSecurityType field value
 // and a boolean to check if the value has been set.
 func (o *Instrument) GetQuoteSecurityTypeOk() (*SecurityType, bool) {
-	if o == nil || IsNil(o.QuoteSecurityType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.QuoteSecurityType, true
+	return &o.QuoteSecurityType, true
 }
 
-// HasQuoteSecurityType returns a boolean if a field has been set.
-func (o *Instrument) HasQuoteSecurityType() bool {
-	if o != nil && !IsNil(o.QuoteSecurityType) {
-		return true
-	}
-
-	return false
-}
-
-// SetQuoteSecurityType gets a reference to the given SecurityType and assigns it to the QuoteSecurityType field.
+// SetQuoteSecurityType sets field value
 func (o *Instrument) SetQuoteSecurityType(v SecurityType) {
-	o.QuoteSecurityType = &v
+	o.QuoteSecurityType = v
 }
 
 // GetBasePrecision returns the BasePrecision field value
@@ -1038,12 +1024,8 @@ func (o Instrument) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["baseAsset"] = o.BaseAsset
 	toSerialize["quoteAsset"] = o.QuoteAsset
-	if !IsNil(o.BaseSecurityType) {
-		toSerialize["baseSecurityType"] = o.BaseSecurityType
-	}
-	if !IsNil(o.QuoteSecurityType) {
-		toSerialize["quoteSecurityType"] = o.QuoteSecurityType
-	}
+	toSerialize["baseSecurityType"] = o.BaseSecurityType
+	toSerialize["quoteSecurityType"] = o.QuoteSecurityType
 	toSerialize["basePrecision"] = o.BasePrecision
 	toSerialize["quotePrecision"] = o.QuotePrecision
 	toSerialize["baseMaxSignificant"] = o.BaseMaxSignificant.Get()
@@ -1105,6 +1087,8 @@ func (o *Instrument) UnmarshalJSON(data []byte) (err error) {
 		"status",
 		"baseAsset",
 		"quoteAsset",
+		"baseSecurityType",
+		"quoteSecurityType",
 		"basePrecision",
 		"quotePrecision",
 		"baseMaxSignificant",

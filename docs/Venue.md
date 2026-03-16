@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `EMPTY` (value: `""`)
+
 * `BINANCE` (value: `"BINANCE"`)
 
 * `B2_C2` (value: `"B2C2"`)

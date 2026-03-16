@@ -15,33 +15,43 @@ import (
 	"fmt"
 )
 
-// SecurityType Type of financial instrument
+// SecurityType Type of security (base asset)
 type SecurityType string
 
 // List of securityType
 const (
+	SECURITYTYPE_EMPTY SecurityType = ""
+	SECURITYTYPE_CASH SecurityType = "CASH"
 	SECURITYTYPE_STOCK SecurityType = "STOCK"
 	SECURITYTYPE_CRYPTO SecurityType = "CRYPTO"
 	SECURITYTYPE_CURRENCY SecurityType = "CURRENCY"
 	SECURITYTYPE_COMMODITY SecurityType = "COMMODITY"
 	SECURITYTYPE_INDEX SecurityType = "INDEX"
 	SECURITYTYPE_BOND SecurityType = "BOND"
+	SECURITYTYPE_DERIVATIVE SecurityType = "DERIVATIVE"
 	SECURITYTYPE_OPTION SecurityType = "OPTION"
+	SECURITYTYPE_FUTURE SecurityType = "FUTURE"
 	SECURITYTYPE_FUTURES SecurityType = "FUTURES"
 	SECURITYTYPE_PERPETUAL SecurityType = "PERPETUAL"
+	SECURITYTYPE_FOREX SecurityType = "FOREX"
 )
 
 // All allowed values of SecurityType enum
 var AllowedSecurityTypeEnumValues = []SecurityType{
+	"",
+	"CASH",
 	"STOCK",
 	"CRYPTO",
 	"CURRENCY",
 	"COMMODITY",
 	"INDEX",
 	"BOND",
+	"DERIVATIVE",
 	"OPTION",
+	"FUTURE",
 	"FUTURES",
 	"PERPETUAL",
+	"FOREX",
 }
 
 func (v *SecurityType) UnmarshalJSON(src []byte) error {

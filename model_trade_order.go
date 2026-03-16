@@ -23,6 +23,8 @@ var _ MappedNullable = &TradeOrder{}
 type TradeOrder struct {
 	// UUID string
 	TradeOrderId string `json:"tradeOrderId"`
+	// Exchange order list ID linking OCO/OTO/OTOCO legs. For OCO parents, externalOrderId uses 'ol_' prefix.
+	OrderListId *string `json:"orderListId,omitempty"`
 	// UUID string
 	TradingAccountId string `json:"tradingAccountId"`
 	Venue Venue `json:"venue"`
@@ -37,9 +39,9 @@ type TradeOrder struct {
 	// Quote asset in the trading pair
 	QuoteAsset string `json:"quoteAsset"`
 	OrderSide OrderSide `json:"orderSide"`
-	OrderType NullableOrderType `json:"orderType"`
-	TimeInForce NullableTimeInForce `json:"timeInForce"`
-	Status NullableOrderStatus `json:"status"`
+	OrderType OrderType `json:"orderType"`
+	TimeInForce TimeInForce `json:"timeInForce"`
+	Status OrderStatus `json:"status"`
 	// Reason for order rejection
 	RejectReason *string `json:"rejectReason,omitempty"`
 	// Reason for order cancellation
@@ -48,6 +50,16 @@ type TradeOrder struct {
 	LimitPrice *string `json:"limitPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
 	StopPrice *string `json:"stopPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	// Decimal value as string to preserve precision
+	TakeProfitPrice *string `json:"takeProfitPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	// Decimal value as string to preserve precision
+	TakeProfitLimitPrice *string `json:"takeProfitLimitPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	// Decimal value as string to preserve precision
+	StopLossPrice *string `json:"stopLossPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	// Decimal value as string to preserve precision
+	StopLossLimitPrice *string `json:"stopLossLimitPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	TakeProfitTimeInForce *TimeInForce `json:"takeProfitTimeInForce,omitempty"`
+	StopLossTimeInForce *TimeInForce `json:"stopLossTimeInForce,omitempty"`
 	// Decimal value as string to preserve precision
 	Quantity string `json:"quantity" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	OrderQuantityType OrderQuantityType `json:"orderQuantityType"`
@@ -87,7 +99,7 @@ type _TradeOrder TradeOrder
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTradeOrder(tradeOrderId string, tradingAccountId string, venue Venue, instrumentId string, baseAsset string, quoteAsset string, orderSide OrderSide, orderType NullableOrderType, timeInForce NullableTimeInForce, status NullableOrderStatus, quantity string, orderQuantityType OrderQuantityType, executedPrice string, executedQuantity string, executedCost string, fees []SecurityQuantity, createdAt int64, updatedAt int64) *TradeOrder {
+func NewTradeOrder(tradeOrderId string, tradingAccountId string, venue Venue, instrumentId string, baseAsset string, quoteAsset string, orderSide OrderSide, orderType OrderType, timeInForce TimeInForce, status OrderStatus, quantity string, orderQuantityType OrderQuantityType, executedPrice string, executedQuantity string, executedCost string, fees []SecurityQuantity, createdAt int64, updatedAt int64) *TradeOrder {
 	this := TradeOrder{}
 	this.TradeOrderId = tradeOrderId
 	this.TradingAccountId = tradingAccountId
@@ -144,6 +156,38 @@ func (o *TradeOrder) GetTradeOrderIdOk() (*string, bool) {
 // SetTradeOrderId sets field value
 func (o *TradeOrder) SetTradeOrderId(v string) {
 	o.TradeOrderId = v
+}
+
+// GetOrderListId returns the OrderListId field value if set, zero value otherwise.
+func (o *TradeOrder) GetOrderListId() string {
+	if o == nil || IsNil(o.OrderListId) {
+		var ret string
+		return ret
+	}
+	return *o.OrderListId
+}
+
+// GetOrderListIdOk returns a tuple with the OrderListId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetOrderListIdOk() (*string, bool) {
+	if o == nil || IsNil(o.OrderListId) {
+		return nil, false
+	}
+	return o.OrderListId, true
+}
+
+// HasOrderListId returns a boolean if a field has been set.
+func (o *TradeOrder) HasOrderListId() bool {
+	if o != nil && !IsNil(o.OrderListId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrderListId gets a reference to the given string and assigns it to the OrderListId field.
+func (o *TradeOrder) SetOrderListId(v string) {
+	o.OrderListId = &v
 }
 
 // GetTradingAccountId returns the TradingAccountId field value
@@ -355,81 +399,75 @@ func (o *TradeOrder) SetOrderSide(v OrderSide) {
 }
 
 // GetOrderType returns the OrderType field value
-// If the value is explicit nil, the zero value for OrderType will be returned
 func (o *TradeOrder) GetOrderType() OrderType {
-	if o == nil || o.OrderType.Get() == nil {
+	if o == nil {
 		var ret OrderType
 		return ret
 	}
 
-	return *o.OrderType.Get()
+	return o.OrderType
 }
 
 // GetOrderTypeOk returns a tuple with the OrderType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradeOrder) GetOrderTypeOk() (*OrderType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.OrderType.Get(), o.OrderType.IsSet()
+	return &o.OrderType, true
 }
 
 // SetOrderType sets field value
 func (o *TradeOrder) SetOrderType(v OrderType) {
-	o.OrderType.Set(&v)
+	o.OrderType = v
 }
 
 // GetTimeInForce returns the TimeInForce field value
-// If the value is explicit nil, the zero value for TimeInForce will be returned
 func (o *TradeOrder) GetTimeInForce() TimeInForce {
-	if o == nil || o.TimeInForce.Get() == nil {
+	if o == nil {
 		var ret TimeInForce
 		return ret
 	}
 
-	return *o.TimeInForce.Get()
+	return o.TimeInForce
 }
 
 // GetTimeInForceOk returns a tuple with the TimeInForce field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradeOrder) GetTimeInForceOk() (*TimeInForce, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.TimeInForce.Get(), o.TimeInForce.IsSet()
+	return &o.TimeInForce, true
 }
 
 // SetTimeInForce sets field value
 func (o *TradeOrder) SetTimeInForce(v TimeInForce) {
-	o.TimeInForce.Set(&v)
+	o.TimeInForce = v
 }
 
 // GetStatus returns the Status field value
-// If the value is explicit nil, the zero value for OrderStatus will be returned
 func (o *TradeOrder) GetStatus() OrderStatus {
-	if o == nil || o.Status.Get() == nil {
+	if o == nil {
 		var ret OrderStatus
 		return ret
 	}
 
-	return *o.Status.Get()
+	return o.Status
 }
 
 // GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TradeOrder) GetStatusOk() (*OrderStatus, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Status.Get(), o.Status.IsSet()
+	return &o.Status, true
 }
 
 // SetStatus sets field value
 func (o *TradeOrder) SetStatus(v OrderStatus) {
-	o.Status.Set(&v)
+	o.Status = v
 }
 
 // GetRejectReason returns the RejectReason field value if set, zero value otherwise.
@@ -558,6 +596,198 @@ func (o *TradeOrder) HasStopPrice() bool {
 // SetStopPrice gets a reference to the given string and assigns it to the StopPrice field.
 func (o *TradeOrder) SetStopPrice(v string) {
 	o.StopPrice = &v
+}
+
+// GetTakeProfitPrice returns the TakeProfitPrice field value if set, zero value otherwise.
+func (o *TradeOrder) GetTakeProfitPrice() string {
+	if o == nil || IsNil(o.TakeProfitPrice) {
+		var ret string
+		return ret
+	}
+	return *o.TakeProfitPrice
+}
+
+// GetTakeProfitPriceOk returns a tuple with the TakeProfitPrice field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetTakeProfitPriceOk() (*string, bool) {
+	if o == nil || IsNil(o.TakeProfitPrice) {
+		return nil, false
+	}
+	return o.TakeProfitPrice, true
+}
+
+// HasTakeProfitPrice returns a boolean if a field has been set.
+func (o *TradeOrder) HasTakeProfitPrice() bool {
+	if o != nil && !IsNil(o.TakeProfitPrice) {
+		return true
+	}
+
+	return false
+}
+
+// SetTakeProfitPrice gets a reference to the given string and assigns it to the TakeProfitPrice field.
+func (o *TradeOrder) SetTakeProfitPrice(v string) {
+	o.TakeProfitPrice = &v
+}
+
+// GetTakeProfitLimitPrice returns the TakeProfitLimitPrice field value if set, zero value otherwise.
+func (o *TradeOrder) GetTakeProfitLimitPrice() string {
+	if o == nil || IsNil(o.TakeProfitLimitPrice) {
+		var ret string
+		return ret
+	}
+	return *o.TakeProfitLimitPrice
+}
+
+// GetTakeProfitLimitPriceOk returns a tuple with the TakeProfitLimitPrice field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetTakeProfitLimitPriceOk() (*string, bool) {
+	if o == nil || IsNil(o.TakeProfitLimitPrice) {
+		return nil, false
+	}
+	return o.TakeProfitLimitPrice, true
+}
+
+// HasTakeProfitLimitPrice returns a boolean if a field has been set.
+func (o *TradeOrder) HasTakeProfitLimitPrice() bool {
+	if o != nil && !IsNil(o.TakeProfitLimitPrice) {
+		return true
+	}
+
+	return false
+}
+
+// SetTakeProfitLimitPrice gets a reference to the given string and assigns it to the TakeProfitLimitPrice field.
+func (o *TradeOrder) SetTakeProfitLimitPrice(v string) {
+	o.TakeProfitLimitPrice = &v
+}
+
+// GetStopLossPrice returns the StopLossPrice field value if set, zero value otherwise.
+func (o *TradeOrder) GetStopLossPrice() string {
+	if o == nil || IsNil(o.StopLossPrice) {
+		var ret string
+		return ret
+	}
+	return *o.StopLossPrice
+}
+
+// GetStopLossPriceOk returns a tuple with the StopLossPrice field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetStopLossPriceOk() (*string, bool) {
+	if o == nil || IsNil(o.StopLossPrice) {
+		return nil, false
+	}
+	return o.StopLossPrice, true
+}
+
+// HasStopLossPrice returns a boolean if a field has been set.
+func (o *TradeOrder) HasStopLossPrice() bool {
+	if o != nil && !IsNil(o.StopLossPrice) {
+		return true
+	}
+
+	return false
+}
+
+// SetStopLossPrice gets a reference to the given string and assigns it to the StopLossPrice field.
+func (o *TradeOrder) SetStopLossPrice(v string) {
+	o.StopLossPrice = &v
+}
+
+// GetStopLossLimitPrice returns the StopLossLimitPrice field value if set, zero value otherwise.
+func (o *TradeOrder) GetStopLossLimitPrice() string {
+	if o == nil || IsNil(o.StopLossLimitPrice) {
+		var ret string
+		return ret
+	}
+	return *o.StopLossLimitPrice
+}
+
+// GetStopLossLimitPriceOk returns a tuple with the StopLossLimitPrice field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetStopLossLimitPriceOk() (*string, bool) {
+	if o == nil || IsNil(o.StopLossLimitPrice) {
+		return nil, false
+	}
+	return o.StopLossLimitPrice, true
+}
+
+// HasStopLossLimitPrice returns a boolean if a field has been set.
+func (o *TradeOrder) HasStopLossLimitPrice() bool {
+	if o != nil && !IsNil(o.StopLossLimitPrice) {
+		return true
+	}
+
+	return false
+}
+
+// SetStopLossLimitPrice gets a reference to the given string and assigns it to the StopLossLimitPrice field.
+func (o *TradeOrder) SetStopLossLimitPrice(v string) {
+	o.StopLossLimitPrice = &v
+}
+
+// GetTakeProfitTimeInForce returns the TakeProfitTimeInForce field value if set, zero value otherwise.
+func (o *TradeOrder) GetTakeProfitTimeInForce() TimeInForce {
+	if o == nil || IsNil(o.TakeProfitTimeInForce) {
+		var ret TimeInForce
+		return ret
+	}
+	return *o.TakeProfitTimeInForce
+}
+
+// GetTakeProfitTimeInForceOk returns a tuple with the TakeProfitTimeInForce field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetTakeProfitTimeInForceOk() (*TimeInForce, bool) {
+	if o == nil || IsNil(o.TakeProfitTimeInForce) {
+		return nil, false
+	}
+	return o.TakeProfitTimeInForce, true
+}
+
+// HasTakeProfitTimeInForce returns a boolean if a field has been set.
+func (o *TradeOrder) HasTakeProfitTimeInForce() bool {
+	if o != nil && !IsNil(o.TakeProfitTimeInForce) {
+		return true
+	}
+
+	return false
+}
+
+// SetTakeProfitTimeInForce gets a reference to the given TimeInForce and assigns it to the TakeProfitTimeInForce field.
+func (o *TradeOrder) SetTakeProfitTimeInForce(v TimeInForce) {
+	o.TakeProfitTimeInForce = &v
+}
+
+// GetStopLossTimeInForce returns the StopLossTimeInForce field value if set, zero value otherwise.
+func (o *TradeOrder) GetStopLossTimeInForce() TimeInForce {
+	if o == nil || IsNil(o.StopLossTimeInForce) {
+		var ret TimeInForce
+		return ret
+	}
+	return *o.StopLossTimeInForce
+}
+
+// GetStopLossTimeInForceOk returns a tuple with the StopLossTimeInForce field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetStopLossTimeInForceOk() (*TimeInForce, bool) {
+	if o == nil || IsNil(o.StopLossTimeInForce) {
+		return nil, false
+	}
+	return o.StopLossTimeInForce, true
+}
+
+// HasStopLossTimeInForce returns a boolean if a field has been set.
+func (o *TradeOrder) HasStopLossTimeInForce() bool {
+	if o != nil && !IsNil(o.StopLossTimeInForce) {
+		return true
+	}
+
+	return false
+}
+
+// SetStopLossTimeInForce gets a reference to the given TimeInForce and assigns it to the StopLossTimeInForce field.
+func (o *TradeOrder) SetStopLossTimeInForce(v TimeInForce) {
+	o.StopLossTimeInForce = &v
 }
 
 // GetQuantity returns the Quantity field value
@@ -1019,6 +1249,9 @@ func (o TradeOrder) MarshalJSON() ([]byte, error) {
 func (o TradeOrder) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradeOrderId"] = o.TradeOrderId
+	if !IsNil(o.OrderListId) {
+		toSerialize["orderListId"] = o.OrderListId
+	}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
 	toSerialize["venue"] = o.Venue
 	if !IsNil(o.PositionId) {
@@ -1031,9 +1264,9 @@ func (o TradeOrder) ToMap() (map[string]interface{}, error) {
 	toSerialize["baseAsset"] = o.BaseAsset
 	toSerialize["quoteAsset"] = o.QuoteAsset
 	toSerialize["orderSide"] = o.OrderSide
-	toSerialize["orderType"] = o.OrderType.Get()
-	toSerialize["timeInForce"] = o.TimeInForce.Get()
-	toSerialize["status"] = o.Status.Get()
+	toSerialize["orderType"] = o.OrderType
+	toSerialize["timeInForce"] = o.TimeInForce
+	toSerialize["status"] = o.Status
 	if !IsNil(o.RejectReason) {
 		toSerialize["rejectReason"] = o.RejectReason
 	}
@@ -1045,6 +1278,24 @@ func (o TradeOrder) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.StopPrice) {
 		toSerialize["stopPrice"] = o.StopPrice
+	}
+	if !IsNil(o.TakeProfitPrice) {
+		toSerialize["takeProfitPrice"] = o.TakeProfitPrice
+	}
+	if !IsNil(o.TakeProfitLimitPrice) {
+		toSerialize["takeProfitLimitPrice"] = o.TakeProfitLimitPrice
+	}
+	if !IsNil(o.StopLossPrice) {
+		toSerialize["stopLossPrice"] = o.StopLossPrice
+	}
+	if !IsNil(o.StopLossLimitPrice) {
+		toSerialize["stopLossLimitPrice"] = o.StopLossLimitPrice
+	}
+	if !IsNil(o.TakeProfitTimeInForce) {
+		toSerialize["takeProfitTimeInForce"] = o.TakeProfitTimeInForce
+	}
+	if !IsNil(o.StopLossTimeInForce) {
+		toSerialize["stopLossTimeInForce"] = o.StopLossTimeInForce
 	}
 	toSerialize["quantity"] = o.Quantity
 	toSerialize["orderQuantityType"] = o.OrderQuantityType
@@ -1139,6 +1390,7 @@ func (o *TradeOrder) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "tradeOrderId")
+		delete(additionalProperties, "orderListId")
 		delete(additionalProperties, "tradingAccountId")
 		delete(additionalProperties, "venue")
 		delete(additionalProperties, "positionId")
@@ -1154,6 +1406,12 @@ func (o *TradeOrder) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "cancelReason")
 		delete(additionalProperties, "limitPrice")
 		delete(additionalProperties, "stopPrice")
+		delete(additionalProperties, "takeProfitPrice")
+		delete(additionalProperties, "takeProfitLimitPrice")
+		delete(additionalProperties, "stopLossPrice")
+		delete(additionalProperties, "stopLossLimitPrice")
+		delete(additionalProperties, "takeProfitTimeInForce")
+		delete(additionalProperties, "stopLossTimeInForce")
 		delete(additionalProperties, "quantity")
 		delete(additionalProperties, "orderQuantityType")
 		delete(additionalProperties, "quantityRounding")

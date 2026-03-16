@@ -22,7 +22,7 @@ var _ MappedNullable = &RpcTradingAccountCredential{}
 type RpcTradingAccountCredential struct {
 	CredentialId *string `json:"credentialId,omitempty"`
 	Nickname *string `json:"nickname,omitempty"`
-	CredentialType NullableCredentialType `json:"credentialType,omitempty"`
+	CredentialType *CredentialType `json:"credentialType,omitempty"`
 	Status *CredentialStatus `json:"status,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
 	// API key (only in responses where withSecret=true)
@@ -120,46 +120,36 @@ func (o *RpcTradingAccountCredential) SetNickname(v string) {
 	o.Nickname = &v
 }
 
-// GetCredentialType returns the CredentialType field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetCredentialType returns the CredentialType field value if set, zero value otherwise.
 func (o *RpcTradingAccountCredential) GetCredentialType() CredentialType {
-	if o == nil || IsNil(o.CredentialType.Get()) {
+	if o == nil || IsNil(o.CredentialType) {
 		var ret CredentialType
 		return ret
 	}
-	return *o.CredentialType.Get()
+	return *o.CredentialType
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcTradingAccountCredential) GetCredentialTypeOk() (*CredentialType, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CredentialType) {
 		return nil, false
 	}
-	return o.CredentialType.Get(), o.CredentialType.IsSet()
+	return o.CredentialType, true
 }
 
 // HasCredentialType returns a boolean if a field has been set.
 func (o *RpcTradingAccountCredential) HasCredentialType() bool {
-	if o != nil && o.CredentialType.IsSet() {
+	if o != nil && !IsNil(o.CredentialType) {
 		return true
 	}
 
 	return false
 }
 
-// SetCredentialType gets a reference to the given NullableCredentialType and assigns it to the CredentialType field.
+// SetCredentialType gets a reference to the given CredentialType and assigns it to the CredentialType field.
 func (o *RpcTradingAccountCredential) SetCredentialType(v CredentialType) {
-	o.CredentialType.Set(&v)
-}
-// SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
-func (o *RpcTradingAccountCredential) SetCredentialTypeNil() {
-	o.CredentialType.Set(nil)
-}
-
-// UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
-func (o *RpcTradingAccountCredential) UnsetCredentialType() {
-	o.CredentialType.Unset()
+	o.CredentialType = &v
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
@@ -434,8 +424,8 @@ func (o RpcTradingAccountCredential) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
-	if o.CredentialType.IsSet() {
-		toSerialize["credentialType"] = o.CredentialType.Get()
+	if !IsNil(o.CredentialType) {
+		toSerialize["credentialType"] = o.CredentialType
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status

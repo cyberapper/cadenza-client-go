@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Venue** | [**Venue**](Venue.md) |  | 
 **Nickname** | Pointer to **string** | Nickname of the credential | [optional] 
-**CredentialType** | [**NullableCredentialType**](CredentialType.md) |  | 
+**CredentialType** | [**CredentialType**](CredentialType.md) |  | 
 **ApiKey** | Pointer to **string** |  | [optional] 
 **ApiSecret** | Pointer to **string** |  | [optional] 
 **ApiPassphrase** | Pointer to **string** |  | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewCreateTradingAccountCredentialRequest
 
-`func NewCreateTradingAccountCredentialRequest(venue Venue, credentialType NullableCredentialType, ) *CreateTradingAccountCredentialRequest`
+`func NewCreateTradingAccountCredentialRequest(venue Venue, credentialType CredentialType, ) *CreateTradingAccountCredentialRequest`
 
 NewCreateTradingAccountCredentialRequest instantiates a new CreateTradingAccountCredentialRequest object
 This constructor will assign default values to properties that have it defined,
@@ -95,16 +95,6 @@ and a boolean to check if the value has been set.
 SetCredentialType sets CredentialType field to given value.
 
 
-### SetCredentialTypeNil
-
-`func (o *CreateTradingAccountCredentialRequest) SetCredentialTypeNil(b bool)`
-
- SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
-
-### UnsetCredentialType
-`func (o *CreateTradingAccountCredentialRequest) UnsetCredentialType()`
-
-UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
 ### GetApiKey
 
 `func (o *CreateTradingAccountCredentialRequest) GetApiKey() string`

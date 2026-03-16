@@ -21,17 +21,21 @@ type CredentialStatus string
 // List of credentialStatus
 const (
 	CREDENTIALSTATUS_CREATED CredentialStatus = "CREATED"
-	CREDENTIALSTATUS_ACTIVE CredentialStatus = "ACTIVE"
-	CREDENTIALSTATUS_EXPIRED CredentialStatus = "EXPIRED"
+	CREDENTIALSTATUS_VALIDATED CredentialStatus = "VALIDATED"
+	CREDENTIALSTATUS_INACTIVE CredentialStatus = "INACTIVE"
 	CREDENTIALSTATUS_REVOKED CredentialStatus = "REVOKED"
+	CREDENTIALSTATUS_ERROR CredentialStatus = "ERROR"
+	CREDENTIALSTATUS_UNKNOWN CredentialStatus = "UNKNOWN"
 )
 
 // All allowed values of CredentialStatus enum
 var AllowedCredentialStatusEnumValues = []CredentialStatus{
 	"CREATED",
-	"ACTIVE",
-	"EXPIRED",
+	"VALIDATED",
+	"INACTIVE",
 	"REVOKED",
+	"ERROR",
+	"UNKNOWN",
 }
 
 func (v *CredentialStatus) UnmarshalJSON(src []byte) error {

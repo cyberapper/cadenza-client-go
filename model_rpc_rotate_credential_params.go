@@ -21,7 +21,7 @@ var _ MappedNullable = &RpcRotateCredentialParams{}
 // RpcRotateCredentialParams Request to rotate a credential
 type RpcRotateCredentialParams struct {
 	CredentialId string `json:"credentialId"`
-	CredentialType NullableCredentialType `json:"credentialType"`
+	CredentialType CredentialType `json:"credentialType"`
 	ApiKey *string `json:"apiKey,omitempty"`
 	SecretKey *string `json:"secretKey,omitempty"`
 	SecretPassphrase *string `json:"secretPassphrase,omitempty"`
@@ -34,7 +34,7 @@ type _RpcRotateCredentialParams RpcRotateCredentialParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRpcRotateCredentialParams(credentialId string, credentialType NullableCredentialType) *RpcRotateCredentialParams {
+func NewRpcRotateCredentialParams(credentialId string, credentialType CredentialType) *RpcRotateCredentialParams {
 	this := RpcRotateCredentialParams{}
 	this.CredentialId = credentialId
 	this.CredentialType = credentialType
@@ -74,29 +74,27 @@ func (o *RpcRotateCredentialParams) SetCredentialId(v string) {
 }
 
 // GetCredentialType returns the CredentialType field value
-// If the value is explicit nil, the zero value for CredentialType will be returned
 func (o *RpcRotateCredentialParams) GetCredentialType() CredentialType {
-	if o == nil || o.CredentialType.Get() == nil {
+	if o == nil {
 		var ret CredentialType
 		return ret
 	}
 
-	return *o.CredentialType.Get()
+	return o.CredentialType
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcRotateCredentialParams) GetCredentialTypeOk() (*CredentialType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CredentialType.Get(), o.CredentialType.IsSet()
+	return &o.CredentialType, true
 }
 
 // SetCredentialType sets field value
 func (o *RpcRotateCredentialParams) SetCredentialType(v CredentialType) {
-	o.CredentialType.Set(&v)
+	o.CredentialType = v
 }
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
@@ -206,7 +204,7 @@ func (o RpcRotateCredentialParams) MarshalJSON() ([]byte, error) {
 func (o RpcRotateCredentialParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["credentialId"] = o.CredentialId
-	toSerialize["credentialType"] = o.CredentialType.Get()
+	toSerialize["credentialType"] = o.CredentialType
 	if !IsNil(o.ApiKey) {
 		toSerialize["apiKey"] = o.ApiKey
 	}

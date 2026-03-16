@@ -15,19 +15,21 @@ import (
 	"fmt"
 )
 
-// BalanceStatus Status of a balance entry
+// BalanceStatus Balance entry status
 type BalanceStatus string
 
 // List of balanceStatus
 const (
 	BALANCESTATUS_ACTIVE BalanceStatus = "ACTIVE"
-	BALANCESTATUS_LOCKED BalanceStatus = "LOCKED"
+	BALANCESTATUS_INACTIVE BalanceStatus = "INACTIVE"
+	BALANCESTATUS_FROZEN BalanceStatus = "FROZEN"
 )
 
 // All allowed values of BalanceStatus enum
 var AllowedBalanceStatusEnumValues = []BalanceStatus{
 	"ACTIVE",
-	"LOCKED",
+	"INACTIVE",
+	"FROZEN",
 }
 
 func (v *BalanceStatus) UnmarshalJSON(src []byte) error {

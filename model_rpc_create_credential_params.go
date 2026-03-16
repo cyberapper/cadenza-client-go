@@ -22,7 +22,7 @@ var _ MappedNullable = &RpcCreateCredentialParams{}
 type RpcCreateCredentialParams struct {
 	TradingAccountId string `json:"tradingAccountId"`
 	Venue Venue `json:"venue"`
-	CredentialType NullableCredentialType `json:"credentialType"`
+	CredentialType CredentialType `json:"credentialType"`
 	ApiKey *string `json:"apiKey,omitempty"`
 	SecretKey *string `json:"secretKey,omitempty"`
 	SecretPassphrase *string `json:"secretPassphrase,omitempty"`
@@ -36,7 +36,7 @@ type _RpcCreateCredentialParams RpcCreateCredentialParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRpcCreateCredentialParams(tradingAccountId string, venue Venue, credentialType NullableCredentialType) *RpcCreateCredentialParams {
+func NewRpcCreateCredentialParams(tradingAccountId string, venue Venue, credentialType CredentialType) *RpcCreateCredentialParams {
 	this := RpcCreateCredentialParams{}
 	this.TradingAccountId = tradingAccountId
 	this.Venue = venue
@@ -101,29 +101,27 @@ func (o *RpcCreateCredentialParams) SetVenue(v Venue) {
 }
 
 // GetCredentialType returns the CredentialType field value
-// If the value is explicit nil, the zero value for CredentialType will be returned
 func (o *RpcCreateCredentialParams) GetCredentialType() CredentialType {
-	if o == nil || o.CredentialType.Get() == nil {
+	if o == nil {
 		var ret CredentialType
 		return ret
 	}
 
-	return *o.CredentialType.Get()
+	return o.CredentialType
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *RpcCreateCredentialParams) GetCredentialTypeOk() (*CredentialType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CredentialType.Get(), o.CredentialType.IsSet()
+	return &o.CredentialType, true
 }
 
 // SetCredentialType sets field value
 func (o *RpcCreateCredentialParams) SetCredentialType(v CredentialType) {
-	o.CredentialType.Set(&v)
+	o.CredentialType = v
 }
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
@@ -266,7 +264,7 @@ func (o RpcCreateCredentialParams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
 	toSerialize["venue"] = o.Venue
-	toSerialize["credentialType"] = o.CredentialType.Get()
+	toSerialize["credentialType"] = o.CredentialType
 	if !IsNil(o.ApiKey) {
 		toSerialize["apiKey"] = o.ApiKey
 	}

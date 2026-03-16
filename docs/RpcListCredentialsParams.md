@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CredentialIds** | Pointer to **[]string** |  | [optional] 
 **Venue** | Pointer to [**Venue**](Venue.md) |  | [optional] 
-**CredentialType** | Pointer to [**NullableCredentialType**](CredentialType.md) |  | [optional] 
+**CredentialType** | Pointer to [**CredentialType**](CredentialType.md) |  | [optional] 
 **Status** | Pointer to [**CredentialStatus**](CredentialStatus.md) |  | [optional] 
 **Pagination** | Pointer to [**RpcPagination**](RpcPagination.md) |  | [optional] 
 
@@ -104,16 +104,6 @@ SetCredentialType sets CredentialType field to given value.
 
 HasCredentialType returns a boolean if a field has been set.
 
-### SetCredentialTypeNil
-
-`func (o *RpcListCredentialsParams) SetCredentialTypeNil(b bool)`
-
- SetCredentialTypeNil sets the value for CredentialType to be an explicit nil
-
-### UnsetCredentialType
-`func (o *RpcListCredentialsParams) UnsetCredentialType()`
-
-UnsetCredentialType ensures that no value is present for CredentialType, not even an explicit nil
 ### GetStatus
 
 `func (o *RpcListCredentialsParams) GetStatus() CredentialStatus`

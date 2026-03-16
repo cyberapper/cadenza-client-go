@@ -20,6 +20,7 @@ type OrderStatus string
 
 // List of orderStatus
 const (
+	ORDERSTATUS_EMPTY OrderStatus = ""
 	ORDERSTATUS_CREATED OrderStatus = "CREATED"
 	ORDERSTATUS_SUBMITTED OrderStatus = "SUBMITTED"
 	ORDERSTATUS_ACCEPTED OrderStatus = "ACCEPTED"
@@ -37,6 +38,7 @@ const (
 
 // All allowed values of OrderStatus enum
 var AllowedOrderStatusEnumValues = []OrderStatus{
+	"",
 	"CREATED",
 	"SUBMITTED",
 	"ACCEPTED",

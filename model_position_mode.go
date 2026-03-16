@@ -20,12 +20,14 @@ type PositionMode string
 
 // List of positionMode
 const (
+	POSITIONMODE_EMPTY PositionMode = ""
 	POSITIONMODE_HEDGE PositionMode = "HEDGE"
 	POSITIONMODE_NETTING PositionMode = "NETTING"
 )
 
 // All allowed values of PositionMode enum
 var AllowedPositionModeEnumValues = []PositionMode{
+	"",
 	"HEDGE",
 	"NETTING",
 }

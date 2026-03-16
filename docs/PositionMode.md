@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `EMPTY` (value: `""`)
+
 * `HEDGE` (value: `"HEDGE"`)
 
 * `NETTING` (value: `"NETTING"`)

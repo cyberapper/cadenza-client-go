@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **SecurityType** | [**SecurityType**](SecurityType.md) |  | 
 **Status** | [**PositionStatus**](PositionStatus.md) |  | 
-**PositionSide** | [**PositionSide**](PositionSide.md) |  | 
 **Quantity** | **string** | Decimal value as string to preserve precision | 
 **EntryPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **ExitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
@@ -29,7 +28,7 @@ Name | Type | Description | Notes
 
 ### NewPositionEntry
 
-`func NewPositionEntry(positionId string, securitySymbol string, tradingAccountId string, securityType SecurityType, status PositionStatus, positionSide PositionSide, quantity string, createdAt int64, updatedAt int64, ) *PositionEntry`
+`func NewPositionEntry(positionId string, securitySymbol string, tradingAccountId string, securityType SecurityType, status PositionStatus, quantity string, createdAt int64, updatedAt int64, ) *PositionEntry`
 
 NewPositionEntry instantiates a new PositionEntry object
 This constructor will assign default values to properties that have it defined,
@@ -202,26 +201,6 @@ and a boolean to check if the value has been set.
 `func (o *PositionEntry) SetStatus(v PositionStatus)`
 
 SetStatus sets Status field to given value.
-
-
-### GetPositionSide
-
-`func (o *PositionEntry) GetPositionSide() PositionSide`
-
-GetPositionSide returns the PositionSide field if non-nil, zero value otherwise.
-
-### GetPositionSideOk
-
-`func (o *PositionEntry) GetPositionSideOk() (*PositionSide, bool)`
-
-GetPositionSideOk returns a tuple with the PositionSide field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPositionSide
-
-`func (o *PositionEntry) SetPositionSide(v PositionSide)`
-
-SetPositionSide sets PositionSide field to given value.
 
 
 ### GetQuantity

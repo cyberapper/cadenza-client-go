@@ -22,14 +22,16 @@ type AccountType string
 const (
 	ACCOUNTTYPE_SPOT AccountType = "SPOT"
 	ACCOUNTTYPE_MARGIN AccountType = "MARGIN"
-	ACCOUNTTYPE_CREDIT AccountType = "CREDIT"
+	ACCOUNTTYPE_FUTURES AccountType = "FUTURES"
+	ACCOUNTTYPE_OPTIONS AccountType = "OPTIONS"
 )
 
 // All allowed values of AccountType enum
 var AllowedAccountTypeEnumValues = []AccountType{
 	"SPOT",
 	"MARGIN",
-	"CREDIT",
+	"FUTURES",
+	"OPTIONS",
 }
 
 func (v *AccountType) UnmarshalJSON(src []byte) error {

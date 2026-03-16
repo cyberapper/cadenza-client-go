@@ -5,7 +5,13 @@
 
 * `SPOT` (value: `"SPOT"`)
 
-* `CONTRACT` (value: `"CONTRACT"`)
+* `FUTURES` (value: `"FUTURES"`)
+
+* `OPTION` (value: `"OPTION"`)
+
+* `PERPETUAL` (value: `"PERPETUAL"`)
+
+* `DERIVATIVE` (value: `"DERIVATIVE"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

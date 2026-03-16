@@ -23,7 +23,7 @@ type CreateTradingAccountCredentialRequest struct {
 	Venue Venue `json:"venue"`
 	// Nickname of the credential
 	Nickname *string `json:"nickname,omitempty"`
-	CredentialType NullableCredentialType `json:"credentialType"`
+	CredentialType CredentialType `json:"credentialType"`
 	ApiKey *string `json:"apiKey,omitempty"`
 	ApiSecret *string `json:"apiSecret,omitempty"`
 	ApiPassphrase *string `json:"apiPassphrase,omitempty"`
@@ -36,7 +36,7 @@ type _CreateTradingAccountCredentialRequest CreateTradingAccountCredentialReques
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateTradingAccountCredentialRequest(venue Venue, credentialType NullableCredentialType) *CreateTradingAccountCredentialRequest {
+func NewCreateTradingAccountCredentialRequest(venue Venue, credentialType CredentialType) *CreateTradingAccountCredentialRequest {
 	this := CreateTradingAccountCredentialRequest{}
 	this.Venue = venue
 	this.CredentialType = credentialType
@@ -108,29 +108,27 @@ func (o *CreateTradingAccountCredentialRequest) SetNickname(v string) {
 }
 
 // GetCredentialType returns the CredentialType field value
-// If the value is explicit nil, the zero value for CredentialType will be returned
 func (o *CreateTradingAccountCredentialRequest) GetCredentialType() CredentialType {
-	if o == nil || o.CredentialType.Get() == nil {
+	if o == nil {
 		var ret CredentialType
 		return ret
 	}
 
-	return *o.CredentialType.Get()
+	return o.CredentialType
 }
 
 // GetCredentialTypeOk returns a tuple with the CredentialType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *CreateTradingAccountCredentialRequest) GetCredentialTypeOk() (*CredentialType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CredentialType.Get(), o.CredentialType.IsSet()
+	return &o.CredentialType, true
 }
 
 // SetCredentialType sets field value
 func (o *CreateTradingAccountCredentialRequest) SetCredentialType(v CredentialType) {
-	o.CredentialType.Set(&v)
+	o.CredentialType = v
 }
 
 // GetApiKey returns the ApiKey field value if set, zero value otherwise.
@@ -243,7 +241,7 @@ func (o CreateTradingAccountCredentialRequest) ToMap() (map[string]interface{}, 
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
-	toSerialize["credentialType"] = o.CredentialType.Get()
+	toSerialize["credentialType"] = o.CredentialType
 	if !IsNil(o.ApiKey) {
 		toSerialize["apiKey"] = o.ApiKey
 	}

@@ -15,19 +15,21 @@ import (
 	"fmt"
 )
 
-// PositionStatus Status of a position
+// PositionStatus Position entry status
 type PositionStatus string
 
 // List of positionStatus
 const (
 	POSITIONSTATUS_OPEN PositionStatus = "OPEN"
 	POSITIONSTATUS_CLOSED PositionStatus = "CLOSED"
+	POSITIONSTATUS_LIQUIDATED PositionStatus = "LIQUIDATED"
 )
 
 // All allowed values of PositionStatus enum
 var AllowedPositionStatusEnumValues = []PositionStatus{
 	"OPEN",
 	"CLOSED",
+	"LIQUIDATED",
 }
 
 func (v *PositionStatus) UnmarshalJSON(src []byte) error {

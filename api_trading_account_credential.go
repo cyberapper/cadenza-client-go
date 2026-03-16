@@ -261,7 +261,7 @@ type ApiListTradingAccountCredentialsRequest struct {
 	ctx context.Context
 	ApiService TradingAccountCredentialAPI
 	credentialType *CredentialType
-	credentialStatus *CredentialStatus
+	credentialStatus *TradingAccountStatus
 	credentialIds *[]string
 }
 
@@ -272,7 +272,7 @@ func (r ApiListTradingAccountCredentialsRequest) CredentialType(credentialType C
 }
 
 // Credential status
-func (r ApiListTradingAccountCredentialsRequest) CredentialStatus(credentialStatus CredentialStatus) ApiListTradingAccountCredentialsRequest {
+func (r ApiListTradingAccountCredentialsRequest) CredentialStatus(credentialStatus TradingAccountStatus) ApiListTradingAccountCredentialsRequest {
 	r.credentialStatus = &credentialStatus
 	return r
 }

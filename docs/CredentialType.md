@@ -3,9 +3,9 @@
 ## Enum
 
 
-* `API_KEY` (value: `"API_KEY"`)
+* `EMPTY` (value: `""`)
 
-* `TOKEN` (value: `"TOKEN"`)
+* `API_KEY` (value: `"API_KEY"`)
 
 * `HMAC` (value: `"HMAC"`)
 

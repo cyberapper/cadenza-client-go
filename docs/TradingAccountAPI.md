@@ -378,7 +378,7 @@ import (
 
 func main() {
 	tradingAccountId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trading account ID (optional)
-	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
+	venue := openapiclient.venue("") // Venue | Exchange type (optional)
 	accountStatus := openapiclient.tradingAccountStatus("NEW") // TradingAccountStatus | Account status (optional)
 	userId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Filter by user ID (optional)
 	tenantId := "tenantId_example" // string | Filter by tenant ID (optional)

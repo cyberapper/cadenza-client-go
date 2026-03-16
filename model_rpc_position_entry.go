@@ -28,7 +28,6 @@ type RpcPositionEntry struct {
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	SecurityType *SecurityType `json:"securityType,omitempty"`
 	Status *PositionStatus `json:"status,omitempty"`
-	PositionSide *PositionSide `json:"positionSide,omitempty"`
 	// Position quantity
 	Quantity *string `json:"quantity,omitempty"`
 	EntryPrice *string `json:"entryPrice,omitempty"`
@@ -282,38 +281,6 @@ func (o *RpcPositionEntry) HasStatus() bool {
 // SetStatus gets a reference to the given PositionStatus and assigns it to the Status field.
 func (o *RpcPositionEntry) SetStatus(v PositionStatus) {
 	o.Status = &v
-}
-
-// GetPositionSide returns the PositionSide field value if set, zero value otherwise.
-func (o *RpcPositionEntry) GetPositionSide() PositionSide {
-	if o == nil || IsNil(o.PositionSide) {
-		var ret PositionSide
-		return ret
-	}
-	return *o.PositionSide
-}
-
-// GetPositionSideOk returns a tuple with the PositionSide field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RpcPositionEntry) GetPositionSideOk() (*PositionSide, bool) {
-	if o == nil || IsNil(o.PositionSide) {
-		return nil, false
-	}
-	return o.PositionSide, true
-}
-
-// HasPositionSide returns a boolean if a field has been set.
-func (o *RpcPositionEntry) HasPositionSide() bool {
-	if o != nil && !IsNil(o.PositionSide) {
-		return true
-	}
-
-	return false
-}
-
-// SetPositionSide gets a reference to the given PositionSide and assigns it to the PositionSide field.
-func (o *RpcPositionEntry) SetPositionSide(v PositionSide) {
-	o.PositionSide = &v
 }
 
 // GetQuantity returns the Quantity field value if set, zero value otherwise.
@@ -603,9 +570,6 @@ func (o RpcPositionEntry) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
-	if !IsNil(o.PositionSide) {
-		toSerialize["positionSide"] = o.PositionSide
-	}
 	if !IsNil(o.Quantity) {
 		toSerialize["quantity"] = o.Quantity
 	}
@@ -659,7 +623,6 @@ func (o *RpcPositionEntry) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "instrumentId")
 		delete(additionalProperties, "securityType")
 		delete(additionalProperties, "status")
-		delete(additionalProperties, "positionSide")
 		delete(additionalProperties, "quantity")
 		delete(additionalProperties, "entryPrice")
 		delete(additionalProperties, "exitPrice")

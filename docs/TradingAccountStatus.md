@@ -5,8 +5,6 @@
 
 * `NEW` (value: `"NEW"`)
 
-* `CREATED` (value: `"CREATED"`)
-
 * `ACTIVE` (value: `"ACTIVE"`)
 
 * `INACTIVE` (value: `"INACTIVE"`)

@@ -10,9 +10,9 @@ Name | Type | Description | Notes
 **Nickname** | **string** | Nickname of the trading account | 
 **AccountType** | [**AccountType**](AccountType.md) |  | 
 **ExternalAccountType** | **string** | Type of account on the exchange (set by market connector) | 
-**PositionMode** | Pointer to [**NullablePositionMode**](PositionMode.md) |  | [optional] 
-**CollateralMode** | Pointer to [**NullableCollateralMode**](CollateralMode.md) |  | [optional] 
-**MarginMode** | Pointer to [**NullableMarginMode**](MarginMode.md) |  | [optional] 
+**PositionMode** | Pointer to [**PositionMode**](PositionMode.md) |  | [optional] 
+**CollateralMode** | Pointer to [**CollateralMode**](CollateralMode.md) |  | [optional] 
+**MarginMode** | Pointer to [**MarginMode**](MarginMode.md) |  | [optional] 
 **Credentials** | [**[]TradingAccountCredential**](TradingAccountCredential.md) |  | 
 **Status** | [**TradingAccountStatus**](TradingAccountStatus.md) |  | 
 **CreatedAt** | **int64** | Unix timestamp in milliseconds | 
@@ -184,16 +184,6 @@ SetPositionMode sets PositionMode field to given value.
 
 HasPositionMode returns a boolean if a field has been set.
 
-### SetPositionModeNil
-
-`func (o *TradingAccount) SetPositionModeNil(b bool)`
-
- SetPositionModeNil sets the value for PositionMode to be an explicit nil
-
-### UnsetPositionMode
-`func (o *TradingAccount) UnsetPositionMode()`
-
-UnsetPositionMode ensures that no value is present for PositionMode, not even an explicit nil
 ### GetCollateralMode
 
 `func (o *TradingAccount) GetCollateralMode() CollateralMode`
@@ -219,16 +209,6 @@ SetCollateralMode sets CollateralMode field to given value.
 
 HasCollateralMode returns a boolean if a field has been set.
 
-### SetCollateralModeNil
-
-`func (o *TradingAccount) SetCollateralModeNil(b bool)`
-
- SetCollateralModeNil sets the value for CollateralMode to be an explicit nil
-
-### UnsetCollateralMode
-`func (o *TradingAccount) UnsetCollateralMode()`
-
-UnsetCollateralMode ensures that no value is present for CollateralMode, not even an explicit nil
 ### GetMarginMode
 
 `func (o *TradingAccount) GetMarginMode() MarginMode`
@@ -254,16 +234,6 @@ SetMarginMode sets MarginMode field to given value.
 
 HasMarginMode returns a boolean if a field has been set.
 
-### SetMarginModeNil
-
-`func (o *TradingAccount) SetMarginModeNil(b bool)`
-
- SetMarginModeNil sets the value for MarginMode to be an explicit nil
-
-### UnsetMarginMode
-`func (o *TradingAccount) UnsetMarginMode()`
-
-UnsetMarginMode ensures that no value is present for MarginMode, not even an explicit nil
 ### GetCredentials
 
 `func (o *TradingAccount) GetCredentials() []TradingAccountCredential`

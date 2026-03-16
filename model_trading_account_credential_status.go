@@ -21,16 +21,12 @@ type TradingAccountCredentialStatus string
 // List of tradingAccountCredentialStatus
 const (
 	TRADINGACCOUNTCREDENTIALSTATUS_CREATED TradingAccountCredentialStatus = "CREATED"
-	TRADINGACCOUNTCREDENTIALSTATUS_ACTIVE TradingAccountCredentialStatus = "ACTIVE"
-	TRADINGACCOUNTCREDENTIALSTATUS_EXPIRED TradingAccountCredentialStatus = "EXPIRED"
 	TRADINGACCOUNTCREDENTIALSTATUS_REVOKED TradingAccountCredentialStatus = "REVOKED"
 )
 
 // All allowed values of TradingAccountCredentialStatus enum
 var AllowedTradingAccountCredentialStatusEnumValues = []TradingAccountCredentialStatus{
 	"CREATED",
-	"ACTIVE",
-	"EXPIRED",
 	"REVOKED",
 }
 

@@ -33,7 +33,7 @@ import (
 )
 
 func main() {
-	createTradingAccountCredentialRequest := *openapiclient.NewCreateTradingAccountCredentialRequest(openapiclient.venue("BINANCE"), "TODO") // CreateTradingAccountCredentialRequest |  (optional)
+	createTradingAccountCredentialRequest := *openapiclient.NewCreateTradingAccountCredentialRequest(openapiclient.venue(""), openapiclient.credentialType("")) // CreateTradingAccountCredentialRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -99,8 +99,8 @@ import (
 )
 
 func main() {
-	credentialType := openapiclient.credentialType("API_KEY") // CredentialType | Credential type (optional)
-	credentialStatus := openapiclient.credentialStatus("CREATED") // CredentialStatus | Credential status (optional)
+	credentialType := openapiclient.credentialType("") // CredentialType | Credential type (optional)
+	credentialStatus := openapiclient.tradingAccountStatus("NEW") // TradingAccountStatus | Credential status (optional)
 	credentialIds := []string{"Inner_example"} // []string | credentialId array (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -127,7 +127,7 @@ Other parameters are passed through a pointer to a apiListTradingAccountCredenti
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **credentialType** | [**CredentialType**](CredentialType.md) | Credential type | 
- **credentialStatus** | [**CredentialStatus**](CredentialStatus.md) | Credential status | 
+ **credentialStatus** | [**TradingAccountStatus**](TradingAccountStatus.md) | Credential status | 
  **credentialIds** | **[]string** | credentialId array | 
 
 ### Return type
@@ -235,7 +235,7 @@ import (
 )
 
 func main() {
-	rotateTradingAccountCredentialRequest := *openapiclient.NewRotateTradingAccountCredentialRequest("CredentialId_example") // RotateTradingAccountCredentialRequest |  (optional)
+	rotateTradingAccountCredentialRequest := *openapiclient.NewRotateTradingAccountCredentialRequest("CredentialId_example", "my_api_key") // RotateTradingAccountCredentialRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
