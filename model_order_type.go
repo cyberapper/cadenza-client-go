@@ -22,6 +22,7 @@ type OrderType string
 const (
 	ORDERTYPE_MARKET OrderType = "MARKET"
 	ORDERTYPE_LIMIT OrderType = "LIMIT"
+	ORDERTYPE_LIMIT_MAKER OrderType = "LIMIT_MAKER"
 	ORDERTYPE_STOP OrderType = "STOP"
 	ORDERTYPE_STOP_LIMIT OrderType = "STOP_LIMIT"
 	ORDERTYPE_STOP_LOSS OrderType = "STOP_LOSS"
@@ -30,6 +31,7 @@ const (
 	ORDERTYPE_TAKE_PROFIT_LIMIT OrderType = "TAKE_PROFIT_LIMIT"
 	ORDERTYPE_TRAILING_STOP OrderType = "TRAILING_STOP"
 	ORDERTYPE_QUOTED OrderType = "QUOTED"
+	ORDERTYPE_OCO OrderType = "OCO"
 	ORDERTYPE_UNKNOWN OrderType = "UNKNOWN"
 )
 
@@ -37,6 +39,7 @@ const (
 var AllowedOrderTypeEnumValues = []OrderType{
 	"MARKET",
 	"LIMIT",
+	"LIMIT_MAKER",
 	"STOP",
 	"STOP_LIMIT",
 	"STOP_LOSS",
@@ -45,6 +48,7 @@ var AllowedOrderTypeEnumValues = []OrderType{
 	"TAKE_PROFIT_LIMIT",
 	"TRAILING_STOP",
 	"QUOTED",
+	"OCO",
 	"UNKNOWN",
 }
 

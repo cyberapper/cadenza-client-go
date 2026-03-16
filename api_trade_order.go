@@ -232,6 +232,7 @@ type ApiListTradeOrdersRequest struct {
 	ctx context.Context
 	ApiService TradeOrderAPI
 	tradeOrderId *string
+	orderListId *string
 	orderStatus *OrderStatus
 	tradingAccountId *string
 	instrumentId *string
@@ -246,6 +247,12 @@ type ApiListTradeOrdersRequest struct {
 // Trade order ID
 func (r ApiListTradeOrdersRequest) TradeOrderId(tradeOrderId string) ApiListTradeOrdersRequest {
 	r.tradeOrderId = &tradeOrderId
+	return r
+}
+
+// Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO parent
+func (r ApiListTradeOrdersRequest) OrderListId(orderListId string) ApiListTradeOrdersRequest {
+	r.orderListId = &orderListId
 	return r
 }
 
@@ -344,6 +351,9 @@ func (a *TradeOrderAPIService) ListTradeOrdersExecute(r ApiListTradeOrdersReques
 
 	if r.tradeOrderId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "tradeOrderId", r.tradeOrderId, "form", "")
+	}
+	if r.orderListId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderListId", r.orderListId, "form", "")
 	}
 	if r.orderStatus != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "orderStatus", r.orderStatus, "form", "")

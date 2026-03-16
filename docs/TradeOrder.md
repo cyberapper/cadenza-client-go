@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradeOrderId** | **string** | UUID string | 
+**OrderListId** | Pointer to **string** | Exchange order list ID linking OCO/OTO/OTOCO legs. For OCO parents, externalOrderId uses &#39;ol_&#39; prefix. | [optional] 
 **TradingAccountId** | **string** | UUID string | 
 **Venue** | [**Venue**](Venue.md) |  | 
 **PositionId** | Pointer to **string** | UUID string | [optional] 
@@ -20,6 +21,12 @@ Name | Type | Description | Notes
 **CancelReason** | Pointer to **string** | Reason for order cancellation | [optional] 
 **LimitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **StopPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
+**TakeProfitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
+**TakeProfitLimitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
+**StopLossPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
+**StopLossLimitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
+**TakeProfitTimeInForce** | Pointer to [**NullableTimeInForce**](TimeInForce.md) |  | [optional] 
+**StopLossTimeInForce** | Pointer to [**NullableTimeInForce**](TimeInForce.md) |  | [optional] 
 **Quantity** | **string** | Decimal value as string to preserve precision | 
 **OrderQuantityType** | [**OrderQuantityType**](OrderQuantityType.md) |  | 
 **QuantityRounding** | Pointer to [**QuantityRounding**](QuantityRounding.md) |  | [optional] [default to QUANTITYROUNDING_EMPTY]
@@ -75,6 +82,31 @@ and a boolean to check if the value has been set.
 
 SetTradeOrderId sets TradeOrderId field to given value.
 
+
+### GetOrderListId
+
+`func (o *TradeOrder) GetOrderListId() string`
+
+GetOrderListId returns the OrderListId field if non-nil, zero value otherwise.
+
+### GetOrderListIdOk
+
+`func (o *TradeOrder) GetOrderListIdOk() (*string, bool)`
+
+GetOrderListIdOk returns a tuple with the OrderListId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrderListId
+
+`func (o *TradeOrder) SetOrderListId(v string)`
+
+SetOrderListId sets OrderListId field to given value.
+
+### HasOrderListId
+
+`func (o *TradeOrder) HasOrderListId() bool`
+
+HasOrderListId returns a boolean if a field has been set.
 
 ### GetTradingAccountId
 
@@ -436,6 +468,176 @@ SetStopPrice sets StopPrice field to given value.
 
 HasStopPrice returns a boolean if a field has been set.
 
+### GetTakeProfitPrice
+
+`func (o *TradeOrder) GetTakeProfitPrice() string`
+
+GetTakeProfitPrice returns the TakeProfitPrice field if non-nil, zero value otherwise.
+
+### GetTakeProfitPriceOk
+
+`func (o *TradeOrder) GetTakeProfitPriceOk() (*string, bool)`
+
+GetTakeProfitPriceOk returns a tuple with the TakeProfitPrice field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTakeProfitPrice
+
+`func (o *TradeOrder) SetTakeProfitPrice(v string)`
+
+SetTakeProfitPrice sets TakeProfitPrice field to given value.
+
+### HasTakeProfitPrice
+
+`func (o *TradeOrder) HasTakeProfitPrice() bool`
+
+HasTakeProfitPrice returns a boolean if a field has been set.
+
+### GetTakeProfitLimitPrice
+
+`func (o *TradeOrder) GetTakeProfitLimitPrice() string`
+
+GetTakeProfitLimitPrice returns the TakeProfitLimitPrice field if non-nil, zero value otherwise.
+
+### GetTakeProfitLimitPriceOk
+
+`func (o *TradeOrder) GetTakeProfitLimitPriceOk() (*string, bool)`
+
+GetTakeProfitLimitPriceOk returns a tuple with the TakeProfitLimitPrice field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTakeProfitLimitPrice
+
+`func (o *TradeOrder) SetTakeProfitLimitPrice(v string)`
+
+SetTakeProfitLimitPrice sets TakeProfitLimitPrice field to given value.
+
+### HasTakeProfitLimitPrice
+
+`func (o *TradeOrder) HasTakeProfitLimitPrice() bool`
+
+HasTakeProfitLimitPrice returns a boolean if a field has been set.
+
+### GetStopLossPrice
+
+`func (o *TradeOrder) GetStopLossPrice() string`
+
+GetStopLossPrice returns the StopLossPrice field if non-nil, zero value otherwise.
+
+### GetStopLossPriceOk
+
+`func (o *TradeOrder) GetStopLossPriceOk() (*string, bool)`
+
+GetStopLossPriceOk returns a tuple with the StopLossPrice field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStopLossPrice
+
+`func (o *TradeOrder) SetStopLossPrice(v string)`
+
+SetStopLossPrice sets StopLossPrice field to given value.
+
+### HasStopLossPrice
+
+`func (o *TradeOrder) HasStopLossPrice() bool`
+
+HasStopLossPrice returns a boolean if a field has been set.
+
+### GetStopLossLimitPrice
+
+`func (o *TradeOrder) GetStopLossLimitPrice() string`
+
+GetStopLossLimitPrice returns the StopLossLimitPrice field if non-nil, zero value otherwise.
+
+### GetStopLossLimitPriceOk
+
+`func (o *TradeOrder) GetStopLossLimitPriceOk() (*string, bool)`
+
+GetStopLossLimitPriceOk returns a tuple with the StopLossLimitPrice field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStopLossLimitPrice
+
+`func (o *TradeOrder) SetStopLossLimitPrice(v string)`
+
+SetStopLossLimitPrice sets StopLossLimitPrice field to given value.
+
+### HasStopLossLimitPrice
+
+`func (o *TradeOrder) HasStopLossLimitPrice() bool`
+
+HasStopLossLimitPrice returns a boolean if a field has been set.
+
+### GetTakeProfitTimeInForce
+
+`func (o *TradeOrder) GetTakeProfitTimeInForce() TimeInForce`
+
+GetTakeProfitTimeInForce returns the TakeProfitTimeInForce field if non-nil, zero value otherwise.
+
+### GetTakeProfitTimeInForceOk
+
+`func (o *TradeOrder) GetTakeProfitTimeInForceOk() (*TimeInForce, bool)`
+
+GetTakeProfitTimeInForceOk returns a tuple with the TakeProfitTimeInForce field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTakeProfitTimeInForce
+
+`func (o *TradeOrder) SetTakeProfitTimeInForce(v TimeInForce)`
+
+SetTakeProfitTimeInForce sets TakeProfitTimeInForce field to given value.
+
+### HasTakeProfitTimeInForce
+
+`func (o *TradeOrder) HasTakeProfitTimeInForce() bool`
+
+HasTakeProfitTimeInForce returns a boolean if a field has been set.
+
+### SetTakeProfitTimeInForceNil
+
+`func (o *TradeOrder) SetTakeProfitTimeInForceNil(b bool)`
+
+ SetTakeProfitTimeInForceNil sets the value for TakeProfitTimeInForce to be an explicit nil
+
+### UnsetTakeProfitTimeInForce
+`func (o *TradeOrder) UnsetTakeProfitTimeInForce()`
+
+UnsetTakeProfitTimeInForce ensures that no value is present for TakeProfitTimeInForce, not even an explicit nil
+### GetStopLossTimeInForce
+
+`func (o *TradeOrder) GetStopLossTimeInForce() TimeInForce`
+
+GetStopLossTimeInForce returns the StopLossTimeInForce field if non-nil, zero value otherwise.
+
+### GetStopLossTimeInForceOk
+
+`func (o *TradeOrder) GetStopLossTimeInForceOk() (*TimeInForce, bool)`
+
+GetStopLossTimeInForceOk returns a tuple with the StopLossTimeInForce field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStopLossTimeInForce
+
+`func (o *TradeOrder) SetStopLossTimeInForce(v TimeInForce)`
+
+SetStopLossTimeInForce sets StopLossTimeInForce field to given value.
+
+### HasStopLossTimeInForce
+
+`func (o *TradeOrder) HasStopLossTimeInForce() bool`
+
+HasStopLossTimeInForce returns a boolean if a field has been set.
+
+### SetStopLossTimeInForceNil
+
+`func (o *TradeOrder) SetStopLossTimeInForceNil(b bool)`
+
+ SetStopLossTimeInForceNil sets the value for StopLossTimeInForce to be an explicit nil
+
+### UnsetStopLossTimeInForce
+`func (o *TradeOrder) UnsetStopLossTimeInForce()`
+
+UnsetStopLossTimeInForce ensures that no value is present for StopLossTimeInForce, not even an explicit nil
 ### GetQuantity
 
 `func (o *TradeOrder) GetQuantity() string`

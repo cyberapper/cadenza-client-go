@@ -481,6 +481,15 @@ paths:
         schema:
           $ref: "#/components/schemas/uuidString"
         style: form
+      - description: Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO
+          parent
+        explode: true
+        in: query
+        name: orderListId
+        required: false
+        schema:
+          type: string
+        style: form
       - description: Order status
         explode: true
         in: query
@@ -2594,6 +2603,16 @@ components:
       schema:
         $ref: "#/components/schemas/uuidString"
       style: form
+    orderListId:
+      description: Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO
+        parent
+      explode: true
+      in: query
+      name: orderListId
+      required: false
+      schema:
+        type: string
+      style: form
     venue:
       description: Exchange type
       explode: true
@@ -3408,6 +3427,7 @@ components:
       enum:
       - MARKET
       - LIMIT
+      - LIMIT_MAKER
       - STOP
       - STOP_LIMIT
       - STOP_LOSS
@@ -3416,6 +3436,7 @@ components:
       - TAKE_PROFIT_LIMIT
       - TRAILING_STOP
       - QUOTED
+      - OCO
       - UNKNOWN
       example: LIMIT
       nullable: true
@@ -3880,6 +3901,7 @@ components:
       example:
         venue: BINANCE
         orderType: LIMIT
+        takeProfitPrice: "1234.56789000"
         fees:
         - venue: BINANCE
           security: BINANCE:BTC
@@ -3898,12 +3920,17 @@ components:
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
         rejectReason: rejectReason
+        stopLossTimeInForce: GTC
+        stopLossPrice: "1234.56789000"
         cancelReason: cancelReason
         timeInForce: GTC
         quoteAsset: USDT
         createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+        takeProfitLimitPrice: "1234.56789000"
+        stopLossLimitPrice: "1234.56789000"
         updatedAt: 1632933600000
         executedQuantity: "1234.56789000"
+        orderListId: "2042488"
         quantity: "1234.56789000"
         limitPrice: "1234.56789000"
         expireAt: 1632933600000
@@ -3911,6 +3938,7 @@ components:
         quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         stopPrice: "1234.56789000"
         expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+        takeProfitTimeInForce: GTC
         executions:
         - executionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           venue: BINANCE
@@ -3960,6 +3988,11 @@ components:
         tradeOrderId:
           description: UUID string
           format: uuid
+          type: string
+        orderListId:
+          description: "Exchange order list ID linking OCO/OTO/OTOCO legs. For OCO\
+            \ parents, externalOrderId uses 'ol_' prefix."
+          example: "2042488"
           type: string
         tradingAccountId:
           description: UUID string
@@ -4011,6 +4044,30 @@ components:
           example: "1234.56789000"
           pattern: ^-?\d+(\.\d+)?$
           type: string
+        takeProfitPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        takeProfitLimitPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        stopLossPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        stopLossLimitPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        takeProfitTimeInForce:
+          $ref: "#/components/schemas/timeInForce"
+        stopLossTimeInForce:
+          $ref: "#/components/schemas/timeInForce"
         quantity:
           description: Decimal value as string to preserve precision
           example: "1234.56789000"
@@ -5139,6 +5196,30 @@ components:
             Useful for market orders that typically fill immediately.
           example: true
           type: boolean
+        takeProfitPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        takeProfitLimitPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        stopLossPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        stopLossLimitPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        takeProfitTimeInForce:
+          $ref: "#/components/schemas/timeInForce"
+        stopLossTimeInForce:
+          $ref: "#/components/schemas/timeInForce"
       required:
       - instrumentId
       - orderSide
@@ -8939,6 +9020,7 @@ components:
         data:
         - venue: BINANCE
           orderType: LIMIT
+          takeProfitPrice: "1234.56789000"
           fees:
           - venue: BINANCE
             security: BINANCE:BTC
@@ -8957,12 +9039,17 @@ components:
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
+          stopLossTimeInForce: GTC
+          stopLossPrice: "1234.56789000"
           cancelReason: cancelReason
           timeInForce: GTC
           quoteAsset: USDT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitLimitPrice: "1234.56789000"
+          stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
+          orderListId: "2042488"
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -8970,6 +9057,7 @@ components:
           quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           stopPrice: "1234.56789000"
           expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitTimeInForce: GTC
           executions:
           - executionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             venue: BINANCE
@@ -9017,6 +9105,7 @@ components:
           status: FILLED
         - venue: BINANCE
           orderType: LIMIT
+          takeProfitPrice: "1234.56789000"
           fees:
           - venue: BINANCE
             security: BINANCE:BTC
@@ -9035,12 +9124,17 @@ components:
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
+          stopLossTimeInForce: GTC
+          stopLossPrice: "1234.56789000"
           cancelReason: cancelReason
           timeInForce: GTC
           quoteAsset: USDT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitLimitPrice: "1234.56789000"
+          stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
+          orderListId: "2042488"
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -9048,6 +9142,7 @@ components:
           quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           stopPrice: "1234.56789000"
           expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitTimeInForce: GTC
           executions:
           - executionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             venue: BINANCE
@@ -9120,6 +9215,7 @@ components:
         data:
           venue: BINANCE
           orderType: LIMIT
+          takeProfitPrice: "1234.56789000"
           fees:
           - venue: BINANCE
             security: BINANCE:BTC
@@ -9138,12 +9234,17 @@ components:
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
+          stopLossTimeInForce: GTC
+          stopLossPrice: "1234.56789000"
           cancelReason: cancelReason
           timeInForce: GTC
           quoteAsset: USDT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitLimitPrice: "1234.56789000"
+          stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
+          orderListId: "2042488"
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -9151,6 +9252,7 @@ components:
           quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           stopPrice: "1234.56789000"
           expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitTimeInForce: GTC
           executions:
           - executionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             venue: BINANCE
@@ -9233,6 +9335,7 @@ components:
         data:
         - venue: BINANCE
           orderType: LIMIT
+          takeProfitPrice: "1234.56789000"
           fees:
           - venue: BINANCE
             security: BINANCE:BTC
@@ -9251,12 +9354,17 @@ components:
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
+          stopLossTimeInForce: GTC
+          stopLossPrice: "1234.56789000"
           cancelReason: cancelReason
           timeInForce: GTC
           quoteAsset: USDT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitLimitPrice: "1234.56789000"
+          stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
+          orderListId: "2042488"
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -9264,6 +9372,7 @@ components:
           quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           stopPrice: "1234.56789000"
           expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitTimeInForce: GTC
           executions:
           - executionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             venue: BINANCE
@@ -9311,6 +9420,7 @@ components:
           status: FILLED
         - venue: BINANCE
           orderType: LIMIT
+          takeProfitPrice: "1234.56789000"
           fees:
           - venue: BINANCE
             security: BINANCE:BTC
@@ -9329,12 +9439,17 @@ components:
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
+          stopLossTimeInForce: GTC
+          stopLossPrice: "1234.56789000"
           cancelReason: cancelReason
           timeInForce: GTC
           quoteAsset: USDT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitLimitPrice: "1234.56789000"
+          stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
+          orderListId: "2042488"
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -9342,6 +9457,7 @@ components:
           quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           stopPrice: "1234.56789000"
           expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+          takeProfitTimeInForce: GTC
           executions:
           - executionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             venue: BINANCE
