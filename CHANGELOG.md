@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.10](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.9...v1.2.10) (2026-03-17)
+
+
+### Bug Fixes
+
+* regenerate Go client SDK with contingencyType field and updated orderListId description ([#40](https://github.com/cyberapper/cadenza-client-go/issues/40)) ([e489c04](https://github.com/cyberapper/cadenza-client-go/commit/e489c043c6b6befbd982a2e633d879fc88f84104))
+
 ## [1.2.9](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.8...v1.2.9) (2026-03-16)
 
 
