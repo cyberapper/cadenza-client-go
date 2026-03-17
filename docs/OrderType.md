@@ -25,8 +25,6 @@
 
 * `QUOTED` (value: `"QUOTED"`)
 
-* `OCO` (value: `"OCO"`)
-
 * `UNKNOWN` (value: `"UNKNOWN"`)
 
 

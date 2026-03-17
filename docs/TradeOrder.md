@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradeOrderId** | **string** | UUID string | 
-**OrderListId** | Pointer to **string** | Exchange order list ID linking OCO/OTO/OTOCO legs. For OCO parents, externalOrderId uses &#39;ol_&#39; prefix. | [optional] 
+**OrderListId** | Pointer to **string** | Exchange order list ID linking sibling orders in OCO/OTO/OTOCO order lists. Present on all orders in a list. | [optional] 
+**ContingencyType** | Pointer to **string** | Order list contingency type. Present on all orders in a list. | [optional] 
 **TradingAccountId** | **string** | UUID string | 
 **Venue** | [**Venue**](Venue.md) |  | 
 **PositionId** | Pointer to **string** | UUID string | [optional] 
@@ -107,6 +108,31 @@ SetOrderListId sets OrderListId field to given value.
 `func (o *TradeOrder) HasOrderListId() bool`
 
 HasOrderListId returns a boolean if a field has been set.
+
+### GetContingencyType
+
+`func (o *TradeOrder) GetContingencyType() string`
+
+GetContingencyType returns the ContingencyType field if non-nil, zero value otherwise.
+
+### GetContingencyTypeOk
+
+`func (o *TradeOrder) GetContingencyTypeOk() (*string, bool)`
+
+GetContingencyTypeOk returns a tuple with the ContingencyType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContingencyType
+
+`func (o *TradeOrder) SetContingencyType(v string)`
+
+SetContingencyType sets ContingencyType field to given value.
+
+### HasContingencyType
+
+`func (o *TradeOrder) HasContingencyType() bool`
+
+HasContingencyType returns a boolean if a field has been set.
 
 ### GetTradingAccountId
 
