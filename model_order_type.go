@@ -31,7 +31,6 @@ const (
 	ORDERTYPE_TAKE_PROFIT_LIMIT OrderType = "TAKE_PROFIT_LIMIT"
 	ORDERTYPE_TRAILING_STOP OrderType = "TRAILING_STOP"
 	ORDERTYPE_QUOTED OrderType = "QUOTED"
-	ORDERTYPE_OCO OrderType = "OCO"
 	ORDERTYPE_UNKNOWN OrderType = "UNKNOWN"
 )
 
@@ -48,7 +47,6 @@ var AllowedOrderTypeEnumValues = []OrderType{
 	"TAKE_PROFIT_LIMIT",
 	"TRAILING_STOP",
 	"QUOTED",
-	"OCO",
 	"UNKNOWN",
 }
 

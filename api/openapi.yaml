@@ -3436,7 +3436,6 @@ components:
       - TAKE_PROFIT_LIMIT
       - TRAILING_STOP
       - QUOTED
-      - OCO
       - UNKNOWN
       example: LIMIT
       nullable: true
@@ -3917,6 +3916,7 @@ components:
         orderQuantityType: BASE
         baseAsset: BTC
         executedCost: "1234.56789000"
+        contingencyType: OCO
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
         rejectReason: rejectReason
@@ -3990,9 +3990,17 @@ components:
           format: uuid
           type: string
         orderListId:
-          description: "Exchange order list ID linking OCO/OTO/OTOCO legs. For OCO\
-            \ parents, externalOrderId uses 'ol_' prefix."
+          description: Exchange order list ID linking sibling orders in OCO/OTO/OTOCO
+            order lists. Present on all orders in a list.
           example: "2042488"
+          type: string
+        contingencyType:
+          description: Order list contingency type. Present on all orders in a list.
+          enum:
+          - OCO
+          - OTO
+          - OTOCO
+          example: OCO
           type: string
         tradingAccountId:
           description: UUID string
@@ -9036,6 +9044,7 @@ components:
           orderQuantityType: BASE
           baseAsset: BTC
           executedCost: "1234.56789000"
+          contingencyType: OCO
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
@@ -9121,6 +9130,7 @@ components:
           orderQuantityType: BASE
           baseAsset: BTC
           executedCost: "1234.56789000"
+          contingencyType: OCO
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
@@ -9231,6 +9241,7 @@ components:
           orderQuantityType: BASE
           baseAsset: BTC
           executedCost: "1234.56789000"
+          contingencyType: OCO
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
@@ -9351,6 +9362,7 @@ components:
           orderQuantityType: BASE
           baseAsset: BTC
           executedCost: "1234.56789000"
+          contingencyType: OCO
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason
@@ -9436,6 +9448,7 @@ components:
           orderQuantityType: BASE
           baseAsset: BTC
           executedCost: "1234.56789000"
+          contingencyType: OCO
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           rejectReason: rejectReason

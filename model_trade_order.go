@@ -23,8 +23,10 @@ var _ MappedNullable = &TradeOrder{}
 type TradeOrder struct {
 	// UUID string
 	TradeOrderId string `json:"tradeOrderId"`
-	// Exchange order list ID linking OCO/OTO/OTOCO legs. For OCO parents, externalOrderId uses 'ol_' prefix.
+	// Exchange order list ID linking sibling orders in OCO/OTO/OTOCO order lists. Present on all orders in a list.
 	OrderListId *string `json:"orderListId,omitempty"`
+	// Order list contingency type. Present on all orders in a list.
+	ContingencyType *string `json:"contingencyType,omitempty"`
 	// UUID string
 	TradingAccountId string `json:"tradingAccountId"`
 	Venue Venue `json:"venue"`
@@ -188,6 +190,38 @@ func (o *TradeOrder) HasOrderListId() bool {
 // SetOrderListId gets a reference to the given string and assigns it to the OrderListId field.
 func (o *TradeOrder) SetOrderListId(v string) {
 	o.OrderListId = &v
+}
+
+// GetContingencyType returns the ContingencyType field value if set, zero value otherwise.
+func (o *TradeOrder) GetContingencyType() string {
+	if o == nil || IsNil(o.ContingencyType) {
+		var ret string
+		return ret
+	}
+	return *o.ContingencyType
+}
+
+// GetContingencyTypeOk returns a tuple with the ContingencyType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TradeOrder) GetContingencyTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.ContingencyType) {
+		return nil, false
+	}
+	return o.ContingencyType, true
+}
+
+// HasContingencyType returns a boolean if a field has been set.
+func (o *TradeOrder) HasContingencyType() bool {
+	if o != nil && !IsNil(o.ContingencyType) {
+		return true
+	}
+
+	return false
+}
+
+// SetContingencyType gets a reference to the given string and assigns it to the ContingencyType field.
+func (o *TradeOrder) SetContingencyType(v string) {
+	o.ContingencyType = &v
 }
 
 // GetTradingAccountId returns the TradingAccountId field value
@@ -1278,6 +1312,9 @@ func (o TradeOrder) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.OrderListId) {
 		toSerialize["orderListId"] = o.OrderListId
 	}
+	if !IsNil(o.ContingencyType) {
+		toSerialize["contingencyType"] = o.ContingencyType
+	}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
 	toSerialize["venue"] = o.Venue
 	if !IsNil(o.PositionId) {
@@ -1417,6 +1454,7 @@ func (o *TradeOrder) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "tradeOrderId")
 		delete(additionalProperties, "orderListId")
+		delete(additionalProperties, "contingencyType")
 		delete(additionalProperties, "tradingAccountId")
 		delete(additionalProperties, "venue")
 		delete(additionalProperties, "positionId")
