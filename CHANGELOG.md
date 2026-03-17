@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.11](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.10...v1.2.11) (2026-03-17)
+
+
+### Miscellaneous
+
+* standardize repo configuration ([#42](https://github.com/cyberapper/cadenza-client-go/issues/42)) ([4585d43](https://github.com/cyberapper/cadenza-client-go/commit/4585d43be2770474a3aeb68c761c98081c6ef586))
+
 ## [1.2.10](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.9...v1.2.10) (2026-03-17)
 
 
