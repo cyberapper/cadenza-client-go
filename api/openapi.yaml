@@ -26,8 +26,8 @@ tags:
   name: Utility
 - description: Authentication endpoints (Supabase GoTrue proxy)
   name: Authentication
-- description: Trade Order Management
-  name: Trade Order
+- description: Trading
+  name: Trading
 - description: Trading Account Management
   name: Trading Account
 - description: Trading Account Credential Management
@@ -40,6 +40,8 @@ tags:
   name: Market
 - description: Market data subscription management
   name: Market Subscription
+- description: "RFQ Dealer venue management (dealer accounts, wallets, quotes)"
+  name: Fermata
 - description: WebSocket message specifications
   name: WebSocket
 paths:
@@ -418,7 +420,7 @@ paths:
           description: Internal server error
       summary: Submit trade order
       tags:
-      - Trade Order
+      - Trading
   /api/v3/tradeOrder/cancel:
     post:
       description: Cancel an existing trade order
@@ -467,7 +469,7 @@ paths:
           description: Internal server error
       summary: Cancel trade order
       tags:
-      - Trade Order
+      - Trading
   /api/v3/tradeOrder/list:
     get:
       description: List trade orders with filtering options
@@ -610,7 +612,7 @@ paths:
           description: Internal server error
       summary: List trade orders
       tags:
-      - Trade Order
+      - Trading
   /api/v3/credential/list:
     get:
       description: List all credentials for a trading account
@@ -2424,6 +2426,488 @@ paths:
       summary: List market order books
       tags:
       - Market
+  /api/v3/quote/rfq:
+    post:
+      description: Request a firm quote from the RFQ dealer. The quote is a bilateral
+        contract between the user and the dealer with a guaranteed execution price
+        and validity period.
+      operationId: quoteRfq
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/quoteRfqRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quoteRfq_200_response"
+          description: RFQ quote response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Request for Quote
+      tags:
+      - Trading
+  /api/v3/fermata/dealer/link:
+    post:
+      description: Link an existing exchange trading account to the dealer as a liquidity
+        provider for hedging.
+      operationId: fermataLinkDealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataLinkDealerRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteMarketInstrument_200_response"
+          description: Simple successful response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Link exchange account to dealer
+      tags:
+      - Fermata
+  /api/v3/fermata/dealer/unlink:
+    post:
+      description: Unlink an exchange trading account from the dealer.
+      operationId: fermataUnlinkDealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataUnlinkDealerRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteMarketInstrument_200_response"
+          description: Simple successful response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Unlink exchange account from dealer
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/create:
+    post:
+      description: Create a new wallet in the Fermata ledger.
+      operationId: fermataCreateWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataCreateWalletRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateWallet_200_response"
+          description: Fermata wallet details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Create wallet
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/list:
+    get:
+      description: "List wallets by type, owner, or dealer."
+      operationId: fermataListWallets
+      parameters:
+      - description: Filter by wallet type
+        explode: true
+        in: query
+        name: walletType
+        required: false
+        schema:
+          $ref: "#/components/schemas/walletType"
+        style: form
+      - description: Limit the number of returned results
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          example: 100
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      - description: Offset of the returned results
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          example: 0
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          description: Cursor for next page
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataListWallets_200_response"
+          description: Fermata wallet list response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: List wallets
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/transfer:
+    post:
+      description: Transfer assets between wallets owned by the same user under the
+        same dealer.
+      operationId: fermataTransferWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataTransferWalletRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteMarketInstrument_200_response"
+          description: Simple successful response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Transfer between wallets
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/freeze:
+    post:
+      description: "Freeze a wallet, blocking all transactions. Admin only."
+      operationId: fermataFreezeWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataFreezeWalletRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateWallet_200_response"
+          description: Fermata wallet details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Freeze wallet
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/unfreeze:
+    post:
+      description: "Unfreeze a previously frozen wallet, restoring transaction capabilities.\
+        \ Admin only."
+      operationId: fermataUnfreezeWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataUnfreezeWalletRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateWallet_200_response"
+          description: Fermata wallet details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Unfreeze wallet
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/close:
+    post:
+      description: Close a wallet. Terminal state — only a final withdrawal to zero
+        balance is allowed after closing.
+      operationId: fermataCloseWallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataCloseWalletRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateWallet_200_response"
+          description: Fermata wallet details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Close wallet
+      tags:
+      - Fermata
   /connection/websocket:
     post:
       description: |-
@@ -2838,6 +3322,15 @@ components:
         description: Cursor for next page
         type: string
       style: form
+    walletType:
+      description: Filter by wallet type
+      explode: true
+      in: query
+      name: walletType
+      required: false
+      schema:
+        $ref: "#/components/schemas/walletType"
+      style: form
     ascending:
       description: Return records in ascending order
       explode: true
@@ -3061,6 +3554,24 @@ components:
           schema:
             $ref: "#/components/schemas/listMarketOrderBooks_200_response"
       description: List market order books response
+    quoteRfqResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/quoteRfq_200_response"
+      description: RFQ quote response
+    fermataWalletResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/fermataCreateWallet_200_response"
+      description: Fermata wallet details response
+    fermataWalletListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/fermataListWallets_200_response"
+      description: Fermata wallet list response
     securityResponse:
       content:
         application/json:
@@ -3389,6 +3900,7 @@ components:
       - BINANCE_SANDBOX
       - B2C2_SANDBOX
       - IBKR_PAPER
+      - FERMATA
       - MOCK
       - PAPER
       example: BINANCE
@@ -3627,6 +4139,33 @@ components:
       - CROSS
       example: CROSS
       nullable: true
+      type: string
+    quoteStatus:
+      description: Status of an RFQ quote
+      enum:
+      - CREATED
+      - ACCEPTED
+      - REJECTED
+      - EXPIRED
+      - REPLACED
+      example: CREATED
+      type: string
+    walletType:
+      description: Type of Fermata wallet
+      enum:
+      - DEALER
+      - CLIENT
+      - EXCHANGE
+      - ACCOUNTING
+      example: CLIENT
+      type: string
+    walletStatus:
+      description: Status of a Fermata wallet
+      enum:
+      - ACTIVE
+      - FROZEN
+      - CLOSED
+      example: ACTIVE
       type: string
     instrumentType:
       description: Type of financial instrument
@@ -5136,7 +5675,195 @@ components:
       - timestamp
       - venue
       type: object
+    quote:
+      description: RFQ quote — a bilateral contract between the user and the dealer
+        with a guaranteed execution price
+      example:
+        quantityType: BASE
+        venue: BINANCE
+        pricingProfileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        quantity: "100.50"
+        instrumentId: BINANCE:BTC/USDT
+        dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        baseAsset: BTC
+        expireAt: 1632933600000
+        orderSide: BUY
+        quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        externalQuoteId: externalQuoteId
+        traderAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        createdAt: 1632933600000
+        updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+        expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+        rejectReason: rejectReason
+        quoteRequestId: my-quote-request-001
+        price: "100.50"
+        quoteAsset: USDT
+        quoteQuantity: "100.50"
+        createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+        status: CREATED
+        updatedAt: 1632933600000
+      properties:
+        quoteId:
+          description: UUID string
+          format: uuid
+          type: string
+        quoteRequestId:
+          description: Client-provided reference for idempotency and tracking
+          example: my-quote-request-001
+          type: string
+        externalQuoteId:
+          description: External quote identifier from upstream venue
+          type: string
+        venue:
+          $ref: "#/components/schemas/venue"
+        instrumentId:
+          description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
+          example: BINANCE:BTC/USDT
+          type: string
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        traderAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        baseAsset:
+          description: Base asset being traded
+          example: BTC
+          type: string
+        quoteAsset:
+          description: Quote asset (payment currency)
+          example: USDT
+          type: string
+        orderSide:
+          $ref: "#/components/schemas/orderSide"
+        quantityType:
+          $ref: "#/components/schemas/quantityType"
+        quantity:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        quoteQuantity:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        price:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        status:
+          $ref: "#/components/schemas/quoteStatus"
+        rejectReason:
+          description: "Reason for quote rejection, if status is REJECTED"
+          type: string
+        createdAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        createdAtDateTime:
+          description: Quote creation timestamp in ISO 8601 format
+          format: date-time
+          type: string
+        updatedAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        updatedAtDateTime:
+          description: Last update timestamp in ISO 8601 format
+          format: date-time
+          type: string
+        expireAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        expireAtDateTime:
+          description: Quote expiration timestamp in ISO 8601 format
+          format: date-time
+          type: string
+        pricingProfileId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - baseAsset
+      - createdAt
+      - dealerAccountId
+      - expireAt
+      - orderSide
+      - price
+      - quantity
+      - quoteAsset
+      - quoteId
+      - quoteQuantity
+      - status
+      type: object
+    fermataWallet:
+      description: Fermata wallet entity
+      example:
+        walletId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        createdAt: 1632933600000
+        metadata:
+          key: metadata
+        updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+        allowNegative: true
+        walletType: CLIENT
+        createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+        status: ACTIVE
+        updatedAt: 1632933600000
+      properties:
+        walletId:
+          description: UUID string
+          format: uuid
+          type: string
+        walletType:
+          $ref: "#/components/schemas/walletType"
+        status:
+          $ref: "#/components/schemas/walletStatus"
+        allowNegative:
+          description: "Whether this wallet allows negative balances (e.g., dealer\
+            \ short positions)"
+          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          description: "Additional attributes (name, created_by, etc.)"
+          type: object
+        createdAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        createdAtDateTime:
+          description: Wallet creation timestamp in ISO 8601 format
+          format: date-time
+          type: string
+        updatedAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        updatedAtDateTime:
+          description: Last update timestamp in ISO 8601 format
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - status
+      - updatedAt
+      - walletId
+      - walletType
+      type: object
     submitTradeOrderRequest:
+      description: "Submit a trade order. For exchange venues, instrumentId is required.\
+        \ For Fermata venue, quoteId is required instead (the quote already contains\
+        \ all trade parameters)."
       properties:
         tradingAccountId:
           description: UUID string
@@ -5229,7 +5956,6 @@ components:
         stopLossTimeInForce:
           $ref: "#/components/schemas/timeInForce"
       required:
-      - instrumentId
       - orderSide
       - orderType
       - quantity
@@ -5250,22 +5976,27 @@ components:
       - tradingAccountId
       type: object
     connectTradingAccountRequest:
+      description: "Connect a trading account. For exchange venues, credentialIds\
+        \ and externalTradingAccountId are required. For Fermata venue, only venue\
+        \ is required (no credentials)."
       properties:
+        venue:
+          $ref: "#/components/schemas/venue"
         credentialIds:
-          description: A list of credential IDs to be used to connect the trading
-            account
+          description: Credential IDs for exchange venues. Not required for Fermata.
           items:
             $ref: "#/components/schemas/uuidString"
           type: array
         externalTradingAccountId:
-          description: External trading account ID
+          description: External trading account ID. Not required for Fermata.
+          type: string
+        dealerAccountId:
+          description: UUID string
+          format: uuid
           type: string
         nickname:
           description: Nickname of the trading account
           type: string
-      required:
-      - credentialIds
-      - externalTradingAccountId
       type: object
     disconnectTradingAccountRequest:
       properties:
@@ -5447,6 +6178,143 @@ components:
           type: string
       required:
       - instrumentId
+      type: object
+    quoteRfqRequest:
+      description: "Request a firm quote. Supports any venue with RFQ capability —\
+        \ use instrumentId for venues that identify pairs by ID, or baseAsset/quoteAsset\
+        \ for symbol-based venues."
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        traderAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        instrumentId:
+          description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
+          example: BINANCE:BTC/USDT
+          type: string
+        baseAsset:
+          description: Base asset to trade. Used with quoteAsset for symbol-based
+            venues.
+          example: BTC
+          type: string
+        quoteAsset:
+          description: Quote asset (payment currency). Used with baseAsset for symbol-based
+            venues.
+          example: USDT
+          type: string
+        orderSide:
+          $ref: "#/components/schemas/orderSide"
+        quantity:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        quoteQuantity:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        quoteRequestId:
+          description: Client-provided reference for idempotency and tracking
+          example: my-quote-request-001
+          type: string
+      required:
+      - dealerAccountId
+      - orderSide
+      type: object
+    fermataLinkDealerRequest:
+      description: Link an exchange trading account to a dealer as a liquidity provider
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        tradingAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - dealerAccountId
+      - tradingAccountId
+      type: object
+    fermataUnlinkDealerRequest:
+      description: Unlink an exchange trading account from a dealer
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        tradingAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - dealerAccountId
+      - tradingAccountId
+      type: object
+    fermataCreateWalletRequest:
+      description: Create a new wallet
+      properties:
+        nickname:
+          description: Nickname for the new wallet
+          type: string
+      type: object
+    fermataTransferWalletRequest:
+      description: Transfer assets between wallets owned by the same user
+      properties:
+        sourceWalletId:
+          description: UUID string
+          format: uuid
+          type: string
+        destWalletId:
+          description: UUID string
+          format: uuid
+          type: string
+        asset:
+          description: Asset to transfer
+          example: USDT
+          type: string
+        amount:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+      required:
+      - amount
+      - asset
+      - destWalletId
+      - sourceWalletId
+      type: object
+    fermataFreezeWalletRequest:
+      properties:
+        walletId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - walletId
+      type: object
+    fermataUnfreezeWalletRequest:
+      properties:
+        walletId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - walletId
+      type: object
+    fermataCloseWalletRequest:
+      properties:
+        walletId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - walletId
       type: object
     syncMarketSecuritiesRequest:
       properties:
@@ -5669,6 +6537,24 @@ components:
       - query.security.list
       - response.security.list
       - event.security.updated
+      - command.quote.rfq
+      - response.quote.rfq
+      - command.fermata.dealer.link
+      - response.fermata.dealer.link
+      - command.fermata.dealer.unlink
+      - response.fermata.dealer.unlink
+      - command.fermata.wallet.create
+      - response.fermata.wallet.create
+      - query.fermata.wallet.list
+      - response.fermata.wallet.list
+      - command.fermata.wallet.transfer
+      - response.fermata.wallet.transfer
+      - command.fermata.wallet.freeze
+      - response.fermata.wallet.freeze
+      - command.fermata.wallet.unfreeze
+      - response.fermata.wallet.unfreeze
+      - command.fermata.wallet.close
+      - response.fermata.wallet.close
       - query.venue.list
       - response.venue.list
       - query.orderbook.get
@@ -10656,6 +11542,144 @@ components:
           - admin
           - write
         error: error
+    quoteRfq_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/quote"
+        type: object
+      example:
+        errno: 0
+        data:
+          quantityType: BASE
+          venue: BINANCE
+          pricingProfileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          quantity: "100.50"
+          instrumentId: BINANCE:BTC/USDT
+          dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          baseAsset: BTC
+          expireAt: 1632933600000
+          orderSide: BUY
+          quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          externalQuoteId: externalQuoteId
+          traderAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          createdAt: 1632933600000
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          expireAtDateTime: 2000-01-23T04:56:07.000+00:00
+          rejectReason: rejectReason
+          quoteRequestId: my-quote-request-001
+          price: "100.50"
+          quoteAsset: USDT
+          quoteQuantity: "100.50"
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: CREATED
+          updatedAt: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    fermataCreateWallet_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/fermataWallet"
+        type: object
+      example:
+        errno: 0
+        data:
+          walletId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          createdAt: 1632933600000
+          metadata:
+            key: metadata
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          allowNegative: true
+          walletType: CLIENT
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: ACTIVE
+          updatedAt: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    fermataListWallets_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            items:
+              $ref: "#/components/schemas/fermataWallet"
+            type: array
+          pagination:
+            $ref: "#/components/schemas/pagination"
+        type: object
+      example:
+        errno: 0
+        pagination:
+          cursor: cursor
+          total: 100
+          offset: 0
+          limit: 20
+          hasNext: true
+        data:
+        - walletId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          createdAt: 1632933600000
+          metadata:
+            key: metadata
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          allowNegative: true
+          walletType: CLIENT
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: ACTIVE
+          updatedAt: 1632933600000
+        - walletId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          createdAt: 1632933600000
+          metadata:
+            key: metadata
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          allowNegative: true
+          walletType: CLIENT
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: ACTIVE
+          updatedAt: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
     baseResponse_details:
       description: "Additional error details (optional, only present in error responses)"
       example:
@@ -10936,17 +11960,6 @@ components:
       bearerFormat: JWT
       scheme: bearer
       type: http
-x-common-responses:
-  "400":
-    $ref: "#/components/responses/badRequestResponse"
-  "401":
-    $ref: "#/components/responses/unauthorizedResponse"
-  "403":
-    $ref: "#/components/responses/forbiddenResponse"
-  "404":
-    $ref: "#/components/responses/notFoundResponse"
-  "500":
-    $ref: "#/components/responses/internalServerErrorResponse"
 x-websocket-endpoints:
   market.orderBook:
     description: Real-time market order book updates

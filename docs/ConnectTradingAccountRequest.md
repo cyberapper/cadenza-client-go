@@ -4,15 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CredentialIds** | **[]string** | A list of credential IDs to be used to connect the trading account | 
-**ExternalTradingAccountId** | **string** | External trading account ID | 
+**Venue** | Pointer to [**Venue**](Venue.md) |  | [optional] 
+**CredentialIds** | Pointer to **[]string** | Credential IDs for exchange venues. Not required for Fermata. | [optional] 
+**ExternalTradingAccountId** | Pointer to **string** | External trading account ID. Not required for Fermata. | [optional] 
+**DealerAccountId** | Pointer to **string** | UUID string | [optional] 
 **Nickname** | Pointer to **string** | Nickname of the trading account | [optional] 
 
 ## Methods
 
 ### NewConnectTradingAccountRequest
 
-`func NewConnectTradingAccountRequest(credentialIds []string, externalTradingAccountId string, ) *ConnectTradingAccountRequest`
+`func NewConnectTradingAccountRequest() *ConnectTradingAccountRequest`
 
 NewConnectTradingAccountRequest instantiates a new ConnectTradingAccountRequest object
 This constructor will assign default values to properties that have it defined,
@@ -26,6 +28,31 @@ will change when the set of required properties is changed
 NewConnectTradingAccountRequestWithDefaults instantiates a new ConnectTradingAccountRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetVenue
+
+`func (o *ConnectTradingAccountRequest) GetVenue() Venue`
+
+GetVenue returns the Venue field if non-nil, zero value otherwise.
+
+### GetVenueOk
+
+`func (o *ConnectTradingAccountRequest) GetVenueOk() (*Venue, bool)`
+
+GetVenueOk returns a tuple with the Venue field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVenue
+
+`func (o *ConnectTradingAccountRequest) SetVenue(v Venue)`
+
+SetVenue sets Venue field to given value.
+
+### HasVenue
+
+`func (o *ConnectTradingAccountRequest) HasVenue() bool`
+
+HasVenue returns a boolean if a field has been set.
 
 ### GetCredentialIds
 
@@ -46,6 +73,11 @@ and a boolean to check if the value has been set.
 
 SetCredentialIds sets CredentialIds field to given value.
 
+### HasCredentialIds
+
+`func (o *ConnectTradingAccountRequest) HasCredentialIds() bool`
+
+HasCredentialIds returns a boolean if a field has been set.
 
 ### GetExternalTradingAccountId
 
@@ -66,6 +98,36 @@ and a boolean to check if the value has been set.
 
 SetExternalTradingAccountId sets ExternalTradingAccountId field to given value.
 
+### HasExternalTradingAccountId
+
+`func (o *ConnectTradingAccountRequest) HasExternalTradingAccountId() bool`
+
+HasExternalTradingAccountId returns a boolean if a field has been set.
+
+### GetDealerAccountId
+
+`func (o *ConnectTradingAccountRequest) GetDealerAccountId() string`
+
+GetDealerAccountId returns the DealerAccountId field if non-nil, zero value otherwise.
+
+### GetDealerAccountIdOk
+
+`func (o *ConnectTradingAccountRequest) GetDealerAccountIdOk() (*string, bool)`
+
+GetDealerAccountIdOk returns a tuple with the DealerAccountId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDealerAccountId
+
+`func (o *ConnectTradingAccountRequest) SetDealerAccountId(v string)`
+
+SetDealerAccountId sets DealerAccountId field to given value.
+
+### HasDealerAccountId
+
+`func (o *ConnectTradingAccountRequest) HasDealerAccountId() bool`
+
+HasDealerAccountId returns a boolean if a field has been set.
 
 ### GetNickname
 

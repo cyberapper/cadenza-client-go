@@ -181,6 +181,42 @@
 
 * `EVENT_SECURITY_UPDATED` (value: `"event.security.updated"`)
 
+* `COMMAND_QUOTE_RFQ` (value: `"command.quote.rfq"`)
+
+* `RESPONSE_QUOTE_RFQ` (value: `"response.quote.rfq"`)
+
+* `COMMAND_FERMATA_DEALER_LINK` (value: `"command.fermata.dealer.link"`)
+
+* `RESPONSE_FERMATA_DEALER_LINK` (value: `"response.fermata.dealer.link"`)
+
+* `COMMAND_FERMATA_DEALER_UNLINK` (value: `"command.fermata.dealer.unlink"`)
+
+* `RESPONSE_FERMATA_DEALER_UNLINK` (value: `"response.fermata.dealer.unlink"`)
+
+* `COMMAND_FERMATA_WALLET_CREATE` (value: `"command.fermata.wallet.create"`)
+
+* `RESPONSE_FERMATA_WALLET_CREATE` (value: `"response.fermata.wallet.create"`)
+
+* `QUERY_FERMATA_WALLET_LIST` (value: `"query.fermata.wallet.list"`)
+
+* `RESPONSE_FERMATA_WALLET_LIST` (value: `"response.fermata.wallet.list"`)
+
+* `COMMAND_FERMATA_WALLET_TRANSFER` (value: `"command.fermata.wallet.transfer"`)
+
+* `RESPONSE_FERMATA_WALLET_TRANSFER` (value: `"response.fermata.wallet.transfer"`)
+
+* `COMMAND_FERMATA_WALLET_FREEZE` (value: `"command.fermata.wallet.freeze"`)
+
+* `RESPONSE_FERMATA_WALLET_FREEZE` (value: `"response.fermata.wallet.freeze"`)
+
+* `COMMAND_FERMATA_WALLET_UNFREEZE` (value: `"command.fermata.wallet.unfreeze"`)
+
+* `RESPONSE_FERMATA_WALLET_UNFREEZE` (value: `"response.fermata.wallet.unfreeze"`)
+
+* `COMMAND_FERMATA_WALLET_CLOSE` (value: `"command.fermata.wallet.close"`)
+
+* `RESPONSE_FERMATA_WALLET_CLOSE` (value: `"response.fermata.wallet.close"`)
+
 * `QUERY_VENUE_LIST` (value: `"query.venue.list"`)
 
 * `RESPONSE_VENUE_LIST` (value: `"response.venue.list"`)

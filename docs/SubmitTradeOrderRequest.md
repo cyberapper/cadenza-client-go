@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradingAccountId** | **string** | UUID string | 
-**InstrumentId** | **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | 
+**InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **IdempotencyKey** | Pointer to **string** | Idempotency key to prevent duplicate request processing | [optional] 
 **ClientOrderId** | Pointer to **string** | Client-provided order ID, used as idempotency key | [optional] 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
@@ -32,7 +32,7 @@ Name | Type | Description | Notes
 
 ### NewSubmitTradeOrderRequest
 
-`func NewSubmitTradeOrderRequest(tradingAccountId string, instrumentId string, orderSide OrderSide, orderType NullableOrderType, quantity string, ) *SubmitTradeOrderRequest`
+`func NewSubmitTradeOrderRequest(tradingAccountId string, orderSide OrderSide, orderType NullableOrderType, quantity string, ) *SubmitTradeOrderRequest`
 
 NewSubmitTradeOrderRequest instantiates a new SubmitTradeOrderRequest object
 This constructor will assign default values to properties that have it defined,
@@ -86,6 +86,11 @@ and a boolean to check if the value has been set.
 
 SetInstrumentId sets InstrumentId field to given value.
 
+### HasInstrumentId
+
+`func (o *SubmitTradeOrderRequest) HasInstrumentId() bool`
+
+HasInstrumentId returns a boolean if a field has been set.
 
 ### GetIdempotencyKey
 

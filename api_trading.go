@@ -19,7 +19,7 @@ import (
 )
 
 
-type TradeOrderAPI interface {
+type TradingAPI interface {
 
 	/*
 	CancelTradeOrder Cancel trade order
@@ -50,6 +50,20 @@ type TradeOrderAPI interface {
 	ListTradeOrdersExecute(r ApiListTradeOrdersRequest) (*ListTradeOrders200Response, *http.Response, error)
 
 	/*
+	QuoteRfq Request for Quote
+
+	Request a firm quote from the RFQ dealer. The quote is a bilateral contract between the user and the dealer with a guaranteed execution price and validity period.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiQuoteRfqRequest
+	*/
+	QuoteRfq(ctx context.Context) ApiQuoteRfqRequest
+
+	// QuoteRfqExecute executes the request
+	//  @return QuoteRfq200Response
+	QuoteRfqExecute(r ApiQuoteRfqRequest) (*QuoteRfq200Response, *http.Response, error)
+
+	/*
 	SubmitTradeOrder Submit trade order
 
 	Submit a new trade order
@@ -64,12 +78,12 @@ type TradeOrderAPI interface {
 	SubmitTradeOrderExecute(r ApiSubmitTradeOrderRequest) (*SubmitTradeOrder200Response, *http.Response, error)
 }
 
-// TradeOrderAPIService TradeOrderAPI service
-type TradeOrderAPIService service
+// TradingAPIService TradingAPI service
+type TradingAPIService service
 
 type ApiCancelTradeOrderRequest struct {
 	ctx context.Context
-	ApiService TradeOrderAPI
+	ApiService TradingAPI
 	cancelTradeOrderRequest *CancelTradeOrderRequest
 }
 
@@ -90,7 +104,7 @@ Cancel an existing trade order
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCancelTradeOrderRequest
 */
-func (a *TradeOrderAPIService) CancelTradeOrder(ctx context.Context) ApiCancelTradeOrderRequest {
+func (a *TradingAPIService) CancelTradeOrder(ctx context.Context) ApiCancelTradeOrderRequest {
 	return ApiCancelTradeOrderRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -99,7 +113,7 @@ func (a *TradeOrderAPIService) CancelTradeOrder(ctx context.Context) ApiCancelTr
 
 // Execute executes the request
 //  @return CancelTradeOrder200Response
-func (a *TradeOrderAPIService) CancelTradeOrderExecute(r ApiCancelTradeOrderRequest) (*CancelTradeOrder200Response, *http.Response, error) {
+func (a *TradingAPIService) CancelTradeOrderExecute(r ApiCancelTradeOrderRequest) (*CancelTradeOrder200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -107,7 +121,7 @@ func (a *TradeOrderAPIService) CancelTradeOrderExecute(r ApiCancelTradeOrderRequ
 		localVarReturnValue  *CancelTradeOrder200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradeOrderAPIService.CancelTradeOrder")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradingAPIService.CancelTradeOrder")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -230,7 +244,7 @@ func (a *TradeOrderAPIService) CancelTradeOrderExecute(r ApiCancelTradeOrderRequ
 
 type ApiListTradeOrdersRequest struct {
 	ctx context.Context
-	ApiService TradeOrderAPI
+	ApiService TradingAPI
 	tradeOrderId *string
 	orderListId *string
 	orderStatus *OrderStatus
@@ -321,7 +335,7 @@ List trade orders with filtering options
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListTradeOrdersRequest
 */
-func (a *TradeOrderAPIService) ListTradeOrders(ctx context.Context) ApiListTradeOrdersRequest {
+func (a *TradingAPIService) ListTradeOrders(ctx context.Context) ApiListTradeOrdersRequest {
 	return ApiListTradeOrdersRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -330,7 +344,7 @@ func (a *TradeOrderAPIService) ListTradeOrders(ctx context.Context) ApiListTrade
 
 // Execute executes the request
 //  @return ListTradeOrders200Response
-func (a *TradeOrderAPIService) ListTradeOrdersExecute(r ApiListTradeOrdersRequest) (*ListTradeOrders200Response, *http.Response, error) {
+func (a *TradingAPIService) ListTradeOrdersExecute(r ApiListTradeOrdersRequest) (*ListTradeOrders200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -338,7 +352,7 @@ func (a *TradeOrderAPIService) ListTradeOrdersExecute(r ApiListTradeOrdersReques
 		localVarReturnValue  *ListTradeOrders200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradeOrderAPIService.ListTradeOrders")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradingAPIService.ListTradeOrders")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -502,9 +516,170 @@ func (a *TradeOrderAPIService) ListTradeOrdersExecute(r ApiListTradeOrdersReques
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiQuoteRfqRequest struct {
+	ctx context.Context
+	ApiService TradingAPI
+	quoteRfqRequest *QuoteRfqRequest
+}
+
+func (r ApiQuoteRfqRequest) QuoteRfqRequest(quoteRfqRequest QuoteRfqRequest) ApiQuoteRfqRequest {
+	r.quoteRfqRequest = &quoteRfqRequest
+	return r
+}
+
+func (r ApiQuoteRfqRequest) Execute() (*QuoteRfq200Response, *http.Response, error) {
+	return r.ApiService.QuoteRfqExecute(r)
+}
+
+/*
+QuoteRfq Request for Quote
+
+Request a firm quote from the RFQ dealer. The quote is a bilateral contract between the user and the dealer with a guaranteed execution price and validity period.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiQuoteRfqRequest
+*/
+func (a *TradingAPIService) QuoteRfq(ctx context.Context) ApiQuoteRfqRequest {
+	return ApiQuoteRfqRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return QuoteRfq200Response
+func (a *TradingAPIService) QuoteRfqExecute(r ApiQuoteRfqRequest) (*QuoteRfq200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *QuoteRfq200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradingAPIService.QuoteRfq")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v3/quote/rfq"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.quoteRfqRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiSubmitTradeOrderRequest struct {
 	ctx context.Context
-	ApiService TradeOrderAPI
+	ApiService TradingAPI
 	submitTradeOrderRequest *SubmitTradeOrderRequest
 }
 
@@ -525,7 +700,7 @@ Submit a new trade order
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSubmitTradeOrderRequest
 */
-func (a *TradeOrderAPIService) SubmitTradeOrder(ctx context.Context) ApiSubmitTradeOrderRequest {
+func (a *TradingAPIService) SubmitTradeOrder(ctx context.Context) ApiSubmitTradeOrderRequest {
 	return ApiSubmitTradeOrderRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -534,7 +709,7 @@ func (a *TradeOrderAPIService) SubmitTradeOrder(ctx context.Context) ApiSubmitTr
 
 // Execute executes the request
 //  @return SubmitTradeOrder200Response
-func (a *TradeOrderAPIService) SubmitTradeOrderExecute(r ApiSubmitTradeOrderRequest) (*SubmitTradeOrder200Response, *http.Response, error) {
+func (a *TradingAPIService) SubmitTradeOrderExecute(r ApiSubmitTradeOrderRequest) (*SubmitTradeOrder200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -542,7 +717,7 @@ func (a *TradeOrderAPIService) SubmitTradeOrderExecute(r ApiSubmitTradeOrderRequ
 		localVarReturnValue  *SubmitTradeOrder200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradeOrderAPIService.SubmitTradeOrder")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TradingAPIService.SubmitTradeOrder")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
