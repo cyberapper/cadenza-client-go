@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.11...v1.3.0) (2026-03-31)
+
+
+### Features
+
+* regenerate Go client SDK with RFQ broker APIs ([#44](https://github.com/cyberapper/cadenza-client-go/issues/44)) ([f9a5716](https://github.com/cyberapper/cadenza-client-go/commit/f9a57164291627911d58d02f733a41e3abcf7059))
+
 ## [1.2.11](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.10...v1.2.11) (2026-03-17)
 
 
