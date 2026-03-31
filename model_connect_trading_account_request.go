@@ -12,18 +12,20 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the ConnectTradingAccountRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ConnectTradingAccountRequest{}
 
-// ConnectTradingAccountRequest struct for ConnectTradingAccountRequest
+// ConnectTradingAccountRequest Connect a trading account. For exchange venues, credentialIds and externalTradingAccountId are required. For Fermata venue, only venue is required (no credentials).
 type ConnectTradingAccountRequest struct {
-	// A list of credential IDs to be used to connect the trading account
-	CredentialIds []string `json:"credentialIds"`
-	// External trading account ID
-	ExternalTradingAccountId string `json:"externalTradingAccountId"`
+	Venue *Venue `json:"venue,omitempty"`
+	// Credential IDs for exchange venues. Not required for Fermata.
+	CredentialIds []string `json:"credentialIds,omitempty"`
+	// External trading account ID. Not required for Fermata.
+	ExternalTradingAccountId *string `json:"externalTradingAccountId,omitempty"`
+	// UUID string
+	DealerAccountId *string `json:"dealerAccountId,omitempty"`
 	// Nickname of the trading account
 	Nickname *string `json:"nickname,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -35,10 +37,8 @@ type _ConnectTradingAccountRequest ConnectTradingAccountRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewConnectTradingAccountRequest(credentialIds []string, externalTradingAccountId string) *ConnectTradingAccountRequest {
+func NewConnectTradingAccountRequest() *ConnectTradingAccountRequest {
 	this := ConnectTradingAccountRequest{}
-	this.CredentialIds = credentialIds
-	this.ExternalTradingAccountId = externalTradingAccountId
 	return &this
 }
 
@@ -50,52 +50,132 @@ func NewConnectTradingAccountRequestWithDefaults() *ConnectTradingAccountRequest
 	return &this
 }
 
-// GetCredentialIds returns the CredentialIds field value
+// GetVenue returns the Venue field value if set, zero value otherwise.
+func (o *ConnectTradingAccountRequest) GetVenue() Venue {
+	if o == nil || IsNil(o.Venue) {
+		var ret Venue
+		return ret
+	}
+	return *o.Venue
+}
+
+// GetVenueOk returns a tuple with the Venue field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectTradingAccountRequest) GetVenueOk() (*Venue, bool) {
+	if o == nil || IsNil(o.Venue) {
+		return nil, false
+	}
+	return o.Venue, true
+}
+
+// HasVenue returns a boolean if a field has been set.
+func (o *ConnectTradingAccountRequest) HasVenue() bool {
+	if o != nil && !IsNil(o.Venue) {
+		return true
+	}
+
+	return false
+}
+
+// SetVenue gets a reference to the given Venue and assigns it to the Venue field.
+func (o *ConnectTradingAccountRequest) SetVenue(v Venue) {
+	o.Venue = &v
+}
+
+// GetCredentialIds returns the CredentialIds field value if set, zero value otherwise.
 func (o *ConnectTradingAccountRequest) GetCredentialIds() []string {
-	if o == nil {
+	if o == nil || IsNil(o.CredentialIds) {
 		var ret []string
 		return ret
 	}
-
 	return o.CredentialIds
 }
 
-// GetCredentialIdsOk returns a tuple with the CredentialIds field value
+// GetCredentialIdsOk returns a tuple with the CredentialIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectTradingAccountRequest) GetCredentialIdsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CredentialIds) {
 		return nil, false
 	}
 	return o.CredentialIds, true
 }
 
-// SetCredentialIds sets field value
+// HasCredentialIds returns a boolean if a field has been set.
+func (o *ConnectTradingAccountRequest) HasCredentialIds() bool {
+	if o != nil && !IsNil(o.CredentialIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialIds gets a reference to the given []string and assigns it to the CredentialIds field.
 func (o *ConnectTradingAccountRequest) SetCredentialIds(v []string) {
 	o.CredentialIds = v
 }
 
-// GetExternalTradingAccountId returns the ExternalTradingAccountId field value
+// GetExternalTradingAccountId returns the ExternalTradingAccountId field value if set, zero value otherwise.
 func (o *ConnectTradingAccountRequest) GetExternalTradingAccountId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ExternalTradingAccountId) {
 		var ret string
 		return ret
 	}
-
-	return o.ExternalTradingAccountId
+	return *o.ExternalTradingAccountId
 }
 
-// GetExternalTradingAccountIdOk returns a tuple with the ExternalTradingAccountId field value
+// GetExternalTradingAccountIdOk returns a tuple with the ExternalTradingAccountId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ConnectTradingAccountRequest) GetExternalTradingAccountIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ExternalTradingAccountId) {
 		return nil, false
 	}
-	return &o.ExternalTradingAccountId, true
+	return o.ExternalTradingAccountId, true
 }
 
-// SetExternalTradingAccountId sets field value
+// HasExternalTradingAccountId returns a boolean if a field has been set.
+func (o *ConnectTradingAccountRequest) HasExternalTradingAccountId() bool {
+	if o != nil && !IsNil(o.ExternalTradingAccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalTradingAccountId gets a reference to the given string and assigns it to the ExternalTradingAccountId field.
 func (o *ConnectTradingAccountRequest) SetExternalTradingAccountId(v string) {
-	o.ExternalTradingAccountId = v
+	o.ExternalTradingAccountId = &v
+}
+
+// GetDealerAccountId returns the DealerAccountId field value if set, zero value otherwise.
+func (o *ConnectTradingAccountRequest) GetDealerAccountId() string {
+	if o == nil || IsNil(o.DealerAccountId) {
+		var ret string
+		return ret
+	}
+	return *o.DealerAccountId
+}
+
+// GetDealerAccountIdOk returns a tuple with the DealerAccountId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectTradingAccountRequest) GetDealerAccountIdOk() (*string, bool) {
+	if o == nil || IsNil(o.DealerAccountId) {
+		return nil, false
+	}
+	return o.DealerAccountId, true
+}
+
+// HasDealerAccountId returns a boolean if a field has been set.
+func (o *ConnectTradingAccountRequest) HasDealerAccountId() bool {
+	if o != nil && !IsNil(o.DealerAccountId) {
+		return true
+	}
+
+	return false
+}
+
+// SetDealerAccountId gets a reference to the given string and assigns it to the DealerAccountId field.
+func (o *ConnectTradingAccountRequest) SetDealerAccountId(v string) {
+	o.DealerAccountId = &v
 }
 
 // GetNickname returns the Nickname field value if set, zero value otherwise.
@@ -140,8 +220,18 @@ func (o ConnectTradingAccountRequest) MarshalJSON() ([]byte, error) {
 
 func (o ConnectTradingAccountRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["credentialIds"] = o.CredentialIds
-	toSerialize["externalTradingAccountId"] = o.ExternalTradingAccountId
+	if !IsNil(o.Venue) {
+		toSerialize["venue"] = o.Venue
+	}
+	if !IsNil(o.CredentialIds) {
+		toSerialize["credentialIds"] = o.CredentialIds
+	}
+	if !IsNil(o.ExternalTradingAccountId) {
+		toSerialize["externalTradingAccountId"] = o.ExternalTradingAccountId
+	}
+	if !IsNil(o.DealerAccountId) {
+		toSerialize["dealerAccountId"] = o.DealerAccountId
+	}
 	if !IsNil(o.Nickname) {
 		toSerialize["nickname"] = o.Nickname
 	}
@@ -154,28 +244,6 @@ func (o ConnectTradingAccountRequest) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *ConnectTradingAccountRequest) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"credentialIds",
-		"externalTradingAccountId",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varConnectTradingAccountRequest := _ConnectTradingAccountRequest{}
 
 	err = json.Unmarshal(data, &varConnectTradingAccountRequest)
@@ -189,8 +257,10 @@ func (o *ConnectTradingAccountRequest) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "venue")
 		delete(additionalProperties, "credentialIds")
 		delete(additionalProperties, "externalTradingAccountId")
+		delete(additionalProperties, "dealerAccountId")
 		delete(additionalProperties, "nickname")
 		o.AdditionalProperties = additionalProperties
 	}

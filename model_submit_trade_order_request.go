@@ -18,12 +18,12 @@ import (
 // checks if the SubmitTradeOrderRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SubmitTradeOrderRequest{}
 
-// SubmitTradeOrderRequest struct for SubmitTradeOrderRequest
+// SubmitTradeOrderRequest Submit a trade order. For exchange venues, instrumentId is required. For Fermata venue, quoteId is required instead (the quote already contains all trade parameters).
 type SubmitTradeOrderRequest struct {
 	// UUID string
 	TradingAccountId string `json:"tradingAccountId"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
-	InstrumentId string `json:"instrumentId"`
+	InstrumentId *string `json:"instrumentId,omitempty"`
 	// Idempotency key to prevent duplicate request processing
 	IdempotencyKey *string `json:"idempotencyKey,omitempty"`
 	// Client-provided order ID, used as idempotency key
@@ -68,10 +68,9 @@ type _SubmitTradeOrderRequest SubmitTradeOrderRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSubmitTradeOrderRequest(tradingAccountId string, instrumentId string, orderSide OrderSide, orderType NullableOrderType, quantity string) *SubmitTradeOrderRequest {
+func NewSubmitTradeOrderRequest(tradingAccountId string, orderSide OrderSide, orderType NullableOrderType, quantity string) *SubmitTradeOrderRequest {
 	this := SubmitTradeOrderRequest{}
 	this.TradingAccountId = tradingAccountId
-	this.InstrumentId = instrumentId
 	this.OrderSide = orderSide
 	this.OrderType = orderType
 	this.Quantity = quantity
@@ -118,28 +117,36 @@ func (o *SubmitTradeOrderRequest) SetTradingAccountId(v string) {
 	o.TradingAccountId = v
 }
 
-// GetInstrumentId returns the InstrumentId field value
+// GetInstrumentId returns the InstrumentId field value if set, zero value otherwise.
 func (o *SubmitTradeOrderRequest) GetInstrumentId() string {
-	if o == nil {
+	if o == nil || IsNil(o.InstrumentId) {
 		var ret string
 		return ret
 	}
-
-	return o.InstrumentId
+	return *o.InstrumentId
 }
 
-// GetInstrumentIdOk returns a tuple with the InstrumentId field value
+// GetInstrumentIdOk returns a tuple with the InstrumentId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SubmitTradeOrderRequest) GetInstrumentIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.InstrumentId) {
 		return nil, false
 	}
-	return &o.InstrumentId, true
+	return o.InstrumentId, true
 }
 
-// SetInstrumentId sets field value
+// HasInstrumentId returns a boolean if a field has been set.
+func (o *SubmitTradeOrderRequest) HasInstrumentId() bool {
+	if o != nil && !IsNil(o.InstrumentId) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstrumentId gets a reference to the given string and assigns it to the InstrumentId field.
 func (o *SubmitTradeOrderRequest) SetInstrumentId(v string) {
-	o.InstrumentId = v
+	o.InstrumentId = &v
 }
 
 // GetIdempotencyKey returns the IdempotencyKey field value if set, zero value otherwise.
@@ -833,7 +840,9 @@ func (o SubmitTradeOrderRequest) MarshalJSON() ([]byte, error) {
 func (o SubmitTradeOrderRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["tradingAccountId"] = o.TradingAccountId
-	toSerialize["instrumentId"] = o.InstrumentId
+	if !IsNil(o.InstrumentId) {
+		toSerialize["instrumentId"] = o.InstrumentId
+	}
 	if !IsNil(o.IdempotencyKey) {
 		toSerialize["idempotencyKey"] = o.IdempotencyKey
 	}
@@ -905,7 +914,6 @@ func (o *SubmitTradeOrderRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"tradingAccountId",
-		"instrumentId",
 		"orderSide",
 		"orderType",
 		"quantity",

@@ -35,7 +35,7 @@ import (
 )
 
 func main() {
-	connectTradingAccountRequest := *openapiclient.NewConnectTradingAccountRequest([]string{"CredentialIds_example"}, "ExternalTradingAccountId_example") // ConnectTradingAccountRequest |  (optional)
+	connectTradingAccountRequest := *openapiclient.NewConnectTradingAccountRequest() // ConnectTradingAccountRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

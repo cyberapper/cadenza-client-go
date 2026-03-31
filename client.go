@@ -51,11 +51,13 @@ type APIClient struct {
 
 	AuthenticationAPI AuthenticationAPI
 
+	FermataAPI FermataAPI
+
 	MarketAPI MarketAPI
 
 	MarketSubscriptionAPI MarketSubscriptionAPI
 
-	TradeOrderAPI TradeOrderAPI
+	TradingAPI TradingAPI
 
 	TradingAccountAPI TradingAccountAPI
 
@@ -87,9 +89,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AuthenticationAPI = (*AuthenticationAPIService)(&c.common)
+	c.FermataAPI = (*FermataAPIService)(&c.common)
 	c.MarketAPI = (*MarketAPIService)(&c.common)
 	c.MarketSubscriptionAPI = (*MarketSubscriptionAPIService)(&c.common)
-	c.TradeOrderAPI = (*TradeOrderAPIService)(&c.common)
+	c.TradingAPI = (*TradingAPIService)(&c.common)
 	c.TradingAccountAPI = (*TradingAccountAPIService)(&c.common)
 	c.TradingAccountCredentialAPI = (*TradingAccountCredentialAPIService)(&c.common)
 	c.TradingAccountPortfolioAPI = (*TradingAccountPortfolioAPIService)(&c.common)

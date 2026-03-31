@@ -109,6 +109,24 @@ const (
 	RPCMETHOD_QUERY_SECURITY_LIST RpcMethod = "query.security.list"
 	RPCMETHOD_RESPONSE_SECURITY_LIST RpcMethod = "response.security.list"
 	RPCMETHOD_EVENT_SECURITY_UPDATED RpcMethod = "event.security.updated"
+	RPCMETHOD_COMMAND_QUOTE_RFQ RpcMethod = "command.quote.rfq"
+	RPCMETHOD_RESPONSE_QUOTE_RFQ RpcMethod = "response.quote.rfq"
+	RPCMETHOD_COMMAND_FERMATA_DEALER_LINK RpcMethod = "command.fermata.dealer.link"
+	RPCMETHOD_RESPONSE_FERMATA_DEALER_LINK RpcMethod = "response.fermata.dealer.link"
+	RPCMETHOD_COMMAND_FERMATA_DEALER_UNLINK RpcMethod = "command.fermata.dealer.unlink"
+	RPCMETHOD_RESPONSE_FERMATA_DEALER_UNLINK RpcMethod = "response.fermata.dealer.unlink"
+	RPCMETHOD_COMMAND_FERMATA_WALLET_CREATE RpcMethod = "command.fermata.wallet.create"
+	RPCMETHOD_RESPONSE_FERMATA_WALLET_CREATE RpcMethod = "response.fermata.wallet.create"
+	RPCMETHOD_QUERY_FERMATA_WALLET_LIST RpcMethod = "query.fermata.wallet.list"
+	RPCMETHOD_RESPONSE_FERMATA_WALLET_LIST RpcMethod = "response.fermata.wallet.list"
+	RPCMETHOD_COMMAND_FERMATA_WALLET_TRANSFER RpcMethod = "command.fermata.wallet.transfer"
+	RPCMETHOD_RESPONSE_FERMATA_WALLET_TRANSFER RpcMethod = "response.fermata.wallet.transfer"
+	RPCMETHOD_COMMAND_FERMATA_WALLET_FREEZE RpcMethod = "command.fermata.wallet.freeze"
+	RPCMETHOD_RESPONSE_FERMATA_WALLET_FREEZE RpcMethod = "response.fermata.wallet.freeze"
+	RPCMETHOD_COMMAND_FERMATA_WALLET_UNFREEZE RpcMethod = "command.fermata.wallet.unfreeze"
+	RPCMETHOD_RESPONSE_FERMATA_WALLET_UNFREEZE RpcMethod = "response.fermata.wallet.unfreeze"
+	RPCMETHOD_COMMAND_FERMATA_WALLET_CLOSE RpcMethod = "command.fermata.wallet.close"
+	RPCMETHOD_RESPONSE_FERMATA_WALLET_CLOSE RpcMethod = "response.fermata.wallet.close"
 	RPCMETHOD_QUERY_VENUE_LIST RpcMethod = "query.venue.list"
 	RPCMETHOD_RESPONSE_VENUE_LIST RpcMethod = "response.venue.list"
 	RPCMETHOD_QUERY_ORDERBOOK_GET RpcMethod = "query.orderbook.get"
@@ -232,6 +250,24 @@ var AllowedRpcMethodEnumValues = []RpcMethod{
 	"query.security.list",
 	"response.security.list",
 	"event.security.updated",
+	"command.quote.rfq",
+	"response.quote.rfq",
+	"command.fermata.dealer.link",
+	"response.fermata.dealer.link",
+	"command.fermata.dealer.unlink",
+	"response.fermata.dealer.unlink",
+	"command.fermata.wallet.create",
+	"response.fermata.wallet.create",
+	"query.fermata.wallet.list",
+	"response.fermata.wallet.list",
+	"command.fermata.wallet.transfer",
+	"response.fermata.wallet.transfer",
+	"command.fermata.wallet.freeze",
+	"response.fermata.wallet.freeze",
+	"command.fermata.wallet.unfreeze",
+	"response.fermata.wallet.unfreeze",
+	"command.fermata.wallet.close",
+	"response.fermata.wallet.close",
 	"query.venue.list",
 	"response.venue.list",
 	"query.orderbook.get",

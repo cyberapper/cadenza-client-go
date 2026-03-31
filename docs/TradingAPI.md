@@ -1,12 +1,13 @@
-# \TradeOrderAPI
+# \TradingAPI
 
 All URIs are relative to *https://cadenza-api-uat.algo724.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CancelTradeOrder**](TradeOrderAPI.md#CancelTradeOrder) | **Post** /api/v3/tradeOrder/cancel | Cancel trade order
-[**ListTradeOrders**](TradeOrderAPI.md#ListTradeOrders) | **Get** /api/v3/tradeOrder/list | List trade orders
-[**SubmitTradeOrder**](TradeOrderAPI.md#SubmitTradeOrder) | **Post** /api/v3/tradeOrder/submit | Submit trade order
+[**CancelTradeOrder**](TradingAPI.md#CancelTradeOrder) | **Post** /api/v3/tradeOrder/cancel | Cancel trade order
+[**ListTradeOrders**](TradingAPI.md#ListTradeOrders) | **Get** /api/v3/tradeOrder/list | List trade orders
+[**QuoteRfq**](TradingAPI.md#QuoteRfq) | **Post** /api/v3/quote/rfq | Request for Quote
+[**SubmitTradeOrder**](TradingAPI.md#SubmitTradeOrder) | **Post** /api/v3/tradeOrder/submit | Submit trade order
 
 
 
@@ -35,13 +36,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TradeOrderAPI.CancelTradeOrder(context.Background()).CancelTradeOrderRequest(cancelTradeOrderRequest).Execute()
+	resp, r, err := apiClient.TradingAPI.CancelTradeOrder(context.Background()).CancelTradeOrderRequest(cancelTradeOrderRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TradeOrderAPI.CancelTradeOrder``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TradingAPI.CancelTradeOrder``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
 	// response from `CancelTradeOrder`: CancelTradeOrder200Response
-	fmt.Fprintf(os.Stdout, "Response from `TradeOrderAPI.CancelTradeOrder`: %v\n", resp)
+	fmt.Fprintf(os.Stdout, "Response from `TradingAPI.CancelTradeOrder`: %v\n", resp)
 }
 ```
 
@@ -111,13 +112,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TradeOrderAPI.ListTradeOrders(context.Background()).TradeOrderId(tradeOrderId).OrderListId(orderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
+	resp, r, err := apiClient.TradingAPI.ListTradeOrders(context.Background()).TradeOrderId(tradeOrderId).OrderListId(orderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TradeOrderAPI.ListTradeOrders``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TradingAPI.ListTradeOrders``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
 	// response from `ListTradeOrders`: ListTradeOrders200Response
-	fmt.Fprintf(os.Stdout, "Response from `TradeOrderAPI.ListTradeOrders`: %v\n", resp)
+	fmt.Fprintf(os.Stdout, "Response from `TradingAPI.ListTradeOrders`: %v\n", resp)
 }
 ```
 
@@ -162,6 +163,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## QuoteRfq
+
+> QuoteRfq200Response QuoteRfq(ctx).QuoteRfqRequest(quoteRfqRequest).Execute()
+
+Request for Quote
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/cyberapper/cadenza-client-go"
+)
+
+func main() {
+	quoteRfqRequest := *openapiclient.NewQuoteRfqRequest("DealerAccountId_example", openapiclient.orderSide("BUY")) // QuoteRfqRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TradingAPI.QuoteRfq(context.Background()).QuoteRfqRequest(quoteRfqRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TradingAPI.QuoteRfq``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `QuoteRfq`: QuoteRfq200Response
+	fmt.Fprintf(os.Stdout, "Response from `TradingAPI.QuoteRfq`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiQuoteRfqRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **quoteRfqRequest** | [**QuoteRfqRequest**](QuoteRfqRequest.md) |  | 
+
+### Return type
+
+[**QuoteRfq200Response**](QuoteRfq200Response.md)
+
+### Authorization
+
+[SupabaseOAuth2BearerAuth](../README.md#SupabaseOAuth2BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SubmitTradeOrder
 
 > SubmitTradeOrder200Response SubmitTradeOrder(ctx).SubmitTradeOrderRequest(submitTradeOrderRequest).Execute()
@@ -183,17 +250,17 @@ import (
 )
 
 func main() {
-	submitTradeOrderRequest := *openapiclient.NewSubmitTradeOrderRequest("TradingAccountId_example", "BINANCE:BTC/USDT", openapiclient.orderSide("BUY"), "TODO", "1234.56789000") // SubmitTradeOrderRequest |  (optional)
+	submitTradeOrderRequest := *openapiclient.NewSubmitTradeOrderRequest("TradingAccountId_example", openapiclient.orderSide("BUY"), "TODO", "1234.56789000") // SubmitTradeOrderRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TradeOrderAPI.SubmitTradeOrder(context.Background()).SubmitTradeOrderRequest(submitTradeOrderRequest).Execute()
+	resp, r, err := apiClient.TradingAPI.SubmitTradeOrder(context.Background()).SubmitTradeOrderRequest(submitTradeOrderRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TradeOrderAPI.SubmitTradeOrder``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TradingAPI.SubmitTradeOrder``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
 	// response from `SubmitTradeOrder`: SubmitTradeOrder200Response
-	fmt.Fprintf(os.Stdout, "Response from `TradeOrderAPI.SubmitTradeOrder`: %v\n", resp)
+	fmt.Fprintf(os.Stdout, "Response from `TradingAPI.SubmitTradeOrder`: %v\n", resp)
 }
 ```
 
