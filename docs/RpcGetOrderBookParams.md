@@ -4,9 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**InstrumentId** | Pointer to **string** | Instrument ID (e.g., BINANCE:BTC/USDT) | [optional] 
-**Venue** | Pointer to **string** | Venue (alternative to instrumentId) | [optional] 
-**Symbol** | Pointer to **string** | Symbol (alternative to instrumentId) | [optional] 
+**InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **Depth** | Pointer to **int32** | Order book depth | [optional] [default to 10]
 
 ## Methods
@@ -52,56 +50,6 @@ SetInstrumentId sets InstrumentId field to given value.
 `func (o *RpcGetOrderBookParams) HasInstrumentId() bool`
 
 HasInstrumentId returns a boolean if a field has been set.
-
-### GetVenue
-
-`func (o *RpcGetOrderBookParams) GetVenue() string`
-
-GetVenue returns the Venue field if non-nil, zero value otherwise.
-
-### GetVenueOk
-
-`func (o *RpcGetOrderBookParams) GetVenueOk() (*string, bool)`
-
-GetVenueOk returns a tuple with the Venue field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVenue
-
-`func (o *RpcGetOrderBookParams) SetVenue(v string)`
-
-SetVenue sets Venue field to given value.
-
-### HasVenue
-
-`func (o *RpcGetOrderBookParams) HasVenue() bool`
-
-HasVenue returns a boolean if a field has been set.
-
-### GetSymbol
-
-`func (o *RpcGetOrderBookParams) GetSymbol() string`
-
-GetSymbol returns the Symbol field if non-nil, zero value otherwise.
-
-### GetSymbolOk
-
-`func (o *RpcGetOrderBookParams) GetSymbolOk() (*string, bool)`
-
-GetSymbolOk returns a tuple with the Symbol field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSymbol
-
-`func (o *RpcGetOrderBookParams) SetSymbol(v string)`
-
-SetSymbol sets Symbol field to given value.
-
-### HasSymbol
-
-`func (o *RpcGetOrderBookParams) HasSymbol() bool`
-
-HasSymbol returns a boolean if a field has been set.
 
 ### GetDepth
 

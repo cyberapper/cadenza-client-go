@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **InstrumentId** | **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | 
 **Venue** | [**Venue**](Venue.md) |  | 
-**Symbol** | **string** | Human-readable symbol format | 
+**Symbol** | **string** | Trading pair symbol in format {BASE}/{QUOTE} | 
 **ExternalSymbol** | **string** | Symbol format used by the exchange | 
 **Description** | Pointer to **string** | Symbol description, human readable description of the instrument | [optional] 
 **InstrumentType** | [**InstrumentType**](InstrumentType.md) |  | 

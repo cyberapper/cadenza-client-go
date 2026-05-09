@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]RpcTicker**](RpcTicker.md) |  | [optional] 
+**Data** | Pointer to [**[]Ticker**](Ticker.md) |  | [optional] 
 **Error** | Pointer to [**RpcError**](RpcError.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *RpcSaveTickersResult) GetData() []RpcTicker`
+`func (o *RpcSaveTickersResult) GetData() []Ticker`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *RpcSaveTickersResult) GetDataOk() (*[]RpcTicker, bool)`
+`func (o *RpcSaveTickersResult) GetDataOk() (*[]Ticker, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *RpcSaveTickersResult) SetData(v []RpcTicker)`
+`func (o *RpcSaveTickersResult) SetData(v []Ticker)`
 
 SetData sets Data field to given value.
 

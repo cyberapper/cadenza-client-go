@@ -21,7 +21,7 @@ var _ MappedNullable = &WsMarketOrderBookUpdate{}
 // WsMarketOrderBookUpdate struct for WsMarketOrderBookUpdate
 type WsMarketOrderBookUpdate struct {
 	Channel string `json:"channel"`
-	Data Orderbook `json:"data"`
+	Data OrderBook `json:"data"`
 	// UUID string
 	SubscriptionId string `json:"subscriptionId"`
 	// Unix timestamp in milliseconds
@@ -35,7 +35,7 @@ type _WsMarketOrderBookUpdate WsMarketOrderBookUpdate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWsMarketOrderBookUpdate(channel string, data Orderbook, subscriptionId string, timestamp int64) *WsMarketOrderBookUpdate {
+func NewWsMarketOrderBookUpdate(channel string, data OrderBook, subscriptionId string, timestamp int64) *WsMarketOrderBookUpdate {
 	this := WsMarketOrderBookUpdate{}
 	this.Channel = channel
 	this.Data = data
@@ -77,9 +77,9 @@ func (o *WsMarketOrderBookUpdate) SetChannel(v string) {
 }
 
 // GetData returns the Data field value
-func (o *WsMarketOrderBookUpdate) GetData() Orderbook {
+func (o *WsMarketOrderBookUpdate) GetData() OrderBook {
 	if o == nil {
-		var ret Orderbook
+		var ret OrderBook
 		return ret
 	}
 
@@ -88,7 +88,7 @@ func (o *WsMarketOrderBookUpdate) GetData() Orderbook {
 
 // GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
-func (o *WsMarketOrderBookUpdate) GetDataOk() (*Orderbook, bool) {
+func (o *WsMarketOrderBookUpdate) GetDataOk() (*OrderBook, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -96,7 +96,7 @@ func (o *WsMarketOrderBookUpdate) GetDataOk() (*Orderbook, bool) {
 }
 
 // SetData sets field value
-func (o *WsMarketOrderBookUpdate) SetData(v Orderbook) {
+func (o *WsMarketOrderBookUpdate) SetData(v OrderBook) {
 	o.Data = v
 }
 

@@ -103,8 +103,8 @@ func main() {
 	orderStatus := openapiclient.orderStatus("CREATED") // OrderStatus | Order status (optional)
 	tradingAccountId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trading account ID (optional)
 	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
-	startTime := int32(1622505600000) // int32 | Start time (in unix milliseconds), of the created at field (optional)
-	endTime := int32(56) // int32 | End time (in unix milliseconds), of the created at field (optional)
+	startTime := int64(789) // int64 | Start time (in unix milliseconds), of the created at field (optional)
+	endTime := int64(789) // int64 | End time (in unix milliseconds), of the created at field (optional)
 	limit := int32(100) // int32 | Limit the number of returned results (optional) (default to 50)
 	offset := int32(0) // int32 | Offset of the returned results (optional) (default to 0)
 	cursor := "cursor_example" // string |  (optional)
@@ -138,8 +138,8 @@ Name | Type | Description  | Notes
  **orderStatus** | [**OrderStatus**](OrderStatus.md) | Order status | 
  **tradingAccountId** | **string** | Trading account ID | 
  **instrumentId** | **string** | Instrument ID | 
- **startTime** | **int32** | Start time (in unix milliseconds), of the created at field | 
- **endTime** | **int32** | End time (in unix milliseconds), of the created at field | 
+ **startTime** | **int64** | Start time (in unix milliseconds), of the created at field | 
+ **endTime** | **int64** | End time (in unix milliseconds), of the created at field | 
  **limit** | **int32** | Limit the number of returned results | [default to 50]
  **offset** | **int32** | Offset of the returned results | [default to 0]
  **cursor** | **string** |  | 

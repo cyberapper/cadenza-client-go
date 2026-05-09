@@ -30,3 +30,6 @@ CLAUDE.md
 # Protect package manifest (version managed by release-please)
 go.mod
 go.sum
+
+# Protect openapi-generator-cli version pin
+openapitools.json

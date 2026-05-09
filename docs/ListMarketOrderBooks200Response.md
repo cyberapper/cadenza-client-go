@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Errno** | **int32** | Error code (0 for success, non-zero indicates error). Format: AABBB where AA is the module code and BBB is the error code | 
 **Error** | Pointer to **NullableString** | Error message (null for successful operations) | [optional] 
 **Details** | Pointer to [**NullableBaseResponseDetails**](BaseResponseDetails.md) |  | [optional] 
-**Data** | Pointer to [**[]Orderbook**](Orderbook.md) |  | [optional] 
+**Data** | Pointer to [**[]OrderBook**](OrderBook.md) |  | [optional] 
 
 ## Methods
 
@@ -146,20 +146,20 @@ HasDetails returns a boolean if a field has been set.
 UnsetDetails ensures that no value is present for Details, not even an explicit nil
 ### GetData
 
-`func (o *ListMarketOrderBooks200Response) GetData() []Orderbook`
+`func (o *ListMarketOrderBooks200Response) GetData() []OrderBook`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *ListMarketOrderBooks200Response) GetDataOk() (*[]Orderbook, bool)`
+`func (o *ListMarketOrderBooks200Response) GetDataOk() (*[]OrderBook, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *ListMarketOrderBooks200Response) SetData(v []Orderbook)`
+`func (o *ListMarketOrderBooks200Response) SetData(v []OrderBook)`
 
 SetData sets Data field to given value.
 

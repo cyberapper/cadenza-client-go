@@ -17,14 +17,10 @@ import (
 // checks if the RpcGetOrderBookParams type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RpcGetOrderBookParams{}
 
-// RpcGetOrderBookParams Request to get order book for an instrument
+// RpcGetOrderBookParams Request to get order book for an instrument.
 type RpcGetOrderBookParams struct {
-	// Instrument ID (e.g., BINANCE:BTC/USDT)
+	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`
-	// Venue (alternative to instrumentId)
-	Venue *string `json:"venue,omitempty"`
-	// Symbol (alternative to instrumentId)
-	Symbol *string `json:"symbol,omitempty"`
 	// Order book depth
 	Depth *int32 `json:"depth,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -85,70 +81,6 @@ func (o *RpcGetOrderBookParams) SetInstrumentId(v string) {
 	o.InstrumentId = &v
 }
 
-// GetVenue returns the Venue field value if set, zero value otherwise.
-func (o *RpcGetOrderBookParams) GetVenue() string {
-	if o == nil || IsNil(o.Venue) {
-		var ret string
-		return ret
-	}
-	return *o.Venue
-}
-
-// GetVenueOk returns a tuple with the Venue field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RpcGetOrderBookParams) GetVenueOk() (*string, bool) {
-	if o == nil || IsNil(o.Venue) {
-		return nil, false
-	}
-	return o.Venue, true
-}
-
-// HasVenue returns a boolean if a field has been set.
-func (o *RpcGetOrderBookParams) HasVenue() bool {
-	if o != nil && !IsNil(o.Venue) {
-		return true
-	}
-
-	return false
-}
-
-// SetVenue gets a reference to the given string and assigns it to the Venue field.
-func (o *RpcGetOrderBookParams) SetVenue(v string) {
-	o.Venue = &v
-}
-
-// GetSymbol returns the Symbol field value if set, zero value otherwise.
-func (o *RpcGetOrderBookParams) GetSymbol() string {
-	if o == nil || IsNil(o.Symbol) {
-		var ret string
-		return ret
-	}
-	return *o.Symbol
-}
-
-// GetSymbolOk returns a tuple with the Symbol field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *RpcGetOrderBookParams) GetSymbolOk() (*string, bool) {
-	if o == nil || IsNil(o.Symbol) {
-		return nil, false
-	}
-	return o.Symbol, true
-}
-
-// HasSymbol returns a boolean if a field has been set.
-func (o *RpcGetOrderBookParams) HasSymbol() bool {
-	if o != nil && !IsNil(o.Symbol) {
-		return true
-	}
-
-	return false
-}
-
-// SetSymbol gets a reference to the given string and assigns it to the Symbol field.
-func (o *RpcGetOrderBookParams) SetSymbol(v string) {
-	o.Symbol = &v
-}
-
 // GetDepth returns the Depth field value if set, zero value otherwise.
 func (o *RpcGetOrderBookParams) GetDepth() int32 {
 	if o == nil || IsNil(o.Depth) {
@@ -194,12 +126,6 @@ func (o RpcGetOrderBookParams) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.InstrumentId) {
 		toSerialize["instrumentId"] = o.InstrumentId
 	}
-	if !IsNil(o.Venue) {
-		toSerialize["venue"] = o.Venue
-	}
-	if !IsNil(o.Symbol) {
-		toSerialize["symbol"] = o.Symbol
-	}
 	if !IsNil(o.Depth) {
 		toSerialize["depth"] = o.Depth
 	}
@@ -226,8 +152,6 @@ func (o *RpcGetOrderBookParams) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "instrumentId")
-		delete(additionalProperties, "venue")
-		delete(additionalProperties, "symbol")
 		delete(additionalProperties, "depth")
 		o.AdditionalProperties = additionalProperties
 	}

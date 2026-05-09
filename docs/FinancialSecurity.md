@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SecurityId** | Pointer to **string** | Security ID, id in the format of venue:symbol | [optional] 
-**Symbol** | Pointer to **string** | Symbol | [optional] 
+**Symbol** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **Venue** | Pointer to [**Venue**](Venue.md) |  | [optional] 
 **SecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
 **Precision** | Pointer to **int32** | Precision | [optional] 

@@ -20,7 +20,7 @@ var _ MappedNullable = &RpcSaveKlinesParams{}
 
 // RpcSaveKlinesParams Request to save klines (candlestick data)
 type RpcSaveKlinesParams struct {
-	Klines []RpcKline `json:"klines"`
+	Klines []Kline `json:"klines"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -30,7 +30,7 @@ type _RpcSaveKlinesParams RpcSaveKlinesParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRpcSaveKlinesParams(klines []RpcKline) *RpcSaveKlinesParams {
+func NewRpcSaveKlinesParams(klines []Kline) *RpcSaveKlinesParams {
 	this := RpcSaveKlinesParams{}
 	this.Klines = klines
 	return &this
@@ -45,9 +45,9 @@ func NewRpcSaveKlinesParamsWithDefaults() *RpcSaveKlinesParams {
 }
 
 // GetKlines returns the Klines field value
-func (o *RpcSaveKlinesParams) GetKlines() []RpcKline {
+func (o *RpcSaveKlinesParams) GetKlines() []Kline {
 	if o == nil {
-		var ret []RpcKline
+		var ret []Kline
 		return ret
 	}
 
@@ -56,7 +56,7 @@ func (o *RpcSaveKlinesParams) GetKlines() []RpcKline {
 
 // GetKlinesOk returns a tuple with the Klines field value
 // and a boolean to check if the value has been set.
-func (o *RpcSaveKlinesParams) GetKlinesOk() ([]RpcKline, bool) {
+func (o *RpcSaveKlinesParams) GetKlinesOk() ([]Kline, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -64,7 +64,7 @@ func (o *RpcSaveKlinesParams) GetKlinesOk() ([]RpcKline, bool) {
 }
 
 // SetKlines sets field value
-func (o *RpcSaveKlinesParams) SetKlines(v []RpcKline) {
+func (o *RpcSaveKlinesParams) SetKlines(v []Kline) {
 	o.Klines = v
 }
 

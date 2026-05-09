@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]RpcKline**](RpcKline.md) |  | [optional] 
+**Data** | Pointer to [**[]Kline**](Kline.md) |  | [optional] 
 **Error** | Pointer to [**RpcError**](RpcError.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *RpcListKlinesResult) GetData() []RpcKline`
+`func (o *RpcListKlinesResult) GetData() []Kline`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *RpcListKlinesResult) GetDataOk() (*[]RpcKline, bool)`
+`func (o *RpcListKlinesResult) GetDataOk() (*[]Kline, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *RpcListKlinesResult) SetData(v []RpcKline)`
+`func (o *RpcListKlinesResult) SetData(v []Kline)`
 
 SetData sets Data field to given value.
 

@@ -20,7 +20,7 @@ var _ MappedNullable = &RpcSaveOrderBooksParams{}
 
 // RpcSaveOrderBooksParams Request to save order books
 type RpcSaveOrderBooksParams struct {
-	OrderBooks []RpcOrderBook `json:"orderBooks"`
+	OrderBooks []OrderBook `json:"orderBooks"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -30,7 +30,7 @@ type _RpcSaveOrderBooksParams RpcSaveOrderBooksParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRpcSaveOrderBooksParams(orderBooks []RpcOrderBook) *RpcSaveOrderBooksParams {
+func NewRpcSaveOrderBooksParams(orderBooks []OrderBook) *RpcSaveOrderBooksParams {
 	this := RpcSaveOrderBooksParams{}
 	this.OrderBooks = orderBooks
 	return &this
@@ -45,9 +45,9 @@ func NewRpcSaveOrderBooksParamsWithDefaults() *RpcSaveOrderBooksParams {
 }
 
 // GetOrderBooks returns the OrderBooks field value
-func (o *RpcSaveOrderBooksParams) GetOrderBooks() []RpcOrderBook {
+func (o *RpcSaveOrderBooksParams) GetOrderBooks() []OrderBook {
 	if o == nil {
-		var ret []RpcOrderBook
+		var ret []OrderBook
 		return ret
 	}
 
@@ -56,7 +56,7 @@ func (o *RpcSaveOrderBooksParams) GetOrderBooks() []RpcOrderBook {
 
 // GetOrderBooksOk returns a tuple with the OrderBooks field value
 // and a boolean to check if the value has been set.
-func (o *RpcSaveOrderBooksParams) GetOrderBooksOk() ([]RpcOrderBook, bool) {
+func (o *RpcSaveOrderBooksParams) GetOrderBooksOk() ([]OrderBook, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -64,7 +64,7 @@ func (o *RpcSaveOrderBooksParams) GetOrderBooksOk() ([]RpcOrderBook, bool) {
 }
 
 // SetOrderBooks sets field value
-func (o *RpcSaveOrderBooksParams) SetOrderBooks(v []RpcOrderBook) {
+func (o *RpcSaveOrderBooksParams) SetOrderBooks(v []OrderBook) {
 	o.OrderBooks = v
 }
 

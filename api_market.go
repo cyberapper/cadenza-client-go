@@ -79,9 +79,28 @@ type MarketAPI interface {
 	EnableMarketInstrumentExecute(r ApiEnableMarketInstrumentRequest) (*EnableMarketInstrument200Response, *http.Response, error)
 
 	/*
+	GetMarketKline Get market kline
+
+	Get klines (candlestick data) for a specific instrument and interval.
+Returns a single `kline` object containing an array of OHLCV candles.
+
+Returns `isClosed: true` for historical-only queries; `isClosed: false` only when
+the queried range includes the live (currently forming) bar.
+
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetMarketKlineRequest
+	*/
+	GetMarketKline(ctx context.Context) ApiGetMarketKlineRequest
+
+	// GetMarketKlineExecute executes the request
+	//  @return GetMarketKline200Response
+	GetMarketKlineExecute(r ApiGetMarketKlineRequest) (*GetMarketKline200Response, *http.Response, error)
+
+	/*
 	GetMarketOrderBook Get market order book
 
-	Get order book for a specific instrument. instrumentId or venue+symbol
+	Get order book for a specific instrument.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetMarketOrderBookRequest
@@ -91,6 +110,20 @@ type MarketAPI interface {
 	// GetMarketOrderBookExecute executes the request
 	//  @return GetMarketOrderBook200Response
 	GetMarketOrderBookExecute(r ApiGetMarketOrderBookRequest) (*GetMarketOrderBook200Response, *http.Response, error)
+
+	/*
+	GetMarketTicker Get market ticker
+
+	Get ticker for a specific instrument.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetMarketTickerRequest
+	*/
+	GetMarketTicker(ctx context.Context) ApiGetMarketTickerRequest
+
+	// GetMarketTickerExecute executes the request
+	//  @return GetMarketTicker200Response
+	GetMarketTickerExecute(r ApiGetMarketTickerRequest) (*GetMarketTicker200Response, *http.Response, error)
 
 	/*
 	ListMarketInstruments List market instruments
@@ -109,7 +142,7 @@ type MarketAPI interface {
 	/*
 	ListMarketOrderBooks List market order books
 
-	List order books for multiple instruments
+	List order books for multiple instruments. Filter by `instrumentIds`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiListMarketOrderBooksRequest
@@ -133,6 +166,20 @@ type MarketAPI interface {
 	// ListMarketSecuritiesExecute executes the request
 	//  @return ListMarketSecurities200Response
 	ListMarketSecuritiesExecute(r ApiListMarketSecuritiesRequest) (*ListMarketSecurities200Response, *http.Response, error)
+
+	/*
+	ListMarketTickers List market tickers
+
+	List tickers for screening — filter by `instrumentIds`.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiListMarketTickersRequest
+	*/
+	ListMarketTickers(ctx context.Context) ApiListMarketTickersRequest
+
+	// ListMarketTickersExecute executes the request
+	//  @return ListMarketTickers200Response
+	ListMarketTickersExecute(r ApiListMarketTickersRequest) (*ListMarketTickers200Response, *http.Response, error)
 
 	/*
 	ListMarketVenues List market venues
@@ -824,30 +871,229 @@ func (a *MarketAPIService) EnableMarketInstrumentExecute(r ApiEnableMarketInstru
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetMarketKlineRequest struct {
+	ctx context.Context
+	ApiService MarketAPI
+	interval *KlineInterval
+	instrumentId *string
+	from *int64
+	to *int64
+	limit *int32
+}
+
+// Kline interval (e.g. &#x60;1m&#x60;, &#x60;5m&#x60;, &#x60;1h&#x60;, &#x60;1d&#x60;)
+func (r ApiGetMarketKlineRequest) Interval(interval KlineInterval) ApiGetMarketKlineRequest {
+	r.interval = &interval
+	return r
+}
+
+// Instrument ID
+func (r ApiGetMarketKlineRequest) InstrumentId(instrumentId string) ApiGetMarketKlineRequest {
+	r.instrumentId = &instrumentId
+	return r
+}
+
+// Range start (Unix timestamp in milliseconds, inclusive)
+func (r ApiGetMarketKlineRequest) From(from int64) ApiGetMarketKlineRequest {
+	r.from = &from
+	return r
+}
+
+// Range end (Unix timestamp in milliseconds, inclusive)
+func (r ApiGetMarketKlineRequest) To(to int64) ApiGetMarketKlineRequest {
+	r.to = &to
+	return r
+}
+
+// Limit the number of returned results
+func (r ApiGetMarketKlineRequest) Limit(limit int32) ApiGetMarketKlineRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetMarketKlineRequest) Execute() (*GetMarketKline200Response, *http.Response, error) {
+	return r.ApiService.GetMarketKlineExecute(r)
+}
+
+/*
+GetMarketKline Get market kline
+
+Get klines (candlestick data) for a specific instrument and interval.
+Returns a single `kline` object containing an array of OHLCV candles.
+
+Returns `isClosed: true` for historical-only queries; `isClosed: false` only when
+the queried range includes the live (currently forming) bar.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetMarketKlineRequest
+*/
+func (a *MarketAPIService) GetMarketKline(ctx context.Context) ApiGetMarketKlineRequest {
+	return ApiGetMarketKlineRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetMarketKline200Response
+func (a *MarketAPIService) GetMarketKlineExecute(r ApiGetMarketKlineRequest) (*GetMarketKline200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetMarketKline200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MarketAPIService.GetMarketKline")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v3/market/kline/get"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.interval == nil {
+		return localVarReturnValue, nil, reportError("interval is required and must be specified")
+	}
+
+	if r.instrumentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "instrumentId", r.instrumentId, "form", "")
+	}
+	parameterAddToHeaderOrQuery(localVarQueryParams, "interval", r.interval, "form", "")
+	if r.from != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "from", r.from, "form", "")
+	}
+	if r.to != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "to", r.to, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 50
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", defaultValue, "form", "")
+		r.limit = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetMarketOrderBookRequest struct {
 	ctx context.Context
 	ApiService MarketAPI
 	instrumentId *string
-	venue *Venue
-	symbol *string
 	depth *int32
 }
 
 // Instrument ID
 func (r ApiGetMarketOrderBookRequest) InstrumentId(instrumentId string) ApiGetMarketOrderBookRequest {
 	r.instrumentId = &instrumentId
-	return r
-}
-
-// Exchange type
-func (r ApiGetMarketOrderBookRequest) Venue(venue Venue) ApiGetMarketOrderBookRequest {
-	r.venue = &venue
-	return r
-}
-
-// Instrument Symbol
-func (r ApiGetMarketOrderBookRequest) Symbol(symbol string) ApiGetMarketOrderBookRequest {
-	r.symbol = &symbol
 	return r
 }
 
@@ -864,7 +1110,7 @@ func (r ApiGetMarketOrderBookRequest) Execute() (*GetMarketOrderBook200Response,
 /*
 GetMarketOrderBook Get market order book
 
-Get order book for a specific instrument. instrumentId or venue+symbol
+Get order book for a specific instrument.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetMarketOrderBookRequest
@@ -900,18 +1146,175 @@ func (a *MarketAPIService) GetMarketOrderBookExecute(r ApiGetMarketOrderBookRequ
 	if r.instrumentId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "instrumentId", r.instrumentId, "form", "")
 	}
-	if r.venue != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "venue", r.venue, "form", "")
-	}
-	if r.symbol != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "symbol", r.symbol, "form", "")
-	}
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "form", "")
 	} else {
 		var defaultValue int32 = 10
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", defaultValue, "form", "")
 		r.depth = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetMarketTickerRequest struct {
+	ctx context.Context
+	ApiService MarketAPI
+	instrumentId *string
+}
+
+// Instrument ID
+func (r ApiGetMarketTickerRequest) InstrumentId(instrumentId string) ApiGetMarketTickerRequest {
+	r.instrumentId = &instrumentId
+	return r
+}
+
+func (r ApiGetMarketTickerRequest) Execute() (*GetMarketTicker200Response, *http.Response, error) {
+	return r.ApiService.GetMarketTickerExecute(r)
+}
+
+/*
+GetMarketTicker Get market ticker
+
+Get ticker for a specific instrument.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetMarketTickerRequest
+*/
+func (a *MarketAPIService) GetMarketTicker(ctx context.Context) ApiGetMarketTickerRequest {
+	return ApiGetMarketTickerRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetMarketTicker200Response
+func (a *MarketAPIService) GetMarketTickerExecute(r ApiGetMarketTickerRequest) (*GetMarketTicker200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetMarketTicker200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MarketAPIService.GetMarketTicker")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v3/market/ticker/get"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.instrumentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "instrumentId", r.instrumentId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1254,25 +1657,12 @@ type ApiListMarketOrderBooksRequest struct {
 	ctx context.Context
 	ApiService MarketAPI
 	instrumentIds *[]string
-	venue *Venue
-	symbols *[]string
 	depth *int32
 }
 
+// Instrument ID array. Repeat the param to pass multiple values.
 func (r ApiListMarketOrderBooksRequest) InstrumentIds(instrumentIds []string) ApiListMarketOrderBooksRequest {
 	r.instrumentIds = &instrumentIds
-	return r
-}
-
-// Exchange type
-func (r ApiListMarketOrderBooksRequest) Venue(venue Venue) ApiListMarketOrderBooksRequest {
-	r.venue = &venue
-	return r
-}
-
-// Instrument Symbols array
-func (r ApiListMarketOrderBooksRequest) Symbols(symbols []string) ApiListMarketOrderBooksRequest {
-	r.symbols = &symbols
 	return r
 }
 
@@ -1289,7 +1679,7 @@ func (r ApiListMarketOrderBooksRequest) Execute() (*ListMarketOrderBooks200Respo
 /*
 ListMarketOrderBooks List market order books
 
-List order books for multiple instruments
+List order books for multiple instruments. Filter by `instrumentIds`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListMarketOrderBooksRequest
@@ -1331,20 +1721,6 @@ func (a *MarketAPIService) ListMarketOrderBooksExecute(r ApiListMarketOrderBooks
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "instrumentIds", t, "form", "multi")
-		}
-	}
-	if r.venue != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "venue", r.venue, "form", "")
-	}
-	if r.symbols != nil {
-		t := *r.symbols
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "symbols", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "symbols", t, "form", "multi")
 		}
 	}
 	if r.depth != nil {
@@ -1554,6 +1930,214 @@ func (a *MarketAPIService) ListMarketSecuritiesExecute(r ApiListMarketSecurities
 		var defaultValue int32 = 0
 		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", defaultValue, "form", "")
 		r.offset = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v BaseResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListMarketTickersRequest struct {
+	ctx context.Context
+	ApiService MarketAPI
+	instrumentIds *[]string
+	limit *int32
+	offset *int32
+	cursor *string
+}
+
+// Instrument ID array. Repeat the param to pass multiple values.
+func (r ApiListMarketTickersRequest) InstrumentIds(instrumentIds []string) ApiListMarketTickersRequest {
+	r.instrumentIds = &instrumentIds
+	return r
+}
+
+// Limit the number of returned results
+func (r ApiListMarketTickersRequest) Limit(limit int32) ApiListMarketTickersRequest {
+	r.limit = &limit
+	return r
+}
+
+// Offset of the returned results
+func (r ApiListMarketTickersRequest) Offset(offset int32) ApiListMarketTickersRequest {
+	r.offset = &offset
+	return r
+}
+
+func (r ApiListMarketTickersRequest) Cursor(cursor string) ApiListMarketTickersRequest {
+	r.cursor = &cursor
+	return r
+}
+
+func (r ApiListMarketTickersRequest) Execute() (*ListMarketTickers200Response, *http.Response, error) {
+	return r.ApiService.ListMarketTickersExecute(r)
+}
+
+/*
+ListMarketTickers List market tickers
+
+List tickers for screening — filter by `instrumentIds`.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListMarketTickersRequest
+*/
+func (a *MarketAPIService) ListMarketTickers(ctx context.Context) ApiListMarketTickersRequest {
+	return ApiListMarketTickersRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ListMarketTickers200Response
+func (a *MarketAPIService) ListMarketTickersExecute(r ApiListMarketTickersRequest) (*ListMarketTickers200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListMarketTickers200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MarketAPIService.ListMarketTickers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v3/market/ticker/list"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.instrumentIds != nil {
+		t := *r.instrumentIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "instrumentIds", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "instrumentIds", t, "form", "multi")
+		}
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 50
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", defaultValue, "form", "")
+		r.limit = &defaultValue
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	} else {
+		var defaultValue int32 = 0
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", defaultValue, "form", "")
+		r.offset = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

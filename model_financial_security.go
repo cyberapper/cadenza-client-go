@@ -21,7 +21,7 @@ var _ MappedNullable = &FinancialSecurity{}
 type FinancialSecurity struct {
 	// Security ID, id in the format of venue:symbol
 	SecurityId *string `json:"securityId,omitempty"`
-	// Symbol
+	// Asset symbol (e.g. currency code, base asset)
 	Symbol *string `json:"symbol,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
 	SecurityType *SecurityType `json:"securityType,omitempty"`

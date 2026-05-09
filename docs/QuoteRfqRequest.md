@@ -13,6 +13,9 @@ Name | Type | Description | Notes
 **Quantity** | Pointer to **string** | Positive decimal value as string | [optional] 
 **QuoteQuantity** | Pointer to **string** | Positive decimal value as string | [optional] 
 **QuoteRequestId** | Pointer to **string** | Client-provided reference for idempotency and tracking | [optional] 
+**Ttl** | Pointer to **int32** | Time to live in seconds | [optional] [default to 10]
+**ExpireAt** | Pointer to **time.Time** | Absolute expiry timestamp (ISO 8601). Mutually exclusive with ttl. If neither ttl nor expireAt is set, defaults to 10 seconds from quote creation. | [optional] 
+**PricingProfileId** | Pointer to **string** | UUID string | [optional] 
 
 ## Methods
 
@@ -247,6 +250,81 @@ SetQuoteRequestId sets QuoteRequestId field to given value.
 `func (o *QuoteRfqRequest) HasQuoteRequestId() bool`
 
 HasQuoteRequestId returns a boolean if a field has been set.
+
+### GetTtl
+
+`func (o *QuoteRfqRequest) GetTtl() int32`
+
+GetTtl returns the Ttl field if non-nil, zero value otherwise.
+
+### GetTtlOk
+
+`func (o *QuoteRfqRequest) GetTtlOk() (*int32, bool)`
+
+GetTtlOk returns a tuple with the Ttl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTtl
+
+`func (o *QuoteRfqRequest) SetTtl(v int32)`
+
+SetTtl sets Ttl field to given value.
+
+### HasTtl
+
+`func (o *QuoteRfqRequest) HasTtl() bool`
+
+HasTtl returns a boolean if a field has been set.
+
+### GetExpireAt
+
+`func (o *QuoteRfqRequest) GetExpireAt() time.Time`
+
+GetExpireAt returns the ExpireAt field if non-nil, zero value otherwise.
+
+### GetExpireAtOk
+
+`func (o *QuoteRfqRequest) GetExpireAtOk() (*time.Time, bool)`
+
+GetExpireAtOk returns a tuple with the ExpireAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExpireAt
+
+`func (o *QuoteRfqRequest) SetExpireAt(v time.Time)`
+
+SetExpireAt sets ExpireAt field to given value.
+
+### HasExpireAt
+
+`func (o *QuoteRfqRequest) HasExpireAt() bool`
+
+HasExpireAt returns a boolean if a field has been set.
+
+### GetPricingProfileId
+
+`func (o *QuoteRfqRequest) GetPricingProfileId() string`
+
+GetPricingProfileId returns the PricingProfileId field if non-nil, zero value otherwise.
+
+### GetPricingProfileIdOk
+
+`func (o *QuoteRfqRequest) GetPricingProfileIdOk() (*string, bool)`
+
+GetPricingProfileIdOk returns a tuple with the PricingProfileId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPricingProfileId
+
+`func (o *QuoteRfqRequest) SetPricingProfileId(v string)`
+
+SetPricingProfileId sets PricingProfileId field to given value.
+
+### HasPricingProfileId
+
+`func (o *QuoteRfqRequest) HasPricingProfileId() bool`
+
+HasPricingProfileId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

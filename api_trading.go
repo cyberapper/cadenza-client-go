@@ -250,8 +250,8 @@ type ApiListTradeOrdersRequest struct {
 	orderStatus *OrderStatus
 	tradingAccountId *string
 	instrumentId *string
-	startTime *int32
-	endTime *int32
+	startTime *int64
+	endTime *int64
 	limit *int32
 	offset *int32
 	cursor *string
@@ -289,13 +289,13 @@ func (r ApiListTradeOrdersRequest) InstrumentId(instrumentId string) ApiListTrad
 }
 
 // Start time (in unix milliseconds), of the created at field
-func (r ApiListTradeOrdersRequest) StartTime(startTime int32) ApiListTradeOrdersRequest {
+func (r ApiListTradeOrdersRequest) StartTime(startTime int64) ApiListTradeOrdersRequest {
 	r.startTime = &startTime
 	return r
 }
 
 // End time (in unix milliseconds), of the created at field
-func (r ApiListTradeOrdersRequest) EndTime(endTime int32) ApiListTradeOrdersRequest {
+func (r ApiListTradeOrdersRequest) EndTime(endTime int64) ApiListTradeOrdersRequest {
 	r.endTime = &endTime
 	return r
 }

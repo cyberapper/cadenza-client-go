@@ -22,7 +22,7 @@ var _ MappedNullable = &PortfolioSummary{}
 type PortfolioSummary struct {
 	// UUID string
 	TradingAccountId string `json:"tradingAccountId"`
-	// Base currency for the portfolio summary
+	// Asset symbol (e.g. currency code, base asset)
 	Currency string `json:"currency"`
 	// Leverage multiplier
 	Leverage NullableInt32 `json:"leverage"`

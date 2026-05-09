@@ -27,7 +27,7 @@ type ListMarketOrderBooks200Response struct {
 	// Error message (null for successful operations)
 	Error NullableString `json:"error,omitempty"`
 	Details NullableBaseResponseDetails `json:"details,omitempty"`
-	Data []Orderbook `json:"data,omitempty"`
+	Data []OrderBook `json:"data,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -192,9 +192,9 @@ func (o *ListMarketOrderBooks200Response) UnsetDetails() {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ListMarketOrderBooks200Response) GetData() []Orderbook {
+func (o *ListMarketOrderBooks200Response) GetData() []OrderBook {
 	if o == nil || IsNil(o.Data) {
-		var ret []Orderbook
+		var ret []OrderBook
 		return ret
 	}
 	return o.Data
@@ -202,7 +202,7 @@ func (o *ListMarketOrderBooks200Response) GetData() []Orderbook {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListMarketOrderBooks200Response) GetDataOk() ([]Orderbook, bool) {
+func (o *ListMarketOrderBooks200Response) GetDataOk() ([]OrderBook, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -218,8 +218,8 @@ func (o *ListMarketOrderBooks200Response) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []Orderbook and assigns it to the Data field.
-func (o *ListMarketOrderBooks200Response) SetData(v []Orderbook) {
+// SetData gets a reference to the given []OrderBook and assigns it to the Data field.
+func (o *ListMarketOrderBooks200Response) SetData(v []OrderBook) {
 	o.Data = v
 }
 

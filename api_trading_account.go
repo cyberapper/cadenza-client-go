@@ -783,8 +783,8 @@ type ApiListTradingAccountOperationsRequest struct {
 	ApiService TradingAccountAPI
 	tradingAccountId *string
 	operationType *OperationType
-	startTime *int32
-	endTime *int32
+	startTime *int64
+	endTime *int64
 	limit *int32
 	offset *int32
 	cursor *string
@@ -803,13 +803,13 @@ func (r ApiListTradingAccountOperationsRequest) OperationType(operationType Oper
 }
 
 // Start time (in unix milliseconds), of the created at field
-func (r ApiListTradingAccountOperationsRequest) StartTime(startTime int32) ApiListTradingAccountOperationsRequest {
+func (r ApiListTradingAccountOperationsRequest) StartTime(startTime int64) ApiListTradingAccountOperationsRequest {
 	r.startTime = &startTime
 	return r
 }
 
 // End time (in unix milliseconds), of the created at field
-func (r ApiListTradingAccountOperationsRequest) EndTime(endTime int32) ApiListTradingAccountOperationsRequest {
+func (r ApiListTradingAccountOperationsRequest) EndTime(endTime int64) ApiListTradingAccountOperationsRequest {
 	r.endTime = &endTime
 	return r
 }

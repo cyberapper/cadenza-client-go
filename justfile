@@ -30,9 +30,10 @@ openapi:
         -i "{{spec}}" \
         -g go \
         -o . \
-        --package-name cadenza_client \
+        --package-name client \
         --git-user-id cyberapper \
-        --git-repo-id cadenza-client-go
+        --git-repo-id cadenza-client-go \
+        --additional-properties=generateInterfaces=true,enumClassPrefix=true,disallowAdditionalPropertiesIfNotPresent=false
     echo "Cleaning up unwanted generated files..."
     rm -f .travis.yml git_push.sh
     echo "Generation complete!"

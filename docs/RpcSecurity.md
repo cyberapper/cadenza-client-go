@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SecurityId** | Pointer to **string** |  | [optional] 
-**Symbol** | Pointer to **string** |  | [optional] 
+**Symbol** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **ExternalSymbol** | Pointer to **string** |  | [optional] 
 **Venue** | Pointer to [**Venue**](Venue.md) |  | [optional] 
 

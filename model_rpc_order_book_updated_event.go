@@ -19,7 +19,7 @@ var _ MappedNullable = &RpcOrderBookUpdatedEvent{}
 
 // RpcOrderBookUpdatedEvent Order book update event (pushed via WebSocket)
 type RpcOrderBookUpdatedEvent struct {
-	Data *RpcOrderBook `json:"data,omitempty"`
+	Data *OrderBook `json:"data,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -43,9 +43,9 @@ func NewRpcOrderBookUpdatedEventWithDefaults() *RpcOrderBookUpdatedEvent {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *RpcOrderBookUpdatedEvent) GetData() RpcOrderBook {
+func (o *RpcOrderBookUpdatedEvent) GetData() OrderBook {
 	if o == nil || IsNil(o.Data) {
-		var ret RpcOrderBook
+		var ret OrderBook
 		return ret
 	}
 	return *o.Data
@@ -53,7 +53,7 @@ func (o *RpcOrderBookUpdatedEvent) GetData() RpcOrderBook {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RpcOrderBookUpdatedEvent) GetDataOk() (*RpcOrderBook, bool) {
+func (o *RpcOrderBookUpdatedEvent) GetDataOk() (*OrderBook, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -69,8 +69,8 @@ func (o *RpcOrderBookUpdatedEvent) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given RpcOrderBook and assigns it to the Data field.
-func (o *RpcOrderBookUpdatedEvent) SetData(v RpcOrderBook) {
+// SetData gets a reference to the given OrderBook and assigns it to the Data field.
+func (o *RpcOrderBookUpdatedEvent) SetData(v OrderBook) {
 	o.Data = &v
 }
 

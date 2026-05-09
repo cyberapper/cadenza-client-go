@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Klines** | [**[]RpcKline**](RpcKline.md) |  | 
+**Klines** | [**[]Kline**](Kline.md) |  | 
 
 ## Methods
 
 ### NewRpcSaveKlinesParams
 
-`func NewRpcSaveKlinesParams(klines []RpcKline, ) *RpcSaveKlinesParams`
+`func NewRpcSaveKlinesParams(klines []Kline, ) *RpcSaveKlinesParams`
 
 NewRpcSaveKlinesParams instantiates a new RpcSaveKlinesParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetKlines
 
-`func (o *RpcSaveKlinesParams) GetKlines() []RpcKline`
+`func (o *RpcSaveKlinesParams) GetKlines() []Kline`
 
 GetKlines returns the Klines field if non-nil, zero value otherwise.
 
 ### GetKlinesOk
 
-`func (o *RpcSaveKlinesParams) GetKlinesOk() (*[]RpcKline, bool)`
+`func (o *RpcSaveKlinesParams) GetKlinesOk() (*[]Kline, bool)`
 
 GetKlinesOk returns a tuple with the Klines field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetKlines
 
-`func (o *RpcSaveKlinesParams) SetKlines(v []RpcKline)`
+`func (o *RpcSaveKlinesParams) SetKlines(v []Kline)`
 
 SetKlines sets Klines field to given value.
 

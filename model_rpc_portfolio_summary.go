@@ -21,7 +21,7 @@ var _ MappedNullable = &RpcPortfolioSummary{}
 type RpcPortfolioSummary struct {
 	PortfolioSummaryId *string `json:"portfolioSummaryId,omitempty"`
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
-	// Summary currency
+	// Asset symbol (e.g. currency code, base asset)
 	Currency *string `json:"currency,omitempty"`
 	Leverage *int32 `json:"leverage,omitempty"`
 	// Total equity
