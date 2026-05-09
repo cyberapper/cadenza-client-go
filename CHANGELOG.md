@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.3.0...v1.4.0) (2026-05-09)
+
+
+### Features
+
+* **openapi:** regenerate Go SDK with unified market data schemas (CDZ-450) ([#46](https://github.com/cyberapper/cadenza-client-go/issues/46)) ([e874e2e](https://github.com/cyberapper/cadenza-client-go/commit/e874e2ef56b83f434dd8c71fa662633d65d3c962))
+
 ## [1.3.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.2.11...v1.3.0) (2026-03-31)
 
 
