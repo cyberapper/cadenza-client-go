@@ -32,7 +32,7 @@ Name | Type | Description | Notes
 **CredentialIds** | Pointer to **[]string** |  | [optional] 
 **Credentials** | Pointer to [**[]RpcTradingAccountCredential**](RpcTradingAccountCredential.md) |  | [optional] 
 **CredentialId** | **string** |  | 
-**Currency** | Pointer to **string** | Filter by currency | [optional] 
+**Currency** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **Portfolio** | [**RpcPortfolio**](RpcPortfolio.md) |  | 
 **Symbols** | Pointer to **[]string** |  | [optional] 
 **Instruments** | **[]string** |  | 
@@ -43,19 +43,18 @@ Name | Type | Description | Notes
 **Securities** | **[]string** |  | 
 **SecurityIds** | **[]string** |  | 
 **ExternalSymbols** | Pointer to **[]string** |  | [optional] 
-**Symbol** | Pointer to **string** | Symbol (alternative to instrumentId) | [optional] 
 **Depth** | Pointer to **int32** | Order book depth | [optional] [default to 10]
 **InstrumentIds** | Pointer to **[]string** |  | [optional] 
-**OrderBooks** | [**[]RpcOrderBook**](RpcOrderBook.md) |  | 
-**Klines** | [**[]RpcKline**](RpcKline.md) |  | 
-**Interval** | Pointer to **string** |  | [optional] 
-**Tickers** | [**[]RpcTicker**](RpcTicker.md) |  | 
+**OrderBooks** | [**[]OrderBook**](OrderBook.md) |  | 
+**Klines** | [**[]Kline**](Kline.md) |  | 
+**Interval** | Pointer to [**KlineInterval**](KlineInterval.md) |  | [optional] 
+**Tickers** | [**[]Ticker**](Ticker.md) |  | 
 
 ## Methods
 
 ### NewWsRPCRequestData
 
-`func NewWsRPCRequestData(tradeOrder RpcTradeOrder, tradingAccountId string, tradeOrderId string, instrumentId []string, tradingAccount RpcTradingAccount, tradingAccounts []RpcTradingAccount, venue Venue, subscriptionType SubscriptionType, credentialType NullableCredentialType, credential RpcTradingAccountCredential, credentialId string, portfolio RpcPortfolio, instruments []string, securities []string, securityIds []string, orderBooks []RpcOrderBook, klines []RpcKline, tickers []RpcTicker, ) *WsRPCRequestData`
+`func NewWsRPCRequestData(tradeOrder RpcTradeOrder, tradingAccountId string, tradeOrderId string, instrumentId []string, tradingAccount RpcTradingAccount, tradingAccounts []RpcTradingAccount, venue Venue, subscriptionType SubscriptionType, credentialType NullableCredentialType, credential RpcTradingAccountCredential, credentialId string, portfolio RpcPortfolio, instruments []string, securities []string, securityIds []string, orderBooks []OrderBook, klines []Kline, tickers []Ticker, ) *WsRPCRequestData`
 
 NewWsRPCRequestData instantiates a new WsRPCRequestData object
 This constructor will assign default values to properties that have it defined,
@@ -990,31 +989,6 @@ SetExternalSymbols sets ExternalSymbols field to given value.
 
 HasExternalSymbols returns a boolean if a field has been set.
 
-### GetSymbol
-
-`func (o *WsRPCRequestData) GetSymbol() string`
-
-GetSymbol returns the Symbol field if non-nil, zero value otherwise.
-
-### GetSymbolOk
-
-`func (o *WsRPCRequestData) GetSymbolOk() (*string, bool)`
-
-GetSymbolOk returns a tuple with the Symbol field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSymbol
-
-`func (o *WsRPCRequestData) SetSymbol(v string)`
-
-SetSymbol sets Symbol field to given value.
-
-### HasSymbol
-
-`func (o *WsRPCRequestData) HasSymbol() bool`
-
-HasSymbol returns a boolean if a field has been set.
-
 ### GetDepth
 
 `func (o *WsRPCRequestData) GetDepth() int32`
@@ -1067,60 +1041,60 @@ HasInstrumentIds returns a boolean if a field has been set.
 
 ### GetOrderBooks
 
-`func (o *WsRPCRequestData) GetOrderBooks() []RpcOrderBook`
+`func (o *WsRPCRequestData) GetOrderBooks() []OrderBook`
 
 GetOrderBooks returns the OrderBooks field if non-nil, zero value otherwise.
 
 ### GetOrderBooksOk
 
-`func (o *WsRPCRequestData) GetOrderBooksOk() (*[]RpcOrderBook, bool)`
+`func (o *WsRPCRequestData) GetOrderBooksOk() (*[]OrderBook, bool)`
 
 GetOrderBooksOk returns a tuple with the OrderBooks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOrderBooks
 
-`func (o *WsRPCRequestData) SetOrderBooks(v []RpcOrderBook)`
+`func (o *WsRPCRequestData) SetOrderBooks(v []OrderBook)`
 
 SetOrderBooks sets OrderBooks field to given value.
 
 
 ### GetKlines
 
-`func (o *WsRPCRequestData) GetKlines() []RpcKline`
+`func (o *WsRPCRequestData) GetKlines() []Kline`
 
 GetKlines returns the Klines field if non-nil, zero value otherwise.
 
 ### GetKlinesOk
 
-`func (o *WsRPCRequestData) GetKlinesOk() (*[]RpcKline, bool)`
+`func (o *WsRPCRequestData) GetKlinesOk() (*[]Kline, bool)`
 
 GetKlinesOk returns a tuple with the Klines field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetKlines
 
-`func (o *WsRPCRequestData) SetKlines(v []RpcKline)`
+`func (o *WsRPCRequestData) SetKlines(v []Kline)`
 
 SetKlines sets Klines field to given value.
 
 
 ### GetInterval
 
-`func (o *WsRPCRequestData) GetInterval() string`
+`func (o *WsRPCRequestData) GetInterval() KlineInterval`
 
 GetInterval returns the Interval field if non-nil, zero value otherwise.
 
 ### GetIntervalOk
 
-`func (o *WsRPCRequestData) GetIntervalOk() (*string, bool)`
+`func (o *WsRPCRequestData) GetIntervalOk() (*KlineInterval, bool)`
 
 GetIntervalOk returns a tuple with the Interval field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInterval
 
-`func (o *WsRPCRequestData) SetInterval(v string)`
+`func (o *WsRPCRequestData) SetInterval(v KlineInterval)`
 
 SetInterval sets Interval field to given value.
 
@@ -1132,20 +1106,20 @@ HasInterval returns a boolean if a field has been set.
 
 ### GetTickers
 
-`func (o *WsRPCRequestData) GetTickers() []RpcTicker`
+`func (o *WsRPCRequestData) GetTickers() []Ticker`
 
 GetTickers returns the Tickers field if non-nil, zero value otherwise.
 
 ### GetTickersOk
 
-`func (o *WsRPCRequestData) GetTickersOk() (*[]RpcTicker, bool)`
+`func (o *WsRPCRequestData) GetTickersOk() (*[]Ticker, bool)`
 
 GetTickersOk returns a tuple with the Tickers field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTickers
 
-`func (o *WsRPCRequestData) SetTickers(v []RpcTicker)`
+`func (o *WsRPCRequestData) SetTickers(v []Ticker)`
 
 SetTickers sets Tickers field to given value.
 

@@ -8,10 +8,13 @@ Method | HTTP request | Description
 [**DeleteMarketSecurity**](MarketAPI.md#DeleteMarketSecurity) | **Delete** /api/v3/market/security/delete | Delete market security
 [**DisableMarketInstrument**](MarketAPI.md#DisableMarketInstrument) | **Post** /api/v3/market/instrument/disable | Disable market instrument
 [**EnableMarketInstrument**](MarketAPI.md#EnableMarketInstrument) | **Post** /api/v3/market/instrument/enable | Enable market instrument
+[**GetMarketKline**](MarketAPI.md#GetMarketKline) | **Get** /api/v3/market/kline/get | Get market kline
 [**GetMarketOrderBook**](MarketAPI.md#GetMarketOrderBook) | **Get** /api/v3/market/orderBook/get | Get market order book
+[**GetMarketTicker**](MarketAPI.md#GetMarketTicker) | **Get** /api/v3/market/ticker/get | Get market ticker
 [**ListMarketInstruments**](MarketAPI.md#ListMarketInstruments) | **Get** /api/v3/market/instrument/list | List market instruments
 [**ListMarketOrderBooks**](MarketAPI.md#ListMarketOrderBooks) | **Get** /api/v3/market/orderBook/list | List market order books
 [**ListMarketSecurities**](MarketAPI.md#ListMarketSecurities) | **Get** /api/v3/market/security/list | List market securities
+[**ListMarketTickers**](MarketAPI.md#ListMarketTickers) | **Get** /api/v3/market/ticker/list | List market tickers
 [**ListMarketVenues**](MarketAPI.md#ListMarketVenues) | **Get** /api/v3/market/venue/list | List market venues
 [**SyncMarketInstruments**](MarketAPI.md#SyncMarketInstruments) | **Post** /api/v3/market/instrument/sync | Sync market instruments
 [**SyncMarketSecurities**](MarketAPI.md#SyncMarketSecurities) | **Post** /api/v3/market/security/sync | Sync market securities
@@ -282,9 +285,83 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetMarketKline
+
+> GetMarketKline200Response GetMarketKline(ctx).Interval(interval).InstrumentId(instrumentId).From(from).To(to).Limit(limit).Execute()
+
+Get market kline
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/cyberapper/cadenza-client-go"
+)
+
+func main() {
+	interval := openapiclient.klineInterval("1s") // KlineInterval | Kline interval (e.g. `1m`, `5m`, `1h`, `1d`)
+	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
+	from := int64(789) // int64 | Range start (Unix timestamp in milliseconds, inclusive) (optional)
+	to := int64(789) // int64 | Range end (Unix timestamp in milliseconds, inclusive) (optional)
+	limit := int32(100) // int32 | Limit the number of returned results (optional) (default to 50)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.MarketAPI.GetMarketKline(context.Background()).Interval(interval).InstrumentId(instrumentId).From(from).To(to).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `MarketAPI.GetMarketKline``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMarketKline`: GetMarketKline200Response
+	fmt.Fprintf(os.Stdout, "Response from `MarketAPI.GetMarketKline`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMarketKlineRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **interval** | [**KlineInterval**](KlineInterval.md) | Kline interval (e.g. &#x60;1m&#x60;, &#x60;5m&#x60;, &#x60;1h&#x60;, &#x60;1d&#x60;) | 
+ **instrumentId** | **string** | Instrument ID | 
+ **from** | **int64** | Range start (Unix timestamp in milliseconds, inclusive) | 
+ **to** | **int64** | Range end (Unix timestamp in milliseconds, inclusive) | 
+ **limit** | **int32** | Limit the number of returned results | [default to 50]
+
+### Return type
+
+[**GetMarketKline200Response**](GetMarketKline200Response.md)
+
+### Authorization
+
+[SupabaseOAuth2BearerAuth](../README.md#SupabaseOAuth2BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetMarketOrderBook
 
-> GetMarketOrderBook200Response GetMarketOrderBook(ctx).InstrumentId(instrumentId).Venue(venue).Symbol(symbol).Depth(depth).Execute()
+> GetMarketOrderBook200Response GetMarketOrderBook(ctx).InstrumentId(instrumentId).Depth(depth).Execute()
 
 Get market order book
 
@@ -304,13 +381,11 @@ import (
 
 func main() {
 	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
-	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
-	symbol := "BTC/USDT" // string | Instrument Symbol (optional)
 	depth := int32(56) // int32 | Order book depth (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MarketAPI.GetMarketOrderBook(context.Background()).InstrumentId(instrumentId).Venue(venue).Symbol(symbol).Depth(depth).Execute()
+	resp, r, err := apiClient.MarketAPI.GetMarketOrderBook(context.Background()).InstrumentId(instrumentId).Depth(depth).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MarketAPI.GetMarketOrderBook``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -332,13 +407,77 @@ Other parameters are passed through a pointer to a apiGetMarketOrderBookRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **instrumentId** | **string** | Instrument ID | 
- **venue** | [**Venue**](Venue.md) | Exchange type | 
- **symbol** | **string** | Instrument Symbol | 
  **depth** | **int32** | Order book depth | [default to 10]
 
 ### Return type
 
 [**GetMarketOrderBook200Response**](GetMarketOrderBook200Response.md)
+
+### Authorization
+
+[SupabaseOAuth2BearerAuth](../README.md#SupabaseOAuth2BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMarketTicker
+
+> GetMarketTicker200Response GetMarketTicker(ctx).InstrumentId(instrumentId).Execute()
+
+Get market ticker
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/cyberapper/cadenza-client-go"
+)
+
+func main() {
+	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.MarketAPI.GetMarketTicker(context.Background()).InstrumentId(instrumentId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `MarketAPI.GetMarketTicker``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMarketTicker`: GetMarketTicker200Response
+	fmt.Fprintf(os.Stdout, "Response from `MarketAPI.GetMarketTicker`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMarketTickerRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **instrumentId** | **string** | Instrument ID | 
+
+### Return type
+
+[**GetMarketTicker200Response**](GetMarketTicker200Response.md)
 
 ### Authorization
 
@@ -432,7 +571,7 @@ Name | Type | Description  | Notes
 
 ## ListMarketOrderBooks
 
-> ListMarketOrderBooks200Response ListMarketOrderBooks(ctx).InstrumentIds(instrumentIds).Venue(venue).Symbols(symbols).Depth(depth).Execute()
+> ListMarketOrderBooks200Response ListMarketOrderBooks(ctx).InstrumentIds(instrumentIds).Depth(depth).Execute()
 
 List market order books
 
@@ -451,14 +590,12 @@ import (
 )
 
 func main() {
-	instrumentIds := []string{"BINANCE:BTC/USDT"} // []string |  (optional)
-	venue := openapiclient.venue("BINANCE") // Venue | Exchange type (optional)
-	symbols := []string{"BTC/USDT"} // []string | Instrument Symbols array (optional)
+	instrumentIds := []string{"BINANCE:BTC/USDT"} // []string | Instrument ID array. Repeat the param to pass multiple values. (optional)
 	depth := int32(56) // int32 | Order book depth (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MarketAPI.ListMarketOrderBooks(context.Background()).InstrumentIds(instrumentIds).Venue(venue).Symbols(symbols).Depth(depth).Execute()
+	resp, r, err := apiClient.MarketAPI.ListMarketOrderBooks(context.Background()).InstrumentIds(instrumentIds).Depth(depth).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MarketAPI.ListMarketOrderBooks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -479,9 +616,7 @@ Other parameters are passed through a pointer to a apiListMarketOrderBooksReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **instrumentIds** | **[]string** |  | 
- **venue** | [**Venue**](Venue.md) | Exchange type | 
- **symbols** | **[]string** | Instrument Symbols array | 
+ **instrumentIds** | **[]string** | Instrument ID array. Repeat the param to pass multiple values. | 
  **depth** | **int32** | Order book depth | [default to 10]
 
 ### Return type
@@ -559,6 +694,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListMarketSecurities200Response**](ListMarketSecurities200Response.md)
+
+### Authorization
+
+[SupabaseOAuth2BearerAuth](../README.md#SupabaseOAuth2BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListMarketTickers
+
+> ListMarketTickers200Response ListMarketTickers(ctx).InstrumentIds(instrumentIds).Limit(limit).Offset(offset).Cursor(cursor).Execute()
+
+List market tickers
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/cyberapper/cadenza-client-go"
+)
+
+func main() {
+	instrumentIds := []string{"BINANCE:BTC/USDT"} // []string | Instrument ID array. Repeat the param to pass multiple values. (optional)
+	limit := int32(100) // int32 | Limit the number of returned results (optional) (default to 50)
+	offset := int32(0) // int32 | Offset of the returned results (optional) (default to 0)
+	cursor := "cursor_example" // string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.MarketAPI.ListMarketTickers(context.Background()).InstrumentIds(instrumentIds).Limit(limit).Offset(offset).Cursor(cursor).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `MarketAPI.ListMarketTickers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListMarketTickers`: ListMarketTickers200Response
+	fmt.Fprintf(os.Stdout, "Response from `MarketAPI.ListMarketTickers`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListMarketTickersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **instrumentIds** | **[]string** | Instrument ID array. Repeat the param to pass multiple values. | 
+ **limit** | **int32** | Limit the number of returned results | [default to 50]
+ **offset** | **int32** | Offset of the returned results | [default to 0]
+ **cursor** | **string** |  | 
+
+### Return type
+
+[**ListMarketTickers200Response**](ListMarketTickers200Response.md)
 
 ### Authorization
 

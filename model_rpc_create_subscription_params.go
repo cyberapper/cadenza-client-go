@@ -18,11 +18,12 @@ import (
 // checks if the RpcCreateSubscriptionParams type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &RpcCreateSubscriptionParams{}
 
-// RpcCreateSubscriptionParams Request to create a market data subscription
+// RpcCreateSubscriptionParams Request to create a market data subscription.  `subscriptionType` selects the data stream — for unified market data surfaces, use `MARKET.SUBSCRIPTION.ORDERBOOK`, `MARKET.SUBSCRIPTION.TICKER`, or `MARKET.SUBSCRIPTION.KLINE`. `interval` is required when `subscriptionType: MARKET.SUBSCRIPTION.KLINE` and ignored otherwise. 
 type RpcCreateSubscriptionParams struct {
 	Venue Venue `json:"venue"`
 	Instruments []string `json:"instruments,omitempty"`
 	SubscriptionType SubscriptionType `json:"subscriptionType"`
+	Interval *KlineInterval `json:"interval,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -127,6 +128,38 @@ func (o *RpcCreateSubscriptionParams) SetSubscriptionType(v SubscriptionType) {
 	o.SubscriptionType = v
 }
 
+// GetInterval returns the Interval field value if set, zero value otherwise.
+func (o *RpcCreateSubscriptionParams) GetInterval() KlineInterval {
+	if o == nil || IsNil(o.Interval) {
+		var ret KlineInterval
+		return ret
+	}
+	return *o.Interval
+}
+
+// GetIntervalOk returns a tuple with the Interval field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RpcCreateSubscriptionParams) GetIntervalOk() (*KlineInterval, bool) {
+	if o == nil || IsNil(o.Interval) {
+		return nil, false
+	}
+	return o.Interval, true
+}
+
+// HasInterval returns a boolean if a field has been set.
+func (o *RpcCreateSubscriptionParams) HasInterval() bool {
+	if o != nil && !IsNil(o.Interval) {
+		return true
+	}
+
+	return false
+}
+
+// SetInterval gets a reference to the given KlineInterval and assigns it to the Interval field.
+func (o *RpcCreateSubscriptionParams) SetInterval(v KlineInterval) {
+	o.Interval = &v
+}
+
 func (o RpcCreateSubscriptionParams) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -142,6 +175,9 @@ func (o RpcCreateSubscriptionParams) ToMap() (map[string]interface{}, error) {
 		toSerialize["instruments"] = o.Instruments
 	}
 	toSerialize["subscriptionType"] = o.SubscriptionType
+	if !IsNil(o.Interval) {
+		toSerialize["interval"] = o.Interval
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -189,6 +225,7 @@ func (o *RpcCreateSubscriptionParams) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "venue")
 		delete(additionalProperties, "instruments")
 		delete(additionalProperties, "subscriptionType")
+		delete(additionalProperties, "interval")
 		o.AdditionalProperties = additionalProperties
 	}
 

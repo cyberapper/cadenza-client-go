@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Channel** | **string** |  | 
-**Data** | [**Orderbook**](Orderbook.md) |  | 
+**Data** | [**OrderBook**](OrderBook.md) |  | 
 **SubscriptionId** | **string** | UUID string | 
 **Timestamp** | **int64** | Unix timestamp in milliseconds | 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewWsMarketOrderBookUpdate
 
-`func NewWsMarketOrderBookUpdate(channel string, data Orderbook, subscriptionId string, timestamp int64, ) *WsMarketOrderBookUpdate`
+`func NewWsMarketOrderBookUpdate(channel string, data OrderBook, subscriptionId string, timestamp int64, ) *WsMarketOrderBookUpdate`
 
 NewWsMarketOrderBookUpdate instantiates a new WsMarketOrderBookUpdate object
 This constructor will assign default values to properties that have it defined,
@@ -50,20 +50,20 @@ SetChannel sets Channel field to given value.
 
 ### GetData
 
-`func (o *WsMarketOrderBookUpdate) GetData() Orderbook`
+`func (o *WsMarketOrderBookUpdate) GetData() OrderBook`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *WsMarketOrderBookUpdate) GetDataOk() (*Orderbook, bool)`
+`func (o *WsMarketOrderBookUpdate) GetDataOk() (*OrderBook, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *WsMarketOrderBookUpdate) SetData(v Orderbook)`
+`func (o *WsMarketOrderBookUpdate) SetData(v OrderBook)`
 
 SetData sets Data field to given value.
 

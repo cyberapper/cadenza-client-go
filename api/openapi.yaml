@@ -522,8 +522,7 @@ paths:
         name: startTime
         required: false
         schema:
-          example: 1622505600000
-          type: integer
+          $ref: "#/components/schemas/millisecond"
         style: form
       - description: "End time (in unix milliseconds), of the created at field"
         explode: true
@@ -531,7 +530,7 @@ paths:
         name: endTime
         required: false
         schema:
-          type: integer
+          $ref: "#/components/schemas/millisecond"
         style: form
       - description: Limit the number of returned results
         explode: true
@@ -1061,8 +1060,7 @@ paths:
         name: userId
         required: false
         schema:
-          format: uuid
-          type: string
+          $ref: "#/components/schemas/uuidString"
         style: form
       - description: Filter by tenant ID
         explode: true
@@ -1262,8 +1260,7 @@ paths:
         name: startTime
         required: false
         schema:
-          example: 1622505600000
-          type: integer
+          $ref: "#/components/schemas/millisecond"
         style: form
       - description: "End time (in unix milliseconds), of the created at field"
         explode: true
@@ -1271,7 +1268,7 @@ paths:
         name: endTime
         required: false
         schema:
-          type: integer
+          $ref: "#/components/schemas/millisecond"
         style: form
       - description: Limit the number of returned results
         explode: true
@@ -1517,8 +1514,7 @@ paths:
         name: currency
         required: false
         schema:
-          example: USDT
-          type: string
+          $ref: "#/components/schemas/assetSymbol"
         style: form
       - description: Limit the number of returned results
         explode: true
@@ -2261,7 +2257,7 @@ paths:
       - Market
   /api/v3/market/orderBook/get:
     get:
-      description: Get order book for a specific instrument. instrumentId or venue+symbol
+      description: Get order book for a specific instrument.
       operationId: getMarketOrderBook
       parameters:
       - description: Instrument ID
@@ -2271,23 +2267,6 @@ paths:
         required: false
         schema:
           $ref: "#/components/schemas/instrumentId"
-        style: form
-      - description: Exchange type
-        explode: true
-        in: query
-        name: venue
-        required: false
-        schema:
-          $ref: "#/components/schemas/venue"
-        style: form
-      - description: Instrument Symbol
-        explode: true
-        in: query
-        name: symbol
-        required: false
-        schema:
-          example: BTC/USDT
-          type: string
         style: form
       - description: Order book depth
         explode: true
@@ -2342,37 +2321,17 @@ paths:
       - Market
   /api/v3/market/orderBook/list:
     get:
-      description: List order books for multiple instruments
+      description: List order books for multiple instruments. Filter by `instrumentIds`.
       operationId: listMarketOrderBooks
       parameters:
-      - explode: true
+      - description: Instrument ID array. Repeat the param to pass multiple values.
+        explode: true
         in: query
         name: instrumentIds
         required: false
         schema:
           items:
-            description: Instrument ID
-            example: BINANCE:BTC/USDT
-            type: string
-          type: array
-        style: form
-      - description: Exchange type
-        explode: true
-        in: query
-        name: venue
-        required: false
-        schema:
-          $ref: "#/components/schemas/venue"
-        style: form
-      - description: Instrument Symbols array
-        explode: true
-        in: query
-        name: symbols
-        required: false
-        schema:
-          items:
-            example: BTC/USDT
-            type: string
+            $ref: "#/components/schemas/instrumentId"
           type: array
         style: form
       - description: Order book depth
@@ -2426,6 +2385,239 @@ paths:
       summary: List market order books
       tags:
       - Market
+  /api/v3/market/ticker/get:
+    get:
+      description: Get ticker for a specific instrument.
+      operationId: getMarketTicker
+      parameters:
+      - description: Instrument ID
+        explode: true
+        in: query
+        name: instrumentId
+        required: false
+        schema:
+          $ref: "#/components/schemas/instrumentId"
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getMarketTicker_200_response"
+          description: Get market ticker response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Get market ticker
+      tags:
+      - Market
+  /api/v3/market/ticker/list:
+    get:
+      description: List tickers for screening — filter by `instrumentIds`.
+      operationId: listMarketTickers
+      parameters:
+      - description: Instrument ID array. Repeat the param to pass multiple values.
+        explode: true
+        in: query
+        name: instrumentIds
+        required: false
+        schema:
+          items:
+            $ref: "#/components/schemas/instrumentId"
+          type: array
+        style: form
+      - description: Limit the number of returned results
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          example: 100
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      - description: Offset of the returned results
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          example: 0
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          description: Cursor for next page
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listMarketTickers_200_response"
+          description: List market tickers response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: List market tickers
+      tags:
+      - Market
+  /api/v3/market/kline/get:
+    get:
+      description: |
+        Get klines (candlestick data) for a specific instrument and interval.
+        Returns a single `kline` object containing an array of OHLCV candles.
+
+        Returns `isClosed: true` for historical-only queries; `isClosed: false` only when
+        the queried range includes the live (currently forming) bar.
+      operationId: getMarketKline
+      parameters:
+      - description: Instrument ID
+        explode: true
+        in: query
+        name: instrumentId
+        required: false
+        schema:
+          $ref: "#/components/schemas/instrumentId"
+        style: form
+      - description: "Kline interval (e.g. `1m`, `5m`, `1h`, `1d`)"
+        explode: true
+        in: query
+        name: interval
+        required: true
+        schema:
+          $ref: "#/components/schemas/klineInterval"
+        style: form
+      - description: "Range start (Unix timestamp in milliseconds, inclusive)"
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          $ref: "#/components/schemas/millisecond"
+        style: form
+      - description: "Range end (Unix timestamp in milliseconds, inclusive)"
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          $ref: "#/components/schemas/millisecond"
+        style: form
+      - description: Limit the number of returned results
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          example: 100
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getMarketKline_200_response"
+          description: Get market kline response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Get market kline
+      tags:
+      - Market
   /api/v3/quote/rfq:
     post:
       description: Request a firm quote from the RFQ dealer. The quote is a bilateral
@@ -2477,6 +2669,332 @@ paths:
       summary: Request for Quote
       tags:
       - Trading
+  /api/v3/fermata/dealer/create:
+    post:
+      description: "Create a new dealer account in the Fermata venue. Admin only.\
+        \ Provisions a Trading Account (venue=FERMATA), a dealer wallet in the Formance\
+        \ Ledger, and dealer configuration."
+      operationId: fermataCreateDealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataCreateDealerRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateDealer_200_response"
+          description: Fermata dealer details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Create dealer
+      tags:
+      - Fermata
+  /api/v3/fermata/dealer/get:
+    get:
+      description: "Get a single dealer by ID, including configuration and linked\
+        \ accounts."
+      operationId: fermataGetDealer
+      parameters:
+      - description: Dealer account ID
+        explode: true
+        in: query
+        name: dealerAccountId
+        required: true
+        schema:
+          $ref: "#/components/schemas/uuidString"
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateDealer_200_response"
+          description: Fermata dealer details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Get dealer
+      tags:
+      - Fermata
+  /api/v3/fermata/dealer/list:
+    get:
+      description: List dealers with optional status filter. Admin only.
+      operationId: fermataListDealers
+      parameters:
+      - description: Filter by dealer status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: "#/components/schemas/dealerStatus"
+        style: form
+      - description: Limit the number of returned results
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          example: 100
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      - description: Offset of the returned results
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          example: 0
+          minimum: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          description: Cursor for next page
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataListDealers_200_response"
+          description: Fermata dealer list response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: List dealers
+      tags:
+      - Fermata
+  /api/v3/fermata/dealer/pause:
+    post:
+      description: Pause a dealer — stops quoting but continues hedging open positions.
+        Admin only.
+      operationId: fermataPauseDealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataPauseDealerRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateDealer_200_response"
+          description: Fermata dealer details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Pause dealer
+      tags:
+      - Fermata
+  /api/v3/fermata/dealer/resume:
+    post:
+      description: Resume a paused dealer — restores quoting capability. Admin only.
+      operationId: fermataResumeDealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataResumeDealerRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateDealer_200_response"
+          description: Fermata dealer details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Resume dealer
+      tags:
+      - Fermata
+  /api/v3/fermata/dealer/archive:
+    post:
+      description: Archive a dealer — permanently stops all operations. All open positions
+        must be closed before archiving. Admin only.
+      operationId: fermataArchiveDealer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fermataArchiveDealerRequest"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateDealer_200_response"
+          description: Fermata dealer details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Archive dealer
+      tags:
+      - Fermata
   /api/v3/fermata/dealer/link:
     post:
       description: Link an existing exchange trading account to the dealer as a liquidity
@@ -2623,6 +3141,59 @@ paths:
                 $ref: "#/components/schemas/baseResponse"
           description: Internal server error
       summary: Create wallet
+      tags:
+      - Fermata
+  /api/v3/fermata/wallet/get:
+    get:
+      description: "Get a single wallet by ID, including balances and status."
+      operationId: fermataGetWallet
+      parameters:
+      - description: Wallet ID
+        explode: true
+        in: query
+        name: walletId
+        required: true
+        schema:
+          $ref: "#/components/schemas/uuidString"
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/fermataCreateWallet_200_response"
+          description: Fermata wallet details response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Unauthorized - Authentication required
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Forbidden - Insufficient permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/baseResponse"
+          description: Internal server error
+      summary: Get wallet
       tags:
       - Fermata
   /api/v3/fermata/wallet/list:
@@ -2942,11 +3513,16 @@ paths:
 
         Subscribe to channels for real-time updates:
 
-        | Channel Pattern | Description |
-        |-----------------|-------------|
-        | `tradingAccount:{accountId}` | Trading account updates (orders, portfolio, balances) |
-        | `market:orderBook:{instrumentId}` | Order book updates for an instrument |
-        | `market:trade:{instrumentId}` | Trade updates for an instrument |
+        | Channel Pattern | Payload Schema | Description |
+        |-----------------|----------------|-------------|
+        | `tradingAccount:{accountId}` | — | Trading account updates (orders, portfolio, balances) |
+        | `market:orderbook:{venue}:{symbol}` | `orderBook` | Order book updates (`updateType` ∈ SNAPSHOT \| DIFF \| DELTA) |
+        | `market:ticker:{venue}:{symbol}` | `ticker` | Per-instrument ticker updates |
+        | `market:ticker:{venue}` | `ticker` | Venue-wide ticker fanout (live screening) |
+        | `market:kline:{venue}:{symbol}:{interval}` | `kline` | Kline updates (`isClosed: false` while live, `true` on bar close) |
+        | `market:trade:{venue}:{symbol}` | — | Trade updates for an instrument |
+
+        Channel publications carry the same `orderBook` / `ticker` / `kline` schemas used by REST and WebSocket RPC.
 
         ## Message Format
 
@@ -3219,15 +3795,16 @@ components:
           type: string
         type: array
       style: form
-    instrumentSymbol:
-      description: Instrument Symbol
+    instrumentIds:
+      description: Instrument ID array. Repeat the param to pass multiple values.
       explode: true
       in: query
-      name: symbol
+      name: instrumentIds
       required: false
       schema:
-        example: BTC/USDT
-        type: string
+        items:
+          $ref: "#/components/schemas/instrumentId"
+        type: array
       style: form
     currency:
       description: Currency
@@ -3236,8 +3813,7 @@ components:
       name: currency
       required: false
       schema:
-        example: USDT
-        type: string
+        $ref: "#/components/schemas/assetSymbol"
       style: form
     securityType:
       description: Security type
@@ -3276,8 +3852,7 @@ components:
       name: startTime
       required: false
       schema:
-        example: 1622505600000
-        type: integer
+        $ref: "#/components/schemas/millisecond"
       style: form
     endTime:
       description: "End time (in unix milliseconds), of the created at field"
@@ -3286,7 +3861,7 @@ components:
       name: endTime
       required: false
       schema:
-        type: integer
+        $ref: "#/components/schemas/millisecond"
       style: form
     limit:
       description: Limit the number of returned results
@@ -3322,6 +3897,24 @@ components:
         description: Cursor for next page
         type: string
       style: form
+    dealerAccountId:
+      description: Dealer account ID
+      explode: true
+      in: query
+      name: dealerAccountId
+      required: true
+      schema:
+        $ref: "#/components/schemas/uuidString"
+      style: form
+    dealerStatus:
+      description: Filter by dealer status
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        $ref: "#/components/schemas/dealerStatus"
+      style: form
     walletType:
       description: Filter by wallet type
       explode: true
@@ -3348,8 +3941,7 @@ components:
       name: userId
       required: false
       schema:
-        format: uuid
-        type: string
+        $ref: "#/components/schemas/uuidString"
       style: form
     tenantId:
       description: Filter by tenant ID
@@ -3554,12 +4146,42 @@ components:
           schema:
             $ref: "#/components/schemas/listMarketOrderBooks_200_response"
       description: List market order books response
+    tickerResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/getMarketTicker_200_response"
+      description: Get market ticker response
+    listMarketTickersResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listMarketTickers_200_response"
+      description: List market tickers response
+    klineResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/getMarketKline_200_response"
+      description: Get market kline response
     quoteRfqResponse:
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/quoteRfq_200_response"
       description: RFQ quote response
+    fermataDealerResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/fermataCreateDealer_200_response"
+      description: Fermata dealer details response
+    fermataDealerListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/fermataListDealers_200_response"
+      description: Fermata dealer list response
     fermataWalletResponse:
       content:
         application/json:
@@ -3651,6 +4273,13 @@ components:
       description: UUID string
       format: uuid
       type: string
+    quoteTtl:
+      default: 10
+      description: Time to live in seconds
+      example: 10
+      maximum: 300
+      minimum: 1
+      type: integer
     authSignupRequest:
       properties:
         email:
@@ -4036,6 +4665,14 @@ components:
       description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
       example: BINANCE:BTC/USDT
       type: string
+    instrumentSymbol:
+      description: "Trading pair symbol in format {BASE}/{QUOTE}"
+      example: BTC/USDT
+      type: string
+    assetSymbol:
+      description: "Asset symbol (e.g. currency code, base asset)"
+      example: USDT
+      type: string
     idempotencyKey:
       description: Idempotency key to prevent duplicate request processing
       example: my_unique_request_id
@@ -4159,6 +4796,14 @@ components:
       - ACCOUNTING
       example: CLIENT
       type: string
+    dealerStatus:
+      description: Status of a Fermata dealer
+      enum:
+      - ACTIVE
+      - PAUSED
+      - ARCHIVED
+      example: ACTIVE
+      type: string
     walletStatus:
       description: Status of a Fermata wallet
       enum:
@@ -4250,17 +4895,25 @@ components:
       example: SNAPSHOT
       type: string
     subscriptionType:
-      description: Type of data subscription
+      description: |
+        Type of data subscription. Format: `{LEVEL}.SUBSCRIPTION.{TYPE}`.
+
+        Market-level subscriptions stream public market data; trading-account-level
+        subscriptions stream account-scoped data.
+
+        `TRADING_ACCOUNT.SUBSCRIPTION.TRADING_ACCOUNT` is deprecated — use
+        `TRADING_ACCOUNT.SUBSCRIPTION.USER_DATA` instead (which combines `PORTFOLIO`
+        and `EXECUTION_REPORT`).
       enum:
-      - ORDERBOOK
-      - TRADE
-      - TICKER
-      - KLINE
-      - USER_DATA
-      - PORTFOLIO
-      - EXECUTION_REPORT
-      - TRADING_ACCOUNT
-      example: ORDERBOOK
+      - MARKET.SUBSCRIPTION.ORDERBOOK
+      - MARKET.SUBSCRIPTION.TRADE
+      - MARKET.SUBSCRIPTION.TICKER
+      - MARKET.SUBSCRIPTION.KLINE
+      - TRADING_ACCOUNT.SUBSCRIPTION.USER_DATA
+      - TRADING_ACCOUNT.SUBSCRIPTION.PORTFOLIO
+      - TRADING_ACCOUNT.SUBSCRIPTION.EXECUTION_REPORT
+      - TRADING_ACCOUNT.SUBSCRIPTION.TRADING_ACCOUNT
+      example: MARKET.SUBSCRIPTION.ORDERBOOK
       type: string
     subscriptionStatus:
       description: Status of a subscription
@@ -4709,7 +5362,7 @@ components:
       type: object
     financialSecurity:
       example:
-        symbol: BTC
+        symbol: USDT
         venue: BINANCE
         minQuantity: "1234.56789000"
         securityType: CRYPTO
@@ -4723,8 +5376,8 @@ components:
           example: BINANCE:BTC
           type: string
         symbol:
-          description: Symbol
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         venue:
           $ref: "#/components/schemas/venue"
@@ -4753,7 +5406,7 @@ components:
       example:
         pipSize: "1234.56789000"
         venue: BINANCE
-        symbol: BTC/USD
+        symbol: BTC/USDT
         icebergMinQuantity: "1234.56789000"
         maxQuantity: "1234.56789000"
         instrumentId: BINANCE:BTC/USDT
@@ -4796,8 +5449,8 @@ components:
         venue:
           $ref: "#/components/schemas/venue"
         symbol:
-          description: Human-readable symbol format
-          example: BTC/USD
+          description: "Trading pair symbol in format {BASE}/{QUOTE}"
+          example: BTC/USDT
           type: string
         externalSymbol:
           description: Symbol format used by the exchange
@@ -5441,7 +6094,7 @@ components:
           format: uuid
           type: string
         currency:
-          description: Base currency for the portfolio summary
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         leverage:
@@ -5553,7 +6206,7 @@ components:
         venue: BINANCE
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-        subscriptionType: ORDERBOOK
+        subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
         instrumentId: BINANCE:BTC/USDT
         lastEventTimestamp: 1632933600000
         tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -5624,28 +6277,112 @@ components:
       - status
       - venue
       type: object
-    orderbookEntry:
-      description: "[price, quantity]"
+    klineInterval:
+      description: Kline (candlestick) interval. Not all venues support every interval
+        — refer to the venue's connector for the supported set.
+      enum:
+      - 1s
+      - 1m
+      - 3m
+      - 5m
+      - 15m
+      - 30m
+      - 1h
+      - 2h
+      - 4h
+      - 6h
+      - 8h
+      - 12h
+      - 1d
+      - 3d
+      - 1w
+      - 1M
+      example: 1m
+      type: string
+    updateType:
+      description: |
+        How the client should apply the order book payload.
+
+        - `SNAPSHOT`: Full state of the book at `timestamp`. Client replaces its local view.
+        - `DIFF`: Incremental change since previous message. Client applies per-level: zero quantity removes the level, non-zero upserts.
+        - `DELTA`: Reconciliation delta against a known reference state (venue-specific semantics — document per-connector).
+      enum:
+      - SNAPSHOT
+      - DIFF
+      - DELTA
+      example: SNAPSHOT
+      type: string
+    orderBookType:
+      description: |
+        Level encoding of the order book. The `columns` array describes the positional layout of each entry in `bids` / `asks`.
+
+        | Value | columns | Price unique | Description |
+        | -- | -- | -- | -- |
+        | `L2` | `[price, quantity]` | Yes | Standard price-aggregated depth (default) |
+        | `L2_COUNTED` | `[price, quantity, orderCount]` | Yes | L2 + number of orders at level (e.g. OKX) |
+        | `L3` | `[price, quantity]` | No | Per-order depth — same price can repeat |
+        | `L3_COUNTED` | `[price, quantity, orderId]` | No | L3 + exchange order ID (when venue provides it) |
+        | `L2_EXCHANGE` | `[price, quantity, exchange]` | Per exchange | Cross-venue aggregated book (client SDK or IBKR Smart Depth) |
+        | `VWAP` | `[price, quantity]` | Yes | Quantity-aggregated — price is VWAP, quantity is cumulative |
+      enum:
+      - L2
+      - L2_COUNTED
+      - L3
+      - L3_COUNTED
+      - L2_EXCHANGE
+      - VWAP
+      example: L2
+      type: string
+    orderBookEntry:
+      description: |
+        Order book row. Field positions are determined by `columns` in the parent
+        snapshot — tuple length must match `columns.length`. All values are strings
+        to preserve decimal precision.
+      example:
+      - "50000.00"
+      - "1.5"
+      - "3"
       items:
-        $ref: "#/components/schemas/decimal"
-      maxItems: 2
+        type: string
+      maxItems: 4
       minItems: 2
       type: array
-    orderbook:
+    orderBook:
+      description: |
+        Unified order book payload. Used identically in REST responses (`GET /api/v3/market/orderBook/*`),
+        WebSocket RPC results (`query.orderbook.get` / `query.orderbook.list`), and Centrifugo channel
+        publications (`market:orderbook:{venue}:{symbol}`).
+
+        REST `get` and `list` always return `updateType: SNAPSHOT`. Streaming surfaces may emit
+        `SNAPSHOT`, `DIFF`, or `DELTA`.
       example:
         venue: BINANCE
         symbol: BTC/USDT
         instrumentId: BINANCE:BTC/USDT
+        columns:
+        - price
+        - quantity
+        - orderCount
         asks:
-        - - "1234.56789000"
-          - "1234.56789000"
-        - - "1234.56789000"
-          - "1234.56789000"
+        - - "50000.00"
+          - "1.5"
+          - "3"
+        - - "50000.00"
+          - "1.5"
+          - "3"
         bids:
-        - null
-        - null
+        - - "50000.00"
+          - "1.5"
+          - "3"
+        - - "50000.00"
+          - "1.5"
+          - "3"
+        orderBookType: L2
+        updateType: SNAPSHOT
         timestamp: 1632933600000
       properties:
+        updateType:
+          $ref: "#/components/schemas/updateType"
         instrumentId:
           description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
           example: BINANCE:BTC/USDT
@@ -5653,15 +6390,31 @@ components:
         venue:
           $ref: "#/components/schemas/venue"
         symbol:
+          description: "Trading pair symbol in format {BASE}/{QUOTE}"
           example: BTC/USDT
           type: string
-        asks:
+        orderBookType:
+          $ref: "#/components/schemas/orderBookType"
+        columns:
+          description: |
+            Positional layout of each entry in `bids` / `asks`. Length must equal each row tuple length.
+            Determined by `orderBookType` (e.g. `L2_COUNTED` → `["price", "quantity", "orderCount"]`).
+          example:
+          - price
+          - quantity
+          - orderCount
           items:
-            $ref: "#/components/schemas/orderbookEntry"
+            type: string
           type: array
         bids:
+          description: Bid rows (sorted by price descending)
           items:
-            $ref: "#/components/schemas/orderbookEntry"
+            $ref: "#/components/schemas/orderBookEntry"
+          type: array
+        asks:
+          description: Ask rows (sorted by price ascending)
+          items:
+            $ref: "#/components/schemas/orderBookEntry"
           type: array
         timestamp:
           description: Unix timestamp in milliseconds
@@ -5671,6 +6424,165 @@ components:
       required:
       - asks
       - bids
+      - columns
+      - orderBookType
+      - symbol
+      - timestamp
+      - updateType
+      - venue
+      type: object
+    ticker:
+      description: |
+        Unified ticker payload. Used identically in REST responses (`GET /api/v3/market/ticker/*`),
+        WebSocket RPC results (`query.ticker.get` / `query.ticker.list`), and Centrifugo channel
+        publications (`market:ticker:{venue}:{symbol}`, `market:ticker:{venue}`).
+      example:
+        venue: BINANCE
+        symbol: BTC/USDT
+        bidQuantity: "1234.56789000"
+        askPrice: "1234.56789000"
+        instrumentId: BINANCE:BTC/USDT
+        askQuantity: "1234.56789000"
+        lastQuantity: "1234.56789000"
+        bidPrice: "1234.56789000"
+        lastPrice: "1234.56789000"
+        timestamp: 1632933600000
+      properties:
+        instrumentId:
+          description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
+          example: BINANCE:BTC/USDT
+          type: string
+        venue:
+          $ref: "#/components/schemas/venue"
+        symbol:
+          description: "Trading pair symbol in format {BASE}/{QUOTE}"
+          example: BTC/USDT
+          type: string
+        lastPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        lastQuantity:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        bidPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        bidQuantity:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        askPrice:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        askQuantity:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        timestamp:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+      required:
+      - symbol
+      - timestamp
+      - venue
+      type: object
+    klineCandle:
+      description: |
+        Fixed-position OHLCV tuple.
+
+        | Position | Field | Type | Required |
+        | -- | -- | -- | -- |
+        | 0 | `openTime` | int (ms) | Yes |
+        | 1 | `open` | string (decimal) | Yes |
+        | 2 | `high` | string (decimal) | Yes |
+        | 3 | `low` | string (decimal) | Yes |
+        | 4 | `close` | string (decimal) | Yes |
+        | 5 | `volume` | string (decimal) \| null | Optional — venues without volume (e.g. CFD) emit `null` |
+      example:
+      - 1703052540000
+      - "50000"
+      - "50050"
+      - "49990"
+      - "50010"
+      - "12.34"
+      items: {}
+      maxItems: 6
+      minItems: 6
+      type: array
+    kline:
+      description: |
+        Unified kline payload. Used identically in REST responses (`GET /api/v3/market/kline/list`),
+        WebSocket RPC results (`query.kline.list`), and Centrifugo channel publications
+        (`market:kline:{venue}:{symbol}:{interval}`).
+
+        Each candle is a fixed-position OHLCV tuple (no `columns` field). REST returns
+        `isClosed: true` for historical-only queries; `isClosed: false` only when the queried
+        range includes the live bar. Streaming surfaces emit `false` while the current bar
+        is forming and `true` when it closes.
+      example:
+        venue: BINANCE
+        symbol: BTC/USDT
+        isClosed: true
+        instrumentId: BINANCE:BTC/USDT
+        interval: 1m
+        candles:
+        - - 1703052540000
+          - "50000"
+          - "50050"
+          - "49990"
+          - "50010"
+          - "12.34"
+        - - 1703052540000
+          - "50000"
+          - "50050"
+          - "49990"
+          - "50010"
+          - "12.34"
+        timestamp: 1632933600000
+      properties:
+        instrumentId:
+          description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
+          example: BINANCE:BTC/USDT
+          type: string
+        venue:
+          $ref: "#/components/schemas/venue"
+        symbol:
+          description: "Trading pair symbol in format {BASE}/{QUOTE}"
+          example: BTC/USDT
+          type: string
+        interval:
+          $ref: "#/components/schemas/klineInterval"
+        candles:
+          description: OHLCV tuples ordered ascending by `openTime`.
+          items:
+            $ref: "#/components/schemas/klineCandle"
+          type: array
+        isClosed:
+          description: |
+            Whether the **last** candle in `candles` is finalized. Historical candles before
+            the last are always closed.
+          type: boolean
+        timestamp:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+      required:
+      - candles
+      - interval
+      - isClosed
       - symbol
       - timestamp
       - venue
@@ -5803,6 +6715,88 @@ components:
       - quoteId
       - quoteQuantity
       - status
+      type: object
+    fermataDealer:
+      description: Fermata dealer entity — a principal trading counterparty in the
+        Fermata venue
+      example:
+        linkedAccountIds:
+        - null
+        - null
+        createdAt: 1632933600000
+        updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+        riskThreshold: "100.50"
+        baseCurrencies:
+        - USD
+        - USDT
+        - USDC
+        dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        name: Main Dealer
+        config:
+          key: ""
+        createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+        status: ACTIVE
+        updatedAt: 1632933600000
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+        name:
+          description: Human-readable dealer name
+          example: Main Dealer
+          type: string
+        status:
+          $ref: "#/components/schemas/dealerStatus"
+        baseCurrencies:
+          description: Base currencies the dealer settles in
+          example:
+          - USD
+          - USDT
+          - USDC
+          items:
+            type: string
+          type: array
+        riskThreshold:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        linkedAccountIds:
+          description: Trading account IDs of exchange accounts linked as liquidity
+            providers
+          items:
+            $ref: "#/components/schemas/uuidString"
+          type: array
+        config:
+          additionalProperties: true
+          description: "Additional dealer configuration (spreads, fees, etc.)"
+          type: object
+        createdAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        createdAtDateTime:
+          description: Creation timestamp in ISO 8601 format
+          format: date-time
+          type: string
+        updatedAt:
+          description: Unix timestamp in milliseconds
+          example: 1632933600000
+          format: int64
+          type: integer
+        updatedAtDateTime:
+          description: Last update timestamp in ISO 8601 format
+          format: date-time
+          type: string
+      required:
+      - baseCurrencies
+      - createdAt
+      - dealerAccountId
+      - name
+      - status
+      - updatedAt
       type: object
     fermataWallet:
       description: Fermata wallet entity
@@ -6222,9 +7216,85 @@ components:
           description: Client-provided reference for idempotency and tracking
           example: my-quote-request-001
           type: string
+        ttl:
+          default: 10
+          description: Time to live in seconds
+          example: 10
+          maximum: 300
+          minimum: 1
+          type: integer
+        expireAt:
+          description: "Absolute expiry timestamp (ISO 8601). Mutually exclusive with\
+            \ ttl. If neither ttl nor expireAt is set, defaults to 10 seconds from\
+            \ quote creation."
+          example: 2026-03-31T12:00:10Z
+          format: date-time
+          type: string
+        pricingProfileId:
+          description: UUID string
+          format: uuid
+          type: string
       required:
       - dealerAccountId
       - orderSide
+      type: object
+    fermataCreateDealerRequest:
+      description: Create a new dealer in the Fermata venue
+      properties:
+        name:
+          description: Human-readable dealer name
+          example: Main Dealer
+          type: string
+        baseCurrencies:
+          description: Base currencies the dealer settles in
+          example:
+          - USDT
+          - USDC
+          items:
+            type: string
+          type: array
+        riskThreshold:
+          description: Positive decimal value as string
+          example: "100.50"
+          pattern: ^\d+(\.\d+)?$
+          type: string
+        config:
+          additionalProperties: true
+          description: Additional dealer configuration
+          type: object
+      required:
+      - baseCurrencies
+      - name
+      type: object
+    fermataPauseDealerRequest:
+      description: Pause a dealer
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - dealerAccountId
+      type: object
+    fermataResumeDealerRequest:
+      description: Resume a paused dealer
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - dealerAccountId
+      type: object
+    fermataArchiveDealerRequest:
+      description: Archive a dealer
+      properties:
+        dealerAccountId:
+          description: UUID string
+          format: uuid
+          type: string
+      required:
+      - dealerAccountId
       type: object
     fermataLinkDealerRequest:
       description: Link an exchange trading account to a dealer as a liquidity provider
@@ -6373,7 +7443,7 @@ components:
           - market.orderBook
           type: string
         data:
-          $ref: "#/components/schemas/orderbook"
+          $ref: "#/components/schemas/orderBook"
         subscriptionId:
           description: UUID string
           format: uuid
@@ -8172,7 +9242,8 @@ components:
           description: Filter by venue
           type: string
         currency:
-          description: Filter by currency
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         pagination:
           $ref: "#/components/schemas/rpcPagination"
@@ -8324,7 +9395,7 @@ components:
           format: uuid
           type: string
         currency:
-          description: Summary currency
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         leverage:
@@ -8361,16 +9432,11 @@ components:
           type: string
       type: object
     rpcGetOrderBookParams:
-      description: Request to get order book for an instrument
+      description: Request to get order book for an instrument.
       properties:
         instrumentId:
-          description: "Instrument ID (e.g., BINANCE:BTC/USDT)"
-          type: string
-        venue:
-          description: Venue (alternative to instrumentId)
-          type: string
-        symbol:
-          description: Symbol (alternative to instrumentId)
+          description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
+          example: BINANCE:BTC/USDT
           type: string
         depth:
           default: 10
@@ -8381,7 +9447,7 @@ components:
       description: Response containing order book
       properties:
         data:
-          $ref: "#/components/schemas/rpcOrderBook"
+          $ref: "#/components/schemas/orderBook"
         error:
           $ref: "#/components/schemas/rpcError"
       type: object
@@ -8411,7 +9477,7 @@ components:
       properties:
         data:
           items:
-            $ref: "#/components/schemas/rpcOrderBook"
+            $ref: "#/components/schemas/orderBook"
           type: array
         error:
           $ref: "#/components/schemas/rpcError"
@@ -8462,52 +9528,6 @@ components:
         error:
           $ref: "#/components/schemas/rpcError"
       type: object
-    rpcOrderBook:
-      description: Order book model
-      properties:
-        instrumentId:
-          description: Instrument ID
-          example: BINANCE:BTC/USDT
-          type: string
-        venue:
-          description: Venue
-          type: string
-        symbol:
-          description: Trading pair symbol
-          type: string
-        bids:
-          description: Bid orders (sorted by price descending)
-          items:
-            $ref: "#/components/schemas/rpcOrderBookLevel"
-          type: array
-        asks:
-          description: Ask orders (sorted by price ascending)
-          items:
-            $ref: "#/components/schemas/rpcOrderBookLevel"
-          type: array
-        timestamp:
-          description: Timestamp in ISO 8601 format (RFC3339). This is the native
-            format used by Go's time.Time.
-          example: 2023-09-29T12:00:00Z
-          format: date-time
-          type: string
-        sequenceNumber:
-          description: Sequence number for ordering updates
-          format: int64
-          type: integer
-      type: object
-    rpcOrderBookLevel:
-      description: Single price level in order book
-      properties:
-        price:
-          description: Price level
-          example: "50000.00"
-          type: string
-        quantity:
-          description: Quantity at this price
-          example: "1.5"
-          type: string
-      type: object
     rpcSubscription:
       description: Subscription model
       properties:
@@ -8545,7 +9565,7 @@ components:
       description: Order book update event (pushed via WebSocket)
       properties:
         data:
-          $ref: "#/components/schemas/rpcOrderBook"
+          $ref: "#/components/schemas/orderBook"
       type: object
     rpcGetSystemInfoParams:
       description: Request to get system information
@@ -9155,12 +10175,13 @@ components:
       description: Financial instrument
       properties:
         instrumentId:
-          description: "Unique instrument identifier (format: VENUE:BASE/QUOTE)"
+          description: "Instrument ID in format {VENUE}:{BASE}/{QUOTE}"
           example: BINANCE:BTC/USDT
           type: string
         venue:
           $ref: "#/components/schemas/venue"
         symbol:
+          description: "Trading pair symbol in format {BASE}/{QUOTE}"
           example: BTC/USDT
           type: string
         externalSymbol:
@@ -9324,7 +10345,8 @@ components:
         securityId:
           type: string
         symbol:
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         externalSymbol:
           type: string
@@ -9358,7 +10380,7 @@ components:
       properties:
         orderBooks:
           items:
-            $ref: "#/components/schemas/rpcOrderBook"
+            $ref: "#/components/schemas/orderBook"
           type: array
       required:
       - orderBooks
@@ -9368,7 +10390,7 @@ components:
       properties:
         data:
           items:
-            $ref: "#/components/schemas/rpcOrderBook"
+            $ref: "#/components/schemas/orderBook"
           type: array
         error:
           $ref: "#/components/schemas/rpcError"
@@ -9402,7 +10424,7 @@ components:
       properties:
         klines:
           items:
-            $ref: "#/components/schemas/rpcKline"
+            $ref: "#/components/schemas/kline"
           type: array
       required:
       - klines
@@ -9412,7 +10434,7 @@ components:
       properties:
         data:
           items:
-            $ref: "#/components/schemas/rpcKline"
+            $ref: "#/components/schemas/kline"
           type: array
         error:
           $ref: "#/components/schemas/rpcError"
@@ -9431,66 +10453,24 @@ components:
             type: string
           type: array
         interval:
-          example: 1h
-          type: string
+          $ref: "#/components/schemas/klineInterval"
       type: object
     rpcListKlinesResult:
       description: Response for listing klines
       properties:
         data:
           items:
-            $ref: "#/components/schemas/rpcKline"
+            $ref: "#/components/schemas/kline"
           type: array
         error:
           $ref: "#/components/schemas/rpcError"
-      type: object
-    rpcKline:
-      description: Kline (candlestick) data
-      properties:
-        instrumentId:
-          example: BINANCE:BTC/USDT
-          type: string
-        symbol:
-          type: string
-        interval:
-          example: 1h
-          type: string
-        candles:
-          items:
-            $ref: "#/components/schemas/rpcOhlcv"
-          type: array
-      type: object
-    rpcOhlcv:
-      description: OHLCV candlestick data
-      properties:
-        t:
-          description: Open time
-          format: date-time
-          type: string
-        interval:
-          type: string
-        o:
-          description: Open price (decimal)
-          type: string
-        h:
-          description: High price (decimal)
-          type: string
-        l:
-          description: Low price (decimal)
-          type: string
-        c:
-          description: Close price (decimal)
-          type: string
-        v:
-          description: Volume (decimal)
-          type: string
       type: object
     rpcSaveTickersParams:
       description: Request to save tickers
       properties:
         tickers:
           items:
-            $ref: "#/components/schemas/rpcTicker"
+            $ref: "#/components/schemas/ticker"
           type: array
       required:
       - tickers
@@ -9500,7 +10480,7 @@ components:
       properties:
         data:
           items:
-            $ref: "#/components/schemas/rpcTicker"
+            $ref: "#/components/schemas/ticker"
           type: array
         error:
           $ref: "#/components/schemas/rpcError"
@@ -9524,48 +10504,18 @@ components:
       properties:
         data:
           items:
-            $ref: "#/components/schemas/rpcTicker"
+            $ref: "#/components/schemas/ticker"
           type: array
         error:
           $ref: "#/components/schemas/rpcError"
       type: object
-    rpcTicker:
-      description: Market ticker data
-      properties:
-        instrumentId:
-          example: BINANCE:BTC/USDT
-          type: string
-        symbol:
-          type: string
-        exchange:
-          type: string
-        exchangeTime:
-          format: date-time
-          type: string
-        time:
-          format: date-time
-          type: string
-        ask:
-          description: Ask price (decimal)
-          type: string
-        askQuantity:
-          description: Ask quantity (decimal)
-          type: string
-        bid:
-          description: Bid price (decimal)
-          type: string
-        bidQuantity:
-          description: Bid quantity (decimal)
-          type: string
-        last:
-          description: Last price (decimal)
-          type: string
-        lastQuantity:
-          description: Last quantity (decimal)
-          type: string
-      type: object
     rpcCreateSubscriptionParams:
-      description: Request to create a market data subscription
+      description: |
+        Request to create a market data subscription.
+
+        `subscriptionType` selects the data stream — for unified market data surfaces, use
+        `MARKET.SUBSCRIPTION.ORDERBOOK`, `MARKET.SUBSCRIPTION.TICKER`, or `MARKET.SUBSCRIPTION.KLINE`.
+        `interval` is required when `subscriptionType: MARKET.SUBSCRIPTION.KLINE` and ignored otherwise.
       properties:
         venue:
           $ref: "#/components/schemas/venue"
@@ -9575,6 +10525,8 @@ components:
           type: array
         subscriptionType:
           $ref: "#/components/schemas/subscriptionType"
+        interval:
+          $ref: "#/components/schemas/klineInterval"
       required:
       - subscriptionType
       - venue
@@ -10842,7 +11794,7 @@ components:
           venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: ORDERBOOK
+          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -10880,7 +11832,7 @@ components:
         - venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: ORDERBOOK
+          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -10891,7 +11843,7 @@ components:
         - venue: BINANCE
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          subscriptionType: ORDERBOOK
+          subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
           tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -11211,7 +12163,7 @@ components:
         data:
           pipSize: "1234.56789000"
           venue: BINANCE
-          symbol: BTC/USD
+          symbol: BTC/USDT
           icebergMinQuantity: "1234.56789000"
           maxQuantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
@@ -11283,7 +12235,7 @@ components:
         data:
         - pipSize: "1234.56789000"
           venue: BINANCE
-          symbol: BTC/USD
+          symbol: BTC/USDT
           icebergMinQuantity: "1234.56789000"
           maxQuantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
@@ -11320,7 +12272,7 @@ components:
           exerciseStyle: EUROPEAN
         - pipSize: "1234.56789000"
           venue: BINANCE
-          symbol: BTC/USD
+          symbol: BTC/USDT
           icebergMinQuantity: "1234.56789000"
           maxQuantity: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
@@ -11380,7 +12332,7 @@ components:
       example:
         errno: 0
         data:
-          symbol: BTC
+          symbol: USDT
           venue: BINANCE
           minQuantity: "1234.56789000"
           securityType: CRYPTO
@@ -11423,7 +12375,7 @@ components:
           limit: 20
           hasNext: true
         data:
-        - symbol: BTC
+        - symbol: USDT
           venue: BINANCE
           minQuantity: "1234.56789000"
           securityType: CRYPTO
@@ -11431,7 +12383,7 @@ components:
           precision: 8
           scale: 10
           securityId: BINANCE:BTC
-        - symbol: BTC
+        - symbol: USDT
           venue: BINANCE
           minQuantity: "1234.56789000"
           securityType: CRYPTO
@@ -11459,7 +12411,7 @@ components:
       - $ref: "#/components/schemas/baseResponse"
       - properties:
           data:
-            $ref: "#/components/schemas/orderbook"
+            $ref: "#/components/schemas/orderBook"
         type: object
       example:
         errno: 0
@@ -11467,14 +12419,26 @@ components:
           venue: BINANCE
           symbol: BTC/USDT
           instrumentId: BINANCE:BTC/USDT
+          columns:
+          - price
+          - quantity
+          - orderCount
           asks:
-          - - "1234.56789000"
-            - "1234.56789000"
-          - - "1234.56789000"
-            - "1234.56789000"
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          - - "50000.00"
+            - "1.5"
+            - "3"
           bids:
-          - null
-          - null
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          orderBookType: L2
+          updateType: SNAPSHOT
           timestamp: 1632933600000
         success: true
         details:
@@ -11497,7 +12461,7 @@ components:
       - properties:
           data:
             items:
-              $ref: "#/components/schemas/orderbook"
+              $ref: "#/components/schemas/orderBook"
             type: array
         type: object
       example:
@@ -11506,26 +12470,184 @@ components:
         - venue: BINANCE
           symbol: BTC/USDT
           instrumentId: BINANCE:BTC/USDT
+          columns:
+          - price
+          - quantity
+          - orderCount
           asks:
-          - - "1234.56789000"
-            - "1234.56789000"
-          - - "1234.56789000"
-            - "1234.56789000"
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          - - "50000.00"
+            - "1.5"
+            - "3"
           bids:
-          - null
-          - null
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          orderBookType: L2
+          updateType: SNAPSHOT
           timestamp: 1632933600000
         - venue: BINANCE
           symbol: BTC/USDT
           instrumentId: BINANCE:BTC/USDT
+          columns:
+          - price
+          - quantity
+          - orderCount
           asks:
-          - - "1234.56789000"
-            - "1234.56789000"
-          - - "1234.56789000"
-            - "1234.56789000"
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          - - "50000.00"
+            - "1.5"
+            - "3"
           bids:
-          - null
-          - null
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          - - "50000.00"
+            - "1.5"
+            - "3"
+          orderBookType: L2
+          updateType: SNAPSHOT
+          timestamp: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    getMarketTicker_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/ticker"
+        type: object
+      example:
+        errno: 0
+        data:
+          venue: BINANCE
+          symbol: BTC/USDT
+          bidQuantity: "1234.56789000"
+          askPrice: "1234.56789000"
+          instrumentId: BINANCE:BTC/USDT
+          askQuantity: "1234.56789000"
+          lastQuantity: "1234.56789000"
+          bidPrice: "1234.56789000"
+          lastPrice: "1234.56789000"
+          timestamp: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    listMarketTickers_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            items:
+              $ref: "#/components/schemas/ticker"
+            type: array
+          pagination:
+            $ref: "#/components/schemas/pagination"
+        type: object
+      example:
+        errno: 0
+        pagination:
+          cursor: cursor
+          total: 100
+          offset: 0
+          limit: 20
+          hasNext: true
+        data:
+        - venue: BINANCE
+          symbol: BTC/USDT
+          bidQuantity: "1234.56789000"
+          askPrice: "1234.56789000"
+          instrumentId: BINANCE:BTC/USDT
+          askQuantity: "1234.56789000"
+          lastQuantity: "1234.56789000"
+          bidPrice: "1234.56789000"
+          lastPrice: "1234.56789000"
+          timestamp: 1632933600000
+        - venue: BINANCE
+          symbol: BTC/USDT
+          bidQuantity: "1234.56789000"
+          askPrice: "1234.56789000"
+          instrumentId: BINANCE:BTC/USDT
+          askQuantity: "1234.56789000"
+          lastQuantity: "1234.56789000"
+          bidPrice: "1234.56789000"
+          lastPrice: "1234.56789000"
+          timestamp: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    getMarketKline_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/kline"
+        type: object
+      example:
+        errno: 0
+        data:
+          venue: BINANCE
+          symbol: BTC/USDT
+          isClosed: true
+          instrumentId: BINANCE:BTC/USDT
+          interval: 1m
+          candles:
+          - - 1703052540000
+            - "50000"
+            - "50050"
+            - "49990"
+            - "50010"
+            - "12.34"
+          - - 1703052540000
+            - "50000"
+            - "50050"
+            - "49990"
+            - "50010"
+            - "12.34"
           timestamp: 1632933600000
         success: true
         details:
@@ -11574,6 +12696,117 @@ components:
           quoteQuantity: "100.50"
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
           status: CREATED
+          updatedAt: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    fermataCreateDealer_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            $ref: "#/components/schemas/fermataDealer"
+        type: object
+      example:
+        errno: 0
+        data:
+          linkedAccountIds:
+          - null
+          - null
+          createdAt: 1632933600000
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          riskThreshold: "100.50"
+          baseCurrencies:
+          - USD
+          - USDT
+          - USDC
+          dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: Main Dealer
+          config:
+            key: ""
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: ACTIVE
+          updatedAt: 1632933600000
+        success: true
+        details:
+          tenant_id: tenant-123
+          metadata:
+            key: ""
+          code: INVALID_TOKEN
+          resource: /api/v3/tradingAccount
+          provided:
+          - read
+          action: create
+          request_id: req-456-789
+          required:
+          - admin
+          - write
+        error: error
+    fermataListDealers_200_response:
+      allOf:
+      - $ref: "#/components/schemas/baseResponse"
+      - properties:
+          data:
+            items:
+              $ref: "#/components/schemas/fermataDealer"
+            type: array
+          pagination:
+            $ref: "#/components/schemas/pagination"
+        type: object
+      example:
+        errno: 0
+        pagination:
+          cursor: cursor
+          total: 100
+          offset: 0
+          limit: 20
+          hasNext: true
+        data:
+        - linkedAccountIds:
+          - null
+          - null
+          createdAt: 1632933600000
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          riskThreshold: "100.50"
+          baseCurrencies:
+          - USD
+          - USDT
+          - USDC
+          dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: Main Dealer
+          config:
+            key: ""
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: ACTIVE
+          updatedAt: 1632933600000
+        - linkedAccountIds:
+          - null
+          - null
+          createdAt: 1632933600000
+          updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
+          riskThreshold: "100.50"
+          baseCurrencies:
+          - USD
+          - USDT
+          - USDC
+          dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          name: Main Dealer
+          config:
+            key: ""
+          createdAtDateTime: 2000-01-23T04:56:07.000+00:00
+          status: ACTIVE
           updatedAt: 1632933600000
         success: true
         details:

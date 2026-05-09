@@ -20,7 +20,7 @@ var _ MappedNullable = &RpcSaveTickersParams{}
 
 // RpcSaveTickersParams Request to save tickers
 type RpcSaveTickersParams struct {
-	Tickers []RpcTicker `json:"tickers"`
+	Tickers []Ticker `json:"tickers"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -30,7 +30,7 @@ type _RpcSaveTickersParams RpcSaveTickersParams
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRpcSaveTickersParams(tickers []RpcTicker) *RpcSaveTickersParams {
+func NewRpcSaveTickersParams(tickers []Ticker) *RpcSaveTickersParams {
 	this := RpcSaveTickersParams{}
 	this.Tickers = tickers
 	return &this
@@ -45,9 +45,9 @@ func NewRpcSaveTickersParamsWithDefaults() *RpcSaveTickersParams {
 }
 
 // GetTickers returns the Tickers field value
-func (o *RpcSaveTickersParams) GetTickers() []RpcTicker {
+func (o *RpcSaveTickersParams) GetTickers() []Ticker {
 	if o == nil {
-		var ret []RpcTicker
+		var ret []Ticker
 		return ret
 	}
 
@@ -56,7 +56,7 @@ func (o *RpcSaveTickersParams) GetTickers() []RpcTicker {
 
 // GetTickersOk returns a tuple with the Tickers field value
 // and a boolean to check if the value has been set.
-func (o *RpcSaveTickersParams) GetTickersOk() ([]RpcTicker, bool) {
+func (o *RpcSaveTickersParams) GetTickersOk() ([]Ticker, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -64,7 +64,7 @@ func (o *RpcSaveTickersParams) GetTickersOk() ([]RpcTicker, bool) {
 }
 
 // SetTickers sets field value
-func (o *RpcSaveTickersParams) SetTickers(v []RpcTicker) {
+func (o *RpcSaveTickersParams) SetTickers(v []Ticker) {
 	o.Tickers = v
 }
 

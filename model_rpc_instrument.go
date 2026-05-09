@@ -20,9 +20,10 @@ var _ MappedNullable = &RpcInstrument{}
 
 // RpcInstrument Financial instrument
 type RpcInstrument struct {
-	// Unique instrument identifier (format: VENUE:BASE/QUOTE)
+	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
+	// Trading pair symbol in format {BASE}/{QUOTE}
 	Symbol *string `json:"symbol,omitempty"`
 	ExternalSymbol *string `json:"externalSymbol,omitempty"`
 	Description *string `json:"description,omitempty"`

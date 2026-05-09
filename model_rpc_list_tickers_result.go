@@ -19,7 +19,7 @@ var _ MappedNullable = &RpcListTickersResult{}
 
 // RpcListTickersResult Response for listing tickers
 type RpcListTickersResult struct {
-	Data []RpcTicker `json:"data,omitempty"`
+	Data []Ticker `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -44,9 +44,9 @@ func NewRpcListTickersResultWithDefaults() *RpcListTickersResult {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *RpcListTickersResult) GetData() []RpcTicker {
+func (o *RpcListTickersResult) GetData() []Ticker {
 	if o == nil || IsNil(o.Data) {
-		var ret []RpcTicker
+		var ret []Ticker
 		return ret
 	}
 	return o.Data
@@ -54,7 +54,7 @@ func (o *RpcListTickersResult) GetData() []RpcTicker {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RpcListTickersResult) GetDataOk() ([]RpcTicker, bool) {
+func (o *RpcListTickersResult) GetDataOk() ([]Ticker, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *RpcListTickersResult) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []RpcTicker and assigns it to the Data field.
-func (o *RpcListTickersResult) SetData(v []RpcTicker) {
+// SetData gets a reference to the given []Ticker and assigns it to the Data field.
+func (o *RpcListTickersResult) SetData(v []Ticker) {
 	o.Data = v
 }
 

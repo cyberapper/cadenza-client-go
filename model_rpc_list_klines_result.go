@@ -19,7 +19,7 @@ var _ MappedNullable = &RpcListKlinesResult{}
 
 // RpcListKlinesResult Response for listing klines
 type RpcListKlinesResult struct {
-	Data []RpcKline `json:"data,omitempty"`
+	Data []Kline `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -44,9 +44,9 @@ func NewRpcListKlinesResultWithDefaults() *RpcListKlinesResult {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *RpcListKlinesResult) GetData() []RpcKline {
+func (o *RpcListKlinesResult) GetData() []Kline {
 	if o == nil || IsNil(o.Data) {
-		var ret []RpcKline
+		var ret []Kline
 		return ret
 	}
 	return o.Data
@@ -54,7 +54,7 @@ func (o *RpcListKlinesResult) GetData() []RpcKline {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RpcListKlinesResult) GetDataOk() ([]RpcKline, bool) {
+func (o *RpcListKlinesResult) GetDataOk() ([]Kline, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *RpcListKlinesResult) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []RpcKline and assigns it to the Data field.
-func (o *RpcListKlinesResult) SetData(v []RpcKline) {
+// SetData gets a reference to the given []Kline and assigns it to the Data field.
+func (o *RpcListKlinesResult) SetData(v []Kline) {
 	o.Data = v
 }
 

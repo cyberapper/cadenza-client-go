@@ -22,7 +22,7 @@ type RpcListKlinesParams struct {
 	InstrumentIds []string `json:"instrumentIds,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`
 	Symbols []string `json:"symbols,omitempty"`
-	Interval *string `json:"interval,omitempty"`
+	Interval *KlineInterval `json:"interval,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -142,9 +142,9 @@ func (o *RpcListKlinesParams) SetSymbols(v []string) {
 }
 
 // GetInterval returns the Interval field value if set, zero value otherwise.
-func (o *RpcListKlinesParams) GetInterval() string {
+func (o *RpcListKlinesParams) GetInterval() KlineInterval {
 	if o == nil || IsNil(o.Interval) {
-		var ret string
+		var ret KlineInterval
 		return ret
 	}
 	return *o.Interval
@@ -152,7 +152,7 @@ func (o *RpcListKlinesParams) GetInterval() string {
 
 // GetIntervalOk returns a tuple with the Interval field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RpcListKlinesParams) GetIntervalOk() (*string, bool) {
+func (o *RpcListKlinesParams) GetIntervalOk() (*KlineInterval, bool) {
 	if o == nil || IsNil(o.Interval) {
 		return nil, false
 	}
@@ -168,8 +168,8 @@ func (o *RpcListKlinesParams) HasInterval() bool {
 	return false
 }
 
-// SetInterval gets a reference to the given string and assigns it to the Interval field.
-func (o *RpcListKlinesParams) SetInterval(v string) {
+// SetInterval gets a reference to the given KlineInterval and assigns it to the Interval field.
+func (o *RpcListKlinesParams) SetInterval(v KlineInterval) {
 	o.Interval = &v
 }
 

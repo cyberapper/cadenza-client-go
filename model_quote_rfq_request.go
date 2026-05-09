@@ -12,6 +12,7 @@ package client
 
 import (
 	"encoding/json"
+	"time"
 	"fmt"
 )
 
@@ -37,6 +38,12 @@ type QuoteRfqRequest struct {
 	QuoteQuantity *string `json:"quoteQuantity,omitempty" validate:"regexp=^\\\\d+(\\\\.\\\\d+)?$"`
 	// Client-provided reference for idempotency and tracking
 	QuoteRequestId *string `json:"quoteRequestId,omitempty"`
+	// Time to live in seconds
+	Ttl *int32 `json:"ttl,omitempty"`
+	// Absolute expiry timestamp (ISO 8601). Mutually exclusive with ttl. If neither ttl nor expireAt is set, defaults to 10 seconds from quote creation.
+	ExpireAt *time.Time `json:"expireAt,omitempty"`
+	// UUID string
+	PricingProfileId *string `json:"pricingProfileId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -50,6 +57,8 @@ func NewQuoteRfqRequest(dealerAccountId string, orderSide OrderSide) *QuoteRfqRe
 	this := QuoteRfqRequest{}
 	this.DealerAccountId = dealerAccountId
 	this.OrderSide = orderSide
+	var ttl int32 = 10
+	this.Ttl = &ttl
 	return &this
 }
 
@@ -58,6 +67,8 @@ func NewQuoteRfqRequest(dealerAccountId string, orderSide OrderSide) *QuoteRfqRe
 // but it doesn't guarantee that properties required by API are set
 func NewQuoteRfqRequestWithDefaults() *QuoteRfqRequest {
 	this := QuoteRfqRequest{}
+	var ttl int32 = 10
+	this.Ttl = &ttl
 	return &this
 }
 
@@ -333,6 +344,102 @@ func (o *QuoteRfqRequest) SetQuoteRequestId(v string) {
 	o.QuoteRequestId = &v
 }
 
+// GetTtl returns the Ttl field value if set, zero value otherwise.
+func (o *QuoteRfqRequest) GetTtl() int32 {
+	if o == nil || IsNil(o.Ttl) {
+		var ret int32
+		return ret
+	}
+	return *o.Ttl
+}
+
+// GetTtlOk returns a tuple with the Ttl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRfqRequest) GetTtlOk() (*int32, bool) {
+	if o == nil || IsNil(o.Ttl) {
+		return nil, false
+	}
+	return o.Ttl, true
+}
+
+// HasTtl returns a boolean if a field has been set.
+func (o *QuoteRfqRequest) HasTtl() bool {
+	if o != nil && !IsNil(o.Ttl) {
+		return true
+	}
+
+	return false
+}
+
+// SetTtl gets a reference to the given int32 and assigns it to the Ttl field.
+func (o *QuoteRfqRequest) SetTtl(v int32) {
+	o.Ttl = &v
+}
+
+// GetExpireAt returns the ExpireAt field value if set, zero value otherwise.
+func (o *QuoteRfqRequest) GetExpireAt() time.Time {
+	if o == nil || IsNil(o.ExpireAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ExpireAt
+}
+
+// GetExpireAtOk returns a tuple with the ExpireAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRfqRequest) GetExpireAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ExpireAt) {
+		return nil, false
+	}
+	return o.ExpireAt, true
+}
+
+// HasExpireAt returns a boolean if a field has been set.
+func (o *QuoteRfqRequest) HasExpireAt() bool {
+	if o != nil && !IsNil(o.ExpireAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpireAt gets a reference to the given time.Time and assigns it to the ExpireAt field.
+func (o *QuoteRfqRequest) SetExpireAt(v time.Time) {
+	o.ExpireAt = &v
+}
+
+// GetPricingProfileId returns the PricingProfileId field value if set, zero value otherwise.
+func (o *QuoteRfqRequest) GetPricingProfileId() string {
+	if o == nil || IsNil(o.PricingProfileId) {
+		var ret string
+		return ret
+	}
+	return *o.PricingProfileId
+}
+
+// GetPricingProfileIdOk returns a tuple with the PricingProfileId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRfqRequest) GetPricingProfileIdOk() (*string, bool) {
+	if o == nil || IsNil(o.PricingProfileId) {
+		return nil, false
+	}
+	return o.PricingProfileId, true
+}
+
+// HasPricingProfileId returns a boolean if a field has been set.
+func (o *QuoteRfqRequest) HasPricingProfileId() bool {
+	if o != nil && !IsNil(o.PricingProfileId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricingProfileId gets a reference to the given string and assigns it to the PricingProfileId field.
+func (o *QuoteRfqRequest) SetPricingProfileId(v string) {
+	o.PricingProfileId = &v
+}
+
 func (o QuoteRfqRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -365,6 +472,15 @@ func (o QuoteRfqRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.QuoteRequestId) {
 		toSerialize["quoteRequestId"] = o.QuoteRequestId
+	}
+	if !IsNil(o.Ttl) {
+		toSerialize["ttl"] = o.Ttl
+	}
+	if !IsNil(o.ExpireAt) {
+		toSerialize["expireAt"] = o.ExpireAt
+	}
+	if !IsNil(o.PricingProfileId) {
+		toSerialize["pricingProfileId"] = o.PricingProfileId
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -419,6 +535,9 @@ func (o *QuoteRfqRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "quantity")
 		delete(additionalProperties, "quoteQuantity")
 		delete(additionalProperties, "quoteRequestId")
+		delete(additionalProperties, "ttl")
+		delete(additionalProperties, "expireAt")
+		delete(additionalProperties, "pricingProfileId")
 		o.AdditionalProperties = additionalProperties
 	}
 

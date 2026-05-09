@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**[]RpcOrderBook**](RpcOrderBook.md) |  | [optional] 
+**Data** | Pointer to [**[]OrderBook**](OrderBook.md) |  | [optional] 
 **Error** | Pointer to [**RpcError**](RpcError.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *RpcListOrderBooksResult) GetData() []RpcOrderBook`
+`func (o *RpcListOrderBooksResult) GetData() []OrderBook`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *RpcListOrderBooksResult) GetDataOk() (*[]RpcOrderBook, bool)`
+`func (o *RpcListOrderBooksResult) GetDataOk() (*[]OrderBook, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *RpcListOrderBooksResult) SetData(v []RpcOrderBook)`
+`func (o *RpcListOrderBooksResult) SetData(v []OrderBook)`
 
 SetData sets Data field to given value.
 

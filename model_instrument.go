@@ -24,7 +24,7 @@ type Instrument struct {
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId string `json:"instrumentId"`
 	Venue Venue `json:"venue"`
-	// Human-readable symbol format
+	// Trading pair symbol in format {BASE}/{QUOTE}
 	Symbol string `json:"symbol"`
 	// Symbol format used by the exchange
 	ExternalSymbol string `json:"externalSymbol"`

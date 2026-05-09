@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **InstrumentIds** | Pointer to **[]string** |  | [optional] 
 **Venue** | Pointer to [**Venue**](Venue.md) |  | [optional] 
 **Symbols** | Pointer to **[]string** |  | [optional] 
-**Interval** | Pointer to **string** |  | [optional] 
+**Interval** | Pointer to [**KlineInterval**](KlineInterval.md) |  | [optional] 
 
 ## Methods
 
@@ -105,20 +105,20 @@ HasSymbols returns a boolean if a field has been set.
 
 ### GetInterval
 
-`func (o *RpcListKlinesParams) GetInterval() string`
+`func (o *RpcListKlinesParams) GetInterval() KlineInterval`
 
 GetInterval returns the Interval field if non-nil, zero value otherwise.
 
 ### GetIntervalOk
 
-`func (o *RpcListKlinesParams) GetIntervalOk() (*string, bool)`
+`func (o *RpcListKlinesParams) GetIntervalOk() (*KlineInterval, bool)`
 
 GetIntervalOk returns a tuple with the Interval field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInterval
 
-`func (o *RpcListKlinesParams) SetInterval(v string)`
+`func (o *RpcListKlinesParams) SetInterval(v KlineInterval)`
 
 SetInterval sets Interval field to given value.
 

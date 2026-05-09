@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcSecurity{}
 // RpcSecurity Security (base asset)
 type RpcSecurity struct {
 	SecurityId *string `json:"securityId,omitempty"`
+	// Asset symbol (e.g. currency code, base asset)
 	Symbol *string `json:"symbol,omitempty"`
 	ExternalSymbol *string `json:"externalSymbol,omitempty"`
 	Venue *Venue `json:"venue,omitempty"`

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PortfolioSummaryId** | Pointer to **string** |  | [optional] 
 **TradingAccountId** | Pointer to **string** |  | [optional] 
-**Currency** | Pointer to **string** | Summary currency | [optional] 
+**Currency** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **Leverage** | Pointer to **int32** |  | [optional] 
 **Equity** | Pointer to **string** | Total equity | [optional] 
 **Margin** | Pointer to **string** | Margin collateral | [optional] 

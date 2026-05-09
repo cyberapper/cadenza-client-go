@@ -19,7 +19,7 @@ var _ MappedNullable = &RpcListOrderBooksResult{}
 
 // RpcListOrderBooksResult Response containing list of order books
 type RpcListOrderBooksResult struct {
-	Data []RpcOrderBook `json:"data,omitempty"`
+	Data []OrderBook `json:"data,omitempty"`
 	Error *RpcError `json:"error,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -44,9 +44,9 @@ func NewRpcListOrderBooksResultWithDefaults() *RpcListOrderBooksResult {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *RpcListOrderBooksResult) GetData() []RpcOrderBook {
+func (o *RpcListOrderBooksResult) GetData() []OrderBook {
 	if o == nil || IsNil(o.Data) {
-		var ret []RpcOrderBook
+		var ret []OrderBook
 		return ret
 	}
 	return o.Data
@@ -54,7 +54,7 @@ func (o *RpcListOrderBooksResult) GetData() []RpcOrderBook {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RpcListOrderBooksResult) GetDataOk() ([]RpcOrderBook, bool) {
+func (o *RpcListOrderBooksResult) GetDataOk() ([]OrderBook, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *RpcListOrderBooksResult) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given []RpcOrderBook and assigns it to the Data field.
-func (o *RpcListOrderBooksResult) SetData(v []RpcOrderBook) {
+// SetData gets a reference to the given []OrderBook and assigns it to the Data field.
+func (o *RpcListOrderBooksResult) SetData(v []OrderBook) {
 	o.Data = v
 }
 

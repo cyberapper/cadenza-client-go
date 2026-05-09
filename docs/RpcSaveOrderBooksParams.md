@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrderBooks** | [**[]RpcOrderBook**](RpcOrderBook.md) |  | 
+**OrderBooks** | [**[]OrderBook**](OrderBook.md) |  | 
 
 ## Methods
 
 ### NewRpcSaveOrderBooksParams
 
-`func NewRpcSaveOrderBooksParams(orderBooks []RpcOrderBook, ) *RpcSaveOrderBooksParams`
+`func NewRpcSaveOrderBooksParams(orderBooks []OrderBook, ) *RpcSaveOrderBooksParams`
 
 NewRpcSaveOrderBooksParams instantiates a new RpcSaveOrderBooksParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetOrderBooks
 
-`func (o *RpcSaveOrderBooksParams) GetOrderBooks() []RpcOrderBook`
+`func (o *RpcSaveOrderBooksParams) GetOrderBooks() []OrderBook`
 
 GetOrderBooks returns the OrderBooks field if non-nil, zero value otherwise.
 
 ### GetOrderBooksOk
 
-`func (o *RpcSaveOrderBooksParams) GetOrderBooksOk() (*[]RpcOrderBook, bool)`
+`func (o *RpcSaveOrderBooksParams) GetOrderBooksOk() (*[]OrderBook, bool)`
 
 GetOrderBooksOk returns a tuple with the OrderBooks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOrderBooks
 
-`func (o *RpcSaveOrderBooksParams) SetOrderBooks(v []RpcOrderBook)`
+`func (o *RpcSaveOrderBooksParams) SetOrderBooks(v []OrderBook)`
 
 SetOrderBooks sets OrderBooks field to given value.
 

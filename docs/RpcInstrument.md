@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**InstrumentId** | Pointer to **string** | Unique instrument identifier (format: VENUE:BASE/QUOTE) | [optional] 
+**InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **Venue** | Pointer to [**Venue**](Venue.md) |  | [optional] 
-**Symbol** | Pointer to **string** |  | [optional] 
+**Symbol** | Pointer to **string** | Trading pair symbol in format {BASE}/{QUOTE} | [optional] 
 **ExternalSymbol** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
 **InstrumentType** | Pointer to [**InstrumentType**](InstrumentType.md) |  | [optional] 

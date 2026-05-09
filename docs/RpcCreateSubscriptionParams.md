@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Venue** | [**Venue**](Venue.md) |  | 
 **Instruments** | Pointer to **[]string** |  | [optional] 
 **SubscriptionType** | [**SubscriptionType**](SubscriptionType.md) |  | 
+**Interval** | Pointer to [**KlineInterval**](KlineInterval.md) |  | [optional] 
 
 ## Methods
 
@@ -91,6 +92,31 @@ and a boolean to check if the value has been set.
 
 SetSubscriptionType sets SubscriptionType field to given value.
 
+
+### GetInterval
+
+`func (o *RpcCreateSubscriptionParams) GetInterval() KlineInterval`
+
+GetInterval returns the Interval field if non-nil, zero value otherwise.
+
+### GetIntervalOk
+
+`func (o *RpcCreateSubscriptionParams) GetIntervalOk() (*KlineInterval, bool)`
+
+GetIntervalOk returns a tuple with the Interval field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInterval
+
+`func (o *RpcCreateSubscriptionParams) SetInterval(v KlineInterval)`
+
+SetInterval sets Interval field to given value.
+
+### HasInterval
+
+`func (o *RpcCreateSubscriptionParams) HasInterval() bool`
+
+HasInterval returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

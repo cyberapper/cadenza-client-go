@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Data** | Pointer to [**RpcOrderBook**](RpcOrderBook.md) |  | [optional] 
+**Data** | Pointer to [**OrderBook**](OrderBook.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetData
 
-`func (o *RpcOrderBookUpdatedEvent) GetData() RpcOrderBook`
+`func (o *RpcOrderBookUpdatedEvent) GetData() OrderBook`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *RpcOrderBookUpdatedEvent) GetDataOk() (*RpcOrderBook, bool)`
+`func (o *RpcOrderBookUpdatedEvent) GetDataOk() (*OrderBook, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *RpcOrderBookUpdatedEvent) SetData(v RpcOrderBook)`
+`func (o *RpcOrderBookUpdatedEvent) SetData(v OrderBook)`
 
 SetData sets Data field to given value.
 

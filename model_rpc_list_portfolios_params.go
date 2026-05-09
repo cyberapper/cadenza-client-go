@@ -23,7 +23,7 @@ type RpcListPortfoliosParams struct {
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Filter by venue
 	Venue *string `json:"venue,omitempty"`
-	// Filter by currency
+	// Asset symbol (e.g. currency code, base asset)
 	Currency *string `json:"currency,omitempty"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
 	AdditionalProperties map[string]interface{}
