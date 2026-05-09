@@ -20,22 +20,22 @@ type KlineInterval string
 
 // List of klineInterval
 const (
-	KLINEINTERVAL__1S KlineInterval = "1s"
-	KLINEINTERVAL__1M KlineInterval = "1m"
-	KLINEINTERVAL__3M KlineInterval = "3m"
-	KLINEINTERVAL__5M KlineInterval = "5m"
-	KLINEINTERVAL__15M KlineInterval = "15m"
-	KLINEINTERVAL__30M KlineInterval = "30m"
-	KLINEINTERVAL__1H KlineInterval = "1h"
-	KLINEINTERVAL__2H KlineInterval = "2h"
-	KLINEINTERVAL__4H KlineInterval = "4h"
-	KLINEINTERVAL__6H KlineInterval = "6h"
-	KLINEINTERVAL__8H KlineInterval = "8h"
-	KLINEINTERVAL__12H KlineInterval = "12h"
-	KLINEINTERVAL__1D KlineInterval = "1d"
-	KLINEINTERVAL__3D KlineInterval = "3d"
-	KLINEINTERVAL__1W KlineInterval = "1w"
-	KLINEINTERVAL__1_M KlineInterval = "1M"
+	KLINEINTERVAL_SECOND_1 KlineInterval = "1s"
+	KLINEINTERVAL_MINUTE_1 KlineInterval = "1m"
+	KLINEINTERVAL_MINUTE_3 KlineInterval = "3m"
+	KLINEINTERVAL_MINUTE_5 KlineInterval = "5m"
+	KLINEINTERVAL_MINUTE_15 KlineInterval = "15m"
+	KLINEINTERVAL_MINUTE_30 KlineInterval = "30m"
+	KLINEINTERVAL_HOUR_1 KlineInterval = "1h"
+	KLINEINTERVAL_HOUR_2 KlineInterval = "2h"
+	KLINEINTERVAL_HOUR_4 KlineInterval = "4h"
+	KLINEINTERVAL_HOUR_6 KlineInterval = "6h"
+	KLINEINTERVAL_HOUR_8 KlineInterval = "8h"
+	KLINEINTERVAL_HOUR_12 KlineInterval = "12h"
+	KLINEINTERVAL_DAY_1 KlineInterval = "1d"
+	KLINEINTERVAL_DAY_3 KlineInterval = "3d"
+	KLINEINTERVAL_WEEK_1 KlineInterval = "1w"
+	KLINEINTERVAL_MONTH_1 KlineInterval = "1M"
 )
 
 // All allowed values of KlineInterval enum
