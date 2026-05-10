@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/cyberapper/cadenza-client-go/compare/v1.4.0...v1.4.1) (2026-05-10)
+
+
+### Bug Fixes
+
+* remove stale Orderbook artifacts to unblock module publishing ([#48](https://github.com/cyberapper/cadenza-client-go/issues/48)) ([e678d42](https://github.com/cyberapper/cadenza-client-go/commit/e678d42b0713163fae046d38c9370789d263d1b2))
+
 ## [1.4.0](https://github.com/cyberapper/cadenza-client-go/compare/v1.3.0...v1.4.0) (2026-05-09)
 
 
