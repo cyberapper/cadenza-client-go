@@ -20,7 +20,7 @@ var _ MappedNullable = &RpcTradeOrder{}
 
 // RpcTradeOrder Trade order model
 type RpcTradeOrder struct {
-	// Unique trade order ID
+	// Internal trade order ID (UUID)
 	TradeOrderId *string `json:"tradeOrderId,omitempty"`
 	// Client-assigned order ID
 	ClientOrderId *string `json:"clientOrderId,omitempty"`
@@ -32,7 +32,7 @@ type RpcTradeOrder struct {
 	IdempotencyKey *string `json:"idempotencyKey,omitempty"`
 	// Trading venue
 	Venue *string `json:"venue,omitempty"`
-	// Trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// External account ID at venue
 	ExternalTradingAccountId *string `json:"externalTradingAccountId,omitempty"`
@@ -40,9 +40,9 @@ type RpcTradeOrder struct {
 	InstrumentId *string `json:"instrumentId,omitempty"`
 	// Symbol at external venue
 	ExternalSymbol *string `json:"externalSymbol,omitempty"`
-	// Base asset
+	// Asset symbol (e.g. currency code, base asset)
 	BaseAsset *string `json:"baseAsset,omitempty"`
-	// Quote asset
+	// Asset symbol (e.g. currency code, base asset)
 	QuoteAsset *string `json:"quoteAsset,omitempty"`
 	OrderType NullableOrderType `json:"orderType,omitempty"`
 	OrderSide *OrderSide `json:"orderSide,omitempty"`

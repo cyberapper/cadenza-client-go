@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | Pointer to **string** |  | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **AccountInfo** | Pointer to [**RpcTradingAccount**](RpcTradingAccount.md) |  | [optional] 
 **Balances** | Pointer to [**[]RpcBalanceEntry**](RpcBalanceEntry.md) |  | [optional] 
 **Positions** | Pointer to [**[]RpcPositionEntry**](RpcPositionEntry.md) |  | [optional] 

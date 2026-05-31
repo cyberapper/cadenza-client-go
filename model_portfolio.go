@@ -21,7 +21,7 @@ var _ MappedNullable = &Portfolio{}
 
 // Portfolio struct for Portfolio
 type Portfolio struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	Venue Venue `json:"venue"`
 	Positions []PositionEntry `json:"positions"`

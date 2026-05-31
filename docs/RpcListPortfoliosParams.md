@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | Pointer to **string** | Filter by trading account ID | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **Venue** | Pointer to **string** | Filter by venue | [optional] 
 **Currency** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **Pagination** | Pointer to [**RpcPagination**](RpcPagination.md) |  | [optional] 

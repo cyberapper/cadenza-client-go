@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradeOrder** | [**RpcTradeOrder**](RpcTradeOrder.md) |  | 
-**TradingAccountId** | **string** | Trading account ID to place order on | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **IdempotencyKey** | Pointer to **string** | Idempotency key to prevent duplicate orders | [optional] 
 **AwaitClosed** | Pointer to **bool** | Wait for order to reach terminal state before responding | [optional] [default to false]
 

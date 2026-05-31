@@ -29,7 +29,9 @@ type RpcInstrument struct {
 	Description *string `json:"description,omitempty"`
 	InstrumentType *InstrumentType `json:"instrumentType,omitempty"`
 	Status *InstrumentStatus `json:"status,omitempty"`
+	// Asset symbol (e.g. currency code, base asset)
 	BaseAsset *string `json:"baseAsset,omitempty"`
+	// Asset symbol (e.g. currency code, base asset)
 	QuoteAsset *string `json:"quoteAsset,omitempty"`
 	BaseSecurityType *SecurityType `json:"baseSecurityType,omitempty"`
 	QuoteSecurityType *SecurityType `json:"quoteSecurityType,omitempty"`

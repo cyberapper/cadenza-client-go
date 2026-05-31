@@ -22,6 +22,7 @@ var _ MappedNullable = &RpcPositionEntry{}
 type RpcPositionEntry struct {
 	PositionId *string `json:"positionId,omitempty"`
 	ExternalPositionId *string `json:"externalPositionId,omitempty"`
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	SecuritySymbol *string `json:"securitySymbol,omitempty"`
 	// Instrument ID

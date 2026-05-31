@@ -21,7 +21,7 @@ var _ MappedNullable = &RpcSubmitTradeOrderParams{}
 // RpcSubmitTradeOrderParams Request to submit a new trade order
 type RpcSubmitTradeOrderParams struct {
 	TradeOrder RpcTradeOrder `json:"tradeOrder"`
-	// Trading account ID to place order on
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// Idempotency key to prevent duplicate orders
 	IdempotencyKey *string `json:"idempotencyKey,omitempty"`

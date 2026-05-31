@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradeOrderId** | Pointer to **string** | Unique trade order ID | [optional] 
+**TradeOrderId** | Pointer to **string** | Internal trade order ID (UUID) | [optional] 
 **ClientOrderId** | Pointer to **string** | Client-assigned order ID | [optional] 
 **OriginalClientOrderId** | Pointer to **string** | Original client order ID (for cancel/replace) | [optional] 
 **ExternalOrderId** | Pointer to **string** | Order ID from external venue | [optional] 
 **IdempotencyKey** | Pointer to **string** | Idempotency key | [optional] 
 **Venue** | Pointer to **string** | Trading venue | [optional] 
-**TradingAccountId** | Pointer to **string** | Trading account ID | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **ExternalTradingAccountId** | Pointer to **string** | External account ID at venue | [optional] 
 **InstrumentId** | Pointer to **string** | Instrument ID (VENUE:BASE/QUOTE) | [optional] 
 **ExternalSymbol** | Pointer to **string** | Symbol at external venue | [optional] 
-**BaseAsset** | Pointer to **string** | Base asset | [optional] 
-**QuoteAsset** | Pointer to **string** | Quote asset | [optional] 
+**BaseAsset** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
+**QuoteAsset** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **OrderType** | Pointer to [**NullableOrderType**](OrderType.md) |  | [optional] 
 **OrderSide** | Pointer to [**OrderSide**](OrderSide.md) |  | [optional] 
 **QuantityType** | Pointer to [**QuantityType**](QuantityType.md) |  | [optional] 

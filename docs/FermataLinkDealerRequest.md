@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DealerAccountId** | **string** | UUID string | 
-**TradingAccountId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 
 ## Methods
 

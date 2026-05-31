@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **BalanceId** | Pointer to **string** |  | [optional] 
 **ExternalBalanceId** | Pointer to **string** |  | [optional] 
-**TradingAccountId** | Pointer to **string** |  | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **SecuritySymbol** | Pointer to **string** | Asset symbol | [optional] 
 **SecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
 **Status** | Pointer to [**BalanceStatus**](BalanceStatus.md) |  | [optional] 

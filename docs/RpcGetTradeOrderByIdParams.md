@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradeOrderId** | **string** |  | 
+**TradeOrderId** | **string** | Internal trade order ID (UUID) | 
 
 ## Methods
 

@@ -20,7 +20,7 @@ var _ MappedNullable = &PortfolioSummary{}
 
 // PortfolioSummary struct for PortfolioSummary
 type PortfolioSummary struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// Asset symbol (e.g. currency code, base asset)
 	Currency string `json:"currency"`

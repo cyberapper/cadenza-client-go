@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradeOrderId** | Pointer to **string** | Filter by specific trade order ID | [optional] 
-**TradingAccountId** | Pointer to **string** | Filter by trading account ID | [optional] 
+**TradeOrderId** | Pointer to **string** | Internal trade order ID (UUID) | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **InstrumentId** | Pointer to **string** | Filter by instrument ID (e.g., BINANCE:BTC/USDT) | [optional] 
 **Side** | Pointer to [**OrderSide**](OrderSide.md) |  | [optional] 
 **OrderType** | Pointer to [**NullableOrderType**](OrderType.md) |  | [optional] 

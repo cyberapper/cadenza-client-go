@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** | Trading account ID to disconnect | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 
 ## Methods
 

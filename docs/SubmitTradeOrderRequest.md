@@ -4,12 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **IdempotencyKey** | Pointer to **string** | Idempotency key to prevent duplicate request processing | [optional] 
 **ClientOrderId** | Pointer to **string** | Client-provided order ID, used as idempotency key | [optional] 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
 **OrderType** | [**NullableOrderType**](OrderType.md) |  | 
+**ContingencyType** | Pointer to [**ContingencyType**](ContingencyType.md) |  | [optional] 
 **LimitPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **StopPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **Quantity** | **string** | Decimal value as string to preserve precision | 
@@ -192,6 +193,31 @@ SetOrderType sets OrderType field to given value.
 `func (o *SubmitTradeOrderRequest) UnsetOrderType()`
 
 UnsetOrderType ensures that no value is present for OrderType, not even an explicit nil
+### GetContingencyType
+
+`func (o *SubmitTradeOrderRequest) GetContingencyType() ContingencyType`
+
+GetContingencyType returns the ContingencyType field if non-nil, zero value otherwise.
+
+### GetContingencyTypeOk
+
+`func (o *SubmitTradeOrderRequest) GetContingencyTypeOk() (*ContingencyType, bool)`
+
+GetContingencyTypeOk returns a tuple with the ContingencyType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContingencyType
+
+`func (o *SubmitTradeOrderRequest) SetContingencyType(v ContingencyType)`
+
+SetContingencyType sets ContingencyType field to given value.
+
+### HasContingencyType
+
+`func (o *SubmitTradeOrderRequest) HasContingencyType() bool`
+
+HasContingencyType returns a boolean if a field has been set.
+
 ### GetLimitPrice
 
 `func (o *SubmitTradeOrderRequest) GetLimitPrice() string`

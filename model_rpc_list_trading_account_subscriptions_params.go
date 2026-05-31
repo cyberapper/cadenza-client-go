@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcListTradingAccountSubscriptionsParams{}
 
 // RpcListTradingAccountSubscriptionsParams Request to list trading account subscriptions
 type RpcListTradingAccountSubscriptionsParams struct {
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	SubscriptionType *SubscriptionType `json:"subscriptionType,omitempty"`
 	Status *SubscriptionStatus `json:"status,omitempty"`

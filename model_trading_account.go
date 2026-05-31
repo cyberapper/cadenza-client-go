@@ -21,7 +21,7 @@ var _ MappedNullable = &TradingAccount{}
 
 // TradingAccount struct for TradingAccount
 type TradingAccount struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// External trading account ID
 	ExternalTradingAccountId string `json:"externalTradingAccountId"`

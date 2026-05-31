@@ -247,6 +247,7 @@ type ApiListTradeOrdersRequest struct {
 	ApiService TradingAPI
 	tradeOrderId *string
 	orderListId *string
+	externalOrderListId *string
 	orderStatus *OrderStatus
 	tradingAccountId *string
 	instrumentId *string
@@ -264,9 +265,15 @@ func (r ApiListTradeOrdersRequest) TradeOrderId(tradeOrderId string) ApiListTrad
 	return r
 }
 
-// Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO parent
+// Filter by internal order list ID (UUID) to retrieve child orders of an OCO/OTO/OTOCO parent
 func (r ApiListTradeOrdersRequest) OrderListId(orderListId string) ApiListTradeOrdersRequest {
 	r.orderListId = &orderListId
+	return r
+}
+
+// Filter by exchange-assigned order list ID to retrieve child orders of an OCO/OTO/OTOCO parent
+func (r ApiListTradeOrdersRequest) ExternalOrderListId(externalOrderListId string) ApiListTradeOrdersRequest {
+	r.externalOrderListId = &externalOrderListId
 	return r
 }
 
@@ -368,6 +375,9 @@ func (a *TradingAPIService) ListTradeOrdersExecute(r ApiListTradeOrdersRequest) 
 	}
 	if r.orderListId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "orderListId", r.orderListId, "form", "")
+	}
+	if r.externalOrderListId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "externalOrderListId", r.externalOrderListId, "form", "")
 	}
 	if r.orderStatus != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "orderStatus", r.orderStatus, "form", "")

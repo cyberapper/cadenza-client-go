@@ -20,7 +20,7 @@ var _ MappedNullable = &SubmitTradeOrderRequest{}
 
 // SubmitTradeOrderRequest Submit a trade order. For exchange venues, instrumentId is required. For Fermata venue, quoteId is required instead (the quote already contains all trade parameters).
 type SubmitTradeOrderRequest struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`
@@ -30,6 +30,7 @@ type SubmitTradeOrderRequest struct {
 	ClientOrderId *string `json:"clientOrderId,omitempty"`
 	OrderSide OrderSide `json:"orderSide"`
 	OrderType NullableOrderType `json:"orderType"`
+	ContingencyType *ContingencyType `json:"contingencyType,omitempty"`
 	// Decimal value as string to preserve precision
 	LimitPrice *string `json:"limitPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
@@ -261,6 +262,38 @@ func (o *SubmitTradeOrderRequest) GetOrderTypeOk() (*OrderType, bool) {
 // SetOrderType sets field value
 func (o *SubmitTradeOrderRequest) SetOrderType(v OrderType) {
 	o.OrderType.Set(&v)
+}
+
+// GetContingencyType returns the ContingencyType field value if set, zero value otherwise.
+func (o *SubmitTradeOrderRequest) GetContingencyType() ContingencyType {
+	if o == nil || IsNil(o.ContingencyType) {
+		var ret ContingencyType
+		return ret
+	}
+	return *o.ContingencyType
+}
+
+// GetContingencyTypeOk returns a tuple with the ContingencyType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitTradeOrderRequest) GetContingencyTypeOk() (*ContingencyType, bool) {
+	if o == nil || IsNil(o.ContingencyType) {
+		return nil, false
+	}
+	return o.ContingencyType, true
+}
+
+// HasContingencyType returns a boolean if a field has been set.
+func (o *SubmitTradeOrderRequest) HasContingencyType() bool {
+	if o != nil && !IsNil(o.ContingencyType) {
+		return true
+	}
+
+	return false
+}
+
+// SetContingencyType gets a reference to the given ContingencyType and assigns it to the ContingencyType field.
+func (o *SubmitTradeOrderRequest) SetContingencyType(v ContingencyType) {
+	o.ContingencyType = &v
 }
 
 // GetLimitPrice returns the LimitPrice field value if set, zero value otherwise.
@@ -851,6 +884,9 @@ func (o SubmitTradeOrderRequest) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["orderSide"] = o.OrderSide
 	toSerialize["orderType"] = o.OrderType.Get()
+	if !IsNil(o.ContingencyType) {
+		toSerialize["contingencyType"] = o.ContingencyType
+	}
 	if !IsNil(o.LimitPrice) {
 		toSerialize["limitPrice"] = o.LimitPrice
 	}
@@ -952,6 +988,7 @@ func (o *SubmitTradeOrderRequest) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "clientOrderId")
 		delete(additionalProperties, "orderSide")
 		delete(additionalProperties, "orderType")
+		delete(additionalProperties, "contingencyType")
 		delete(additionalProperties, "limitPrice")
 		delete(additionalProperties, "stopPrice")
 		delete(additionalProperties, "quantity")

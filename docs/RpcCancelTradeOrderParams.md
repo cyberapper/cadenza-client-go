@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradeOrderId** | Pointer to **string** | Trade order ID to cancel | [optional] 
-**TradingAccountId** | **string** | Trading account ID | 
+**TradeOrderId** | Pointer to **string** | Internal trade order ID (UUID) | [optional] 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **ClientOrderId** | Pointer to **string** | Client order ID (alternative to tradeOrderId) | [optional] 
 **ExternalOrderId** | Pointer to **string** | External order ID from venue | [optional] 
 

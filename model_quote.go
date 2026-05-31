@@ -34,9 +34,9 @@ type Quote struct {
 	DealerAccountId string `json:"dealerAccountId"`
 	// UUID string
 	TraderAccountId *string `json:"traderAccountId,omitempty"`
-	// Base asset being traded
+	// Asset symbol (e.g. currency code, base asset)
 	BaseAsset string `json:"baseAsset"`
-	// Quote asset (payment currency)
+	// Asset symbol (e.g. currency code, base asset)
 	QuoteAsset string `json:"quoteAsset"`
 	OrderSide OrderSide `json:"orderSide"`
 	QuantityType *QuantityType `json:"quantityType,omitempty"`

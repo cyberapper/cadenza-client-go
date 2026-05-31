@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **Nickname** | Pointer to **string** | New nickname for the trading account | [optional] 
 
 ## Methods

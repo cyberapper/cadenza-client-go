@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradingAccountHistoryId** | Pointer to **string** |  | [optional] 
-**TradingAccountId** | Pointer to **string** |  | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **Timestamp** | Pointer to **time.Time** |  | [optional] 
 **OperationType** | Pointer to [**TradingAccountOperationType**](TradingAccountOperationType.md) |  | [optional] 
 **OperateBy** | Pointer to **string** |  | [optional] 

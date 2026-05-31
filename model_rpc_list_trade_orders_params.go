@@ -20,9 +20,9 @@ var _ MappedNullable = &RpcListTradeOrdersParams{}
 
 // RpcListTradeOrdersParams Request to list trade orders with filters
 type RpcListTradeOrdersParams struct {
-	// Filter by specific trade order ID
+	// Internal trade order ID (UUID)
 	TradeOrderId *string `json:"tradeOrderId,omitempty"`
-	// Filter by trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Filter by instrument ID (e.g., BINANCE:BTC/USDT)
 	InstrumentId *string `json:"instrumentId,omitempty"`

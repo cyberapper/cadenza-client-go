@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcDeleteTradingAccountParams{}
 
 // RpcDeleteTradingAccountParams Request to delete a trading account
 type RpcDeleteTradingAccountParams struct {
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	AdditionalProperties map[string]interface{}
 }

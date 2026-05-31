@@ -20,7 +20,7 @@ var _ MappedNullable = &RpcGetPortfolioParams{}
 
 // RpcGetPortfolioParams Request to get portfolio for a trading account
 type RpcGetPortfolioParams struct {
-	// Trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	AdditionalProperties map[string]interface{}
 }

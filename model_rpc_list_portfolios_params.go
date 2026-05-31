@@ -19,7 +19,7 @@ var _ MappedNullable = &RpcListPortfoliosParams{}
 
 // RpcListPortfoliosParams Request to list portfolios
 type RpcListPortfoliosParams struct {
-	// Filter by trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Filter by venue
 	Venue *string `json:"venue,omitempty"`

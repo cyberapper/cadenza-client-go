@@ -21,6 +21,7 @@ var _ MappedNullable = &RpcUnsubscribeTradingAccountStreamParams{}
 // RpcUnsubscribeTradingAccountStreamParams Request to unsubscribe from trading account stream
 type RpcUnsubscribeTradingAccountStreamParams struct {
 	SubscriptionId *string `json:"subscriptionId,omitempty"`
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	AdditionalProperties map[string]interface{}
 }

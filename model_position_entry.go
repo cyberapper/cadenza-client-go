@@ -27,7 +27,7 @@ type PositionEntry struct {
 	SecuritySymbol string `json:"securitySymbol"`
 	// External position ID from the exchange
 	ExternalPositionId NullableString `json:"externalPositionId,omitempty"`
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`

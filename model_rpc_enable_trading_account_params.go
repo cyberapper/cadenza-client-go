@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcEnableTradingAccountParams{}
 
 // RpcEnableTradingAccountParams Request to enable a trading account
 type RpcEnableTradingAccountParams struct {
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	AdditionalProperties map[string]interface{}
 }

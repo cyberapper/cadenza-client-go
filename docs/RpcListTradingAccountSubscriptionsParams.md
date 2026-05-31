@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** |  | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **SubscriptionType** | Pointer to [**SubscriptionType**](SubscriptionType.md) |  | [optional] 
 **Status** | Pointer to [**SubscriptionStatus**](SubscriptionStatus.md) |  | [optional] 
 **Pagination** | Pointer to [**RpcPagination**](RpcPagination.md) |  | [optional] 

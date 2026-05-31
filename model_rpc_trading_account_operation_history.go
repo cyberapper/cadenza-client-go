@@ -21,6 +21,7 @@ var _ MappedNullable = &RpcTradingAccountOperationHistory{}
 // RpcTradingAccountOperationHistory Trading account operation history entry
 type RpcTradingAccountOperationHistory struct {
 	TradingAccountHistoryId *string `json:"tradingAccountHistoryId,omitempty"`
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	OperationType *TradingAccountOperationType `json:"operationType,omitempty"`

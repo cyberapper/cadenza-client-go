@@ -505,7 +505,7 @@ import (
 )
 
 func main() {
-	fermataLinkDealerRequest := *openapiclient.NewFermataLinkDealerRequest("DealerAccountId_example", "TradingAccountId_example") // FermataLinkDealerRequest |  (optional)
+	fermataLinkDealerRequest := *openapiclient.NewFermataLinkDealerRequest("DealerAccountId_example", "550e8400-e29b-41d4-a716-446655440000") // FermataLinkDealerRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -979,7 +979,7 @@ import (
 )
 
 func main() {
-	fermataUnlinkDealerRequest := *openapiclient.NewFermataUnlinkDealerRequest("DealerAccountId_example", "TradingAccountId_example") // FermataUnlinkDealerRequest |  (optional)
+	fermataUnlinkDealerRequest := *openapiclient.NewFermataUnlinkDealerRequest("DealerAccountId_example", "550e8400-e29b-41d4-a716-446655440000") // FermataUnlinkDealerRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

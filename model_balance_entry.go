@@ -26,7 +26,7 @@ type BalanceEntry struct {
 	SecurityType SecurityType `json:"securityType"`
 	// External balance ID from the exchange
 	ExternalBalanceId NullableString `json:"externalBalanceId,omitempty"`
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	Status BalanceStatus `json:"status"`
 	// UUID string

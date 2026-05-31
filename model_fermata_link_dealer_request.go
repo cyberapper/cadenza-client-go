@@ -22,7 +22,7 @@ var _ MappedNullable = &FermataLinkDealerRequest{}
 type FermataLinkDealerRequest struct {
 	// UUID string
 	DealerAccountId string `json:"dealerAccountId"`
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	AdditionalProperties map[string]interface{}
 }

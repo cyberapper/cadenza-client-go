@@ -481,16 +481,25 @@ paths:
         name: tradeOrderId
         required: false
         schema:
-          $ref: "#/components/schemas/uuidString"
+          $ref: "#/components/schemas/tradeOrderId"
         style: form
-      - description: Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO
-          parent
+      - description: Filter by internal order list ID (UUID) to retrieve child orders
+          of an OCO/OTO/OTOCO parent
         explode: true
         in: query
         name: orderListId
         required: false
         schema:
-          type: string
+          $ref: "#/components/schemas/orderListId"
+        style: form
+      - description: Filter by exchange-assigned order list ID to retrieve child orders
+          of an OCO/OTO/OTOCO parent
+        explode: true
+        in: query
+        name: externalOrderListId
+        required: false
+        schema:
+          $ref: "#/components/schemas/externalOrderListId"
         style: form
       - description: Order status
         explode: true
@@ -506,7 +515,7 @@ paths:
         name: tradingAccountId
         required: false
         schema:
-          $ref: "#/components/schemas/uuidString"
+          $ref: "#/components/schemas/tradingAccountId"
         style: form
       - description: Instrument ID
         explode: true
@@ -1036,7 +1045,7 @@ paths:
         name: tradingAccountId
         required: false
         schema:
-          $ref: "#/components/schemas/uuidString"
+          $ref: "#/components/schemas/tradingAccountId"
         style: form
       - description: Exchange type
         explode: true
@@ -1244,7 +1253,7 @@ paths:
         name: tradingAccountId
         required: false
         schema:
-          $ref: "#/components/schemas/uuidString"
+          $ref: "#/components/schemas/tradingAccountId"
         style: form
       - description: Operation type
         explode: true
@@ -1432,7 +1441,7 @@ paths:
         name: tradingAccountId
         required: false
         schema:
-          $ref: "#/components/schemas/uuidString"
+          $ref: "#/components/schemas/tradingAccountId"
         style: form
       - description: Limit the number of returned results
         explode: true
@@ -1498,7 +1507,7 @@ paths:
         name: tradingAccountId
         required: false
         schema:
-          $ref: "#/components/schemas/uuidString"
+          $ref: "#/components/schemas/tradingAccountId"
         style: form
       - description: Exchange type
         explode: true
@@ -3661,17 +3670,27 @@ components:
       name: tradeOrderId
       required: false
       schema:
-        $ref: "#/components/schemas/uuidString"
+        $ref: "#/components/schemas/tradeOrderId"
       style: form
     orderListId:
-      description: Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO
-        parent
+      description: Filter by internal order list ID (UUID) to retrieve child orders
+        of an OCO/OTO/OTOCO parent
       explode: true
       in: query
       name: orderListId
       required: false
       schema:
-        type: string
+        $ref: "#/components/schemas/orderListId"
+      style: form
+    externalOrderListId:
+      description: Filter by exchange-assigned order list ID to retrieve child orders
+        of an OCO/OTO/OTOCO parent
+      explode: true
+      in: query
+      name: externalOrderListId
+      required: false
+      schema:
+        $ref: "#/components/schemas/externalOrderListId"
       style: form
     venue:
       description: Exchange type
@@ -3698,7 +3717,7 @@ components:
       name: tradingAccountId
       required: false
       schema:
-        $ref: "#/components/schemas/uuidString"
+        $ref: "#/components/schemas/tradingAccountId"
       style: form
     subscriptionStatus:
       description: Subscription status
@@ -4681,6 +4700,34 @@ components:
       description: "Client-provided order ID, used as idempotency key"
       example: client_order_12345
       type: string
+    tradeOrderId:
+      description: Internal trade order ID (UUID)
+      example: 550e8400-e29b-41d4-a716-446655440000
+      format: uuid
+      type: string
+    tradingAccountId:
+      description: Internal trading account ID (UUID)
+      example: 550e8400-e29b-41d4-a716-446655440000
+      format: uuid
+      type: string
+    orderListId:
+      description: Internal order list ID (UUID) linking sibling orders in OCO/OTO/OTOCO
+        order lists
+      example: 550e8400-e29b-41d4-a716-446655440000
+      format: uuid
+      type: string
+    externalOrderListId:
+      description: Exchange-assigned order list ID linking sibling OCO/OTO/OTOCO legs
+      example: "2042488"
+      type: string
+    contingencyType:
+      description: Order list contingency type
+      enum:
+      - OCO
+      - OTO
+      - OTOCO
+      example: OCO
+      type: string
     securityId:
       description: "Security ID in format {VENUE}:{SYMBOL}"
       example: BINANCE:BTC
@@ -5104,9 +5151,9 @@ components:
           asset: BTC
         executedPrice: "1234.56789000"
         instrumentId: BINANCE:BTC/USDT
-        tradeOrderId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradeOrderId: 550e8400-e29b-41d4-a716-446655440000
         orderQuantityType: BASE
-        baseAsset: BTC
+        baseAsset: USDT
         executedCost: "1234.56789000"
         contingencyType: OCO
         createdAt: 1632933600000
@@ -5122,7 +5169,7 @@ components:
         stopLossLimitPrice: "1234.56789000"
         updatedAt: 1632933600000
         executedQuantity: "1234.56789000"
-        orderListId: "2042488"
+        orderListId: 550e8400-e29b-41d4-a716-446655440000
         quantity: "1234.56789000"
         limitPrice: "1234.56789000"
         expireAt: 1632933600000
@@ -5172,30 +5219,33 @@ components:
           executedCost: "1234.56789000"
         positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         canceledAt: 1632933600000
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         canceledAtDateTime: 2000-01-23T04:56:07.000+00:00
+        externalOrderListId: "2042488"
         quantityRounding: DOWN
         status: FILLED
       properties:
         tradeOrderId:
-          description: UUID string
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         orderListId:
-          description: Exchange order list ID linking sibling orders in OCO/OTO/OTOCO
-            order lists. Present on all orders in a list.
+          description: Internal order list ID (UUID) linking sibling orders in OCO/OTO/OTOCO
+            order lists
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+        externalOrderListId:
+          description: Exchange-assigned order list ID linking sibling OCO/OTO/OTOCO
+            legs
           example: "2042488"
           type: string
         contingencyType:
-          description: Order list contingency type. Present on all orders in a list.
-          enum:
-          - OCO
-          - OTO
-          - OTOCO
-          example: OCO
-          type: string
+          $ref: "#/components/schemas/contingencyType"
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         venue:
@@ -5213,11 +5263,11 @@ components:
           format: uuid
           type: string
         baseAsset:
-          description: Base asset in the trading pair
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         quoteAsset:
-          description: Quote asset in the trading pair
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         orderSide:
@@ -5340,13 +5390,11 @@ components:
           type: string
       required:
       - baseAsset
-      - cost
       - createdAt
       - executedCost
       - executedPrice
       - executedQuantity
       - fees
-      - filled
       - instrumentId
       - orderQuantityType
       - orderSide
@@ -5412,7 +5460,7 @@ components:
         instrumentId: BINANCE:BTC/USDT
         quoteSecurityType: CRYPTO
         description: description
-        baseAsset: BTC
+        baseAsset: USDT
         isIcebergAllowed: true
         baseSecurityType: CRYPTO
         baseMaxSignificant: 1
@@ -5423,7 +5471,7 @@ components:
         - GTC
         - GTC
         deliveryDate: 1632933600000
-        quoteAsset: USD
+        quoteAsset: USDT
         quoteMaxSignificant: 5
         maxNotional: "1234.56789000"
         instrumentType: SPOT
@@ -5464,10 +5512,12 @@ components:
         status:
           $ref: "#/components/schemas/instrumentStatus"
         baseAsset:
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         quoteAsset:
-          example: USD
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         baseSecurityType:
           $ref: "#/components/schemas/securityType"
@@ -5684,7 +5734,7 @@ components:
         marginMode: CROSS
         createdAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         externalTradingAccountId: externalTradingAccountId
         nickname: nickname
         createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -5693,7 +5743,8 @@ components:
         updatedAt: 1632933600000
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         externalTradingAccountId:
@@ -5760,7 +5811,7 @@ components:
           marginLoan: "1234.56789000"
           riskExposureRate: "1234.56789000"
           equity: "1234.56789000"
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           riskExposure: "1234.56789000"
           currency: USDT
           marginRequirement: "1234.56789000"
@@ -5775,7 +5826,7 @@ components:
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           securityType: CRYPTO
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           free: "1234.56789000"
           locked: "1234.56789000"
           net: "1234.56789000"
@@ -5788,7 +5839,7 @@ components:
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           securityType: CRYPTO
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           free: "1234.56789000"
           locked: "1234.56789000"
           net: "1234.56789000"
@@ -5796,7 +5847,7 @@ components:
           status: ACTIVE
           updatedAt: 1632933600000
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         positions:
         - exitPrice: "1234.56789000"
           quantity: "1234.56789000"
@@ -5811,7 +5862,7 @@ components:
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           securityType: CRYPTO
           unrealizedPnl: "1234.56789000"
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalPositionId: externalPositionId
           realizedPnl: "1234.56789000"
           closedAt: 1632933600000
@@ -5831,7 +5882,7 @@ components:
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           securityType: CRYPTO
           unrealizedPnl: "1234.56789000"
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalPositionId: externalPositionId
           realizedPnl: "1234.56789000"
           closedAt: 1632933600000
@@ -5841,7 +5892,8 @@ components:
         updatedAt: 1632933600000
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         venue:
@@ -5888,7 +5940,7 @@ components:
         positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         securityType: CRYPTO
         unrealizedPnl: "1234.56789000"
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         externalPositionId: externalPositionId
         realizedPnl: "1234.56789000"
         closedAt: 1632933600000
@@ -5909,7 +5961,8 @@ components:
           nullable: true
           type: string
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         instrumentId:
@@ -5999,7 +6052,7 @@ components:
         updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
         positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         securityType: CRYPTO
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         free: "1234.56789000"
         locked: "1234.56789000"
         net: "1234.56789000"
@@ -6018,7 +6071,8 @@ components:
           nullable: true
           type: string
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         status:
@@ -6081,7 +6135,7 @@ components:
         marginLoan: "1234.56789000"
         riskExposureRate: "1234.56789000"
         equity: "1234.56789000"
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         riskExposure: "1234.56789000"
         currency: USDT
         marginRequirement: "1234.56789000"
@@ -6090,7 +6144,8 @@ components:
         marginLevel: "1234.56789000"
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         currency:
@@ -6167,7 +6222,7 @@ components:
     accountOperation:
       example:
         createdAt: 1632933600000
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         operationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         operationType: CONNECT
         createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -6178,7 +6233,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         operationType:
@@ -6209,7 +6265,7 @@ components:
         subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
         instrumentId: BINANCE:BTC/USDT
         lastEventTimestamp: 1632933600000
-        tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
         subscriptionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         createdAtDateTime: 2000-01-23T04:56:07.000+00:00
         status: ACTIVE
@@ -6222,7 +6278,8 @@ components:
         venue:
           $ref: "#/components/schemas/venue"
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         instrumentId:
@@ -6614,7 +6671,7 @@ components:
         quantity: "100.50"
         instrumentId: BINANCE:BTC/USDT
         dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        baseAsset: BTC
+        baseAsset: USDT
         expireAt: 1632933600000
         orderSide: BUY
         quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -6658,11 +6715,11 @@ components:
           format: uuid
           type: string
         baseAsset:
-          description: Base asset being traded
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         quoteAsset:
-          description: Quote asset (payment currency)
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         orderSide:
@@ -6877,7 +6934,8 @@ components:
         \ all trade parameters)."
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         instrumentId:
@@ -6896,6 +6954,8 @@ components:
           $ref: "#/components/schemas/orderSide"
         orderType:
           $ref: "#/components/schemas/orderType"
+        contingencyType:
+          $ref: "#/components/schemas/contingencyType"
         limitPrice:
           description: Decimal value as string to preserve precision
           example: "1234.56789000"
@@ -6975,11 +7035,13 @@ components:
     cancelTradeOrderRequest:
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         tradeOrderId:
-          description: UUID string
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -7012,7 +7074,8 @@ components:
     disconnectTradingAccountRequest:
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -7021,7 +7084,8 @@ components:
     updateTradingAccountRequest:
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         nickname:
@@ -7033,7 +7097,8 @@ components:
     enableTradingAccountRequest:
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -7042,7 +7107,8 @@ components:
     disableTradingAccountRequest:
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -7109,7 +7175,8 @@ components:
     subscribeTradingAccountRequest:
       properties:
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -7131,7 +7198,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         instrumentId:
@@ -7208,13 +7276,11 @@ components:
           example: BINANCE:BTC/USDT
           type: string
         baseAsset:
-          description: Base asset to trade. Used with quoteAsset for symbol-based
-            venues.
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         quoteAsset:
-          description: Quote asset (payment currency). Used with baseAsset for symbol-based
-            venues.
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         orderSide:
@@ -7321,7 +7387,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -7336,7 +7403,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
-          description: UUID string
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -8797,7 +8865,8 @@ components:
         tradeOrder:
           $ref: "#/components/schemas/rpcTradeOrder"
         tradingAccountId:
-          description: Trading account ID to place order on
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         idempotencyKey:
@@ -8823,11 +8892,13 @@ components:
       description: Request to cancel an existing trade order
       properties:
         tradeOrderId:
-          description: Trade order ID to cancel
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         tradingAccountId:
-          description: Trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         clientOrderId:
@@ -8851,11 +8922,13 @@ components:
       description: Request to get a specific trade order
       properties:
         tradeOrderId:
-          description: Trade order ID
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         tradingAccountId:
-          description: Trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         clientOrderId:
@@ -8877,11 +8950,13 @@ components:
       description: Request to list trade orders with filters
       properties:
         tradeOrderId:
-          description: Filter by specific trade order ID
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         tradingAccountId:
-          description: Filter by trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         instrumentId:
@@ -8920,7 +8995,8 @@ components:
       description: Trade order model
       properties:
         tradeOrderId:
-          description: Unique trade order ID
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         clientOrderId:
@@ -8940,7 +9016,8 @@ components:
           example: BINANCE
           type: string
         tradingAccountId:
-          description: Trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         externalTradingAccountId:
@@ -8955,11 +9032,11 @@ components:
           example: BTCUSDT
           type: string
         baseAsset:
-          description: Base asset
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         quoteAsset:
-          description: Quote asset
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         orderType:
@@ -9051,7 +9128,8 @@ components:
       description: Request to list trading accounts
       properties:
         tradingAccountId:
-          description: Filter by specific account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         venue:
@@ -9094,7 +9172,8 @@ components:
       description: Request to disconnect a trading account
       properties:
         tradingAccountId:
-          description: Trading account ID to disconnect
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -9112,6 +9191,8 @@ components:
       description: Request to enable a trading account
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -9128,6 +9209,8 @@ components:
       description: Request to disable a trading account
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -9144,7 +9227,8 @@ components:
       description: Trading account model
       properties:
         tradingAccountId:
-          description: Unique trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         userId:
@@ -9234,7 +9318,8 @@ components:
       description: Request to get portfolio for a trading account
       properties:
         tradingAccountId:
-          description: Trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -9252,7 +9337,8 @@ components:
       description: Request to list portfolios
       properties:
         tradingAccountId:
-          description: Filter by trading account ID
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         venue:
@@ -9281,6 +9367,8 @@ components:
       description: Portfolio model containing balances and positions
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         accountInfo:
@@ -9310,6 +9398,8 @@ components:
         externalBalanceId:
           type: string
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         securitySymbol:
@@ -9369,6 +9459,8 @@ components:
         externalPositionId:
           type: string
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         securitySymbol:
@@ -9409,6 +9501,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         currency:
@@ -9724,6 +9818,8 @@ components:
       description: Request to delete a trading account
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -9757,6 +9853,8 @@ components:
       description: Request to list trading account operations
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         pagination:
@@ -9781,6 +9879,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         timestamp:
@@ -9825,6 +9925,8 @@ components:
           format: uuid
           type: string
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -9842,6 +9944,8 @@ components:
       description: Request to list trading account subscriptions
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         subscriptionType:
@@ -9879,6 +9983,8 @@ components:
       description: Request to create a credential
       properties:
         tradingAccountId:
+          description: Internal trading account ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         venue:
@@ -10039,6 +10145,8 @@ components:
       description: Request to get a trade order by ID
       properties:
         tradeOrderId:
+          description: Internal trade order ID (UUID)
+          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
       required:
@@ -10211,9 +10319,11 @@ components:
         status:
           $ref: "#/components/schemas/instrumentStatus"
         baseAsset:
-          example: BTC
+          description: "Asset symbol (e.g. currency code, base asset)"
+          example: USDT
           type: string
         quoteAsset:
+          description: "Asset symbol (e.g. currency code, base asset)"
           example: USDT
           type: string
         baseSecurityType:
@@ -10895,9 +11005,9 @@ components:
             asset: BTC
           executedPrice: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
-          tradeOrderId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradeOrderId: 550e8400-e29b-41d4-a716-446655440000
           orderQuantityType: BASE
-          baseAsset: BTC
+          baseAsset: USDT
           executedCost: "1234.56789000"
           contingencyType: OCO
           createdAt: 1632933600000
@@ -10913,7 +11023,7 @@ components:
           stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
-          orderListId: "2042488"
+          orderListId: 550e8400-e29b-41d4-a716-446655440000
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -10963,8 +11073,9 @@ components:
             executedCost: "1234.56789000"
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           canceledAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           canceledAtDateTime: 2000-01-23T04:56:07.000+00:00
+          externalOrderListId: "2042488"
           quantityRounding: DOWN
           status: FILLED
         - venue: BINANCE
@@ -10981,9 +11092,9 @@ components:
             asset: BTC
           executedPrice: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
-          tradeOrderId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradeOrderId: 550e8400-e29b-41d4-a716-446655440000
           orderQuantityType: BASE
-          baseAsset: BTC
+          baseAsset: USDT
           executedCost: "1234.56789000"
           contingencyType: OCO
           createdAt: 1632933600000
@@ -10999,7 +11110,7 @@ components:
           stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
-          orderListId: "2042488"
+          orderListId: 550e8400-e29b-41d4-a716-446655440000
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -11049,8 +11160,9 @@ components:
             executedCost: "1234.56789000"
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           canceledAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           canceledAtDateTime: 2000-01-23T04:56:07.000+00:00
+          externalOrderListId: "2042488"
           quantityRounding: DOWN
           status: FILLED
         success: true
@@ -11092,9 +11204,9 @@ components:
             asset: BTC
           executedPrice: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
-          tradeOrderId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradeOrderId: 550e8400-e29b-41d4-a716-446655440000
           orderQuantityType: BASE
-          baseAsset: BTC
+          baseAsset: USDT
           executedCost: "1234.56789000"
           contingencyType: OCO
           createdAt: 1632933600000
@@ -11110,7 +11222,7 @@ components:
           stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
-          orderListId: "2042488"
+          orderListId: 550e8400-e29b-41d4-a716-446655440000
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -11160,8 +11272,9 @@ components:
             executedCost: "1234.56789000"
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           canceledAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           canceledAtDateTime: 2000-01-23T04:56:07.000+00:00
+          externalOrderListId: "2042488"
           quantityRounding: DOWN
           status: FILLED
         success: true
@@ -11213,9 +11326,9 @@ components:
             asset: BTC
           executedPrice: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
-          tradeOrderId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradeOrderId: 550e8400-e29b-41d4-a716-446655440000
           orderQuantityType: BASE
-          baseAsset: BTC
+          baseAsset: USDT
           executedCost: "1234.56789000"
           contingencyType: OCO
           createdAt: 1632933600000
@@ -11231,7 +11344,7 @@ components:
           stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
-          orderListId: "2042488"
+          orderListId: 550e8400-e29b-41d4-a716-446655440000
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -11281,8 +11394,9 @@ components:
             executedCost: "1234.56789000"
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           canceledAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           canceledAtDateTime: 2000-01-23T04:56:07.000+00:00
+          externalOrderListId: "2042488"
           quantityRounding: DOWN
           status: FILLED
         - venue: BINANCE
@@ -11299,9 +11413,9 @@ components:
             asset: BTC
           executedPrice: "1234.56789000"
           instrumentId: BINANCE:BTC/USDT
-          tradeOrderId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradeOrderId: 550e8400-e29b-41d4-a716-446655440000
           orderQuantityType: BASE
-          baseAsset: BTC
+          baseAsset: USDT
           executedCost: "1234.56789000"
           contingencyType: OCO
           createdAt: 1632933600000
@@ -11317,7 +11431,7 @@ components:
           stopLossLimitPrice: "1234.56789000"
           updatedAt: 1632933600000
           executedQuantity: "1234.56789000"
-          orderListId: "2042488"
+          orderListId: 550e8400-e29b-41d4-a716-446655440000
           quantity: "1234.56789000"
           limitPrice: "1234.56789000"
           expireAt: 1632933600000
@@ -11367,8 +11481,9 @@ components:
             executedCost: "1234.56789000"
           positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           canceledAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           canceledAtDateTime: 2000-01-23T04:56:07.000+00:00
+          externalOrderListId: "2042488"
           quantityRounding: DOWN
           status: FILLED
         success: true
@@ -11521,7 +11636,7 @@ components:
           marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalTradingAccountId: externalTradingAccountId
           nickname: nickname
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -11558,7 +11673,7 @@ components:
           marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalTradingAccountId: externalTradingAccountId
           nickname: nickname
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -11620,7 +11735,7 @@ components:
           marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalTradingAccountId: externalTradingAccountId
           nickname: nickname
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -11692,7 +11807,7 @@ components:
           marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalTradingAccountId: externalTradingAccountId
           nickname: nickname
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -11729,7 +11844,7 @@ components:
           marginMode: CROSS
           createdAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           externalTradingAccountId: externalTradingAccountId
           nickname: nickname
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -11772,13 +11887,13 @@ components:
           hasNext: true
         data:
         - createdAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           operationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           operationType: CONNECT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
           status: PENDING
         - createdAt: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           operationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           operationType: CONNECT
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
@@ -11814,7 +11929,7 @@ components:
           subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           subscriptionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
           status: ACTIVE
@@ -11852,7 +11967,7 @@ components:
           subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           subscriptionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
           status: ACTIVE
@@ -11863,7 +11978,7 @@ components:
           subscriptionType: MARKET.SUBSCRIPTION.ORDERBOOK
           instrumentId: BINANCE:BTC/USDT
           lastEventTimestamp: 1632933600000
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           subscriptionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           createdAtDateTime: 2000-01-23T04:56:07.000+00:00
           status: ACTIVE
@@ -11910,7 +12025,7 @@ components:
             marginLoan: "1234.56789000"
             riskExposureRate: "1234.56789000"
             equity: "1234.56789000"
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             riskExposure: "1234.56789000"
             currency: USDT
             marginRequirement: "1234.56789000"
@@ -11925,7 +12040,7 @@ components:
             updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             free: "1234.56789000"
             locked: "1234.56789000"
             net: "1234.56789000"
@@ -11938,7 +12053,7 @@ components:
             updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             free: "1234.56789000"
             locked: "1234.56789000"
             net: "1234.56789000"
@@ -11946,7 +12061,7 @@ components:
             status: ACTIVE
             updatedAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           positions:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
@@ -11961,7 +12076,7 @@ components:
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
             unrealizedPnl: "1234.56789000"
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             externalPositionId: externalPositionId
             realizedPnl: "1234.56789000"
             closedAt: 1632933600000
@@ -11981,7 +12096,7 @@ components:
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
             unrealizedPnl: "1234.56789000"
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             externalPositionId: externalPositionId
             realizedPnl: "1234.56789000"
             closedAt: 1632933600000
@@ -11996,7 +12111,7 @@ components:
             marginLoan: "1234.56789000"
             riskExposureRate: "1234.56789000"
             equity: "1234.56789000"
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             riskExposure: "1234.56789000"
             currency: USDT
             marginRequirement: "1234.56789000"
@@ -12011,7 +12126,7 @@ components:
             updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             free: "1234.56789000"
             locked: "1234.56789000"
             net: "1234.56789000"
@@ -12024,7 +12139,7 @@ components:
             updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             free: "1234.56789000"
             locked: "1234.56789000"
             net: "1234.56789000"
@@ -12032,7 +12147,7 @@ components:
             status: ACTIVE
             updatedAt: 1632933600000
           updatedAtDateTime: 2000-01-23T04:56:07.000+00:00
-          tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
           positions:
           - exitPrice: "1234.56789000"
             quantity: "1234.56789000"
@@ -12047,7 +12162,7 @@ components:
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
             unrealizedPnl: "1234.56789000"
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             externalPositionId: externalPositionId
             realizedPnl: "1234.56789000"
             closedAt: 1632933600000
@@ -12067,7 +12182,7 @@ components:
             positionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             securityType: CRYPTO
             unrealizedPnl: "1234.56789000"
-            tradingAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            tradingAccountId: 550e8400-e29b-41d4-a716-446655440000
             externalPositionId: externalPositionId
             realizedPnl: "1234.56789000"
             closedAt: 1632933600000
@@ -12186,7 +12301,7 @@ components:
           instrumentId: BINANCE:BTC/USDT
           quoteSecurityType: CRYPTO
           description: description
-          baseAsset: BTC
+          baseAsset: USDT
           isIcebergAllowed: true
           baseSecurityType: CRYPTO
           baseMaxSignificant: 1
@@ -12197,7 +12312,7 @@ components:
           - GTC
           - GTC
           deliveryDate: 1632933600000
-          quoteAsset: USD
+          quoteAsset: USDT
           quoteMaxSignificant: 5
           maxNotional: "1234.56789000"
           instrumentType: SPOT
@@ -12258,7 +12373,7 @@ components:
           instrumentId: BINANCE:BTC/USDT
           quoteSecurityType: CRYPTO
           description: description
-          baseAsset: BTC
+          baseAsset: USDT
           isIcebergAllowed: true
           baseSecurityType: CRYPTO
           baseMaxSignificant: 1
@@ -12269,7 +12384,7 @@ components:
           - GTC
           - GTC
           deliveryDate: 1632933600000
-          quoteAsset: USD
+          quoteAsset: USDT
           quoteMaxSignificant: 5
           maxNotional: "1234.56789000"
           instrumentType: SPOT
@@ -12295,7 +12410,7 @@ components:
           instrumentId: BINANCE:BTC/USDT
           quoteSecurityType: CRYPTO
           description: description
-          baseAsset: BTC
+          baseAsset: USDT
           isIcebergAllowed: true
           baseSecurityType: CRYPTO
           baseMaxSignificant: 1
@@ -12306,7 +12421,7 @@ components:
           - GTC
           - GTC
           deliveryDate: 1632933600000
-          quoteAsset: USD
+          quoteAsset: USDT
           quoteMaxSignificant: 5
           maxNotional: "1234.56789000"
           instrumentType: SPOT
@@ -12697,7 +12812,7 @@ components:
           quantity: "100.50"
           instrumentId: BINANCE:BTC/USDT
           dealerAccountId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          baseAsset: BTC
+          baseAsset: USDT
           expireAt: 1632933600000
           orderSide: BUY
           quoteId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91

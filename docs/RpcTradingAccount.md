@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | Pointer to **string** | Unique trading account ID | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **UserId** | Pointer to **string** | User ID | [optional] 
 **TenantId** | Pointer to **string** | Tenant identifier for multi-tenancy | [optional] 
 **Nickname** | Pointer to **string** | Account nickname | [optional] 

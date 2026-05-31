@@ -20,7 +20,7 @@ var _ MappedNullable = &UpdateTradingAccountRequest{}
 
 // UpdateTradingAccountRequest struct for UpdateTradingAccountRequest
 type UpdateTradingAccountRequest struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// New nickname for the trading account
 	Nickname *string `json:"nickname,omitempty"`

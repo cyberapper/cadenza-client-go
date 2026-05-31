@@ -23,7 +23,7 @@ var _ MappedNullable = &AccountOperation{}
 type AccountOperation struct {
 	// UUID string
 	OperationId string `json:"operationId"`
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	OperationType OperationType `json:"operationType"`
 	Status OperationStatus `json:"status"`

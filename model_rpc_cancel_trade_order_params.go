@@ -20,9 +20,9 @@ var _ MappedNullable = &RpcCancelTradeOrderParams{}
 
 // RpcCancelTradeOrderParams Request to cancel an existing trade order
 type RpcCancelTradeOrderParams struct {
-	// Trade order ID to cancel
+	// Internal trade order ID (UUID)
 	TradeOrderId *string `json:"tradeOrderId,omitempty"`
-	// Trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	// Client order ID (alternative to tradeOrderId)
 	ClientOrderId *string `json:"clientOrderId,omitempty"`
