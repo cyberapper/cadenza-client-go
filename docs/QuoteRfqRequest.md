@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **DealerAccountId** | **string** | UUID string | 
 **TraderAccountId** | Pointer to **string** | UUID string | [optional] 
 **InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
-**BaseAsset** | Pointer to **string** | Base asset to trade. Used with quoteAsset for symbol-based venues. | [optional] 
-**QuoteAsset** | Pointer to **string** | Quote asset (payment currency). Used with baseAsset for symbol-based venues. | [optional] 
+**BaseAsset** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
+**QuoteAsset** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
 **Quantity** | Pointer to **string** | Positive decimal value as string | [optional] 
 **QuoteQuantity** | Pointer to **string** | Positive decimal value as string | [optional] 

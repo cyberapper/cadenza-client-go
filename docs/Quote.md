@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **DealerAccountId** | **string** | UUID string | 
 **TraderAccountId** | Pointer to **string** | UUID string | [optional] 
-**BaseAsset** | **string** | Base asset being traded | 
-**QuoteAsset** | **string** | Quote asset (payment currency) | 
+**BaseAsset** | **string** | Asset symbol (e.g. currency code, base asset) | 
+**QuoteAsset** | **string** | Asset symbol (e.g. currency code, base asset) | 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
 **QuantityType** | Pointer to [**QuantityType**](QuantityType.md) |  | [optional] 
 **Quantity** | **string** | Positive decimal value as string | 

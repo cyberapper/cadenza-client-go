@@ -24,7 +24,7 @@ type Subscription struct {
 	// UUID string
 	SubscriptionId string `json:"subscriptionId"`
 	Venue Venue `json:"venue"`
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`

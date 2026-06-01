@@ -20,7 +20,7 @@ var _ MappedNullable = &RpcTradingAccount{}
 
 // RpcTradingAccount Trading account model
 type RpcTradingAccount struct {
-	// Unique trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// User ID
 	UserId *string `json:"userId,omitempty"`

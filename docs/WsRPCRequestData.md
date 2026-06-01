@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TradeOrder** | [**RpcTradeOrder**](RpcTradeOrder.md) |  | 
-**TradingAccountId** | **string** | Filter by trading account ID | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **IdempotencyKey** | Pointer to **string** | Idempotency key to prevent duplicate orders | [optional] 
 **AwaitClosed** | Pointer to **bool** | Wait for order to reach terminal state before responding | [optional] [default to false]
-**TradeOrderId** | **string** | Filter by specific trade order ID | 
+**TradeOrderId** | **string** | Internal trade order ID (UUID) | 
 **ClientOrderId** | Pointer to **string** | Client order ID | [optional] 
 **ExternalOrderId** | Pointer to **string** | External order ID | [optional] 
 **InstrumentId** | **[]string** |  | 

@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcListTradingAccountOperationsParams{}
 
 // RpcListTradingAccountOperationsParams Request to list trading account operations
 type RpcListTradingAccountOperationsParams struct {
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	Pagination *RpcPagination `json:"pagination,omitempty"`
 	AdditionalProperties map[string]interface{}

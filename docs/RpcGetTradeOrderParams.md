@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradeOrderId** | Pointer to **string** | Trade order ID | [optional] 
-**TradingAccountId** | Pointer to **string** | Trading account ID | [optional] 
+**TradeOrderId** | Pointer to **string** | Internal trade order ID (UUID) | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **ClientOrderId** | Pointer to **string** | Client order ID | [optional] 
 **ExternalOrderId** | Pointer to **string** | External order ID | [optional] 
 

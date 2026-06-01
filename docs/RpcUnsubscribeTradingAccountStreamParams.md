@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SubscriptionId** | Pointer to **string** |  | [optional] 
-**TradingAccountId** | **string** |  | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 
 ## Methods
 

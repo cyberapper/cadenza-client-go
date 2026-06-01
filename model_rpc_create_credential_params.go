@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcCreateCredentialParams{}
 
 // RpcCreateCredentialParams Request to create a credential
 type RpcCreateCredentialParams struct {
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	Venue Venue `json:"venue"`
 	CredentialType NullableCredentialType `json:"credentialType"`

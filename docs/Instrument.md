@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **Description** | Pointer to **string** | Symbol description, human readable description of the instrument | [optional] 
 **InstrumentType** | [**InstrumentType**](InstrumentType.md) |  | 
 **Status** | [**InstrumentStatus**](InstrumentStatus.md) |  | 
-**BaseAsset** | **string** |  | 
-**QuoteAsset** | **string** |  | 
+**BaseAsset** | **string** | Asset symbol (e.g. currency code, base asset) | 
+**QuoteAsset** | **string** | Asset symbol (e.g. currency code, base asset) | 
 **BaseSecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
 **QuoteSecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 
 **BasePrecision** | **int32** | Base asset precision | 

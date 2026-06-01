@@ -32,7 +32,9 @@ type Instrument struct {
 	Description *string `json:"description,omitempty"`
 	InstrumentType InstrumentType `json:"instrumentType"`
 	Status InstrumentStatus `json:"status"`
+	// Asset symbol (e.g. currency code, base asset)
 	BaseAsset string `json:"baseAsset"`
+	// Asset symbol (e.g. currency code, base asset)
 	QuoteAsset string `json:"quoteAsset"`
 	BaseSecurityType *SecurityType `json:"baseSecurityType,omitempty"`
 	QuoteSecurityType *SecurityType `json:"quoteSecurityType,omitempty"`

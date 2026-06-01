@@ -21,7 +21,7 @@ var _ MappedNullable = &UnsubscribeRequest{}
 type UnsubscribeRequest struct {
 	// UUID string
 	SubscriptionId *string `json:"subscriptionId,omitempty"`
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`

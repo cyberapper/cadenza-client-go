@@ -20,7 +20,7 @@ var _ MappedNullable = &DisconnectTradingAccountRequest{}
 
 // DisconnectTradingAccountRequest struct for DisconnectTradingAccountRequest
 type DisconnectTradingAccountRequest struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
 	AdditionalProperties map[string]interface{}
 }

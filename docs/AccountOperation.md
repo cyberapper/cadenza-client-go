@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OperationId** | **string** | UUID string | 
-**TradingAccountId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **OperationType** | [**OperationType**](OperationType.md) |  | 
 **Status** | [**OperationStatus**](OperationStatus.md) |  | 
 **CreatedAt** | **int64** | Unix timestamp in milliseconds | 

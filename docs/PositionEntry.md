@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **PositionId** | **string** | UUID string | 
 **SecuritySymbol** | **string** | Security symbol | 
 **ExternalPositionId** | Pointer to **NullableString** | External position ID from the exchange | [optional] 
-**TradingAccountId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **InstrumentId** | Pointer to **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | [optional] 
 **SecurityType** | [**SecurityType**](SecurityType.md) |  | 
 **Status** | [**PositionStatus**](PositionStatus.md) |  | 

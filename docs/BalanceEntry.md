@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **SecuritySymbol** | **string** | Security symbol | 
 **SecurityType** | [**SecurityType**](SecurityType.md) |  | 
 **ExternalBalanceId** | Pointer to **NullableString** | External balance ID from the exchange | [optional] 
-**TradingAccountId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **Status** | [**BalanceStatus**](BalanceStatus.md) |  | 
 **PositionId** | Pointer to **string** | UUID string | [optional] 
 **Free** | **string** | Decimal value as string to preserve precision | 

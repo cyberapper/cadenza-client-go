@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcPortfolio{}
 
 // RpcPortfolio Portfolio model containing balances and positions
 type RpcPortfolio struct {
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	AccountInfo *RpcTradingAccount `json:"accountInfo,omitempty"`
 	Balances []RpcBalanceEntry `json:"balances,omitempty"`

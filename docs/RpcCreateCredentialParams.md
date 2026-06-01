@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** |  | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **Venue** | [**Venue**](Venue.md) |  | 
 **CredentialType** | [**NullableCredentialType**](CredentialType.md) |  | 
 **ApiKey** | Pointer to **string** |  | [optional] 

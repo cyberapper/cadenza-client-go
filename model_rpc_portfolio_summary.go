@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcPortfolioSummary{}
 // RpcPortfolioSummary Portfolio summary with aggregated metrics
 type RpcPortfolioSummary struct {
 	PortfolioSummaryId *string `json:"portfolioSummaryId,omitempty"`
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Asset symbol (e.g. currency code, base asset)
 	Currency *string `json:"currency,omitempty"`

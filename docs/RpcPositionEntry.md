@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PositionId** | Pointer to **string** |  | [optional] 
 **ExternalPositionId** | Pointer to **string** |  | [optional] 
-**TradingAccountId** | Pointer to **string** |  | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **SecuritySymbol** | Pointer to **string** |  | [optional] 
 **InstrumentId** | Pointer to **string** | Instrument ID | [optional] 
 **SecurityType** | Pointer to [**SecurityType**](SecurityType.md) |  | [optional] 

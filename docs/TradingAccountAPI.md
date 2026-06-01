@@ -101,7 +101,7 @@ import (
 )
 
 func main() {
-	disableTradingAccountRequest := *openapiclient.NewDisableTradingAccountRequest("TradingAccountId_example") // DisableTradingAccountRequest |  (optional)
+	disableTradingAccountRequest := *openapiclient.NewDisableTradingAccountRequest("550e8400-e29b-41d4-a716-446655440000") // DisableTradingAccountRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -167,7 +167,7 @@ import (
 )
 
 func main() {
-	disconnectTradingAccountRequest := *openapiclient.NewDisconnectTradingAccountRequest("TradingAccountId_example") // DisconnectTradingAccountRequest |  (optional)
+	disconnectTradingAccountRequest := *openapiclient.NewDisconnectTradingAccountRequest("550e8400-e29b-41d4-a716-446655440000") // DisconnectTradingAccountRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -233,7 +233,7 @@ import (
 )
 
 func main() {
-	enableTradingAccountRequest := *openapiclient.NewEnableTradingAccountRequest("TradingAccountId_example") // EnableTradingAccountRequest |  (optional)
+	enableTradingAccountRequest := *openapiclient.NewEnableTradingAccountRequest("550e8400-e29b-41d4-a716-446655440000") // EnableTradingAccountRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -455,7 +455,7 @@ import (
 )
 
 func main() {
-	updateTradingAccountRequest := *openapiclient.NewUpdateTradingAccountRequest("TradingAccountId_example") // UpdateTradingAccountRequest |  (optional)
+	updateTradingAccountRequest := *openapiclient.NewUpdateTradingAccountRequest("550e8400-e29b-41d4-a716-446655440000") // UpdateTradingAccountRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

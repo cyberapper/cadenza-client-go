@@ -22,6 +22,7 @@ var _ MappedNullable = &RpcBalanceEntry{}
 type RpcBalanceEntry struct {
 	BalanceId *string `json:"balanceId,omitempty"`
 	ExternalBalanceId *string `json:"externalBalanceId,omitempty"`
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Asset symbol
 	SecuritySymbol *string `json:"securitySymbol,omitempty"`

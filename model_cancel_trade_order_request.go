@@ -20,9 +20,9 @@ var _ MappedNullable = &CancelTradeOrderRequest{}
 
 // CancelTradeOrderRequest struct for CancelTradeOrderRequest
 type CancelTradeOrderRequest struct {
-	// UUID string
+	// Internal trading account ID (UUID)
 	TradingAccountId string `json:"tradingAccountId"`
-	// UUID string
+	// Internal trade order ID (UUID)
 	TradeOrderId string `json:"tradeOrderId"`
 	AdditionalProperties map[string]interface{}
 }

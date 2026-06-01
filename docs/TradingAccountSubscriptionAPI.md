@@ -103,7 +103,7 @@ import (
 )
 
 func main() {
-	subscribeTradingAccountRequest := *openapiclient.NewSubscribeTradingAccountRequest("TradingAccountId_example") // SubscribeTradingAccountRequest |  (optional)
+	subscribeTradingAccountRequest := *openapiclient.NewSubscribeTradingAccountRequest("550e8400-e29b-41d4-a716-446655440000") // SubscribeTradingAccountRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

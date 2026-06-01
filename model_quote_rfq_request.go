@@ -27,9 +27,9 @@ type QuoteRfqRequest struct {
 	TraderAccountId *string `json:"traderAccountId,omitempty"`
 	// Instrument ID in format {VENUE}:{BASE}/{QUOTE}
 	InstrumentId *string `json:"instrumentId,omitempty"`
-	// Base asset to trade. Used with quoteAsset for symbol-based venues.
+	// Asset symbol (e.g. currency code, base asset)
 	BaseAsset *string `json:"baseAsset,omitempty"`
-	// Quote asset (payment currency). Used with baseAsset for symbol-based venues.
+	// Asset symbol (e.g. currency code, base asset)
 	QuoteAsset *string `json:"quoteAsset,omitempty"`
 	OrderSide OrderSide `json:"orderSide"`
 	// Positive decimal value as string

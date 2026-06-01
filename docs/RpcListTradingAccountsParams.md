@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | Pointer to **string** | Filter by specific account ID | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **Venue** | Pointer to **string** | Filter by venue | [optional] 
 **Status** | Pointer to [**TradingAccountStatus**](TradingAccountStatus.md) |  | [optional] 
 **Pagination** | Pointer to [**RpcPagination**](RpcPagination.md) |  | [optional] 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** |  | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 
 ## Methods
 

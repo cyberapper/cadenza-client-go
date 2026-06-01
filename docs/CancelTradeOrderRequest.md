@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradingAccountId** | **string** | UUID string | 
-**TradeOrderId** | **string** | UUID string | 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
+**TradeOrderId** | **string** | Internal trade order ID (UUID) | 
 
 ## Methods
 

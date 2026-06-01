@@ -20,6 +20,7 @@ var _ MappedNullable = &RpcGetTradeOrderByIdParams{}
 
 // RpcGetTradeOrderByIdParams Request to get a trade order by ID
 type RpcGetTradeOrderByIdParams struct {
+	// Internal trade order ID (UUID)
 	TradeOrderId string `json:"tradeOrderId"`
 	AdditionalProperties map[string]interface{}
 }

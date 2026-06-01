@@ -19,9 +19,9 @@ var _ MappedNullable = &RpcGetTradeOrderParams{}
 
 // RpcGetTradeOrderParams Request to get a specific trade order
 type RpcGetTradeOrderParams struct {
-	// Trade order ID
+	// Internal trade order ID (UUID)
 	TradeOrderId *string `json:"tradeOrderId,omitempty"`
-	// Trading account ID
+	// Internal trading account ID (UUID)
 	TradingAccountId *string `json:"tradingAccountId,omitempty"`
 	// Client order ID
 	ClientOrderId *string `json:"clientOrderId,omitempty"`

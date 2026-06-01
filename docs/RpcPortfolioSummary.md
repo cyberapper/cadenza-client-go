@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PortfolioSummaryId** | Pointer to **string** |  | [optional] 
-**TradingAccountId** | Pointer to **string** |  | [optional] 
+**TradingAccountId** | Pointer to **string** | Internal trading account ID (UUID) | [optional] 
 **Currency** | Pointer to **string** | Asset symbol (e.g. currency code, base asset) | [optional] 
 **Leverage** | Pointer to **int32** |  | [optional] 
 **Equity** | Pointer to **string** | Total equity | [optional] 

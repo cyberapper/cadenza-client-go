@@ -32,7 +32,7 @@ import (
 )
 
 func main() {
-	cancelTradeOrderRequest := *openapiclient.NewCancelTradeOrderRequest("TradingAccountId_example", "TradeOrderId_example") // CancelTradeOrderRequest |  (optional)
+	cancelTradeOrderRequest := *openapiclient.NewCancelTradeOrderRequest("550e8400-e29b-41d4-a716-446655440000", "550e8400-e29b-41d4-a716-446655440000") // CancelTradeOrderRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -79,7 +79,7 @@ Name | Type | Description  | Notes
 
 ## ListTradeOrders
 
-> ListTradeOrders200Response ListTradeOrders(ctx).TradeOrderId(tradeOrderId).OrderListId(orderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
+> ListTradeOrders200Response ListTradeOrders(ctx).TradeOrderId(tradeOrderId).OrderListId(orderListId).ExternalOrderListId(externalOrderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
 
 List trade orders
 
@@ -99,7 +99,8 @@ import (
 
 func main() {
 	tradeOrderId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trade order ID (optional)
-	orderListId := "orderListId_example" // string | Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO parent (optional)
+	orderListId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Filter by internal order list ID (UUID) to retrieve child orders of an OCO/OTO/OTOCO parent (optional)
+	externalOrderListId := "externalOrderListId_example" // string | Filter by exchange-assigned order list ID to retrieve child orders of an OCO/OTO/OTOCO parent (optional)
 	orderStatus := openapiclient.orderStatus("CREATED") // OrderStatus | Order status (optional)
 	tradingAccountId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Trading account ID (optional)
 	instrumentId := "instrumentId_example" // string | Instrument ID (optional)
@@ -112,7 +113,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TradingAPI.ListTradeOrders(context.Background()).TradeOrderId(tradeOrderId).OrderListId(orderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
+	resp, r, err := apiClient.TradingAPI.ListTradeOrders(context.Background()).TradeOrderId(tradeOrderId).OrderListId(orderListId).ExternalOrderListId(externalOrderListId).OrderStatus(orderStatus).TradingAccountId(tradingAccountId).InstrumentId(instrumentId).StartTime(startTime).EndTime(endTime).Limit(limit).Offset(offset).Cursor(cursor).Ascending(ascending).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TradingAPI.ListTradeOrders``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -134,7 +135,8 @@ Other parameters are passed through a pointer to a apiListTradeOrdersRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tradeOrderId** | **string** | Trade order ID | 
- **orderListId** | **string** | Filter by order list ID to retrieve child orders of an OCO/OTO/OTOCO parent | 
+ **orderListId** | **string** | Filter by internal order list ID (UUID) to retrieve child orders of an OCO/OTO/OTOCO parent | 
+ **externalOrderListId** | **string** | Filter by exchange-assigned order list ID to retrieve child orders of an OCO/OTO/OTOCO parent | 
  **orderStatus** | [**OrderStatus**](OrderStatus.md) | Order status | 
  **tradingAccountId** | **string** | Trading account ID | 
  **instrumentId** | **string** | Instrument ID | 
@@ -250,7 +252,7 @@ import (
 )
 
 func main() {
-	submitTradeOrderRequest := *openapiclient.NewSubmitTradeOrderRequest("TradingAccountId_example", openapiclient.orderSide("BUY"), "TODO", "1234.56789000") // SubmitTradeOrderRequest |  (optional)
+	submitTradeOrderRequest := *openapiclient.NewSubmitTradeOrderRequest("550e8400-e29b-41d4-a716-446655440000", openapiclient.orderSide("BUY"), "TODO", "1234.56789000") // SubmitTradeOrderRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

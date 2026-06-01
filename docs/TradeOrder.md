@@ -4,16 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TradeOrderId** | **string** | UUID string | 
-**OrderListId** | Pointer to **string** | Exchange order list ID linking sibling orders in OCO/OTO/OTOCO order lists. Present on all orders in a list. | [optional] 
-**ContingencyType** | Pointer to **string** | Order list contingency type. Present on all orders in a list. | [optional] 
-**TradingAccountId** | **string** | UUID string | 
+**TradeOrderId** | **string** | Internal trade order ID (UUID) | 
+**OrderListId** | Pointer to **string** | Internal order list ID (UUID) linking sibling orders in OCO/OTO/OTOCO order lists | [optional] 
+**ExternalOrderListId** | Pointer to **string** | Exchange-assigned order list ID linking sibling OCO/OTO/OTOCO legs | [optional] 
+**ContingencyType** | Pointer to [**ContingencyType**](ContingencyType.md) |  | [optional] 
+**TradingAccountId** | **string** | Internal trading account ID (UUID) | 
 **Venue** | [**Venue**](Venue.md) |  | 
 **PositionId** | Pointer to **string** | UUID string | [optional] 
 **InstrumentId** | **string** | Instrument ID in format {VENUE}:{BASE}/{QUOTE} | 
 **QuoteId** | Pointer to **string** | UUID string | [optional] 
-**BaseAsset** | **string** | Base asset in the trading pair | 
-**QuoteAsset** | **string** | Quote asset in the trading pair | 
+**BaseAsset** | **string** | Asset symbol (e.g. currency code, base asset) | 
+**QuoteAsset** | **string** | Asset symbol (e.g. currency code, base asset) | 
 **OrderSide** | [**OrderSide**](OrderSide.md) |  | 
 **OrderType** | [**NullableOrderType**](OrderType.md) |  | 
 **TimeInForce** | [**NullableTimeInForce**](TimeInForce.md) |  | 
@@ -109,22 +110,47 @@ SetOrderListId sets OrderListId field to given value.
 
 HasOrderListId returns a boolean if a field has been set.
 
+### GetExternalOrderListId
+
+`func (o *TradeOrder) GetExternalOrderListId() string`
+
+GetExternalOrderListId returns the ExternalOrderListId field if non-nil, zero value otherwise.
+
+### GetExternalOrderListIdOk
+
+`func (o *TradeOrder) GetExternalOrderListIdOk() (*string, bool)`
+
+GetExternalOrderListIdOk returns a tuple with the ExternalOrderListId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExternalOrderListId
+
+`func (o *TradeOrder) SetExternalOrderListId(v string)`
+
+SetExternalOrderListId sets ExternalOrderListId field to given value.
+
+### HasExternalOrderListId
+
+`func (o *TradeOrder) HasExternalOrderListId() bool`
+
+HasExternalOrderListId returns a boolean if a field has been set.
+
 ### GetContingencyType
 
-`func (o *TradeOrder) GetContingencyType() string`
+`func (o *TradeOrder) GetContingencyType() ContingencyType`
 
 GetContingencyType returns the ContingencyType field if non-nil, zero value otherwise.
 
 ### GetContingencyTypeOk
 
-`func (o *TradeOrder) GetContingencyTypeOk() (*string, bool)`
+`func (o *TradeOrder) GetContingencyTypeOk() (*ContingencyType, bool)`
 
 GetContingencyTypeOk returns a tuple with the ContingencyType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContingencyType
 
-`func (o *TradeOrder) SetContingencyType(v string)`
+`func (o *TradeOrder) SetContingencyType(v ContingencyType)`
 
 SetContingencyType sets ContingencyType field to given value.
 
