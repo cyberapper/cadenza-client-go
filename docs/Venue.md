@@ -23,6 +23,8 @@
 
 * `OKX` (value: `"OKX"`)
 
+* `HYPERLIQUID` (value: `"HYPERLIQUID"`)
+
 * `BINANCE_UAT` (value: `"BINANCE_UAT"`)
 
 * `B2_C2_UAT` (value: `"B2C2_UAT"`)
@@ -42,6 +44,8 @@
 * `BITFINEX_UAT` (value: `"BITFINEX_UAT"`)
 
 * `OKX_UAT` (value: `"OKX_UAT"`)
+
+* `HYPERLIQUID_UAT` (value: `"HYPERLIQUID_UAT"`)
 
 * `BINANCE_SANDBOX` (value: `"BINANCE_SANDBOX"`)
 

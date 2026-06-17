@@ -4535,6 +4535,7 @@ components:
       - DERIBIT
       - BITFINEX
       - OKX
+      - HYPERLIQUID
       - BINANCE_UAT
       - B2C2_UAT
       - WINTERMUTE_UAT
@@ -4545,6 +4546,7 @@ components:
       - DERIBIT_UAT
       - BITFINEX_UAT
       - OKX_UAT
+      - HYPERLIQUID_UAT
       - BINANCE_SANDBOX
       - B2C2_SANDBOX
       - IBKR_PAPER
