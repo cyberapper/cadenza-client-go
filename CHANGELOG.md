@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/cyberapper/cadenza-client-go/compare/v1.4.2...v1.4.3) (2026-06-17)
+
+
+### Miscellaneous
+
+* regenerate Go client SDK for HYPERLIQUID venue ([#52](https://github.com/cyberapper/cadenza-client-go/issues/52)) ([e8bb029](https://github.com/cyberapper/cadenza-client-go/commit/e8bb02933e53bfec9a81f866aac19a793b39052e))
+
 ## [1.4.2](https://github.com/cyberapper/cadenza-client-go/compare/v1.4.1...v1.4.2) (2026-06-01)
 
 
