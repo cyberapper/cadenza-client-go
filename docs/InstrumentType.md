@@ -5,6 +5,14 @@
 
 * `SPOT` (value: `"SPOT"`)
 
+* `FUTURES` (value: `"FUTURES"`)
+
+* `PERPETUAL` (value: `"PERPETUAL"`)
+
+* `OPTION` (value: `"OPTION"`)
+
+* `CFD` (value: `"CFD"`)
+
 * `CONTRACT` (value: `"CONTRACT"`)
 
 
