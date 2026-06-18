@@ -29,6 +29,7 @@ const (
 	SECURITYTYPE_OPTION SecurityType = "OPTION"
 	SECURITYTYPE_FUTURES SecurityType = "FUTURES"
 	SECURITYTYPE_PERPETUAL SecurityType = "PERPETUAL"
+	SECURITYTYPE_CFD SecurityType = "CFD"
 )
 
 // All allowed values of SecurityType enum
@@ -42,6 +43,7 @@ var AllowedSecurityTypeEnumValues = []SecurityType{
 	"OPTION",
 	"FUTURES",
 	"PERPETUAL",
+	"CFD",
 }
 
 func (v *SecurityType) UnmarshalJSON(src []byte) error {

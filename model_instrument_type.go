@@ -15,18 +15,26 @@ import (
 	"fmt"
 )
 
-// InstrumentType Type of financial instrument
+// InstrumentType Trading mechanism of an instrument — how the two securities are exchanged and traded. Unlike `securityType` (which classifies the asset class), this focuses on the instrument's trading mechanism.  - `SPOT`: direct asset exchange, both balances change - `FUTURES`: fixed-expiry contract settled at maturity - `PERPETUAL`: perpetual contract with no expiry (funding rate) - `OPTION`: right to buy/sell at strike price - `CFD`: contract for difference, cash-settled - `CONTRACT`: **deprecated** — legacy umbrella for derivative contracts,   superseded by the more specific `FUTURES` / `PERPETUAL`. Retained for   backward compatibility with previously synced instruments. 
 type InstrumentType string
 
 // List of instrumentType
 const (
 	INSTRUMENTTYPE_SPOT InstrumentType = "SPOT"
+	INSTRUMENTTYPE_FUTURES InstrumentType = "FUTURES"
+	INSTRUMENTTYPE_PERPETUAL InstrumentType = "PERPETUAL"
+	INSTRUMENTTYPE_OPTION InstrumentType = "OPTION"
+	INSTRUMENTTYPE_CFD InstrumentType = "CFD"
 	INSTRUMENTTYPE_CONTRACT InstrumentType = "CONTRACT"
 )
 
 // All allowed values of InstrumentType enum
 var AllowedInstrumentTypeEnumValues = []InstrumentType{
 	"SPOT",
+	"FUTURES",
+	"PERPETUAL",
+	"OPTION",
+	"CFD",
 	"CONTRACT",
 }
 
