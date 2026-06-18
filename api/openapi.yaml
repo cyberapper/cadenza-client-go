@@ -6521,6 +6521,7 @@ components:
         askQuantity: "1234.56789000"
         lastQuantity: "1234.56789000"
         bidPrice: "1234.56789000"
+        priceChangePercent: "1234.56789000"
         lastPrice: "1234.56789000"
         timestamp: 1632933600000
       properties:
@@ -6560,6 +6561,11 @@ components:
           pattern: ^-?\d+(\.\d+)?$
           type: string
         askQuantity:
+          description: Decimal value as string to preserve precision
+          example: "1234.56789000"
+          pattern: ^-?\d+(\.\d+)?$
+          type: string
+        priceChangePercent:
           description: Decimal value as string to preserve precision
           example: "1234.56789000"
           pattern: ^-?\d+(\.\d+)?$
@@ -12682,6 +12688,7 @@ components:
           askQuantity: "1234.56789000"
           lastQuantity: "1234.56789000"
           bidPrice: "1234.56789000"
+          priceChangePercent: "1234.56789000"
           lastPrice: "1234.56789000"
           timestamp: 1632933600000
         success: true
@@ -12727,6 +12734,7 @@ components:
           askQuantity: "1234.56789000"
           lastQuantity: "1234.56789000"
           bidPrice: "1234.56789000"
+          priceChangePercent: "1234.56789000"
           lastPrice: "1234.56789000"
           timestamp: 1632933600000
         - venue: BINANCE
@@ -12737,6 +12745,7 @@ components:
           askQuantity: "1234.56789000"
           lastQuantity: "1234.56789000"
           bidPrice: "1234.56789000"
+          priceChangePercent: "1234.56789000"
           lastPrice: "1234.56789000"
           timestamp: 1632933600000
         success: true

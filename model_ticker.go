@@ -37,6 +37,8 @@ type Ticker struct {
 	AskPrice *string `json:"askPrice,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Decimal value as string to preserve precision
 	AskQuantity *string `json:"askQuantity,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
+	// Decimal value as string to preserve precision
+	PriceChangePercent *string `json:"priceChangePercent,omitempty" validate:"regexp=^-?\\\\d+(\\\\.\\\\d+)?$"`
 	// Unix timestamp in milliseconds
 	Timestamp int64 `json:"timestamp"`
 	AdditionalProperties map[string]interface{}
@@ -336,6 +338,38 @@ func (o *Ticker) SetAskQuantity(v string) {
 	o.AskQuantity = &v
 }
 
+// GetPriceChangePercent returns the PriceChangePercent field value if set, zero value otherwise.
+func (o *Ticker) GetPriceChangePercent() string {
+	if o == nil || IsNil(o.PriceChangePercent) {
+		var ret string
+		return ret
+	}
+	return *o.PriceChangePercent
+}
+
+// GetPriceChangePercentOk returns a tuple with the PriceChangePercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Ticker) GetPriceChangePercentOk() (*string, bool) {
+	if o == nil || IsNil(o.PriceChangePercent) {
+		return nil, false
+	}
+	return o.PriceChangePercent, true
+}
+
+// HasPriceChangePercent returns a boolean if a field has been set.
+func (o *Ticker) HasPriceChangePercent() bool {
+	if o != nil && !IsNil(o.PriceChangePercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetPriceChangePercent gets a reference to the given string and assigns it to the PriceChangePercent field.
+func (o *Ticker) SetPriceChangePercent(v string) {
+	o.PriceChangePercent = &v
+}
+
 // GetTimestamp returns the Timestamp field value
 func (o *Ticker) GetTimestamp() int64 {
 	if o == nil {
@@ -393,6 +427,9 @@ func (o Ticker) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AskQuantity) {
 		toSerialize["askQuantity"] = o.AskQuantity
 	}
+	if !IsNil(o.PriceChangePercent) {
+		toSerialize["priceChangePercent"] = o.PriceChangePercent
+	}
 	toSerialize["timestamp"] = o.Timestamp
 
 	for key, value := range o.AdditionalProperties {
@@ -448,6 +485,7 @@ func (o *Ticker) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "bidQuantity")
 		delete(additionalProperties, "askPrice")
 		delete(additionalProperties, "askQuantity")
+		delete(additionalProperties, "priceChangePercent")
 		delete(additionalProperties, "timestamp")
 		o.AdditionalProperties = additionalProperties
 	}
