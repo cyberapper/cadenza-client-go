@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **BidQuantity** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **AskPrice** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **AskQuantity** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
+**PriceChangePercent** | Pointer to **string** | Decimal value as string to preserve precision | [optional] 
 **Timestamp** | **int64** | Unix timestamp in milliseconds | 
 
 ## Methods
@@ -248,6 +249,31 @@ SetAskQuantity sets AskQuantity field to given value.
 `func (o *Ticker) HasAskQuantity() bool`
 
 HasAskQuantity returns a boolean if a field has been set.
+
+### GetPriceChangePercent
+
+`func (o *Ticker) GetPriceChangePercent() string`
+
+GetPriceChangePercent returns the PriceChangePercent field if non-nil, zero value otherwise.
+
+### GetPriceChangePercentOk
+
+`func (o *Ticker) GetPriceChangePercentOk() (*string, bool)`
+
+GetPriceChangePercentOk returns a tuple with the PriceChangePercent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPriceChangePercent
+
+`func (o *Ticker) SetPriceChangePercent(v string)`
+
+SetPriceChangePercent sets PriceChangePercent field to given value.
+
+### HasPriceChangePercent
+
+`func (o *Ticker) HasPriceChangePercent() bool`
+
+HasPriceChangePercent returns a boolean if a field has been set.
 
 ### GetTimestamp
 
